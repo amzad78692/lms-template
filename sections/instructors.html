@@ -455,7 +455,7 @@
                 ></a>
               </div>
             </div>
-            <a href="public/courses.html" class="instructor-view-link">
+            <a href="courses.html" class="instructor-view-link">
               View Courses <i class="bi bi-arrow-right"></i>
             </a>
           </div>
@@ -524,7 +524,7 @@
                 ></a>
               </div>
             </div>
-            <a href="public/courses.html" class="instructor-view-link">
+            <a href="courses.html" class="instructor-view-link">
               View Courses <i class="bi bi-arrow-right"></i>
             </a>
           </div>
@@ -593,7 +593,7 @@
                 ></a>
               </div>
             </div>
-            <a href="public/courses.html" class="instructor-view-link">
+            <a href="courses.html" class="instructor-view-link">
               View Courses <i class="bi bi-arrow-right"></i>
             </a>
           </div>
@@ -662,7 +662,7 @@
                 ></a>
               </div>
             </div>
-            <a href="public/courses.html" class="instructor-view-link">
+            <a href="courses.html" class="instructor-view-link">
               View Courses <i class="bi bi-arrow-right"></i>
             </a>
           </div>
@@ -731,7 +731,7 @@
                 ></a>
               </div>
             </div>
-            <a href="public/courses.html" class="instructor-view-link">
+            <a href="courses.html" class="instructor-view-link">
               View Courses <i class="bi bi-arrow-right"></i>
             </a>
           </div>
@@ -758,28 +758,26 @@
 <!-- /INSTRUCTORS SECTION -->
 
 <script>
-  /* Instructors Swiper init */
-  document.addEventListener("DOMContentLoaded", () => {
-    if (typeof Swiper !== "undefined") {
-      new Swiper("#instructorsSwiper", {
-        slidesPerView: 1,
-        spaceBetween: 24,
-        loop: false,
-        grabCursor: true,
-        navigation: {
-          nextEl: "#instrNext",
-          prevEl: "#instrPrev",
-        },
-        pagination: {
-          el: ".instructors-swiper .swiper-pagination",
-          clickable: true,
-        },
-        breakpoints: {
-          576: { slidesPerView: 2 },
-          992: { slidesPerView: 3 },
-          1200: { slidesPerView: 4 },
-        },
-      });
-    }
-  });
+  /* Instructors Swiper init — runs immediately after fragment is inserted */
+  if (typeof Swiper !== "undefined") {
+    new Swiper("#instructorsSwiper", {
+      slidesPerView: 1,
+      spaceBetween: 24,
+      loop: false,
+      grabCursor: true,
+      navigation: {
+        nextEl: "#instrNext",
+        prevEl: "#instrPrev",
+      },
+      pagination: {
+        el: ".instructors-swiper .swiper-pagination",
+        clickable: true,
+      },
+      breakpoints: {
+        576: { slidesPerView: 2 },
+        992: { slidesPerView: 3 },
+        1200: { slidesPerView: 4 },
+      },
+    });
+  }
 </script>

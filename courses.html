@@ -65,7 +65,7 @@
       /* ── Page hero ──────────────────────────────────── */
       .courses-hero {
         background: var(--accent);
-        padding: 56px 0 48px;
+        padding: 120px 0 48px;
         position: relative;
         overflow: hidden;
       }
@@ -745,7 +745,7 @@
     </style>
   </head>
 
-  <body x-data="themeToggle()" :data-theme="theme">
+  <body x-data="themeToggle()" :data-theme="dark ? 'dark' : 'light'">
     <!-- ── Navbar ──────────────────────────────────────────────── -->
     <div id="navbar-ph"></div>
 

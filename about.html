@@ -45,7 +45,6 @@
         font-family: var(--font-family);
         background: var(--surface-alt);
         color: var(--text-primary);
-        padding-top: 64px;
       }
       #nprogress .bar {
         background: var(--primary) !important;
@@ -54,7 +53,7 @@
       /* ── Hero ── */
       .about-hero {
         background: var(--accent);
-        padding: 80px 0 64px;
+        padding: 144px 0 64px;
         position: relative;
         overflow: hidden;
       }
@@ -355,7 +354,7 @@
     </style>
   </head>
 
-  <body>
+  <body x-data="themeToggle()">
     <div id="navbar-ph"></div>
 
     <!-- ── Hero ── -->

@@ -4,6 +4,11 @@
    Stack: Bootstrap 5.3 · Alpine.js 3.x · Bootstrap Icons
    ============================================================ */
 
+/* Prevent horizontal scroll caused by Bootstrap .row negative margins */
+html, body {
+  overflow-x: hidden;
+}
+
 :root {
   /* ── Brand Colors ─────────────────────────────────────────── */
   --primary:            #0d6efd;

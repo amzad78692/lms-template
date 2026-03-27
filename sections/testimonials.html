@@ -594,28 +594,26 @@
 <!-- /TESTIMONIALS SECTION -->
 
 <script>
-  /* Testimonials Swiper init */
-  document.addEventListener("DOMContentLoaded", () => {
-    if (typeof Swiper !== "undefined") {
-      new Swiper("#testimonialsSwiper", {
-        slidesPerView: 1,
-        spaceBetween: 24,
-        loop: true,
-        grabCursor: true,
-        autoplay: {
-          delay: 4500,
-          disableOnInteraction: false,
-          pauseOnMouseEnter: true,
-        },
-        pagination: {
-          el: ".testimonials-swiper .swiper-pagination",
-          clickable: true,
-        },
-        breakpoints: {
-          640: { slidesPerView: 2 },
-          1024: { slidesPerView: 3 },
-        },
-      });
-    }
-  });
+  /* Testimonials Swiper init — runs immediately after fragment is inserted */
+  if (typeof Swiper !== "undefined") {
+    new Swiper("#testimonialsSwiper", {
+      slidesPerView: 1,
+      spaceBetween: 24,
+      loop: true,
+      grabCursor: true,
+      autoplay: {
+        delay: 4500,
+        disableOnInteraction: false,
+        pauseOnMouseEnter: true,
+      },
+      pagination: {
+        el: ".testimonials-swiper .swiper-pagination",
+        clickable: true,
+      },
+      breakpoints: {
+        640: { slidesPerView: 2 },
+        1024: { slidesPerView: 3 },
+      },
+    });
+  }
 </script>

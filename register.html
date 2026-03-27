@@ -683,7 +683,7 @@
     </style>
   </head>
 
-  <body x-data="themeToggle()" :data-theme="theme">
+  <body x-data="themeToggle()" :data-theme="dark ? 'dark' : 'light'">
     <!-- Theme toggle -->
     <button
       class="auth-theme-btn"
