@@ -1,0 +1,2620 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Settings — EduLearn Student</title>
+
+    <!-- Bootstrap 5.3 -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    />
+    <!-- Bootstrap Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css"
+    />
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <!-- NProgress -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.css"
+    />
+    <!-- Notyf -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css"
+    />
+    <!-- Flatpickr -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"
+    />
+    <!-- Theme -->
+    <link rel="stylesheet" href="../assets/css/theme.css" />
+
+    <style>
+      body {
+        font-family: "Poppins", sans-serif;
+        background: var(--body-bg);
+        color: var(--body-color);
+      }
+      @media (max-width: 991px) {
+        #main-content {
+          margin-left: 0 !important;
+        }
+      }
+
+      /* ── Settings sidebar nav ───────────────────────────────── */
+      .settings-nav {
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 14px;
+        padding: 10px;
+        position: sticky;
+        top: calc(var(--navbar-height) + 16px);
+      }
+      .settings-nav-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 11px 14px;
+        border-radius: 10px;
+        cursor: pointer;
+        transition:
+          background 0.15s,
+          color 0.15s;
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: var(--body-color);
+        border: none;
+        background: none;
+        width: 100%;
+        text-align: left;
+        margin-bottom: 2px;
+      }
+      .settings-nav-item i {
+        font-size: 1rem;
+        width: 20px;
+        text-align: center;
+        flex-shrink: 0;
+      }
+      .settings-nav-item:hover {
+        background: var(--body-bg);
+      }
+      .settings-nav-item.active {
+        background: rgba(13, 110, 253, 0.1);
+        color: var(--primary);
+        font-weight: 600;
+      }
+      .settings-nav-item.active i {
+        color: var(--primary);
+      }
+      .settings-nav-divider {
+        border-top: 1px solid var(--border-color);
+        margin: 8px 4px;
+      }
+
+      /* ── Section card ───────────────────────────────────────── */
+      .settings-card {
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 14px;
+        padding: 24px;
+        margin-bottom: 20px;
+      }
+      .settings-card-title {
+        font-size: 0.95rem;
+        font-weight: 700;
+        margin-bottom: 4px;
+      }
+      .settings-card-sub {
+        font-size: 0.78rem;
+        color: var(--text-muted);
+        margin-bottom: 20px;
+      }
+
+      /* ── Form elements ──────────────────────────────────────── */
+      .form-label {
+        font-size: 0.82rem;
+        font-weight: 600;
+        margin-bottom: 5px;
+      }
+      .form-control,
+      .form-select {
+        background: var(--body-bg);
+        border-color: var(--border-color);
+        color: var(--body-color);
+        font-size: 0.88rem;
+        border-radius: 9px;
+        font-family: "Poppins", sans-serif;
+      }
+      .form-control:focus,
+      .form-select:focus {
+        background: var(--body-bg);
+        border-color: var(--primary);
+        color: var(--body-color);
+        box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.15);
+      }
+
+      /* ── Toggle row ─────────────────────────────────────────── */
+      .toggle-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 13px 0;
+        border-bottom: 1px solid var(--border-color);
+      }
+      .toggle-row:last-child {
+        border-bottom: none;
+        padding-bottom: 0;
+      }
+      .toggle-row:first-child {
+        padding-top: 0;
+      }
+      .toggle-row-info .label {
+        font-size: 0.875rem;
+        font-weight: 600;
+      }
+      .toggle-row-info .sub {
+        font-size: 0.775rem;
+        color: var(--text-muted);
+        margin-top: 2px;
+      }
+      .form-check-input {
+        cursor: pointer;
+      }
+      .form-check-input:checked {
+        background-color: var(--primary);
+        border-color: var(--primary);
+      }
+
+      /* ── Sortable notification list ─────────────────────────── */
+      .notif-sort-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        background: var(--body-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 10px;
+        padding: 12px 14px;
+        margin-bottom: 8px;
+        cursor: grab;
+        user-select: none;
+        transition:
+          box-shadow 0.15s,
+          background 0.15s;
+      }
+      .notif-sort-item:active {
+        cursor: grabbing;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+      }
+      .notif-sort-item .drag-handle {
+        color: var(--text-muted);
+        font-size: 0.9rem;
+      }
+      .notif-sort-item .notif-icon {
+        width: 34px;
+        height: 34px;
+        border-radius: 9px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.95rem;
+        flex-shrink: 0;
+      }
+
+      /* ── Theme selector ─────────────────────────────────────── */
+      .theme-option {
+        border: 2px solid var(--border-color);
+        border-radius: 12px;
+        padding: 14px;
+        cursor: pointer;
+        transition:
+          border-color 0.15s,
+          box-shadow 0.15s;
+        text-align: center;
+      }
+      .theme-option:hover {
+        border-color: var(--primary);
+      }
+      .theme-option.selected {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.15);
+      }
+      .theme-preview {
+        width: 100%;
+        height: 64px;
+        border-radius: 8px;
+        margin-bottom: 8px;
+        display: flex;
+        gap: 4px;
+        overflow: hidden;
+      }
+      .theme-preview-sidebar {
+        width: 28%;
+        background: #1a1a2e;
+        border-radius: 6px 0 0 6px;
+      }
+      .theme-preview-content {
+        flex: 1;
+        background: #f8f9fa;
+      }
+      .theme-preview.dark .theme-preview-sidebar {
+        background: #000;
+      }
+      .theme-preview.dark .theme-preview-content {
+        background: #121212;
+      }
+      .theme-option-label {
+        font-size: 0.82rem;
+        font-weight: 600;
+      }
+      .theme-option-sub {
+        font-size: 0.73rem;
+        color: var(--text-muted);
+      }
+
+      /* ── Color accent swatch ────────────────────────────────── */
+      .accent-swatch {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        cursor: pointer;
+        border: 3px solid transparent;
+        transition:
+          transform 0.15s,
+          border-color 0.15s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .accent-swatch:hover {
+        transform: scale(1.1);
+      }
+      .accent-swatch.active {
+        border-color: var(--body-color);
+      }
+      .accent-swatch i {
+        color: #fff;
+        font-size: 0.8rem;
+        opacity: 0;
+        transition: opacity 0.15s;
+      }
+      .accent-swatch.active i {
+        opacity: 1;
+      }
+
+      /* ── Font size slider ───────────────────────────────────── */
+      .range-track {
+        -webkit-appearance: none;
+        width: 100%;
+        height: 6px;
+        border-radius: 3px;
+        background: var(--border-color);
+        outline: none;
+        accent-color: var(--primary);
+      }
+
+      /* ── Sidebar layout preview ─────────────────────────────── */
+      .layout-option {
+        border: 2px solid var(--border-color);
+        border-radius: 10px;
+        padding: 12px;
+        cursor: pointer;
+        transition: border-color 0.15s;
+        text-align: center;
+      }
+      .layout-option:hover {
+        border-color: var(--primary);
+      }
+      .layout-option.selected {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.15);
+      }
+      .layout-mini-preview {
+        width: 100%;
+        height: 48px;
+        border-radius: 6px;
+        background: var(--body-bg);
+        margin-bottom: 6px;
+        display: flex;
+        gap: 3px;
+        overflow: hidden;
+      }
+
+      /* ── Privacy visibility selector ───────────────────────── */
+      .visibility-option {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 14px;
+        border-radius: 9px;
+        cursor: pointer;
+        transition: background 0.15s;
+        border: 1px solid var(--border-color);
+        margin-bottom: 6px;
+      }
+      .visibility-option:hover {
+        background: var(--body-bg);
+      }
+      .visibility-option.selected {
+        border-color: var(--primary);
+        background: rgba(13, 110, 253, 0.06);
+      }
+
+      /* ── Danger card ────────────────────────────────────────── */
+      .danger-card {
+        background: rgba(239, 68, 68, 0.04);
+        border: 1px solid rgba(239, 68, 68, 0.2);
+        border-radius: 11px;
+        padding: 16px 18px;
+        margin-bottom: 12px;
+      }
+
+      /* ── Password strength ──────────────────────────────────── */
+      .pw-bars {
+        display: flex;
+        gap: 4px;
+        margin-top: 6px;
+      }
+      .pw-bar {
+        flex: 1;
+        height: 4px;
+        border-radius: 4px;
+        background: var(--border-color);
+        transition: background 0.3s;
+      }
+      .pw-bar.weak {
+        background: #ef4444;
+      }
+      .pw-bar.moderate {
+        background: #f59e0b;
+      }
+      .pw-bar.strong {
+        background: #10b981;
+      }
+
+      /* ── Connected apps ─────────────────────────────────────── */
+      .connected-app {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding: 14px 0;
+        border-bottom: 1px solid var(--border-color);
+      }
+      .connected-app:last-child {
+        border-bottom: none;
+      }
+      .connected-app-icon {
+        width: 42px;
+        height: 42px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+        flex-shrink: 0;
+      }
+
+      /* ── Session row ────────────────────────────────────────── */
+      .session-row {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding: 12px 0;
+        border-bottom: 1px solid var(--border-color);
+      }
+      .session-row:last-child {
+        border-bottom: none;
+      }
+
+      /* modal theming */
+      .modal-content {
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 16px;
+      }
+      .modal-header,
+      .modal-footer {
+        border-color: var(--border-color);
+      }
+
+      /* Flatpickr dark */
+      [data-theme="dark"] .flatpickr-calendar {
+        background: var(--card-bg);
+        border-color: var(--border-color);
+      }
+      [data-theme="dark"] .flatpickr-day {
+        color: var(--body-color);
+      }
+      [data-theme="dark"] .flatpickr-day:hover {
+        background: rgba(13, 110, 253, 0.15);
+      }
+      [data-theme="dark"] .flatpickr-day.selected {
+        background: var(--primary);
+        border-color: var(--primary);
+      }
+      [data-theme="dark"] span.flatpickr-weekday {
+        background: var(--card-bg);
+        color: var(--text-muted);
+      }
+      [data-theme="dark"] .flatpickr-months,
+      [data-theme="dark"] .flatpickr-weekdays {
+        background: var(--card-bg);
+      }
+      [data-theme="dark"] .flatpickr-current-month input.cur-year,
+      [data-theme="dark"]
+        .flatpickr-current-month
+        .flatpickr-monthDropdown-months {
+        color: var(--body-color);
+        background: var(--card-bg);
+      }
+    </style>
+  </head>
+
+  <body x-data="themeToggle()" :data-theme="dark ? 'dark' : 'light'">
+    <div
+      id="layout-wrapper"
+      x-data="sidebarState()"
+      style="display: flex; min-height: 100vh"
+    >
+      <div id="sidebar-placeholder"></div>
+      <div style="flex: 1; display: flex; flex-direction: column; min-width: 0">
+        <div id="navbar-placeholder"></div>
+
+        <div
+          id="main-content"
+          :style="'margin-left:' + (collapsed ? 'var(--sidebar-collapsed)' : 'var(--sidebar-width)')"
+          style="
+            transition: margin-left 0.25s ease;
+            padding-top: var(--navbar-height);
+          "
+        >
+          <div class="container-fluid px-4 py-4" x-data="settingsPage()">
+            <!-- ── Page header ─────────────────────────────────── -->
+            <div
+              class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-4"
+            >
+              <div>
+                <h4 class="fw-700 mb-1">Settings</h4>
+                <p class="text-muted mb-0" style="font-size: 0.85rem">
+                  Manage your account preferences and application settings
+                </p>
+              </div>
+              <button class="btn btn-primary" @click="saveSettings()">
+                <i class="bi bi-check2-all me-1"></i>Save Changes
+              </button>
+            </div>
+
+            <div class="row g-4">
+              <!-- ── Left nav ──────────────────────────────────── -->
+              <div class="col-lg-3 d-none d-lg-block">
+                <div class="settings-nav">
+                  <button
+                    class="settings-nav-item"
+                    :class="{active:tab==='account'}"
+                    @click="tab='account'"
+                  >
+                    <i class="bi bi-person-circle"></i> Account
+                  </button>
+                  <button
+                    class="settings-nav-item"
+                    :class="{active:tab==='security'}"
+                    @click="tab='security'"
+                  >
+                    <i class="bi bi-shield-lock"></i> Security
+                  </button>
+                  <button
+                    class="settings-nav-item"
+                    :class="{active:tab==='notifications'}"
+                    @click="tab='notifications'"
+                  >
+                    <i class="bi bi-bell"></i> Notifications
+                    <span
+                      class="badge bg-primary bg-opacity-15 text-primary ms-auto"
+                      style="font-size: 0.65rem"
+                      >3</span
+                    >
+                  </button>
+                  <button
+                    class="settings-nav-item"
+                    :class="{active:tab==='privacy'}"
+                    @click="tab='privacy'"
+                  >
+                    <i class="bi bi-eye-slash"></i> Privacy
+                  </button>
+                  <div class="settings-nav-divider"></div>
+                  <button
+                    class="settings-nav-item"
+                    :class="{active:tab==='appearance'}"
+                    @click="tab='appearance'"
+                  >
+                    <i class="bi bi-palette"></i> Appearance
+                  </button>
+                  <button
+                    class="settings-nav-item"
+                    :class="{active:tab==='integrations'}"
+                    @click="tab='integrations'"
+                  >
+                    <i class="bi bi-plug"></i> Integrations
+                  </button>
+                </div>
+              </div>
+
+              <!-- ── Mobile tab pills ──────────────────────────── -->
+              <div class="col-12 d-lg-none">
+                <div class="d-flex gap-2 flex-wrap">
+                  <template x-for="t in tabs" :key="t.id">
+                    <button
+                      class="btn btn-sm"
+                      :class="tab===t.id ? 'btn-primary' : 'btn-outline-secondary'"
+                      @click="tab=t.id"
+                      x-text="t.label"
+                    ></button>
+                  </template>
+                </div>
+              </div>
+
+              <!-- ── Right content ─────────────────────────────── -->
+              <div class="col-lg-9">
+                <!-- ═══════════════════════════════════════════════
+                   ACCOUNT TAB
+              ════════════════════════════════════════════════════ -->
+                <div x-show="tab==='account'" x-transition>
+                  <!-- Language & Region -->
+                  <div class="settings-card">
+                    <div class="settings-card-title">Language & Region</div>
+                    <div class="settings-card-sub">
+                      Localisation preferences for your account
+                    </div>
+                    <div class="row g-3">
+                      <div class="col-md-6">
+                        <label class="form-label">Display Language</label>
+                        <select class="form-select" x-model="account.language">
+                          <option value="en">English (US)</option>
+                          <option value="en-gb">English (UK)</option>
+                          <option value="fr">Français</option>
+                          <option value="de">Deutsch</option>
+                          <option value="es">Español</option>
+                          <option value="ar">العربية</option>
+                          <option value="ur">اردو</option>
+                          <option value="zh">中文</option>
+                          <option value="ja">日本語</option>
+                        </select>
+                      </div>
+                      <div class="col-md-6">
+                        <label class="form-label">Timezone</label>
+                        <select class="form-select" x-model="account.timezone">
+                          <option>UTC-8 — Pacific Time</option>
+                          <option>UTC-5 — Eastern Time</option>
+                          <option>UTC+0 — GMT / UTC</option>
+                          <option>UTC+1 — Central European</option>
+                          <option>UTC+5 — Pakistan Standard</option>
+                          <option>UTC+5:30 — India Standard</option>
+                          <option>UTC+8 — China Standard</option>
+                          <option>UTC+10 — AEST</option>
+                        </select>
+                      </div>
+                      <div class="col-md-6">
+                        <label class="form-label">Date Format</label>
+                        <select
+                          class="form-select"
+                          x-model="account.dateFormat"
+                        >
+                          <option>MM/DD/YYYY</option>
+                          <option>DD/MM/YYYY</option>
+                          <option>YYYY-MM-DD</option>
+                          <option>D MMM YYYY</option>
+                        </select>
+                      </div>
+                      <div class="col-md-6">
+                        <label class="form-label">Currency Display</label>
+                        <select class="form-select" x-model="account.currency">
+                          <option>USD — $</option>
+                          <option>EUR — €</option>
+                          <option>GBP — £</option>
+                          <option>PKR — ₨</option>
+                          <option>INR — ₹</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Learning preferences -->
+                  <div class="settings-card">
+                    <div class="settings-card-title">Learning Preferences</div>
+                    <div class="settings-card-sub">
+                      Customise how you consume content
+                    </div>
+                    <div class="row g-3">
+                      <div class="col-md-6">
+                        <label class="form-label">Default Video Quality</label>
+                        <select
+                          class="form-select"
+                          x-model="account.videoQuality"
+                        >
+                          <option>Auto</option>
+                          <option>1080p</option>
+                          <option>720p</option>
+                          <option>480p</option>
+                          <option>360p</option>
+                        </select>
+                      </div>
+                      <div class="col-md-6">
+                        <label class="form-label">Playback Speed</label>
+                        <select
+                          class="form-select"
+                          x-model="account.playbackSpeed"
+                        >
+                          <option>0.75×</option>
+                          <option>1.0×</option>
+                          <option>1.25×</option>
+                          <option>1.5×</option>
+                          <option>2.0×</option>
+                        </select>
+                      </div>
+                      <div class="col-md-6">
+                        <label class="form-label"
+                          >Default Subtitle Language</label
+                        >
+                        <select
+                          class="form-select"
+                          x-model="account.subtitleLang"
+                        >
+                          <option>Off</option>
+                          <option>English</option>
+                          <option>Français</option>
+                          <option>Español</option>
+                          <option>Deutsch</option>
+                          <option>اردو</option>
+                        </select>
+                      </div>
+                      <div class="col-md-6">
+                        <label class="form-label">Study Reminder Time</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="reminderTime"
+                          placeholder="Pick a time…"
+                        />
+                      </div>
+                      <div class="col-12">
+                        <div class="toggle-row">
+                          <div class="toggle-row-info">
+                            <div class="label">Auto-play next lesson</div>
+                            <div class="sub">
+                              Automatically start the next lesson when current
+                              one ends
+                            </div>
+                          </div>
+                          <div class="form-check form-switch mb-0">
+                            <input
+                              class="form-check-input"
+                              type="checkbox"
+                              x-model="account.autoplay"
+                              style="width: 40px; height: 22px"
+                            />
+                          </div>
+                        </div>
+                        <div class="toggle-row">
+                          <div class="toggle-row-info">
+                            <div class="label">Remember video position</div>
+                            <div class="sub">
+                              Resume from where you left off in each video
+                            </div>
+                          </div>
+                          <div class="form-check form-switch mb-0">
+                            <input
+                              class="form-check-input"
+                              type="checkbox"
+                              x-model="account.resumeVideo"
+                              style="width: 40px; height: 22px"
+                            />
+                          </div>
+                        </div>
+                        <div class="toggle-row">
+                          <div class="toggle-row-info">
+                            <div class="label">
+                              Show closed captions by default
+                            </div>
+                            <div class="sub">
+                              Enable subtitles automatically when available
+                            </div>
+                          </div>
+                          <div class="form-check form-switch mb-0">
+                            <input
+                              class="form-check-input"
+                              type="checkbox"
+                              x-model="account.captions"
+                              style="width: 40px; height: 22px"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Email preferences -->
+                  <div class="settings-card">
+                    <div class="settings-card-title">Email Preferences</div>
+                    <div class="settings-card-sub">
+                      Choose which emails EduLearn sends you
+                    </div>
+                    <div class="toggle-row">
+                      <div class="toggle-row-info">
+                        <div class="label">Weekly progress digest</div>
+                        <div class="sub">
+                          Summary of your learning activity every Monday
+                        </div>
+                      </div>
+                      <div class="form-check form-switch mb-0">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          x-model="account.emailDigest"
+                          style="width: 40px; height: 22px"
+                        />
+                      </div>
+                    </div>
+                    <div class="toggle-row">
+                      <div class="toggle-row-info">
+                        <div class="label">Course announcements</div>
+                        <div class="sub">
+                          Updates from instructors about your enrolled courses
+                        </div>
+                      </div>
+                      <div class="form-check form-switch mb-0">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          x-model="account.emailAnnouncements"
+                          style="width: 40px; height: 22px"
+                        />
+                      </div>
+                    </div>
+                    <div class="toggle-row">
+                      <div class="toggle-row-info">
+                        <div class="label">Assignment deadlines</div>
+                        <div class="sub">
+                          Reminder 24 hours before an assignment is due
+                        </div>
+                      </div>
+                      <div class="form-check form-switch mb-0">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          x-model="account.emailDeadlines"
+                          style="width: 40px; height: 22px"
+                        />
+                      </div>
+                    </div>
+                    <div class="toggle-row">
+                      <div class="toggle-row-info">
+                        <div class="label">Promotional emails</div>
+                        <div class="sub">
+                          Deals, new course launches and special offers
+                        </div>
+                      </div>
+                      <div class="form-check form-switch mb-0">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          x-model="account.emailPromos"
+                          style="width: 40px; height: 22px"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- /account -->
+
+                <!-- ═══════════════════════════════════════════════
+                   SECURITY TAB
+              ════════════════════════════════════════════════════ -->
+                <div x-show="tab==='security'" x-transition>
+                  <!-- Change password -->
+                  <div class="settings-card">
+                    <div class="settings-card-title">Change Password</div>
+                    <div class="settings-card-sub">
+                      Use a strong, unique password of at least 8 characters
+                    </div>
+                    <div class="row g-3">
+                      <div class="col-md-6">
+                        <label class="form-label">Current Password</label>
+                        <div class="input-group">
+                          <input
+                            :type="showPw.cur ? 'text' : 'password'"
+                            class="form-control"
+                            x-model="pw.cur"
+                          />
+                          <button
+                            class="btn btn-outline-secondary"
+                            type="button"
+                            @click="showPw.cur = !showPw.cur"
+                          >
+                            <i
+                              class="bi"
+                              :class="showPw.cur ? 'bi-eye-slash' : 'bi-eye'"
+                            ></i>
+                          </button>
+                        </div>
+                      </div>
+                      <div class="col-md-6"></div>
+                      <div class="col-md-6">
+                        <label class="form-label">New Password</label>
+                        <div class="input-group">
+                          <input
+                            :type="showPw.new ? 'text' : 'password'"
+                            class="form-control"
+                            x-model="pw.new"
+                            @input="calcStrength()"
+                          />
+                          <button
+                            class="btn btn-outline-secondary"
+                            type="button"
+                            @click="showPw.new = !showPw.new"
+                          >
+                            <i
+                              class="bi"
+                              :class="showPw.new ? 'bi-eye-slash' : 'bi-eye'"
+                            ></i>
+                          </button>
+                        </div>
+                        <div class="pw-bars">
+                          <div
+                            class="pw-bar"
+                            :class="pwStrength>=1 ? pwClass : ''"
+                          ></div>
+                          <div
+                            class="pw-bar"
+                            :class="pwStrength>=2 ? pwClass : ''"
+                          ></div>
+                          <div
+                            class="pw-bar"
+                            :class="pwStrength>=3 ? pwClass : ''"
+                          ></div>
+                          <div
+                            class="pw-bar"
+                            :class="pwStrength>=4 ? pwClass : ''"
+                          ></div>
+                        </div>
+                        <div
+                          class="mt-1"
+                          style="font-size: 0.74rem; color: var(--text-muted)"
+                          x-text="pwLabel"
+                        ></div>
+                      </div>
+                      <div class="col-md-6">
+                        <label class="form-label">Confirm New Password</label>
+                        <div class="input-group">
+                          <input
+                            :type="showPw.confirm ? 'text' : 'password'"
+                            class="form-control"
+                            x-model="pw.confirm"
+                            :class="pw.confirm && pw.confirm !== pw.new ? 'is-invalid' : (pw.confirm && pw.confirm === pw.new ? 'is-valid':'') "
+                          />
+                          <button
+                            class="btn btn-outline-secondary"
+                            type="button"
+                            @click="showPw.confirm = !showPw.confirm"
+                          >
+                            <i
+                              class="bi"
+                              :class="showPw.confirm ? 'bi-eye-slash' : 'bi-eye'"
+                            ></i>
+                          </button>
+                        </div>
+                        <div class="invalid-feedback">
+                          Passwords do not match.
+                        </div>
+                      </div>
+                      <div class="col-12">
+                        <button
+                          class="btn btn-primary"
+                          @click="changePassword()"
+                        >
+                          <i class="bi bi-lock-fill me-1"></i>Update Password
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- 2FA -->
+                  <div class="settings-card">
+                    <div class="settings-card-title">
+                      Two-Factor Authentication
+                    </div>
+                    <div class="settings-card-sub">
+                      Protect your account with an additional verification step
+                    </div>
+                    <div class="toggle-row">
+                      <div class="toggle-row-info">
+                        <div class="label">Authenticator App (TOTP)</div>
+                        <div class="sub">
+                          Google Authenticator, Authy or similar
+                        </div>
+                      </div>
+                      <div class="form-check form-switch mb-0">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          x-model="security.totpEnabled"
+                          style="width: 40px; height: 22px"
+                          @change="toastToggle('Authenticator App 2FA', security.totpEnabled)"
+                        />
+                      </div>
+                    </div>
+                    <div class="toggle-row">
+                      <div class="toggle-row-info">
+                        <div class="label">SMS / Text Message</div>
+                        <div class="sub">Receive a one-time code via text</div>
+                      </div>
+                      <div class="form-check form-switch mb-0">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          x-model="security.smsEnabled"
+                          style="width: 40px; height: 22px"
+                          @change="toastToggle('SMS 2FA', security.smsEnabled)"
+                        />
+                      </div>
+                    </div>
+                    <div class="mt-3">
+                      <button
+                        class="btn btn-outline-secondary btn-sm"
+                        onclick="showRecoveryCodes()"
+                      >
+                        <i class="bi bi-key me-1"></i>View Recovery Codes
+                      </button>
+                    </div>
+                  </div>
+
+                  <!-- Login history -->
+                  <div class="settings-card">
+                    <div class="settings-card-title">Login History</div>
+                    <div class="settings-card-sub">
+                      Recent sign-ins to your account
+                    </div>
+                    <template x-for="s in loginHistory" :key="s.id">
+                      <div class="session-row">
+                        <div
+                          style="
+                            width: 38px;
+                            height: 38px;
+                            border-radius: 9px;
+                            background: rgba(13, 110, 253, 0.1);
+                            color: var(--primary);
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            font-size: 1rem;
+                            flex-shrink: 0;
+                          "
+                        >
+                          <i :class="'bi ' + s.icon"></i>
+                        </div>
+                        <div class="flex-grow-1">
+                          <div
+                            class="fw-600"
+                            style="font-size: 0.85rem"
+                            x-text="s.device"
+                          ></div>
+                          <div class="text-muted" style="font-size: 0.76rem">
+                            <span x-text="s.location"></span> ·
+                            <span x-text="s.time"></span>
+                          </div>
+                        </div>
+                        <span
+                          class="badge"
+                          :class="s.current ? 'bg-success bg-opacity-15 text-success' : 'bg-secondary bg-opacity-15 text-secondary'"
+                          x-text="s.current ? 'Current' : 'Past'"
+                        ></span>
+                      </div>
+                    </template>
+                  </div>
+
+                  <!-- Active sessions -->
+                  <div class="settings-card">
+                    <div class="settings-card-title">Active Sessions</div>
+                    <div class="settings-card-sub">
+                      Devices currently logged in
+                    </div>
+                    <template x-for="s in activeSessions" :key="s.id">
+                      <div class="session-row">
+                        <div
+                          style="
+                            width: 38px;
+                            height: 38px;
+                            border-radius: 9px;
+                            background: var(--body-bg);
+                            border: 1px solid var(--border-color);
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            font-size: 1rem;
+                            flex-shrink: 0;
+                          "
+                        >
+                          <i :class="'bi ' + s.icon"></i>
+                        </div>
+                        <div class="flex-grow-1">
+                          <div
+                            class="fw-600"
+                            style="font-size: 0.85rem"
+                            x-text="s.device"
+                          ></div>
+                          <div
+                            class="text-muted"
+                            style="font-size: 0.76rem"
+                            x-text="s.location + ' · ' + s.time"
+                          ></div>
+                        </div>
+                        <button
+                          x-show="!s.current"
+                          class="btn btn-outline-danger btn-sm"
+                          @click="revokeSession(s)"
+                        >
+                          Revoke
+                        </button>
+                        <span
+                          x-show="s.current"
+                          class="badge bg-success bg-opacity-15 text-success"
+                          >This device</span
+                        >
+                      </div>
+                    </template>
+                    <div class="mt-3">
+                      <button
+                        class="btn btn-outline-danger btn-sm"
+                        @click="revokeAll()"
+                      >
+                        <i class="bi bi-shield-x me-1"></i>Revoke All Other
+                        Sessions
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <!-- /security -->
+
+                <!-- ═══════════════════════════════════════════════
+                   NOTIFICATIONS TAB
+              ════════════════════════════════════════════════════ -->
+                <div x-show="tab==='notifications'" x-transition>
+                  <!-- Push notifications -->
+                  <div class="settings-card">
+                    <div class="settings-card-title">Push Notifications</div>
+                    <div class="settings-card-sub">
+                      What should send you a push notification?
+                    </div>
+                    <template x-for="n in pushNotifs" :key="n.id">
+                      <div class="toggle-row">
+                        <div class="toggle-row-info">
+                          <div class="label" x-text="n.label"></div>
+                          <div class="sub" x-text="n.sub"></div>
+                        </div>
+                        <div class="form-check form-switch mb-0">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            x-model="n.enabled"
+                            style="width: 40px; height: 22px"
+                          />
+                        </div>
+                      </div>
+                    </template>
+                  </div>
+
+                  <!-- Notification channels -->
+                  <div class="settings-card">
+                    <div class="settings-card-title">Notification Channels</div>
+                    <div class="settings-card-sub">
+                      How you want to be notified
+                    </div>
+                    <div class="row g-3 mb-3">
+                      <div class="col-sm-4">
+                        <div
+                          class="p-3 rounded-3 text-center"
+                          style="
+                            border: 1px solid var(--border-color);
+                            background: var(--body-bg);
+                          "
+                        >
+                          <i
+                            class="bi bi-bell-fill text-primary mb-2 d-block"
+                            style="font-size: 1.4rem"
+                          ></i>
+                          <div class="fw-600 mb-2" style="font-size: 0.85rem">
+                            In-App
+                          </div>
+                          <div
+                            class="form-check form-switch d-flex justify-content-center mb-0"
+                          >
+                            <input
+                              class="form-check-input"
+                              type="checkbox"
+                              x-model="channels.inApp"
+                              style="width: 40px; height: 22px"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-sm-4">
+                        <div
+                          class="p-3 rounded-3 text-center"
+                          style="
+                            border: 1px solid var(--border-color);
+                            background: var(--body-bg);
+                          "
+                        >
+                          <i
+                            class="bi bi-envelope-fill text-success mb-2 d-block"
+                            style="font-size: 1.4rem"
+                          ></i>
+                          <div class="fw-600 mb-2" style="font-size: 0.85rem">
+                            Email
+                          </div>
+                          <div
+                            class="form-check form-switch d-flex justify-content-center mb-0"
+                          >
+                            <input
+                              class="form-check-input"
+                              type="checkbox"
+                              x-model="channels.email"
+                              style="width: 40px; height: 22px"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-sm-4">
+                        <div
+                          class="p-3 rounded-3 text-center"
+                          style="
+                            border: 1px solid var(--border-color);
+                            background: var(--body-bg);
+                          "
+                        >
+                          <i
+                            class="bi bi-phone-fill"
+                            style="
+                              color: #f59e0b;
+                              font-size: 1.4rem;
+                              margin-bottom: 0.5rem;
+                              display: block;
+                            "
+                          ></i>
+                          <div class="fw-600 mb-2" style="font-size: 0.85rem">
+                            SMS
+                          </div>
+                          <div
+                            class="form-check form-switch d-flex justify-content-center mb-0"
+                          >
+                            <input
+                              class="form-check-input"
+                              type="checkbox"
+                              x-model="channels.sms"
+                              style="width: 40px; height: 22px"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Priority order (SortableJS) -->
+                  <div class="settings-card">
+                    <div class="settings-card-title">
+                      Notification Priority Order
+                    </div>
+                    <div class="settings-card-sub">
+                      Drag to reorder which alerts appear first
+                    </div>
+                    <div id="notifSortList">
+                      <div class="notif-sort-item" data-id="deadline">
+                        <i class="bi bi-grip-vertical drag-handle"></i>
+                        <div
+                          class="notif-icon"
+                          style="
+                            background: rgba(239, 68, 68, 0.1);
+                            color: #ef4444;
+                          "
+                        >
+                          <i class="bi bi-alarm-fill"></i>
+                        </div>
+                        <div class="flex-grow-1">
+                          <div class="fw-600" style="font-size: 0.85rem">
+                            Assignment Deadlines
+                          </div>
+                          <div class="text-muted" style="font-size: 0.76rem">
+                            Due date reminders
+                          </div>
+                        </div>
+                        <span
+                          class="badge bg-danger bg-opacity-15 text-danger"
+                          style="font-size: 0.7rem"
+                          >High</span
+                        >
+                      </div>
+                      <div class="notif-sort-item" data-id="live">
+                        <i class="bi bi-grip-vertical drag-handle"></i>
+                        <div
+                          class="notif-icon"
+                          style="
+                            background: rgba(16, 185, 129, 0.1);
+                            color: #10b981;
+                          "
+                        >
+                          <i class="bi bi-camera-video-fill"></i>
+                        </div>
+                        <div class="flex-grow-1">
+                          <div class="fw-600" style="font-size: 0.85rem">
+                            Live Sessions
+                          </div>
+                          <div class="text-muted" style="font-size: 0.76rem">
+                            Starting soon reminders
+                          </div>
+                        </div>
+                        <span
+                          class="badge bg-success bg-opacity-15 text-success"
+                          style="font-size: 0.7rem"
+                          >High</span
+                        >
+                      </div>
+                      <div class="notif-sort-item" data-id="grade">
+                        <i class="bi bi-grip-vertical drag-handle"></i>
+                        <div
+                          class="notif-icon"
+                          style="
+                            background: rgba(13, 110, 253, 0.1);
+                            color: var(--primary);
+                          "
+                        >
+                          <i class="bi bi-clipboard2-check-fill"></i>
+                        </div>
+                        <div class="flex-grow-1">
+                          <div class="fw-600" style="font-size: 0.85rem">
+                            Grade Posted
+                          </div>
+                          <div class="text-muted" style="font-size: 0.76rem">
+                            When instructor grades your work
+                          </div>
+                        </div>
+                        <span
+                          class="badge bg-primary bg-opacity-15 text-primary"
+                          style="font-size: 0.7rem"
+                          >Medium</span
+                        >
+                      </div>
+                      <div class="notif-sort-item" data-id="forum">
+                        <i class="bi bi-grip-vertical drag-handle"></i>
+                        <div
+                          class="notif-icon"
+                          style="
+                            background: rgba(139, 92, 246, 0.1);
+                            color: #8b5cf6;
+                          "
+                        >
+                          <i class="bi bi-chat-dots-fill"></i>
+                        </div>
+                        <div class="flex-grow-1">
+                          <div class="fw-600" style="font-size: 0.85rem">
+                            Forum Replies
+                          </div>
+                          <div class="text-muted" style="font-size: 0.76rem">
+                            Replies to your posts
+                          </div>
+                        </div>
+                        <span
+                          class="badge bg-secondary bg-opacity-15 text-secondary"
+                          style="font-size: 0.7rem"
+                          >Low</span
+                        >
+                      </div>
+                      <div class="notif-sort-item" data-id="promo">
+                        <i class="bi bi-grip-vertical drag-handle"></i>
+                        <div
+                          class="notif-icon"
+                          style="
+                            background: rgba(245, 158, 11, 0.1);
+                            color: #f59e0b;
+                          "
+                        >
+                          <i class="bi bi-megaphone-fill"></i>
+                        </div>
+                        <div class="flex-grow-1">
+                          <div class="fw-600" style="font-size: 0.85rem">
+                            Promotions & Offers
+                          </div>
+                          <div class="text-muted" style="font-size: 0.76rem">
+                            Deals and new course alerts
+                          </div>
+                        </div>
+                        <span
+                          class="badge bg-secondary bg-opacity-15 text-secondary"
+                          style="font-size: 0.7rem"
+                          >Low</span
+                        >
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Quiet hours -->
+                  <div class="settings-card">
+                    <div class="settings-card-title">Quiet Hours</div>
+                    <div class="settings-card-sub">
+                      Silence all notifications during these hours
+                    </div>
+                    <div class="row g-3 align-items-center">
+                      <div class="col-auto">
+                        <div
+                          class="form-check form-switch mb-0 d-flex align-items-center gap-2"
+                        >
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            x-model="notif.quietHours"
+                            style="width: 40px; height: 22px"
+                            id="quietToggle"
+                          />
+                          <label
+                            class="form-check-label fw-500"
+                            for="quietToggle"
+                            >Enable quiet hours</label
+                          >
+                        </div>
+                      </div>
+                      <div class="col-md-3" x-show="notif.quietHours">
+                        <label class="form-label">From</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="quietFrom"
+                          placeholder="10:00 PM"
+                        />
+                      </div>
+                      <div class="col-md-3" x-show="notif.quietHours">
+                        <label class="form-label">To</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="quietTo"
+                          placeholder="8:00 AM"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- /notifications -->
+
+                <!-- ═══════════════════════════════════════════════
+                   PRIVACY TAB
+              ════════════════════════════════════════════════════ -->
+                <div x-show="tab==='privacy'" x-transition>
+                  <!-- Profile visibility -->
+                  <div class="settings-card">
+                    <div class="settings-card-title">Profile Visibility</div>
+                    <div class="settings-card-sub">
+                      Control who can view your profile and learning activity
+                    </div>
+
+                    <label class="form-label">Who can view my profile?</label>
+                    <div class="mb-4">
+                      <template x-for="opt in visibilityOpts" :key="opt.id">
+                        <div
+                          class="visibility-option"
+                          :class="{selected: privacy.profileVisibility === opt.id}"
+                          @click="privacy.profileVisibility = opt.id"
+                        >
+                          <div
+                            style="
+                              width: 34px;
+                              height: 34px;
+                              border-radius: 9px;
+                              display: flex;
+                              align-items: center;
+                              justify-content: center;
+                              font-size: 1rem;
+                              flex-shrink: 0;
+                            "
+                            :style="'background:' + opt.bgColor + '; color:' + opt.color + ';'"
+                          >
+                            <i :class="'bi ' + opt.icon"></i>
+                          </div>
+                          <div class="flex-grow-1">
+                            <div
+                              class="fw-600"
+                              style="font-size: 0.875rem"
+                              x-text="opt.label"
+                            ></div>
+                            <div
+                              class="text-muted"
+                              style="font-size: 0.775rem"
+                              x-text="opt.sub"
+                            ></div>
+                          </div>
+                          <div
+                            class="text-primary"
+                            x-show="privacy.profileVisibility === opt.id"
+                          >
+                            <i class="bi bi-check-circle-fill"></i>
+                          </div>
+                        </div>
+                      </template>
+                    </div>
+
+                    <div class="toggle-row">
+                      <div class="toggle-row-info">
+                        <div class="label">Show my enrolled courses</div>
+                        <div class="sub">
+                          Other users can see what courses you're taking
+                        </div>
+                      </div>
+                      <div class="form-check form-switch mb-0">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          x-model="privacy.showCourses"
+                          style="width: 40px; height: 22px"
+                        />
+                      </div>
+                    </div>
+                    <div class="toggle-row">
+                      <div class="toggle-row-info">
+                        <div class="label">Show my certificates</div>
+                        <div class="sub">
+                          Display earned certificates on your public profile
+                        </div>
+                      </div>
+                      <div class="form-check form-switch mb-0">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          x-model="privacy.showCerts"
+                          style="width: 40px; height: 22px"
+                        />
+                      </div>
+                    </div>
+                    <div class="toggle-row">
+                      <div class="toggle-row-info">
+                        <div class="label">Show my learning streak</div>
+                        <div class="sub">
+                          Show your daily streak badge on your profile
+                        </div>
+                      </div>
+                      <div class="form-check form-switch mb-0">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          x-model="privacy.showStreak"
+                          style="width: 40px; height: 22px"
+                        />
+                      </div>
+                    </div>
+                    <div class="toggle-row">
+                      <div class="toggle-row-info">
+                        <div class="label">Appear in leaderboards</div>
+                        <div class="sub">
+                          Let your name show on class and global leaderboards
+                        </div>
+                      </div>
+                      <div class="form-check form-switch mb-0">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          x-model="privacy.leaderboard"
+                          style="width: 40px; height: 22px"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Data & analytics -->
+                  <div class="settings-card">
+                    <div class="settings-card-title">Data & Analytics</div>
+                    <div class="settings-card-sub">
+                      Manage how we use your data to improve the platform
+                    </div>
+                    <div class="toggle-row">
+                      <div class="toggle-row-info">
+                        <div class="label">
+                          Share anonymised usage analytics
+                        </div>
+                        <div class="sub">
+                          Help us improve EduLearn by sharing anonymous usage
+                          data
+                        </div>
+                      </div>
+                      <div class="form-check form-switch mb-0">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          x-model="privacy.analytics"
+                          style="width: 40px; height: 22px"
+                        />
+                      </div>
+                    </div>
+                    <div class="toggle-row">
+                      <div class="toggle-row-info">
+                        <div class="label">
+                          Personalised course recommendations
+                        </div>
+                        <div class="sub">
+                          Use my learning history to suggest relevant courses
+                        </div>
+                      </div>
+                      <div class="form-check form-switch mb-0">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          x-model="privacy.personalised"
+                          style="width: 40px; height: 22px"
+                        />
+                      </div>
+                    </div>
+                    <div class="toggle-row">
+                      <div class="toggle-row-info">
+                        <div class="label">Marketing cookies</div>
+                        <div class="sub">
+                          Allow third-party advertising cookies
+                        </div>
+                      </div>
+                      <div class="form-check form-switch mb-0">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          x-model="privacy.marketingCookies"
+                          style="width: 40px; height: 22px"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Download data -->
+                  <div class="settings-card">
+                    <div class="settings-card-title">Your Data</div>
+                    <div class="settings-card-sub">
+                      Access and manage your personal data
+                    </div>
+                    <div class="d-flex flex-wrap gap-3">
+                      <button
+                        class="btn btn-outline-secondary btn-sm"
+                        onclick="requestDataExport()"
+                      >
+                        <i class="bi bi-download me-1"></i>Download My Data
+                      </button>
+                      <button
+                        class="btn btn-outline-secondary btn-sm"
+                        onclick="viewPrivacyPolicy()"
+                      >
+                        <i class="bi bi-file-text me-1"></i>Privacy Policy
+                      </button>
+                      <button
+                        class="btn btn-outline-secondary btn-sm"
+                        onclick="viewCookiePolicy()"
+                      >
+                        <i class="bi bi-cookie me-1"></i>Cookie Policy
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <!-- /privacy -->
+
+                <!-- ═══════════════════════════════════════════════
+                   APPEARANCE TAB
+              ════════════════════════════════════════════════════ -->
+                <div x-show="tab==='appearance'" x-transition>
+                  <!-- Theme -->
+                  <div class="settings-card">
+                    <div class="settings-card-title">Theme</div>
+                    <div class="settings-card-sub">
+                      Choose your preferred colour scheme
+                    </div>
+                    <div class="row g-3">
+                      <div class="col-4">
+                        <div
+                          class="theme-option"
+                          :class="{selected: appearance.theme==='light'}"
+                          @click="appearance.theme='light'; setTheme('light')"
+                        >
+                          <div class="theme-preview">
+                            <div
+                              class="theme-preview-sidebar"
+                              style="background: #1e293b"
+                            ></div>
+                            <div
+                              class="theme-preview-content"
+                              style="background: #f8fafc"
+                            ></div>
+                          </div>
+                          <div class="theme-option-label">Light</div>
+                          <div class="theme-option-sub">Clean & bright</div>
+                        </div>
+                      </div>
+                      <div class="col-4">
+                        <div
+                          class="theme-option"
+                          :class="{selected: appearance.theme==='dark'}"
+                          @click="appearance.theme='dark'; setTheme('dark')"
+                        >
+                          <div class="theme-preview dark">
+                            <div class="theme-preview-sidebar"></div>
+                            <div class="theme-preview-content"></div>
+                          </div>
+                          <div class="theme-option-label">Dark</div>
+                          <div class="theme-option-sub">Easy on eyes</div>
+                        </div>
+                      </div>
+                      <div class="col-4">
+                        <div
+                          class="theme-option"
+                          :class="{selected: appearance.theme==='auto'}"
+                          @click="appearance.theme='auto'; setTheme('auto')"
+                        >
+                          <div
+                            class="theme-preview"
+                            style="overflow: hidden; position: relative"
+                          >
+                            <div
+                              style="
+                                width: 50%;
+                                background: #1e293b;
+                                height: 100%;
+                              "
+                            ></div>
+                            <div
+                              style="
+                                width: 50%;
+                                background: #121212;
+                                height: 100%;
+                              "
+                            ></div>
+                          </div>
+                          <div class="theme-option-label">Auto</div>
+                          <div class="theme-option-sub">Follows system</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Accent color -->
+                  <div class="settings-card">
+                    <div class="settings-card-title">Accent Colour</div>
+                    <div class="settings-card-sub">
+                      Primary colour used for buttons and highlights
+                    </div>
+                    <div class="d-flex gap-3 flex-wrap">
+                      <template x-for="c in accentColors" :key="c.id">
+                        <div
+                          class="accent-swatch"
+                          :style="'background:' + c.hex + ';'"
+                          :class="{active: appearance.accent === c.id}"
+                          @click="appearance.accent=c.id"
+                          :title="c.name"
+                        >
+                          <i class="bi bi-check2"></i>
+                        </div>
+                      </template>
+                    </div>
+                  </div>
+
+                  <!-- Font size -->
+                  <div class="settings-card">
+                    <div class="settings-card-title">Text Size</div>
+                    <div class="settings-card-sub">
+                      Adjust the base font size across the platform
+                    </div>
+                    <div class="d-flex align-items-center gap-3">
+                      <span
+                        style="
+                          font-size: 0.8rem;
+                          color: var(--text-muted);
+                          font-weight: 600;
+                        "
+                        >A</span
+                      >
+                      <input
+                        type="range"
+                        class="form-range range-track flex-grow-1"
+                        min="12"
+                        max="18"
+                        step="1"
+                        x-model="appearance.fontSize"
+                      />
+                      <span
+                        style="
+                          font-size: 1.2rem;
+                          color: var(--text-muted);
+                          font-weight: 700;
+                        "
+                        >A</span
+                      >
+                      <span
+                        class="badge bg-primary bg-opacity-15 text-primary"
+                        style="min-width: 52px; text-align: center"
+                        x-text="appearance.fontSize + 'px'"
+                      ></span>
+                    </div>
+                    <p class="text-muted mt-2 mb-0" style="font-size: 0.78rem">
+                      Preview:
+                      <span :style="'font-size:' + appearance.fontSize + 'px;'"
+                        >The quick brown fox jumps over the lazy dog.</span
+                      >
+                    </p>
+                  </div>
+
+                  <!-- Sidebar layout -->
+                  <div class="settings-card">
+                    <div class="settings-card-title">Sidebar Layout</div>
+                    <div class="settings-card-sub">
+                      Choose how the navigation sidebar behaves
+                    </div>
+                    <div class="row g-3">
+                      <div class="col-4">
+                        <div
+                          class="layout-option"
+                          :class="{selected: appearance.sidebarLayout==='fixed'}"
+                          @click="appearance.sidebarLayout='fixed'"
+                        >
+                          <div class="layout-mini-preview">
+                            <div
+                              style="
+                                width: 30%;
+                                background: var(--primary);
+                                border-radius: 4px 0 0 4px;
+                                opacity: 0.7;
+                              "
+                            ></div>
+                            <div
+                              style="flex: 1; background: var(--border-color)"
+                            ></div>
+                          </div>
+                          <div style="font-size: 0.8rem; font-weight: 600">
+                            Fixed
+                          </div>
+                          <div
+                            style="font-size: 0.72rem; color: var(--text-muted)"
+                          >
+                            Always visible
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-4">
+                        <div
+                          class="layout-option"
+                          :class="{selected: appearance.sidebarLayout==='collapsed'}"
+                          @click="appearance.sidebarLayout='collapsed'"
+                        >
+                          <div class="layout-mini-preview">
+                            <div
+                              style="
+                                width: 14%;
+                                background: var(--primary);
+                                border-radius: 4px 0 0 4px;
+                                opacity: 0.7;
+                              "
+                            ></div>
+                            <div
+                              style="flex: 1; background: var(--border-color)"
+                            ></div>
+                          </div>
+                          <div style="font-size: 0.8rem; font-weight: 600">
+                            Collapsed
+                          </div>
+                          <div
+                            style="font-size: 0.72rem; color: var(--text-muted)"
+                          >
+                            Icons only
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-4">
+                        <div
+                          class="layout-option"
+                          :class="{selected: appearance.sidebarLayout==='overlay'}"
+                          @click="appearance.sidebarLayout='overlay'"
+                        >
+                          <div class="layout-mini-preview">
+                            <div
+                              style="
+                                flex: 1;
+                                background: var(--border-color);
+                                position: relative;
+                              "
+                            >
+                              <div
+                                style="
+                                  position: absolute;
+                                  left: 0;
+                                  top: 0;
+                                  bottom: 0;
+                                  width: 40%;
+                                  background: var(--primary);
+                                  opacity: 0.4;
+                                  border-radius: 4px;
+                                "
+                              ></div>
+                            </div>
+                          </div>
+                          <div style="font-size: 0.8rem; font-weight: 600">
+                            Overlay
+                          </div>
+                          <div
+                            style="font-size: 0.72rem; color: var(--text-muted)"
+                          >
+                            Slide over content
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Display density -->
+                  <div class="settings-card">
+                    <div class="settings-card-title">Display Density</div>
+                    <div class="settings-card-sub">
+                      Adjust spacing between elements
+                    </div>
+                    <div class="d-flex gap-3 flex-wrap">
+                      <template x-for="d in densities" :key="d.id">
+                        <button
+                          class="btn btn-sm"
+                          :class="appearance.density===d.id ? 'btn-primary' : 'btn-outline-secondary'"
+                          @click="appearance.density=d.id"
+                          x-text="d.label"
+                        ></button>
+                      </template>
+                    </div>
+                  </div>
+                </div>
+                <!-- /appearance -->
+
+                <!-- ═══════════════════════════════════════════════
+                   INTEGRATIONS TAB
+              ════════════════════════════════════════════════════ -->
+                <div x-show="tab==='integrations'" x-transition>
+                  <div class="settings-card">
+                    <div class="settings-card-title">Connected Apps</div>
+                    <div class="settings-card-sub">
+                      Third-party services linked to your EduLearn account
+                    </div>
+
+                    <div class="connected-app">
+                      <div
+                        class="connected-app-icon"
+                        style="background: #e7f3ff"
+                      >
+                        <i class="bi bi-google" style="color: #4285f4"></i>
+                      </div>
+                      <div class="flex-grow-1">
+                        <div class="fw-600" style="font-size: 0.875rem">
+                          Google
+                        </div>
+                        <div class="text-muted" style="font-size: 0.775rem">
+                          Sign-in, Calendar sync, Drive storage
+                        </div>
+                      </div>
+                      <span
+                        class="badge bg-success bg-opacity-15 text-success me-2"
+                        style="font-size: 0.72rem"
+                        >Connected</span
+                      >
+                      <button
+                        class="btn btn-outline-danger btn-sm"
+                        onclick="disconnectApp('Google')"
+                      >
+                        Disconnect
+                      </button>
+                    </div>
+
+                    <div class="connected-app">
+                      <div
+                        class="connected-app-icon"
+                        style="background: #f0f6ff"
+                      >
+                        <i class="bi bi-github"></i>
+                      </div>
+                      <div class="flex-grow-1">
+                        <div class="fw-600" style="font-size: 0.875rem">
+                          GitHub
+                        </div>
+                        <div class="text-muted" style="font-size: 0.775rem">
+                          Portfolio projects and code submissions
+                        </div>
+                      </div>
+                      <span
+                        class="badge bg-success bg-opacity-15 text-success me-2"
+                        style="font-size: 0.72rem"
+                        >Connected</span
+                      >
+                      <button
+                        class="btn btn-outline-danger btn-sm"
+                        onclick="disconnectApp('GitHub')"
+                      >
+                        Disconnect
+                      </button>
+                    </div>
+
+                    <div class="connected-app">
+                      <div
+                        class="connected-app-icon"
+                        style="background: #e8f4ff"
+                      >
+                        <i class="bi bi-linkedin" style="color: #0077b5"></i>
+                      </div>
+                      <div class="flex-grow-1">
+                        <div class="fw-600" style="font-size: 0.875rem">
+                          LinkedIn
+                        </div>
+                        <div class="text-muted" style="font-size: 0.775rem">
+                          Share certificates directly to your profile
+                        </div>
+                      </div>
+                      <span
+                        class="badge bg-secondary bg-opacity-15 text-secondary me-2"
+                        style="font-size: 0.72rem"
+                        >Not connected</span
+                      >
+                      <button
+                        class="btn btn-outline-primary btn-sm"
+                        onclick="connectApp('LinkedIn')"
+                      >
+                        Connect
+                      </button>
+                    </div>
+
+                    <div class="connected-app">
+                      <div
+                        class="connected-app-icon"
+                        style="background: #eef2ff"
+                      >
+                        <i class="bi bi-discord" style="color: #5865f2"></i>
+                      </div>
+                      <div class="flex-grow-1">
+                        <div class="fw-600" style="font-size: 0.875rem">
+                          Discord
+                        </div>
+                        <div class="text-muted" style="font-size: 0.775rem">
+                          Course community channels and live events
+                        </div>
+                      </div>
+                      <span
+                        class="badge bg-secondary bg-opacity-15 text-secondary me-2"
+                        style="font-size: 0.72rem"
+                        >Not connected</span
+                      >
+                      <button
+                        class="btn btn-outline-primary btn-sm"
+                        onclick="connectApp('Discord')"
+                      >
+                        Connect
+                      </button>
+                    </div>
+
+                    <div class="connected-app">
+                      <div
+                        class="connected-app-icon"
+                        style="background: #fff3e0"
+                      >
+                        <i class="bi bi-zoom-in" style="color: #2d8cff"></i>
+                      </div>
+                      <div class="flex-grow-1">
+                        <div class="fw-600" style="font-size: 0.875rem">
+                          Zoom
+                        </div>
+                        <div class="text-muted" style="font-size: 0.775rem">
+                          Join live sessions directly from EduLearn
+                        </div>
+                      </div>
+                      <span
+                        class="badge bg-secondary bg-opacity-15 text-secondary me-2"
+                        style="font-size: 0.72rem"
+                        >Not connected</span
+                      >
+                      <button
+                        class="btn btn-outline-primary btn-sm"
+                        onclick="connectApp('Zoom')"
+                      >
+                        Connect
+                      </button>
+                    </div>
+                  </div>
+
+                  <!-- API -->
+                  <div class="settings-card">
+                    <div class="settings-card-title">API Access</div>
+                    <div class="settings-card-sub">
+                      Developer credentials for the EduLearn public API
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label">API Key</label>
+                      <div class="input-group">
+                        <input
+                          type="password"
+                          class="form-control"
+                          id="apiKeyInput"
+                          value="el_live_k3y_ax8mQ29zRnVqLp0wXcJv"
+                          readonly
+                        />
+                        <button
+                          class="btn btn-outline-secondary"
+                          type="button"
+                          onclick="toggleApiKey()"
+                        >
+                          <i class="bi bi-eye" id="apiKeyIcon"></i>
+                        </button>
+                        <button
+                          class="btn btn-outline-secondary"
+                          type="button"
+                          onclick="copyApiKey()"
+                        >
+                          <i class="bi bi-clipboard"></i>
+                        </button>
+                      </div>
+                    </div>
+                    <button
+                      class="btn btn-outline-warning btn-sm"
+                      onclick="regenerateApiKey()"
+                    >
+                      <i class="bi bi-arrow-clockwise me-1"></i>Regenerate Key
+                    </button>
+                  </div>
+                </div>
+                <!-- /integrations -->
+
+                <!-- ── Save button (bottom) ────────────────────── -->
+                <div class="d-flex justify-content-end mt-2 mb-3">
+                  <button class="btn btn-primary px-4" @click="saveSettings()">
+                    <i class="bi bi-check2-all me-1"></i>Save All Changes
+                  </button>
+                </div>
+              </div>
+              <!-- /col-lg-9 -->
+            </div>
+            <!-- /row -->
+          </div>
+          <!-- /container -->
+        </div>
+        <!-- /main-content -->
+      </div>
+    </div>
+
+    <!-- Recovery Codes Modal -->
+    <div class="modal fade" id="recoveryModal" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header border-0">
+            <h5 class="modal-title fw-700">
+              <i class="bi bi-key-fill me-2 text-warning"></i>Recovery Codes
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <p class="text-muted mb-3" style="font-size: 0.83rem">
+              Store these codes somewhere safe. Each code can only be used once.
+            </p>
+            <div class="row g-2">
+              <template x-for="code in recoveryCodes" :key="code">
+                <div class="col-6">
+                  <div
+                    class="p-2 rounded"
+                    style="
+                      background: var(--body-bg);
+                      border: 1px solid var(--border-color);
+                      font-family: monospace;
+                      font-size: 0.85rem;
+                      text-align: center;
+                    "
+                    x-text="code"
+                  ></div>
+                </div>
+              </template>
+            </div>
+            <button
+              class="btn btn-outline-secondary btn-sm mt-3 w-100"
+              onclick="copyRecoveryCodes()"
+            >
+              <i class="bi bi-clipboard me-1"></i>Copy All Codes
+            </button>
+          </div>
+          <div class="modal-footer border-0">
+            <button class="btn btn-outline-secondary" data-bs-dismiss="modal">
+              Close
+            </button>
+            <button class="btn btn-warning" onclick="regenerateRecoveryCodes()">
+              Regenerate Codes
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Scripts ─────────────────────────────────────────────── -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.2/Sortable.min.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
+      defer
+    ></script>
+    <script src="../assets/js/app.js"></script>
+
+    <script>
+      NProgress.configure({ showSpinner: false });
+      document.addEventListener("DOMContentLoaded", () => NProgress.start());
+      window.addEventListener("load", () => NProgress.done());
+
+      /* ── Alpine component ────────────────────────────────────────── */
+      function settingsPage() {
+        return {
+          tab: "account",
+          tabs: [
+            { id: "account", label: "Account" },
+            { id: "security", label: "Security" },
+            { id: "notifications", label: "Notifications" },
+            { id: "privacy", label: "Privacy" },
+            { id: "appearance", label: "Appearance" },
+            { id: "integrations", label: "Integrations" },
+          ],
+
+          /* ── Account ─────────────────────────────────────────── */
+          account: {
+            language: "en",
+            timezone: "UTC-5 — Eastern Time",
+            dateFormat: "MM/DD/YYYY",
+            currency: "USD — $",
+            videoQuality: "Auto",
+            playbackSpeed: "1.0×",
+            subtitleLang: "Off",
+            autoplay: true,
+            resumeVideo: true,
+            captions: false,
+            emailDigest: true,
+            emailAnnouncements: true,
+            emailDeadlines: true,
+            emailPromos: false,
+          },
+
+          /* ── Security ────────────────────────────────────────── */
+          pw: { cur: "", new: "", confirm: "" },
+          showPw: { cur: false, new: false, confirm: false },
+          pwStrength: 0,
+          pwClass: "",
+          pwLabel: "",
+          security: { totpEnabled: false, smsEnabled: false },
+          recoveryCodes: [
+            "a1b2-c3d4",
+            "e5f6-g7h8",
+            "i9j0-k1l2",
+            "m3n4-o5p6",
+            "q7r8-s9t0",
+            "u1v2-w3x4",
+            "y5z6-a7b8",
+            "c9d0-e1f2",
+          ],
+          loginHistory: [
+            {
+              id: 1,
+              device: "MacBook Pro — Chrome 122",
+              location: "New York, US",
+              time: "Now",
+              icon: "bi-laptop",
+              current: true,
+            },
+            {
+              id: 2,
+              device: "iPhone 15 — Safari",
+              location: "New York, US",
+              time: "2h ago",
+              icon: "bi-phone",
+              current: false,
+            },
+            {
+              id: 3,
+              device: "Windows PC — Firefox 121",
+              location: "Boston, US",
+              time: "3d ago",
+              icon: "bi-display",
+              current: false,
+            },
+            {
+              id: 4,
+              device: "iPad Pro — Safari",
+              location: "New York, US",
+              time: "1 week ago",
+              icon: "bi-tablet",
+              current: false,
+            },
+          ],
+          activeSessions: [
+            {
+              id: 1,
+              device: "MacBook Pro — Chrome 122",
+              location: "New York, US",
+              time: "Active now",
+              icon: "bi-laptop",
+              current: true,
+            },
+            {
+              id: 2,
+              device: "iPhone 15 — Safari",
+              location: "New York, US",
+              time: "2h ago",
+              icon: "bi-phone",
+              current: false,
+            },
+            {
+              id: 3,
+              device: "Windows PC — Firefox 121",
+              location: "Boston, US",
+              time: "3d ago",
+              icon: "bi-display",
+              current: false,
+            },
+          ],
+
+          /* ── Notifications ───────────────────────────────────── */
+          pushNotifs: [
+            {
+              id: 1,
+              label: "Assignment due reminders",
+              sub: "Notify 24h before a deadline",
+              enabled: true,
+            },
+            {
+              id: 2,
+              label: "Live session starting",
+              sub: "5 minutes before a live session begins",
+              enabled: true,
+            },
+            {
+              id: 3,
+              label: "New grade posted",
+              sub: "When an instructor grades your submission",
+              enabled: true,
+            },
+            {
+              id: 4,
+              label: "Course announcements",
+              sub: "Updates from your enrolled course instructors",
+              enabled: true,
+            },
+            {
+              id: 5,
+              label: "Forum replies",
+              sub: "When someone replies to your posts",
+              enabled: false,
+            },
+            {
+              id: 6,
+              label: "New message",
+              sub: "Direct messages from instructors or peers",
+              enabled: true,
+            },
+            {
+              id: 7,
+              label: "Weekly progress report",
+              sub: "Your learning summary every Monday morning",
+              enabled: false,
+            },
+            {
+              id: 8,
+              label: "Achievement unlocked",
+              sub: "When you earn a badge or complete a milestone",
+              enabled: true,
+            },
+          ],
+          channels: { inApp: true, email: true, sms: false },
+          notif: { quietHours: true },
+
+          /* ── Privacy ─────────────────────────────────────────── */
+          privacy: {
+            profileVisibility: "public",
+            showCourses: true,
+            showCerts: true,
+            showStreak: true,
+            leaderboard: true,
+            analytics: true,
+            personalised: true,
+            marketingCookies: false,
+          },
+          visibilityOpts: [
+            {
+              id: "public",
+              label: "Public",
+              sub: "Anyone on the internet can view your profile",
+              icon: "bi-globe2",
+              bgColor: "rgba(16,185,129,.1)",
+              color: "#10b981",
+            },
+            {
+              id: "students",
+              label: "Students Only",
+              sub: "Only registered EduLearn students can view",
+              icon: "bi-people-fill",
+              bgColor: "rgba(13,110,253,.1)",
+              color: "#0d6efd",
+            },
+            {
+              id: "private",
+              label: "Private",
+              sub: "Only you can view your profile",
+              icon: "bi-lock-fill",
+              bgColor: "rgba(239,68,68,.1)",
+              color: "#ef4444",
+            },
+          ],
+
+          /* ── Appearance ──────────────────────────────────────── */
+          appearance: {
+            theme: "light",
+            accent: "blue",
+            fontSize: 14,
+            sidebarLayout: "fixed",
+            density: "comfortable",
+          },
+          accentColors: [
+            { id: "blue", name: "Ocean Blue", hex: "#0d6efd" },
+            { id: "violet", name: "Violet", hex: "#6610f2" },
+            { id: "indigo", name: "Indigo", hex: "#6366f1" },
+            { id: "green", name: "Emerald", hex: "#10b981" },
+            { id: "teal", name: "Teal", hex: "#0d9488" },
+            { id: "amber", name: "Amber", hex: "#f59e0b" },
+            { id: "red", name: "Rose", hex: "#ef4444" },
+            { id: "pink", name: "Pink", hex: "#ec4899" },
+            { id: "gray", name: "Slate", hex: "#64748b" },
+          ],
+          densities: [
+            { id: "compact", label: "Compact" },
+            { id: "comfortable", label: "Comfortable" },
+            { id: "spacious", label: "Spacious" },
+          ],
+
+          /* ── Methods ─────────────────────────────────────────── */
+          saveSettings() {
+            window.lmsNotify.success("Settings saved successfully!");
+          },
+
+          calcStrength() {
+            const p = this.pw.new;
+            let s = 0;
+            if (p.length >= 8) s++;
+            if (/[A-Z]/.test(p)) s++;
+            if (/[0-9]/.test(p)) s++;
+            if (/[^A-Za-z0-9]/.test(p)) s++;
+            this.pwStrength = s;
+            this.pwClass = s <= 1 ? "weak" : s === 2 ? "moderate" : "strong";
+            this.pwLabel =
+              ["", "Weak", "Moderate", "Strong", "Very Strong"][s] || "";
+          },
+
+          changePassword() {
+            if (!this.pw.cur) {
+              window.lmsNotify.error("Enter your current password.");
+              return;
+            }
+            if (this.pw.new.length < 8) {
+              window.lmsNotify.error("Password must be at least 8 characters.");
+              return;
+            }
+            if (this.pw.new !== this.pw.confirm) {
+              window.lmsNotify.error("Passwords do not match.");
+              return;
+            }
+            this.pw = { cur: "", new: "", confirm: "" };
+            this.pwStrength = 0;
+            window.lmsNotify.success("Password updated successfully!");
+          },
+
+          toastToggle(label, state) {
+            window.lmsNotify.success(
+              `${label} ${state ? "enabled" : "disabled"}.`,
+            );
+          },
+
+          revokeSession(s) {
+            window
+              .lmsConfirm({
+                title: "Revoke Session?",
+                text: `"${s.device}" will be logged out.`,
+                icon: "warning",
+                confirmButtonText: "Revoke",
+                confirmButtonColor: "#ef4444",
+              })
+              .then((r) => {
+                if (r.isConfirmed) {
+                  this.activeSessions = this.activeSessions.filter(
+                    (x) => x.id !== s.id,
+                  );
+                  window.lmsNotify.success("Session revoked.");
+                }
+              });
+          },
+
+          revokeAll() {
+            window
+              .lmsConfirm({
+                title: "Revoke All Other Sessions?",
+                text: "All other devices will be logged out.",
+                icon: "warning",
+                confirmButtonText: "Revoke All",
+                confirmButtonColor: "#ef4444",
+              })
+              .then((r) => {
+                if (r.isConfirmed) {
+                  this.activeSessions = this.activeSessions.filter(
+                    (x) => x.current,
+                  );
+                  window.lmsNotify.success("All other sessions revoked.");
+                }
+              });
+          },
+
+          setTheme(t) {
+            // piggyback on the existing themeToggle Alpine component via dark property
+            if (t === "dark") this.dark = true;
+            if (t === "light") this.dark = false;
+            if (t === "auto")
+              this.dark = window.matchMedia(
+                "(prefers-color-scheme: dark)",
+              ).matches;
+            window.lmsNotify.success(
+              `Theme switched to ${t.charAt(0).toUpperCase() + t.slice(1)}.`,
+            );
+          },
+        };
+      }
+
+      /* ── Global helpers ──────────────────────────────────────────── */
+      function showRecoveryCodes() {
+        new bootstrap.Modal(document.getElementById("recoveryModal")).show();
+      }
+      function copyRecoveryCodes() {
+        window.lmsNotify.success("Recovery codes copied!");
+      }
+      function regenerateRecoveryCodes() {
+        window.lmsNotify.success("New recovery codes generated.");
+        bootstrap.Modal.getInstance(
+          document.getElementById("recoveryModal"),
+        )?.hide();
+      }
+
+      function requestDataExport() {
+        window.lmsNotify.success(
+          "Data export requested. You will receive an email shortly.",
+        );
+      }
+      function viewPrivacyPolicy() {
+        window.lmsNotify.success("Opening Privacy Policy…");
+      }
+      function viewCookiePolicy() {
+        window.lmsNotify.success("Opening Cookie Policy…");
+      }
+
+      function disconnectApp(name) {
+        window
+          .lmsConfirm({
+            title: `Disconnect ${name}?`,
+            text: `${name} will no longer have access to your account.`,
+            icon: "warning",
+            confirmButtonText: "Disconnect",
+            confirmButtonColor: "#ef4444",
+          })
+          .then((r) => {
+            if (r.isConfirmed)
+              window.lmsNotify.success(`${name} disconnected.`);
+          });
+      }
+      function connectApp(name) {
+        window.lmsNotify.success(`Redirecting to ${name} OAuth…`);
+      }
+
+      let apiKeyVisible = false;
+      function toggleApiKey() {
+        const inp = document.getElementById("apiKeyInput");
+        const ico = document.getElementById("apiKeyIcon");
+        apiKeyVisible = !apiKeyVisible;
+        inp.type = apiKeyVisible ? "text" : "password";
+        ico.className = apiKeyVisible ? "bi bi-eye-slash" : "bi bi-eye";
+      }
+      function copyApiKey() {
+        const val = document.getElementById("apiKeyInput").value;
+        navigator.clipboard
+          .writeText(val)
+          .then(() => window.lmsNotify.success("API key copied!"))
+          .catch(() => window.lmsNotify.error("Copy failed."));
+      }
+      function regenerateApiKey() {
+        window
+          .lmsConfirm({
+            title: "Regenerate API Key?",
+            text: "Your current key will stop working immediately.",
+            icon: "warning",
+            confirmButtonText: "Regenerate",
+            confirmButtonColor: "#ef4444",
+          })
+          .then((r) => {
+            if (r.isConfirmed)
+              window.lmsNotify.success("New API key generated.");
+          });
+      }
+
+      /* ── SortableJS for notification priority ────────────────────── */
+      document.addEventListener("DOMContentLoaded", () => {
+        const list = document.getElementById("notifSortList");
+        if (list) {
+          Sortable.create(list, {
+            animation: 150,
+            handle: ".drag-handle",
+            ghostClass: "sortable-ghost",
+            onEnd() {
+              window.lmsNotify.success("Notification priority updated.");
+            },
+          });
+        }
+
+        /* Flatpickr time pickers */
+        flatpickr("#reminderTime", {
+          enableTime: true,
+          noCalendar: true,
+          dateFormat: "h:i K",
+          defaultDate: "09:00",
+        });
+        flatpickr("#quietFrom", {
+          enableTime: true,
+          noCalendar: true,
+          dateFormat: "h:i K",
+          defaultDate: "22:00",
+        });
+        flatpickr("#quietTo", {
+          enableTime: true,
+          noCalendar: true,
+          dateFormat: "h:i K",
+          defaultDate: "08:00",
+        });
+      });
+
+      /* ── Load sidebar + navbar ───────────────────────────────────── */
+      document.addEventListener("DOMContentLoaded", () => {
+        fetch("../components/student-sidebar.html")
+          .then((r) => r.text())
+          .then((html) => {
+            const el = document.getElementById("sidebar-placeholder");
+            el.innerHTML = html;
+            Alpine.initTree(el);
+            el.querySelectorAll(".sidebar-nav-item").forEach((it) => {
+              it.classList.remove("active");
+              if (it.querySelector("a")?.href.includes("settings"))
+                it.classList.add("active");
+            });
+          });
+
+        fetch("../components/student-navbar.html")
+          .then((r) => r.text())
+          .then((html) => {
+            const el = document.getElementById("navbar-placeholder");
+            el.innerHTML = html;
+            Alpine.initTree(el);
+            const t = document.getElementById("navbarPageTitle");
+            const b = document.getElementById("navbarBreadcrumbCurrent");
+            if (t) t.textContent = "Settings";
+            if (b) b.textContent = "Settings";
+          });
+      });
+    </script>
+  </body>
+</html>

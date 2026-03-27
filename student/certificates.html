@@ -1,0 +1,1467 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Certificates — EduLearn Student</title>
+
+    <!-- Bootstrap 5.3 -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    />
+    <!-- Bootstrap Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css"
+    />
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap"
+      rel="stylesheet"
+    />
+    <!-- NProgress -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.css"
+    />
+    <!-- Notyf -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css"
+    />
+    <!-- Theme -->
+    <link rel="stylesheet" href="../assets/css/theme.css" />
+
+    <style>
+      body {
+        font-family: "Poppins", sans-serif;
+        background: var(--body-bg);
+        color: var(--body-color);
+      }
+      @media (max-width: 991px) {
+        #main-content {
+          margin-left: 0 !important;
+        }
+      }
+
+      /* ── Stats bar ──────────────────────────────────────────── */
+      .stat-card {
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 14px;
+        padding: 20px 24px;
+        display: flex;
+        align-items: center;
+        gap: 16px;
+      }
+      .stat-icon {
+        width: 48px;
+        height: 48px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.3rem;
+        flex-shrink: 0;
+      }
+      .stat-val {
+        font-size: 1.6rem;
+        font-weight: 800;
+        line-height: 1;
+      }
+      .stat-lbl {
+        font-size: 0.75rem;
+        color: var(--text-muted);
+        margin-top: 3px;
+      }
+
+      /* ── Filter bar ─────────────────────────────────────────── */
+      .filter-bar {
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 12px;
+        padding: 14px 18px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        align-items: center;
+      }
+      .filter-search {
+        flex: 1;
+        min-width: 200px;
+        background: var(--body-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        padding: 8px 14px 8px 38px;
+        color: var(--body-color);
+        font-size: 0.85rem;
+        font-family: "Poppins", sans-serif;
+        outline: none;
+        transition: border-color 0.2s;
+      }
+      .filter-search:focus {
+        border-color: var(--primary);
+      }
+      .filter-search-wrap {
+        position: relative;
+        flex: 1;
+        min-width: 200px;
+      }
+      .filter-search-wrap i {
+        position: absolute;
+        left: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--text-muted);
+        font-size: 0.9rem;
+        pointer-events: none;
+      }
+      .filter-btn {
+        background: var(--body-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        padding: 7px 14px;
+        color: var(--body-color);
+        font-size: 0.82rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.15s;
+        white-space: nowrap;
+      }
+      .filter-btn:hover,
+      .filter-btn.active {
+        background: var(--primary);
+        border-color: var(--primary);
+        color: #fff;
+      }
+      .view-toggle button {
+        background: var(--body-bg);
+        border: 1px solid var(--border-color);
+        color: var(--text-muted);
+        padding: 7px 10px;
+        font-size: 0.9rem;
+        transition: all 0.15s;
+        cursor: pointer;
+      }
+      .view-toggle button:first-child {
+        border-radius: 8px 0 0 8px;
+      }
+      .view-toggle button:last-child {
+        border-radius: 0 8px 8px 0;
+      }
+      .view-toggle button.active {
+        background: var(--primary);
+        border-color: var(--primary);
+        color: #fff;
+      }
+
+      /* ── Certificate Card ───────────────────────────────────── */
+      .cert-card {
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 16px;
+        overflow: hidden;
+        transition:
+          transform 0.2s,
+          box-shadow 0.2s;
+      }
+      .cert-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+      }
+
+      .cert-thumbnail {
+        position: relative;
+        overflow: hidden;
+        background: linear-gradient(135deg, #0d6efd 0%, #6610f2 100%);
+        padding: 28px 22px;
+        cursor: pointer;
+      }
+      .cert-thumbnail::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      }
+      .cert-badge-icon {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(4px);
+        border: 2px solid rgba(255, 255, 255, 0.4);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.6rem;
+        margin-bottom: 12px;
+      }
+      .cert-course-name {
+        font-size: 0.95rem;
+        font-weight: 700;
+        color: #fff;
+        line-height: 1.3;
+        margin-bottom: 4px;
+      }
+      .cert-issuer {
+        font-size: 0.75rem;
+        color: rgba(255, 255, 255, 0.75);
+      }
+      .cert-ribbon {
+        position: absolute;
+        top: 14px;
+        right: -22px;
+        background: #ffd700;
+        color: #000;
+        font-size: 0.65rem;
+        font-weight: 700;
+        padding: 3px 32px;
+        transform: rotate(45deg);
+        letter-spacing: 0.04em;
+      }
+      .cert-hover-overlay {
+        position: absolute;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.45);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transition: opacity 0.2s;
+      }
+      .cert-thumbnail:hover .cert-hover-overlay {
+        opacity: 1;
+      }
+
+      .cert-body {
+        padding: 16px 18px;
+      }
+      .cert-meta {
+        font-size: 0.75rem;
+        color: var(--text-muted);
+      }
+      .cert-id {
+        font-size: 0.7rem;
+        font-family: monospace;
+        background: var(--body-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 5px;
+        padding: 2px 7px;
+        color: var(--text-muted);
+      }
+
+      /* ── List view ──────────────────────────────────────────── */
+      .cert-list-item {
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 12px;
+        padding: 16px 20px;
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        margin-bottom: 10px;
+        transition: box-shadow 0.15s;
+      }
+      .cert-list-item:hover {
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+      }
+      .cert-list-thumb {
+        width: 64px;
+        height: 64px;
+        border-radius: 10px;
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+      }
+      .cert-list-info {
+        flex: 1;
+        min-width: 0;
+      }
+      .cert-list-actions {
+        display: flex;
+        gap: 8px;
+        flex-shrink: 0;
+      }
+
+      /* ── In-progress card ───────────────────────────────────── */
+      .cert-inprogress-card {
+        background: var(--card-bg);
+        border: 1px dashed var(--border-color);
+        border-radius: 16px;
+        overflow: hidden;
+        opacity: 0.75;
+      }
+      .cert-inprogress-thumb {
+        background: var(--body-bg);
+        padding: 28px 22px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        min-height: 140px;
+      }
+
+      /* ── Certificate preview (modal) ────────────────────────── */
+      .cert-preview-bg {
+        background: linear-gradient(135deg, #0d6efd 0%, #6610f2 100%);
+        border-radius: 12px;
+        padding: 40px 36px;
+        position: relative;
+        overflow: hidden;
+        color: #fff;
+        font-family: "Poppins", sans-serif;
+        min-height: 420px;
+      }
+      .cert-preview-bg::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M0 0h80v80H0z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      }
+      .cert-preview-border {
+        position: absolute;
+        inset: 12px;
+        border: 2px solid rgba(255, 255, 255, 0.2);
+        border-radius: 8px;
+        pointer-events: none;
+      }
+      .cert-preview-inner {
+        position: relative;
+        z-index: 1;
+      }
+      .cert-watermark {
+        position: absolute;
+        bottom: -10px;
+        right: -10px;
+        font-size: 7rem;
+        opacity: 0.04;
+        line-height: 1;
+        font-weight: 800;
+        pointer-events: none;
+        user-select: none;
+      }
+      .cert-preview-title {
+        font-family: "Playfair Display", serif;
+        font-size: 1.8rem;
+        font-weight: 800;
+        letter-spacing: 0.02em;
+        margin-bottom: 6px;
+      }
+      .cert-preview-subtitle {
+        font-size: 0.85rem;
+        opacity: 0.8;
+        margin-bottom: 28px;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+      }
+      .cert-preview-student {
+        font-family: "Playfair Display", serif;
+        font-size: 2.2rem;
+        font-weight: 700;
+        border-bottom: 2px solid rgba(255, 255, 255, 0.4);
+        padding-bottom: 8px;
+        margin-bottom: 10px;
+      }
+      .cert-preview-course-name {
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin-bottom: 4px;
+      }
+      .cert-preview-meta {
+        font-size: 0.78rem;
+        opacity: 0.75;
+      }
+      .cert-preview-seal {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(8px);
+        border: 3px solid rgba(255, 255, 255, 0.5);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2.2rem;
+        flex-shrink: 0;
+      }
+      .cert-preview-sig {
+        font-family: "Playfair Display", serif;
+        font-size: 1rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.4);
+        padding-top: 6px;
+        margin-top: 6px;
+      }
+      .cert-preview-sig-sub {
+        font-size: 0.72rem;
+        opacity: 0.65;
+        letter-spacing: 0.04em;
+      }
+
+      /* ── Empty state ────────────────────────────────────────── */
+      .empty-state {
+        text-align: center;
+        padding: 60px 20px;
+        color: var(--text-muted);
+      }
+      .empty-state-icon {
+        font-size: 4rem;
+        margin-bottom: 12px;
+        opacity: 0.3;
+      }
+
+      /* ── Share modal ────────────────────────────────────────── */
+      .share-link-input {
+        background: var(--body-bg);
+        border: 1px solid var(--border-color);
+        color: var(--body-color);
+        border-radius: 8px 0 0 8px;
+        font-size: 0.83rem;
+        font-family: monospace;
+      }
+      .social-share-btn {
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.1rem;
+        text-decoration: none;
+        transition: transform 0.15s;
+      }
+      .social-share-btn:hover {
+        transform: scale(1.1);
+      }
+
+      /* Modal theming */
+      .modal-content {
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 16px;
+      }
+      .modal-header,
+      .modal-footer {
+        border-color: var(--border-color);
+      }
+      .form-control,
+      .form-select {
+        background: var(--body-bg);
+        border-color: var(--border-color);
+        color: var(--body-color);
+      }
+      .form-control:focus,
+      .form-select:focus {
+        background: var(--body-bg);
+        border-color: var(--primary);
+        color: var(--body-color);
+        box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.15);
+      }
+    </style>
+  </head>
+
+  <body x-data="themeToggle()" :data-theme="dark ? 'dark' : 'light'">
+    <div
+      id="layout-wrapper"
+      x-data="sidebarState()"
+      style="display: flex; min-height: 100vh"
+    >
+      <div id="sidebar-placeholder"></div>
+      <div style="flex: 1; display: flex; flex-direction: column; min-width: 0">
+        <div id="navbar-placeholder"></div>
+
+        <div
+          id="main-content"
+          :style="'margin-left:' + (collapsed ? 'var(--sidebar-collapsed)' : 'var(--sidebar-width)')"
+          style="
+            transition: margin-left 0.25s ease;
+            padding-top: var(--navbar-height);
+          "
+        >
+          <div class="container-fluid px-4 py-4" x-data="certPage()">
+            <!-- ── Page header ─────────────────────────────────── -->
+            <div
+              class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-4"
+            >
+              <div>
+                <h4 class="fw-700 mb-1">My Certificates</h4>
+                <p class="text-muted mb-0" style="font-size: 0.85rem">
+                  Your earned achievements and credentials
+                </p>
+              </div>
+              <div class="d-flex gap-2">
+                <button
+                  class="btn btn-outline-secondary btn-sm"
+                  @click="shareAll()"
+                >
+                  <i class="bi bi-share me-1"></i>Share Portfolio
+                </button>
+                <button class="btn btn-primary btn-sm" @click="downloadAll()">
+                  <i class="bi bi-download me-1"></i>Download All
+                </button>
+              </div>
+            </div>
+
+            <!-- ── Stats row ──────────────────────────────────── -->
+            <div class="row g-3 mb-4">
+              <div class="col-6 col-xl-3">
+                <div class="stat-card">
+                  <div
+                    class="stat-icon"
+                    style="
+                      background: rgba(13, 110, 253, 0.12);
+                      color: var(--primary);
+                    "
+                  >
+                    <i class="bi bi-patch-check-fill"></i>
+                  </div>
+                  <div>
+                    <div class="stat-val" style="color: var(--primary)">6</div>
+                    <div class="stat-lbl">Total Earned</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-6 col-xl-3">
+                <div class="stat-card">
+                  <div
+                    class="stat-icon"
+                    style="background: rgba(16, 185, 129, 0.12); color: #10b981"
+                  >
+                    <i class="bi bi-calendar-check-fill"></i>
+                  </div>
+                  <div>
+                    <div class="stat-val" style="color: #10b981">3</div>
+                    <div class="stat-lbl">This Year</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-6 col-xl-3">
+                <div class="stat-card">
+                  <div
+                    class="stat-icon"
+                    style="background: rgba(245, 158, 11, 0.12); color: #f59e0b"
+                  >
+                    <i class="bi bi-hourglass-split"></i>
+                  </div>
+                  <div>
+                    <div class="stat-val" style="color: #f59e0b">2</div>
+                    <div class="stat-lbl">In Progress</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-6 col-xl-3">
+                <div class="stat-card">
+                  <div
+                    class="stat-icon"
+                    style="background: rgba(139, 92, 246, 0.12); color: #8b5cf6"
+                  >
+                    <i class="bi bi-share-fill"></i>
+                  </div>
+                  <div>
+                    <div class="stat-val" style="color: #8b5cf6">18</div>
+                    <div class="stat-lbl">Profile Views</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- ── Filter bar ─────────────────────────────────── -->
+            <div class="filter-bar mb-4">
+              <div class="filter-search-wrap">
+                <i class="bi bi-search"></i>
+                <input
+                  type="text"
+                  class="filter-search"
+                  placeholder="Search certificates…"
+                  x-model="search"
+                />
+              </div>
+              <div class="d-flex gap-2 flex-wrap">
+                <button
+                  class="filter-btn"
+                  :class="{active: filter==='all'}"
+                  @click="filter='all'"
+                >
+                  All
+                </button>
+                <button
+                  class="filter-btn"
+                  :class="{active: filter==='2026'}"
+                  @click="filter='2026'"
+                >
+                  2026
+                </button>
+                <button
+                  class="filter-btn"
+                  :class="{active: filter==='2025'}"
+                  @click="filter='2025'"
+                >
+                  2025
+                </button>
+                <button
+                  class="filter-btn"
+                  :class="{active: filter==='2024'}"
+                  @click="filter='2024'"
+                >
+                  2024
+                </button>
+              </div>
+              <div class="view-toggle ms-auto">
+                <button
+                  :class="{active: view==='grid'}"
+                  @click="view='grid'"
+                  title="Grid view"
+                >
+                  <i class="bi bi-grid-3x3-gap-fill"></i>
+                </button>
+                <button
+                  :class="{active: view==='list'}"
+                  @click="view='list'"
+                  title="List view"
+                >
+                  <i class="bi bi-list-ul"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- ── Earned heading ─────────────────────────────── -->
+            <div class="d-flex align-items-center gap-2 mb-3">
+              <i class="bi bi-patch-check-fill text-primary"></i>
+              <span class="fw-700" style="font-size: 0.95rem"
+                >Earned Certificates</span
+              >
+              <span
+                class="badge bg-primary bg-opacity-15 text-primary"
+                x-text="filteredCerts.length"
+              ></span>
+            </div>
+
+            <!-- ── GRID VIEW ──────────────────────────────────── -->
+            <div x-show="view==='grid'" x-transition>
+              <div class="row g-3 mb-4">
+                <template x-for="cert in filteredCerts" :key="cert.id">
+                  <div class="col-sm-6 col-lg-4 col-xl-3">
+                    <div class="cert-card">
+                      <!-- Thumbnail -->
+                      <div
+                        class="cert-thumbnail"
+                        @click="previewCert(cert)"
+                        :style="'background: linear-gradient(135deg,' + cert.color1 + ' 0%,' + cert.color2 + ' 100%);'"
+                      >
+                        <!-- Ribbon -->
+                        <div class="cert-ribbon" x-text="cert.year"></div>
+                        <!-- Badge icon -->
+                        <div class="cert-badge-icon" x-text="cert.emoji"></div>
+                        <!-- Course name -->
+                        <div
+                          class="cert-course-name"
+                          x-text="cert.course"
+                        ></div>
+                        <div class="cert-issuer">
+                          <i class="bi bi-building me-1"></i>EduLearn Academy
+                        </div>
+                        <!-- Hover overlay -->
+                        <div class="cert-hover-overlay">
+                          <span class="btn btn-light btn-sm"
+                            ><i class="bi bi-eye me-1"></i>Preview</span
+                          >
+                        </div>
+                      </div>
+                      <!-- Body -->
+                      <div class="cert-body">
+                        <div
+                          class="d-flex align-items-center justify-content-between mb-2"
+                        >
+                          <span
+                            class="badge rounded-pill"
+                            :style="'background:' + cert.color1 + '22; color:' + cert.color1 + '; font-size:.7rem;'"
+                            x-text="cert.category"
+                          ></span>
+                          <div class="cert-id" x-text="'#' + cert.id"></div>
+                        </div>
+                        <div
+                          class="fw-600 mb-1"
+                          style="font-size: 0.85rem; line-height: 1.3"
+                          x-text="cert.course"
+                        ></div>
+                        <div class="cert-meta mb-1">
+                          <i class="bi bi-person me-1"></i
+                          ><span x-text="cert.instructor"></span>
+                        </div>
+                        <div class="cert-meta mb-3">
+                          <i class="bi bi-calendar3 me-1"></i>
+                          <span x-text="'Completed ' + cert.date"></span>
+                        </div>
+                        <!-- Action buttons -->
+                        <div class="d-flex gap-2">
+                          <button
+                            class="btn btn-primary btn-sm flex-grow-1"
+                            @click="downloadCert(cert)"
+                          >
+                            <i class="bi bi-download me-1"></i>Download
+                          </button>
+                          <button
+                            class="btn btn-outline-secondary btn-sm"
+                            @click="shareCert(cert)"
+                            title="Share"
+                          >
+                            <i class="bi bi-share"></i>
+                          </button>
+                          <button
+                            class="btn btn-outline-secondary btn-sm"
+                            @click="previewCert(cert)"
+                            title="Preview"
+                          >
+                            <i class="bi bi-eye"></i>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </template>
+
+                <!-- Empty state -->
+                <div x-show="filteredCerts.length === 0" class="col-12">
+                  <div class="empty-state">
+                    <div class="empty-state-icon">
+                      <i class="bi bi-patch-check"></i>
+                    </div>
+                    <h5 class="fw-600">No certificates found</h5>
+                    <p class="text-muted" style="font-size: 0.85rem">
+                      Try adjusting your filters or search query.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- ── LIST VIEW ──────────────────────────────────── -->
+            <div x-show="view==='list'" x-transition>
+              <div class="mb-4">
+                <template x-for="cert in filteredCerts" :key="cert.id">
+                  <div class="cert-list-item">
+                    <div
+                      class="cert-list-thumb"
+                      :style="'background: linear-gradient(135deg,' + cert.color1 + ' 0%,' + cert.color2 + ' 100%);'"
+                      x-text="cert.emoji"
+                    ></div>
+                    <div class="cert-list-info">
+                      <div
+                        class="fw-600 mb-1"
+                        style="font-size: 0.9rem"
+                        x-text="cert.course"
+                      ></div>
+                      <div
+                        class="d-flex flex-wrap gap-3"
+                        style="font-size: 0.78rem; color: var(--text-muted)"
+                      >
+                        <span
+                          ><i class="bi bi-person me-1"></i
+                          ><span x-text="cert.instructor"></span
+                        ></span>
+                        <span
+                          ><i class="bi bi-calendar3 me-1"></i
+                          ><span x-text="cert.date"></span
+                        ></span>
+                        <span
+                          ><i class="bi bi-hash me-1"></i
+                          ><span x-text="cert.id"></span
+                        ></span>
+                      </div>
+                    </div>
+                    <div class="d-none d-md-block">
+                      <span
+                        class="badge rounded-pill"
+                        :style="'background:' + cert.color1 + '22; color:' + cert.color1 + '; font-size:.72rem;'"
+                        x-text="cert.category"
+                      ></span>
+                    </div>
+                    <div class="cert-list-actions">
+                      <button
+                        class="btn btn-outline-secondary btn-sm"
+                        @click="previewCert(cert)"
+                        title="Preview"
+                      >
+                        <i class="bi bi-eye"></i>
+                      </button>
+                      <button
+                        class="btn btn-outline-secondary btn-sm"
+                        @click="shareCert(cert)"
+                        title="Share"
+                      >
+                        <i class="bi bi-share"></i>
+                      </button>
+                      <button
+                        class="btn btn-primary btn-sm"
+                        @click="downloadCert(cert)"
+                      >
+                        <i class="bi bi-download me-1"></i>Download
+                      </button>
+                    </div>
+                  </div>
+                </template>
+                <div x-show="filteredCerts.length === 0">
+                  <div class="empty-state">
+                    <div class="empty-state-icon">
+                      <i class="bi bi-patch-check"></i>
+                    </div>
+                    <h5 class="fw-600">No certificates found</h5>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- ── IN PROGRESS section ────────────────────────── -->
+            <div class="d-flex align-items-center gap-2 mb-3 mt-2">
+              <i class="bi bi-hourglass-split text-warning"></i>
+              <span class="fw-700" style="font-size: 0.95rem">In Progress</span>
+              <span class="badge bg-warning bg-opacity-20 text-warning">2</span>
+            </div>
+            <div class="row g-3 mb-4">
+              <template x-for="prog in inProgressCerts" :key="prog.id">
+                <div class="col-sm-6 col-lg-4 col-xl-3">
+                  <div class="cert-inprogress-card">
+                    <div class="cert-inprogress-thumb">
+                      <div
+                        class="text-muted"
+                        style="font-size: 2.5rem"
+                        x-text="prog.emoji"
+                      ></div>
+                      <div
+                        class="mt-2 fw-600"
+                        style="font-size: 0.85rem"
+                        x-text="prog.course"
+                      ></div>
+                    </div>
+                    <div class="cert-body">
+                      <div
+                        class="d-flex justify-content-between align-items-center mb-1"
+                      >
+                        <span style="font-size: 0.78rem; font-weight: 600"
+                          >Progress</span
+                        >
+                        <span
+                          style="
+                            font-size: 0.78rem;
+                            color: var(--primary);
+                            font-weight: 700;
+                          "
+                          x-text="prog.progress + '%'"
+                        ></span>
+                      </div>
+                      <div
+                        style="
+                          background: var(--border-color);
+                          border-radius: 8px;
+                          height: 6px;
+                          overflow: hidden;
+                        "
+                      >
+                        <div
+                          style="
+                            height: 100%;
+                            border-radius: 8px;
+                            background: linear-gradient(
+                              90deg,
+                              #f59e0b,
+                              #ef4444
+                            );
+                            transition: width 0.5s;
+                          "
+                          :style="'width:' + prog.progress + '%'"
+                        ></div>
+                      </div>
+                      <div class="text-muted mt-2" style="font-size: 0.75rem">
+                        <i class="bi bi-collection me-1"></i>
+                        <span
+                          x-text="prog.lessonsLeft + ' lessons remaining'"
+                        ></span>
+                      </div>
+                      <a
+                        href="./my-courses.html"
+                        class="btn btn-outline-warning btn-sm w-100 mt-3"
+                        style="font-size: 0.8rem"
+                      >
+                        <i class="bi bi-play-fill me-1"></i>Continue Learning
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </template>
+            </div>
+
+            <!-- ── How it works ───────────────────────────────── -->
+            <div
+              class="section-card mt-2 mb-4"
+              style="
+                background: var(--card-bg);
+                border: 1px solid var(--border-color);
+                border-radius: 14px;
+                padding: 24px;
+              "
+            >
+              <div class="fw-700 mb-1" style="font-size: 0.95rem">
+                How Certificates Work
+              </div>
+              <div class="text-muted mb-3" style="font-size: 0.8rem">
+                Complete any course to earn a verifiable certificate
+              </div>
+              <div class="row g-3">
+                <div class="col-md-4">
+                  <div class="d-flex gap-3">
+                    <div
+                      style="
+                        width: 36px;
+                        height: 36px;
+                        background: rgba(13, 110, 253, 0.1);
+                        color: var(--primary);
+                        border-radius: 10px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        font-weight: 800;
+                        font-size: 0.9rem;
+                        flex-shrink: 0;
+                      "
+                    >
+                      1
+                    </div>
+                    <div>
+                      <div class="fw-600" style="font-size: 0.85rem">
+                        Complete the Course
+                      </div>
+                      <div class="text-muted" style="font-size: 0.78rem">
+                        Finish all lessons and pass required assessments.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="d-flex gap-3">
+                    <div
+                      style="
+                        width: 36px;
+                        height: 36px;
+                        background: rgba(16, 185, 129, 0.1);
+                        color: #10b981;
+                        border-radius: 10px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        font-weight: 800;
+                        font-size: 0.9rem;
+                        flex-shrink: 0;
+                      "
+                    >
+                      2
+                    </div>
+                    <div>
+                      <div class="fw-600" style="font-size: 0.85rem">
+                        Certificate Generated
+                      </div>
+                      <div class="text-muted" style="font-size: 0.78rem">
+                        Your certificate is auto-generated with a unique ID.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="d-flex gap-3">
+                    <div
+                      style="
+                        width: 36px;
+                        height: 36px;
+                        background: rgba(139, 92, 246, 0.1);
+                        color: #8b5cf6;
+                        border-radius: 10px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        font-weight: 800;
+                        font-size: 0.9rem;
+                        flex-shrink: 0;
+                      "
+                    >
+                      3
+                    </div>
+                    <div>
+                      <div class="fw-600" style="font-size: 0.85rem">
+                        Share & Download
+                      </div>
+                      <div class="text-muted" style="font-size: 0.78rem">
+                        Download PDF or share the verification link anywhere.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- /container -->
+        </div>
+        <!-- /main-content -->
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════════
+       CERTIFICATE PREVIEW MODAL
+  ══════════════════════════════════════════════════════════════ -->
+    <div class="modal fade" id="previewModal" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+          <div class="modal-header border-0 pb-0">
+            <h5 class="modal-title fw-700">Certificate Preview</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+            ></button>
+          </div>
+          <div class="modal-body" id="previewModalBody">
+            <!-- injected by JS -->
+          </div>
+          <div class="modal-footer border-0 pt-0">
+            <button class="btn btn-outline-secondary" data-bs-dismiss="modal">
+              Close
+            </button>
+            <button class="btn btn-outline-secondary" id="previewShareBtn">
+              <i class="bi bi-share me-1"></i>Share
+            </button>
+            <button class="btn btn-primary" id="previewDownloadBtn">
+              <i class="bi bi-download me-1"></i>Download PDF
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════════
+       SHARE MODAL
+  ══════════════════════════════════════════════════════════════ -->
+    <div class="modal fade" id="shareModal" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header border-0">
+            <h5 class="modal-title fw-700">Share Certificate</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <p
+              class="text-muted mb-3"
+              style="font-size: 0.85rem"
+              id="shareModalSubtitle"
+            >
+              Share your achievement with the world!
+            </p>
+
+            <!-- Verification link -->
+            <label
+              class="form-label"
+              style="font-size: 0.82rem; font-weight: 600"
+              >Verification Link</label
+            >
+            <div class="input-group mb-4">
+              <input
+                type="text"
+                class="form-control share-link-input"
+                id="shareLinkInput"
+                readonly
+              />
+              <button
+                class="btn btn-outline-secondary"
+                type="button"
+                id="copyLinkBtn"
+              >
+                <i class="bi bi-clipboard me-1"></i>Copy
+              </button>
+            </div>
+
+            <!-- Social share -->
+            <label
+              class="form-label"
+              style="font-size: 0.82rem; font-weight: 600; display: block"
+              >Share on Social</label
+            >
+            <div class="d-flex gap-3 mt-2 flex-wrap">
+              <a
+                href="#"
+                class="social-share-btn"
+                style="background: #0077b5; color: #fff"
+                title="LinkedIn"
+                onclick="shareSocial('linkedin')"
+              >
+                <i class="bi bi-linkedin"></i>
+              </a>
+              <a
+                href="#"
+                class="social-share-btn"
+                style="background: #1da1f2; color: #fff"
+                title="Twitter"
+                onclick="shareSocial('twitter')"
+              >
+                <i class="bi bi-twitter-x"></i>
+              </a>
+              <a
+                href="#"
+                class="social-share-btn"
+                style="background: #4267b2; color: #fff"
+                title="Facebook"
+                onclick="shareSocial('facebook')"
+              >
+                <i class="bi bi-facebook"></i>
+              </a>
+              <a
+                href="#"
+                class="social-share-btn"
+                style="background: #25d366; color: #fff"
+                title="WhatsApp"
+                onclick="shareSocial('whatsapp')"
+              >
+                <i class="bi bi-whatsapp"></i>
+              </a>
+              <a
+                href="#"
+                class="social-share-btn"
+                style="
+                  background: var(--body-bg);
+                  color: var(--body-color);
+                  border: 1px solid var(--border-color);
+                "
+                title="Email"
+                onclick="shareSocial('email')"
+              >
+                <i class="bi bi-envelope-fill"></i>
+              </a>
+            </div>
+
+            <!-- LinkedIn badge -->
+            <div
+              class="mt-4 p-3 rounded-3"
+              style="
+                background: var(--body-bg);
+                border: 1px solid var(--border-color);
+              "
+            >
+              <div class="d-flex align-items-center gap-3">
+                <i
+                  class="bi bi-linkedin"
+                  style="color: #0077b5; font-size: 1.5rem"
+                ></i>
+                <div>
+                  <div class="fw-600" style="font-size: 0.85rem">
+                    Add to LinkedIn Profile
+                  </div>
+                  <div class="text-muted" style="font-size: 0.78rem">
+                    Display this credential on your LinkedIn profile
+                  </div>
+                </div>
+                <button
+                  class="btn btn-sm ms-auto"
+                  style="background: #0077b5; color: #fff; font-size: 0.78rem"
+                  onclick="addToLinkedIn()"
+                >
+                  Add Credential
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer border-0">
+            <button class="btn btn-outline-secondary" data-bs-dismiss="modal">
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Scripts ─────────────────────────────────────────────── -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
+      defer
+    ></script>
+    <script src="../assets/js/app.js"></script>
+
+    <script>
+      NProgress.configure({ showSpinner: false });
+      document.addEventListener("DOMContentLoaded", () => NProgress.start());
+      window.addEventListener("load", () => NProgress.done());
+
+      /* ── Data ────────────────────────────────────────────────────── */
+      const CERTS = [
+        {
+          id: "EDU-2026-0412",
+          course: "Complete JavaScript Masterclass",
+          instructor: "Dr. Sarah Mitchell",
+          category: "Development",
+          date: "March 15, 2026",
+          year: "2026",
+          emoji: "⚡",
+          color1: "#f59e0b",
+          color2: "#ef4444",
+        },
+        {
+          id: "EDU-2026-0387",
+          course: "UI/UX Design Fundamentals",
+          instructor: "Prof. James Carter",
+          category: "Design",
+          date: "February 3, 2026",
+          year: "2026",
+          emoji: "🎨",
+          color1: "#ec4899",
+          color2: "#8b5cf6",
+        },
+        {
+          id: "EDU-2026-0341",
+          course: "Python for Data Science",
+          instructor: "Dr. Aisha Patel",
+          category: "Data Science",
+          date: "January 20, 2026",
+          year: "2026",
+          emoji: "🐍",
+          color1: "#10b981",
+          color2: "#0d9488",
+        },
+        {
+          id: "EDU-2025-0298",
+          course: "React & Next.js Advanced",
+          instructor: "Emily Rodriguez",
+          category: "Development",
+          date: "November 10, 2025",
+          year: "2025",
+          emoji: "⚛️",
+          color1: "#0d6efd",
+          color2: "#6610f2",
+        },
+        {
+          id: "EDU-2025-0241",
+          course: "AWS Cloud Practitioner",
+          instructor: "Michael Thompson",
+          category: "Cloud",
+          date: "August 28, 2025",
+          year: "2025",
+          emoji: "☁️",
+          color1: "#f59e0b",
+          color2: "#0d6efd",
+        },
+        {
+          id: "EDU-2024-0176",
+          course: "Figma UI Design Bootcamp",
+          instructor: "Sophia Zhang",
+          category: "Design",
+          date: "May 14, 2024",
+          year: "2024",
+          emoji: "✏️",
+          color1: "#8b5cf6",
+          color2: "#ec4899",
+        },
+      ];
+
+      const IN_PROGRESS = [
+        {
+          id: "ip-1",
+          course: "Node.js Backend Mastery",
+          emoji: "🟢",
+          progress: 68,
+          lessonsLeft: 12,
+        },
+        {
+          id: "ip-2",
+          course: "Machine Learning with Python",
+          emoji: "🤖",
+          progress: 34,
+          lessonsLeft: 28,
+        },
+      ];
+
+      /* ── Alpine component ────────────────────────────────────────── */
+      function certPage() {
+        return {
+          view: "grid",
+          filter: "all",
+          search: "",
+
+          certs: CERTS,
+          inProgressCerts: IN_PROGRESS,
+
+          get filteredCerts() {
+            return this.certs.filter((c) => {
+              const matchFilter =
+                this.filter === "all" || c.year === this.filter;
+              const matchSearch =
+                !this.search ||
+                c.course.toLowerCase().includes(this.search.toLowerCase()) ||
+                c.instructor.toLowerCase().includes(this.search.toLowerCase());
+              return matchFilter && matchSearch;
+            });
+          },
+
+          downloadCert(cert) {
+            window.lmsNotify.success(
+              `Downloading "${cert.course}" certificate…`,
+            );
+            // Simulate download delay
+            setTimeout(
+              () =>
+                window.lmsNotify.success(
+                  "Download complete! Check your downloads folder.",
+                ),
+              1800,
+            );
+          },
+
+          downloadAll() {
+            window.lmsNotify.success(
+              "Preparing all certificates as a ZIP archive…",
+            );
+            setTimeout(
+              () => window.lmsNotify.success("ZIP downloaded successfully!"),
+              2200,
+            );
+          },
+
+          previewCert(cert) {
+            renderPreview(cert);
+            new bootstrap.Modal(document.getElementById("previewModal")).show();
+            document.getElementById("previewDownloadBtn").onclick = () =>
+              this.downloadCert(cert);
+            document.getElementById("previewShareBtn").onclick = () => {
+              bootstrap.Modal.getInstance(
+                document.getElementById("previewModal"),
+              ).hide();
+              this.shareCert(cert);
+            };
+          },
+
+          shareCert(cert) {
+            const verifyUrl = `https://edulearn.io/verify/${cert.id}`;
+            document.getElementById("shareLinkInput").value = verifyUrl;
+            document.getElementById("shareModalSubtitle").textContent =
+              `Share your "${cert.course}" certificate!`;
+            window._shareActiveCert = cert;
+            new bootstrap.Modal(document.getElementById("shareModal")).show();
+          },
+
+          shareAll() {
+            window.lmsNotify.success("Portfolio link copied to clipboard!");
+          },
+        };
+      }
+
+      /* ── Render certificate preview ──────────────────────────────── */
+      function renderPreview(cert) {
+        const body = document.getElementById("previewModalBody");
+        body.innerHTML = `
+      <div class="cert-preview-bg" style="background: linear-gradient(135deg, ${cert.color1} 0%, ${cert.color2} 100%);">
+        <div class="cert-preview-border"></div>
+        <div class="cert-watermark">★</div>
+        <div class="cert-preview-inner">
+          <div class="d-flex align-items-start justify-content-between mb-3">
+            <div>
+              <div class="cert-preview-subtitle">Certificate of Completion</div>
+              <div class="cert-preview-title">EduLearn Academy</div>
+            </div>
+            <div class="cert-preview-seal">${cert.emoji}</div>
+          </div>
+
+          <div style="font-size:.82rem; opacity:.75; margin-bottom:6px; letter-spacing:.05em; text-transform:uppercase;">This is to certify that</div>
+          <div class="cert-preview-student">Alex Johnson</div>
+          <div style="font-size:.82rem; opacity:.75; margin-bottom:8px; letter-spacing:.04em; text-transform:uppercase;">has successfully completed</div>
+          <div class="cert-preview-course-name">${cert.course}</div>
+          <div class="cert-preview-meta mb-4">Instructor: ${cert.instructor} &nbsp;·&nbsp; Completed on: ${cert.date}</div>
+
+          <div class="d-flex align-items-end justify-content-between">
+            <div>
+              <div class="cert-preview-sig">Dr. Robert Harrison</div>
+              <div class="cert-preview-sig-sub">CEO, EduLearn Academy</div>
+            </div>
+            <div style="text-align:right;">
+              <div style="font-size:.65rem; opacity:.6; text-transform:uppercase; letter-spacing:.04em;">Certificate ID</div>
+              <div style="font-size:.75rem; font-family:monospace; opacity:.85;">${cert.id}</div>
+              <div style="font-size:.65rem; opacity:.5; margin-top:3px;">edulearn.io/verify/${cert.id}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+      }
+
+      /* ── Copy link ───────────────────────────────────────────────── */
+      document.addEventListener("DOMContentLoaded", () => {
+        document.getElementById("copyLinkBtn").addEventListener("click", () => {
+          const val = document.getElementById("shareLinkInput").value;
+          navigator.clipboard
+            .writeText(val)
+            .then(() => window.lmsNotify.success("Link copied to clipboard!"))
+            .catch(() => {
+              document.getElementById("shareLinkInput").select();
+              document.execCommand("copy");
+              window.lmsNotify.success("Link copied!");
+            });
+        });
+      });
+
+      /* ── Social share ────────────────────────────────────────────── */
+      function shareSocial(platform) {
+        const cert = window._shareActiveCert || {};
+        const url = `https://edulearn.io/verify/${cert.id || "EDU-0000"}`;
+        const text = `I just earned a certificate in "${cert.course || "a course"}" on EduLearn Academy! 🎓`;
+        const urls = {
+          linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`,
+          twitter: `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`,
+          facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`,
+          whatsapp: `https://wa.me/?text=${encodeURIComponent(text + " " + url)}`,
+          email: `mailto:?subject=${encodeURIComponent("Check out my certificate!")}&body=${encodeURIComponent(text + "\n\n" + url)}`,
+        };
+        window.lmsNotify.success(
+          `Opening ${platform.charAt(0).toUpperCase() + platform.slice(1)}…`,
+        );
+        // In a real app: window.open(urls[platform], '_blank');
+      }
+
+      function addToLinkedIn() {
+        window.lmsNotify.success("Redirecting to LinkedIn credential builder…");
+      }
+
+      /* ── Load sidebar + navbar ───────────────────────────────────── */
+      document.addEventListener("DOMContentLoaded", () => {
+        fetch("../components/student-sidebar.html")
+          .then((r) => r.text())
+          .then((html) => {
+            const el = document.getElementById("sidebar-placeholder");
+            el.innerHTML = html;
+            Alpine.initTree(el);
+            el.querySelectorAll(".sidebar-nav-item").forEach((it) => {
+              it.classList.remove("active");
+              if (it.querySelector("a")?.href.includes("certificates"))
+                it.classList.add("active");
+            });
+          });
+
+        fetch("../components/student-navbar.html")
+          .then((r) => r.text())
+          .then((html) => {
+            const el = document.getElementById("navbar-placeholder");
+            el.innerHTML = html;
+            Alpine.initTree(el);
+            const t = document.getElementById("navbarPageTitle");
+            const b = document.getElementById("navbarBreadcrumbCurrent");
+            if (t) t.textContent = "My Certificates";
+            if (b) b.textContent = "My Certificates";
+          });
+      });
+    </script>
+  </body>
+</html>

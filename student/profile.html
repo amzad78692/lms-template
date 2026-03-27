@@ -1,0 +1,1628 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Profile — EduLearn Student</title>
+
+    <!-- Bootstrap 5.3 -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    />
+    <!-- Bootstrap Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css"
+    />
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <!-- NProgress -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.css"
+    />
+    <!-- Notyf -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css"
+    />
+    <!-- FilePond -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/filepond@4/dist/filepond.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/filepond-plugin-image-preview@4/dist/filepond-plugin-image-preview.min.css"
+    />
+    <!-- Flatpickr -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"
+    />
+    <!-- Theme -->
+    <link rel="stylesheet" href="../assets/css/theme.css" />
+
+    <style>
+      /* ── Layout ───────────────────────────────────────────────── */
+      body {
+        font-family: "Poppins", sans-serif;
+        background: var(--body-bg);
+        color: var(--body-color);
+      }
+      @media (max-width: 991px) {
+        #main-content {
+          margin-left: 0 !important;
+        }
+      }
+
+      /* ── Profile header card ──────────────────────────────────── */
+      .profile-header {
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 16px;
+        padding: 28px;
+        position: relative;
+        overflow: hidden;
+      }
+      .profile-header::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 100px;
+        background: linear-gradient(135deg, #0d6efd 0%, #6610f2 100%);
+        border-radius: 16px 16px 0 0;
+      }
+      .avatar-wrap {
+        position: relative;
+        display: inline-block;
+        margin-top: 48px;
+      }
+      .avatar-img {
+        width: 96px;
+        height: 96px;
+        border-radius: 50%;
+        border: 4px solid var(--card-bg);
+        object-fit: cover;
+        background: #e9ecef;
+      }
+      .avatar-edit-btn {
+        position: absolute;
+        bottom: 4px;
+        right: 4px;
+        width: 28px;
+        height: 28px;
+        background: var(--primary);
+        color: #fff;
+        border-radius: 50%;
+        border: 2px solid var(--card-bg);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.7rem;
+        cursor: pointer;
+        transition: background 0.15s;
+      }
+      .avatar-edit-btn:hover {
+        background: #0b5ed7;
+      }
+
+      /* ── Stat pills ───────────────────────────────────────────── */
+      .profile-stat {
+        text-align: center;
+        padding: 10px 20px;
+        border-left: 1px solid var(--border-color);
+      }
+      .profile-stat:first-child {
+        border-left: none;
+      }
+      .profile-stat-val {
+        font-size: 1.3rem;
+        font-weight: 700;
+        line-height: 1;
+      }
+      .profile-stat-lbl {
+        font-size: 0.72rem;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        margin-top: 3px;
+      }
+
+      /* ── Completion bar ───────────────────────────────────────── */
+      .completion-bar-wrap {
+        background: var(--border-color);
+        border-radius: 10px;
+        height: 8px;
+        overflow: hidden;
+      }
+      .completion-bar-fill {
+        height: 100%;
+        border-radius: 10px;
+        background: linear-gradient(90deg, #0d6efd, #6610f2);
+        transition: width 0.6s ease;
+      }
+
+      /* ── Tab nav ──────────────────────────────────────────────── */
+      .profile-tabs {
+        border-bottom: 2px solid var(--border-color);
+      }
+      .profile-tabs .nav-link {
+        color: var(--text-muted);
+        border: none;
+        border-bottom: 2px solid transparent;
+        margin-bottom: -2px;
+        padding: 0.6rem 1.1rem;
+        font-size: 0.88rem;
+        font-weight: 500;
+        transition:
+          color 0.2s,
+          border-color 0.2s;
+      }
+      .profile-tabs .nav-link:hover {
+        color: var(--primary);
+      }
+      .profile-tabs .nav-link.active {
+        color: var(--primary);
+        border-bottom-color: var(--primary);
+      }
+
+      /* ── Section card ─────────────────────────────────────────── */
+      .section-card {
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 14px;
+        padding: 24px;
+        margin-bottom: 20px;
+      }
+      .section-card-title {
+        font-size: 0.95rem;
+        font-weight: 700;
+        margin-bottom: 4px;
+      }
+      .section-card-sub {
+        font-size: 0.78rem;
+        color: var(--text-muted);
+        margin-bottom: 20px;
+      }
+
+      /* ── Form labels ──────────────────────────────────────────── */
+      .form-label {
+        font-size: 0.82rem;
+        font-weight: 600;
+        margin-bottom: 5px;
+      }
+      .form-control,
+      .form-select {
+        background: var(--body-bg);
+        border-color: var(--border-color);
+        color: var(--body-color);
+        font-size: 0.88rem;
+        border-radius: 9px;
+      }
+      .form-control:focus,
+      .form-select:focus {
+        background: var(--body-bg);
+        border-color: var(--primary);
+        color: var(--body-color);
+        box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.15);
+      }
+      textarea.form-control {
+        resize: vertical;
+      }
+
+      /* ── Social input group ───────────────────────────────────── */
+      .social-input-group .input-group-text {
+        background: var(--body-bg);
+        border-color: var(--border-color);
+        color: var(--text-muted);
+        font-size: 0.85rem;
+      }
+
+      /* ── Password strength ────────────────────────────────────── */
+      .pw-bars {
+        display: flex;
+        gap: 4px;
+        margin-top: 6px;
+      }
+      .pw-bar {
+        flex: 1;
+        height: 4px;
+        border-radius: 4px;
+        background: var(--border-color);
+        transition: background 0.3s;
+      }
+      .pw-bar.weak {
+        background: #ef4444;
+      }
+      .pw-bar.moderate {
+        background: #f59e0b;
+      }
+      .pw-bar.strong {
+        background: #10b981;
+      }
+
+      /* ── Session item ─────────────────────────────────────────── */
+      .session-item {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding: 12px 0;
+        border-bottom: 1px solid var(--border-color);
+      }
+      .session-item:last-child {
+        border-bottom: none;
+      }
+      .session-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+        background: rgba(13, 110, 253, 0.1);
+        color: var(--primary);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.1rem;
+        flex-shrink: 0;
+      }
+
+      /* ── Danger zone ──────────────────────────────────────────── */
+      .danger-card {
+        background: rgba(239, 68, 68, 0.05);
+        border: 1px solid rgba(239, 68, 68, 0.2);
+        border-radius: 12px;
+        padding: 18px 20px;
+        margin-bottom: 14px;
+      }
+
+      /* ── FilePond custom ──────────────────────────────────────── */
+      .filepond--root {
+        margin-bottom: 0;
+      }
+      .filepond--panel-root {
+        background: var(--body-bg);
+        border: 2px dashed var(--border-color);
+        border-radius: 10px;
+      }
+      .filepond--drop-label label {
+        color: var(--text-muted);
+        font-size: 0.82rem;
+        font-family: "Poppins", sans-serif;
+      }
+      .filepond--label-action {
+        color: var(--primary);
+      }
+
+      /* ── Toggle switch ────────────────────────────────────────── */
+      .form-check-input:checked {
+        background-color: var(--primary);
+        border-color: var(--primary);
+      }
+
+      /* ── Avatar upload modal ──────────────────────────────────── */
+      .avatar-preview-lg {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 3px solid var(--border-color);
+      }
+
+      /* ── Flatpickr dark ───────────────────────────────────────── */
+      [data-theme="dark"] .flatpickr-calendar {
+        background: var(--card-bg);
+        border-color: var(--border-color);
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+      }
+      [data-theme="dark"] .flatpickr-months,
+      [data-theme="dark"] .flatpickr-weekdays {
+        background: var(--card-bg);
+      }
+      [data-theme="dark"] .flatpickr-day {
+        color: var(--body-color);
+      }
+      [data-theme="dark"] .flatpickr-day:hover {
+        background: rgba(13, 110, 253, 0.15);
+      }
+      [data-theme="dark"] .flatpickr-day.selected {
+        background: var(--primary);
+        border-color: var(--primary);
+      }
+      [data-theme="dark"] span.flatpickr-weekday {
+        background: var(--card-bg);
+        color: var(--text-muted);
+      }
+      [data-theme="dark"] .flatpickr-current-month input.cur-year,
+      [data-theme="dark"]
+        .flatpickr-current-month
+        .flatpickr-monthDropdown-months {
+        color: var(--body-color);
+        background: var(--card-bg);
+      }
+      [data-theme="dark"] .numInputWrapper span {
+        border-color: var(--border-color);
+      }
+    </style>
+  </head>
+
+  <body x-data="themeToggle()" :data-theme="dark ? 'dark' : 'light'">
+    <div
+      id="layout-wrapper"
+      x-data="sidebarState()"
+      style="display: flex; min-height: 100vh"
+    >
+      <div id="sidebar-placeholder"></div>
+      <div style="flex: 1; display: flex; flex-direction: column; min-width: 0">
+        <div id="navbar-placeholder"></div>
+
+        <div
+          id="main-content"
+          :style="'margin-left:' + (collapsed ? 'var(--sidebar-collapsed)' : 'var(--sidebar-width)')"
+          style="
+            transition: margin-left 0.25s ease;
+            padding-top: var(--navbar-height);
+          "
+        >
+          <div class="container-fluid px-4 py-4" x-data="profilePage()">
+            <!-- ── Page header ──────────────────────────────────── -->
+            <div
+              class="d-flex align-items-center justify-content-between mb-4 flex-wrap gap-2"
+            >
+              <div>
+                <h4 class="fw-700 mb-1">My Profile</h4>
+                <p class="text-muted mb-0" style="font-size: 0.85rem">
+                  Manage your personal information and account settings
+                </p>
+              </div>
+              <button class="btn btn-primary" @click="saveProfile()">
+                <i class="bi bi-check2 me-1"></i>Save Changes
+              </button>
+            </div>
+
+            <!-- ── Profile header card ──────────────────────────── -->
+            <div class="profile-header mb-4">
+              <div
+                class="d-flex flex-wrap align-items-end gap-4 position-relative"
+              >
+                <!-- Avatar -->
+                <div class="avatar-wrap" style="z-index: 1">
+                  <img
+                    id="avatarPreview"
+                    src="https://ui-avatars.com/api/?name=Alex+Johnson&background=0d6efd&color=fff&size=200"
+                    class="avatar-img"
+                    alt="Avatar"
+                  />
+                  <div
+                    class="avatar-edit-btn"
+                    data-bs-toggle="modal"
+                    data-bs-target="#avatarModal"
+                    title="Change photo"
+                  >
+                    <i class="bi bi-camera-fill"></i>
+                  </div>
+                </div>
+
+                <!-- Name + info -->
+                <div style="z-index: 1; padding-bottom: 4px">
+                  <h5
+                    class="fw-700 mb-0"
+                    x-text="form.firstName + ' ' + form.lastName"
+                  ></h5>
+                  <div class="text-muted" style="font-size: 0.85rem">
+                    <i class="bi bi-envelope me-1"></i
+                    ><span x-text="form.email"></span>
+                  </div>
+                  <div class="d-flex gap-2 mt-2 flex-wrap">
+                    <span
+                      class="badge bg-primary bg-opacity-15 text-primary"
+                      style="font-size: 0.75rem"
+                    >
+                      <i class="bi bi-mortarboard-fill me-1"></i>Student
+                    </span>
+                    <span
+                      class="badge bg-success bg-opacity-15 text-success"
+                      style="font-size: 0.75rem"
+                    >
+                      <i class="bi bi-patch-check-fill me-1"></i>Verified
+                    </span>
+                    <span class="text-muted" style="font-size: 0.75rem">
+                      <i class="bi bi-calendar3 me-1"></i>Member since
+                      <span x-text="memberSince"></span>
+                    </span>
+                  </div>
+                </div>
+
+                <!-- Stats (push right on large screens) -->
+                <div
+                  class="ms-auto d-flex"
+                  style="z-index: 1; padding-bottom: 4px"
+                >
+                  <div class="profile-stat">
+                    <div class="profile-stat-val text-primary">9</div>
+                    <div class="profile-stat-lbl">Enrolled</div>
+                  </div>
+                  <div class="profile-stat">
+                    <div class="profile-stat-val text-success">3</div>
+                    <div class="profile-stat-lbl">Completed</div>
+                  </div>
+                  <div class="profile-stat">
+                    <div class="profile-stat-val" style="color: #f59e0b">
+                      🔥 14
+                    </div>
+                    <div class="profile-stat-lbl">Day Streak</div>
+                  </div>
+                  <div class="profile-stat">
+                    <div class="profile-stat-val text-info">124h</div>
+                    <div class="profile-stat-lbl">Study Time</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Completion bar -->
+              <div class="mt-4 pt-2" style="position: relative; z-index: 1">
+                <div
+                  class="d-flex justify-content-between align-items-center mb-1"
+                >
+                  <span style="font-size: 0.78rem; font-weight: 600"
+                    >Profile Completeness</span
+                  >
+                  <span
+                    class="fw-700"
+                    style="font-size: 0.82rem; color: var(--primary)"
+                    x-text="completeness + '%'"
+                  ></span>
+                </div>
+                <div class="completion-bar-wrap">
+                  <div
+                    class="completion-bar-fill"
+                    :style="'width:' + completeness + '%'"
+                  ></div>
+                </div>
+                <p
+                  class="text-muted mt-1 mb-0"
+                  style="font-size: 0.72rem"
+                  x-text="completenessHint"
+                ></p>
+              </div>
+            </div>
+
+            <!-- ── Tabs ────────────────────────────────────────── -->
+            <ul class="nav profile-tabs mb-4">
+              <li class="nav-item">
+                <button
+                  class="nav-link"
+                  :class="{active:tab==='personal'}"
+                  @click="tab='personal'"
+                >
+                  <i class="bi bi-person me-1"></i>Personal Info
+                </button>
+              </li>
+              <li class="nav-item">
+                <button
+                  class="nav-link"
+                  :class="{active:tab==='education'}"
+                  @click="tab='education'"
+                >
+                  <i class="bi bi-mortarboard me-1"></i>Education
+                </button>
+              </li>
+              <li class="nav-item">
+                <button
+                  class="nav-link"
+                  :class="{active:tab==='social'}"
+                  @click="tab='social'"
+                >
+                  <i class="bi bi-share me-1"></i>Social Links
+                </button>
+              </li>
+              <li class="nav-item">
+                <button
+                  class="nav-link"
+                  :class="{active:tab==='security'}"
+                  @click="tab='security'"
+                >
+                  <i class="bi bi-shield-lock me-1"></i>Security
+                </button>
+              </li>
+              <li class="nav-item">
+                <button
+                  class="nav-link text-danger"
+                  :class="{active:tab==='danger'}"
+                  @click="tab='danger'"
+                >
+                  <i class="bi bi-exclamation-triangle me-1"></i>Danger Zone
+                </button>
+              </li>
+            </ul>
+
+            <!-- ════════════════════════════════════════════════════
+               TAB: PERSONAL INFO
+          ═════════════════════════════════════════════════════════ -->
+            <div x-show="tab==='personal'" x-transition>
+              <!-- Basic info -->
+              <div class="section-card">
+                <div class="section-card-title">Basic Information</div>
+                <div class="section-card-sub">Your public profile details</div>
+                <div class="row g-3">
+                  <div class="col-md-6">
+                    <label class="form-label"
+                      >First Name <span class="text-danger">*</span></label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      x-model="form.firstName"
+                      @input="calcCompleteness()"
+                    />
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label"
+                      >Last Name <span class="text-danger">*</span></label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      x-model="form.lastName"
+                      @input="calcCompleteness()"
+                    />
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label">Username</label>
+                    <div class="input-group">
+                      <span
+                        class="input-group-text"
+                        style="
+                          background: var(--body-bg);
+                          border-color: var(--border-color);
+                          color: var(--text-muted);
+                        "
+                        >@</span
+                      >
+                      <input
+                        type="text"
+                        class="form-control"
+                        x-model="form.username"
+                      />
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label">Date of Birth</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="dobPicker"
+                      placeholder="Pick a date…"
+                      x-model="form.dob"
+                      @change="calcCompleteness()"
+                    />
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label">Gender</label>
+                    <select class="form-select" x-model="form.gender">
+                      <option value="">Prefer not to say</option>
+                      <option>Male</option>
+                      <option>Female</option>
+                      <option>Non-binary</option>
+                      <option>Other</option>
+                    </select>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label">Phone</label>
+                    <input
+                      type="tel"
+                      class="form-control"
+                      x-model="form.phone"
+                      placeholder="+1 (555) 000-0000"
+                      @input="calcCompleteness()"
+                    />
+                  </div>
+                  <div class="col-12">
+                    <label class="form-label">Bio</label>
+                    <textarea
+                      class="form-control"
+                      rows="3"
+                      x-model="form.bio"
+                      placeholder="Tell us a little about yourself…"
+                      @input="calcCompleteness()"
+                    ></textarea>
+                    <div
+                      class="text-muted mt-1"
+                      style="font-size: 0.75rem"
+                      x-text="(form.bio.length) + ' / 300 chars'"
+                    ></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Contact info -->
+              <div class="section-card">
+                <div class="section-card-title">Contact & Location</div>
+                <div class="section-card-sub">
+                  Used for certificate delivery and correspondence
+                </div>
+                <div class="row g-3">
+                  <div class="col-md-6">
+                    <label class="form-label"
+                      >Email Address <span class="text-danger">*</span></label
+                    >
+                    <div class="input-group">
+                      <span
+                        class="input-group-text"
+                        style="
+                          background: var(--body-bg);
+                          border-color: var(--border-color);
+                          color: var(--text-muted);
+                        "
+                        ><i class="bi bi-envelope"></i
+                      ></span>
+                      <input
+                        type="email"
+                        class="form-control"
+                        x-model="form.email"
+                      />
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label">Country</label>
+                    <select
+                      class="form-select"
+                      x-model="form.country"
+                      @change="calcCompleteness()"
+                    >
+                      <option value="">Select country…</option>
+                      <option>United States</option>
+                      <option>United Kingdom</option>
+                      <option>Canada</option>
+                      <option>Australia</option>
+                      <option>Germany</option>
+                      <option>France</option>
+                      <option>India</option>
+                      <option>Pakistan</option>
+                      <option>Brazil</option>
+                      <option>Other</option>
+                    </select>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label">City</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      x-model="form.city"
+                      placeholder="New York"
+                    />
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label">Timezone</label>
+                    <select class="form-select" x-model="form.timezone">
+                      <option value="UTC-8">Pacific Time (UTC-8)</option>
+                      <option value="UTC-7">Mountain Time (UTC-7)</option>
+                      <option value="UTC-6">Central Time (UTC-6)</option>
+                      <option value="UTC-5">Eastern Time (UTC-5)</option>
+                      <option value="UTC+0">UTC / GMT</option>
+                      <option value="UTC+1">Central European (UTC+1)</option>
+                      <option value="UTC+5:30">
+                        India Standard (UTC+5:30)
+                      </option>
+                      <option value="UTC+5">Pakistan Standard (UTC+5)</option>
+                      <option value="UTC+8">China Standard (UTC+8)</option>
+                      <option value="UTC+10">AEST (UTC+10)</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- /personal -->
+
+            <!-- ════════════════════════════════════════════════════
+               TAB: EDUCATION
+          ═════════════════════════════════════════════════════════ -->
+            <div x-show="tab==='education'" x-transition>
+              <div class="section-card">
+                <div class="section-card-title">Education Background</div>
+                <div class="section-card-sub">
+                  Help instructors understand your background
+                </div>
+                <div class="row g-3">
+                  <div class="col-md-6">
+                    <label class="form-label">Education Level</label>
+                    <select class="form-select" x-model="form.eduLevel">
+                      <option value="">Select level…</option>
+                      <option>High School</option>
+                      <option>Associate Degree</option>
+                      <option>Bachelor's Degree</option>
+                      <option>Master's Degree</option>
+                      <option>PhD / Doctorate</option>
+                      <option>Self-taught</option>
+                      <option>Other</option>
+                    </select>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label">Institution / University</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      x-model="form.institution"
+                      placeholder="MIT, Stanford, …"
+                    />
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label">Field of Study</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      x-model="form.fieldOfStudy"
+                      placeholder="Computer Science, Design, …"
+                    />
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label">Graduation Year</label>
+                    <select class="form-select" x-model="form.gradYear">
+                      <option value="">Select year…</option>
+                      <template x-for="y in gradYears" :key="y"
+                        ><option :value="y" x-text="y"></option
+                      ></template>
+                    </select>
+                  </div>
+                  <div class="col-12">
+                    <label class="form-label">Learning Goals</label>
+                    <textarea
+                      class="form-control"
+                      rows="3"
+                      x-model="form.goals"
+                      placeholder="What are you hoping to achieve with EduLearn?"
+                    ></textarea>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Skills / interests -->
+              <div class="section-card">
+                <div class="section-card-title">Skills & Interests</div>
+                <div class="section-card-sub">
+                  Tags shown on your public profile
+                </div>
+                <div
+                  class="d-flex flex-wrap gap-2 mb-3"
+                  id="skillTagsContainer"
+                >
+                  <template x-for="(skill, i) in form.skills" :key="i">
+                    <span
+                      class="badge rounded-pill px-3 py-2"
+                      style="
+                        background: rgba(13, 110, 253, 0.1);
+                        color: var(--primary);
+                        font-size: 0.8rem;
+                        font-weight: 500;
+                        cursor: pointer;
+                      "
+                      @click="removeSkill(i)"
+                    >
+                      <span x-text="skill"></span> <i class="bi bi-x ms-1"></i>
+                    </span>
+                  </template>
+                </div>
+                <div class="input-group" style="max-width: 340px">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="newSkillInput"
+                    placeholder="Add a skill & press Enter…"
+                    @keydown.enter.prevent="addSkill()"
+                  />
+                  <button
+                    class="btn btn-outline-primary"
+                    type="button"
+                    @click="addSkill()"
+                  >
+                    <i class="bi bi-plus-lg"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <!-- /education -->
+
+            <!-- ════════════════════════════════════════════════════
+               TAB: SOCIAL LINKS
+          ═════════════════════════════════════════════════════════ -->
+            <div x-show="tab==='social'" x-transition>
+              <div class="section-card">
+                <div class="section-card-title">Social & Web Presence</div>
+                <div class="section-card-sub">
+                  Links displayed on your public profile card
+                </div>
+                <div class="row g-3 social-input-group">
+                  <div class="col-md-6">
+                    <label class="form-label">LinkedIn</label>
+                    <div class="input-group">
+                      <span class="input-group-text"
+                        ><i class="bi bi-linkedin text-primary"></i
+                      ></span>
+                      <input
+                        type="url"
+                        class="form-control"
+                        x-model="form.linkedin"
+                        placeholder="https://linkedin.com/in/…"
+                      />
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label">GitHub</label>
+                    <div class="input-group">
+                      <span class="input-group-text"
+                        ><i class="bi bi-github"></i
+                      ></span>
+                      <input
+                        type="url"
+                        class="form-control"
+                        x-model="form.github"
+                        placeholder="https://github.com/…"
+                      />
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label">Twitter / X</label>
+                    <div class="input-group">
+                      <span class="input-group-text"
+                        ><i class="bi bi-twitter-x"></i
+                      ></span>
+                      <input
+                        type="url"
+                        class="form-control"
+                        x-model="form.twitter"
+                        placeholder="https://twitter.com/…"
+                      />
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label">Personal Website</label>
+                    <div class="input-group">
+                      <span class="input-group-text"
+                        ><i class="bi bi-globe2 text-success"></i
+                      ></span>
+                      <input
+                        type="url"
+                        class="form-control"
+                        x-model="form.website"
+                        placeholder="https://yoursite.com"
+                      />
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label">YouTube</label>
+                    <div class="input-group">
+                      <span class="input-group-text"
+                        ><i class="bi bi-youtube text-danger"></i
+                      ></span>
+                      <input
+                        type="url"
+                        class="form-control"
+                        x-model="form.youtube"
+                        placeholder="https://youtube.com/@…"
+                      />
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label">Discord Handle</label>
+                    <div class="input-group">
+                      <span class="input-group-text"
+                        ><i class="bi bi-discord" style="color: #5865f2"></i
+                      ></span>
+                      <input
+                        type="text"
+                        class="form-control"
+                        x-model="form.discord"
+                        placeholder="username#0000"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- /social -->
+
+            <!-- ════════════════════════════════════════════════════
+               TAB: SECURITY
+          ═════════════════════════════════════════════════════════ -->
+            <div x-show="tab==='security'" x-transition>
+              <!-- Change password -->
+              <div class="section-card">
+                <div class="section-card-title">Change Password</div>
+                <div class="section-card-sub">
+                  Use a strong password of at least 8 characters
+                </div>
+                <div class="row g-3">
+                  <div class="col-md-6">
+                    <label class="form-label">Current Password</label>
+                    <div class="input-group">
+                      <input
+                        :type="showPw.current ? 'text' : 'password'"
+                        class="form-control"
+                        x-model="pw.current"
+                      />
+                      <button
+                        class="btn btn-outline-secondary"
+                        type="button"
+                        @click="showPw.current = !showPw.current"
+                      >
+                        <i
+                          :class="showPw.current ? 'bi-eye-slash' : 'bi-eye'"
+                          class="bi"
+                        ></i>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="col-md-6"></div>
+                  <div class="col-md-6">
+                    <label class="form-label">New Password</label>
+                    <div class="input-group">
+                      <input
+                        :type="showPw.new ? 'text' : 'password'"
+                        class="form-control"
+                        x-model="pw.new"
+                        @input="calcPwStrength()"
+                      />
+                      <button
+                        class="btn btn-outline-secondary"
+                        type="button"
+                        @click="showPw.new = !showPw.new"
+                      >
+                        <i
+                          :class="showPw.new ? 'bi-eye-slash' : 'bi-eye'"
+                          class="bi"
+                        ></i>
+                      </button>
+                    </div>
+                    <!-- Strength bars -->
+                    <div class="pw-bars">
+                      <div
+                        class="pw-bar"
+                        :class="pwStrength >= 1 ? pwStrengthClass : ''"
+                      ></div>
+                      <div
+                        class="pw-bar"
+                        :class="pwStrength >= 2 ? pwStrengthClass : ''"
+                      ></div>
+                      <div
+                        class="pw-bar"
+                        :class="pwStrength >= 3 ? pwStrengthClass : ''"
+                      ></div>
+                      <div
+                        class="pw-bar"
+                        :class="pwStrength >= 4 ? pwStrengthClass : ''"
+                      ></div>
+                    </div>
+                    <div
+                      class="mt-1"
+                      style="font-size: 0.74rem; color: var(--text-muted)"
+                      x-text="pwStrengthLabel"
+                    ></div>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label">Confirm New Password</label>
+                    <div class="input-group">
+                      <input
+                        :type="showPw.confirm ? 'text' : 'password'"
+                        class="form-control"
+                        x-model="pw.confirm"
+                        :class="pw.confirm && pw.confirm !== pw.new ? 'is-invalid' : (pw.confirm && pw.confirm === pw.new ? 'is-valid' : '')"
+                      />
+                      <button
+                        class="btn btn-outline-secondary"
+                        type="button"
+                        @click="showPw.confirm = !showPw.confirm"
+                      >
+                        <i
+                          :class="showPw.confirm ? 'bi-eye-slash' : 'bi-eye'"
+                          class="bi"
+                        ></i>
+                      </button>
+                    </div>
+                    <div class="invalid-feedback">Passwords do not match.</div>
+                  </div>
+                  <div class="col-12">
+                    <button class="btn btn-primary" @click="changePassword()">
+                      <i class="bi bi-lock-fill me-1"></i>Update Password
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 2FA -->
+              <div class="section-card">
+                <div class="section-card-title">Two-Factor Authentication</div>
+                <div class="section-card-sub">
+                  Add an extra layer of security to your account
+                </div>
+                <div
+                  class="d-flex align-items-center justify-content-between py-2"
+                >
+                  <div>
+                    <div class="fw-600" style="font-size: 0.9rem">
+                      Authenticator App (TOTP)
+                    </div>
+                    <div class="text-muted" style="font-size: 0.8rem">
+                      Use Google Authenticator or similar
+                    </div>
+                  </div>
+                  <div class="form-check form-switch mb-0">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      x-model="twoFA.app"
+                      @change="toggle2FA('app')"
+                      style="width: 40px; height: 22px"
+                    />
+                  </div>
+                </div>
+                <hr class="my-2" style="border-color: var(--border-color)" />
+                <div
+                  class="d-flex align-items-center justify-content-between py-2"
+                >
+                  <div>
+                    <div class="fw-600" style="font-size: 0.9rem">
+                      SMS Verification
+                    </div>
+                    <div class="text-muted" style="font-size: 0.8rem">
+                      Receive a code via text message
+                    </div>
+                  </div>
+                  <div class="form-check form-switch mb-0">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      x-model="twoFA.sms"
+                      @change="toggle2FA('sms')"
+                      style="width: 40px; height: 22px"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <!-- Active sessions -->
+              <div class="section-card">
+                <div class="section-card-title">Active Sessions</div>
+                <div class="section-card-sub">
+                  Devices currently logged in to your account
+                </div>
+                <div class="session-item">
+                  <div class="session-icon"><i class="bi bi-laptop"></i></div>
+                  <div class="flex-grow-1">
+                    <div class="fw-600" style="font-size: 0.88rem">
+                      MacBook Pro — Chrome 122
+                    </div>
+                    <div class="text-muted" style="font-size: 0.78rem">
+                      New York, US ·
+                      <span class="text-success fw-500">Current session</span>
+                    </div>
+                  </div>
+                  <span class="badge bg-success bg-opacity-15 text-success"
+                    >Active</span
+                  >
+                </div>
+                <div class="session-item">
+                  <div class="session-icon"><i class="bi bi-phone"></i></div>
+                  <div class="flex-grow-1">
+                    <div class="fw-600" style="font-size: 0.88rem">
+                      iPhone 15 — Safari Mobile
+                    </div>
+                    <div class="text-muted" style="font-size: 0.78rem">
+                      New York, US · 2 hours ago
+                    </div>
+                  </div>
+                  <button
+                    class="btn btn-outline-danger btn-sm"
+                    onclick="revokeSession('iphone')"
+                  >
+                    Revoke
+                  </button>
+                </div>
+                <div class="session-item">
+                  <div class="session-icon"><i class="bi bi-display"></i></div>
+                  <div class="flex-grow-1">
+                    <div class="fw-600" style="font-size: 0.88rem">
+                      Windows PC — Firefox 121
+                    </div>
+                    <div class="text-muted" style="font-size: 0.78rem">
+                      Boston, US · 3 days ago
+                    </div>
+                  </div>
+                  <button
+                    class="btn btn-outline-danger btn-sm"
+                    onclick="revokeSession('windows')"
+                  >
+                    Revoke
+                  </button>
+                </div>
+                <div class="mt-3">
+                  <button
+                    class="btn btn-outline-danger btn-sm"
+                    onclick="revokeAllSessions()"
+                  >
+                    <i class="bi bi-shield-x me-1"></i>Revoke All Other Sessions
+                  </button>
+                </div>
+              </div>
+            </div>
+            <!-- /security -->
+
+            <!-- ════════════════════════════════════════════════════
+               TAB: DANGER ZONE
+          ═════════════════════════════════════════════════════════ -->
+            <div x-show="tab==='danger'" x-transition>
+              <div class="section-card">
+                <div class="section-card-title text-danger">Danger Zone</div>
+                <div class="section-card-sub">
+                  These actions are irreversible. Please proceed with caution.
+                </div>
+
+                <!-- Export data -->
+                <div class="danger-card">
+                  <div
+                    class="d-flex align-items-center justify-content-between gap-3 flex-wrap"
+                  >
+                    <div>
+                      <div class="fw-600" style="font-size: 0.9rem">
+                        Export My Data
+                      </div>
+                      <div class="text-muted" style="font-size: 0.8rem">
+                        Download a copy of all your data including courses,
+                        grades and certificates.
+                      </div>
+                    </div>
+                    <button
+                      class="btn btn-outline-secondary btn-sm flex-shrink-0"
+                      onclick="exportData()"
+                    >
+                      <i class="bi bi-download me-1"></i>Export ZIP
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Deactivate -->
+                <div class="danger-card">
+                  <div
+                    class="d-flex align-items-center justify-content-between gap-3 flex-wrap"
+                  >
+                    <div>
+                      <div class="fw-600" style="font-size: 0.9rem">
+                        Deactivate Account
+                      </div>
+                      <div class="text-muted" style="font-size: 0.8rem">
+                        Temporarily disable your account. You can reactivate by
+                        logging in again.
+                      </div>
+                    </div>
+                    <button
+                      class="btn btn-warning btn-sm flex-shrink-0"
+                      onclick="deactivateAccount()"
+                    >
+                      <i class="bi bi-pause-circle me-1"></i>Deactivate
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Delete -->
+                <div
+                  class="danger-card"
+                  style="border-color: rgba(239, 68, 68, 0.4)"
+                >
+                  <div
+                    class="d-flex align-items-center justify-content-between gap-3 flex-wrap"
+                  >
+                    <div>
+                      <div class="fw-700 text-danger" style="font-size: 0.9rem">
+                        Delete Account Permanently
+                      </div>
+                      <div class="text-muted" style="font-size: 0.8rem">
+                        This will permanently delete your account, courses,
+                        grades and all data. This cannot be undone.
+                      </div>
+                    </div>
+                    <button
+                      class="btn btn-danger btn-sm flex-shrink-0"
+                      onclick="deleteAccount()"
+                    >
+                      <i class="bi bi-trash3-fill me-1"></i>Delete Account
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- /danger -->
+
+            <!-- ── Floating Save (bottom) ──────────────────────── -->
+            <div class="d-flex justify-content-end mt-2 mb-4">
+              <button class="btn btn-primary px-4" @click="saveProfile()">
+                <i class="bi bi-check2-all me-1"></i>Save Changes
+              </button>
+            </div>
+          </div>
+          <!-- /container -->
+        </div>
+        <!-- /main-content -->
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════════
+       AVATAR UPLOAD MODAL
+  ══════════════════════════════════════════════════════════════ -->
+    <div class="modal fade" id="avatarModal" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered">
+        <div
+          class="modal-content"
+          style="
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+          "
+        >
+          <div class="modal-header border-0">
+            <h5 class="modal-title fw-700">Change Profile Photo</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+            ></button>
+          </div>
+          <div class="modal-body text-center">
+            <img
+              id="avatarPreviewLg"
+              src="https://ui-avatars.com/api/?name=Alex+Johnson&background=0d6efd&color=fff&size=200"
+              class="avatar-preview-lg mb-3"
+            />
+            <input type="file" id="avatarPond" accept="image/*" />
+            <div class="mt-2 text-muted" style="font-size: 0.78rem">
+              JPG, PNG or GIF · Max 2 MB
+            </div>
+          </div>
+          <div class="modal-footer border-0">
+            <button class="btn btn-outline-secondary" data-bs-dismiss="modal">
+              Cancel
+            </button>
+            <button class="btn btn-primary" onclick="applyAvatar()">
+              <i class="bi bi-check2 me-1"></i>Apply Photo
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Scripts ─────────────────────────────────────────────── -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1/plugin/relativeTime.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/filepond-plugin-image-preview@4/dist/filepond-plugin-image-preview.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/filepond@4/dist/filepond.min.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
+      defer
+    ></script>
+    <script src="../assets/js/app.js"></script>
+
+    <script>
+      dayjs.extend(dayjs_plugin_relativeTime);
+      NProgress.configure({ showSpinner: false });
+      document.addEventListener("DOMContentLoaded", () => NProgress.start());
+      window.addEventListener("load", () => NProgress.done());
+
+      /* ── Alpine component ────────────────────────────────────────── */
+      function profilePage() {
+        return {
+          tab: "personal",
+
+          form: {
+            firstName: "Alex",
+            lastName: "Johnson",
+            username: "alexj",
+            email: "alex.johnson@example.com",
+            phone: "+1 (555) 234-5678",
+            dob: "1998-06-15",
+            gender: "Male",
+            bio: "Passionate web developer and lifelong learner. Currently focusing on full-stack JavaScript.",
+            country: "United States",
+            city: "New York",
+            timezone: "UTC-5",
+            eduLevel: "Bachelor's Degree",
+            institution: "New York University",
+            fieldOfStudy: "Computer Science",
+            gradYear: "2020",
+            goals:
+              "Master full-stack development and build scalable web applications.",
+            skills: ["JavaScript", "React", "Node.js", "CSS", "Python"],
+            linkedin: "https://linkedin.com/in/alexjohnson",
+            github: "https://github.com/alexj",
+            twitter: "",
+            website: "",
+            youtube: "",
+            discord: "",
+          },
+
+          pw: { current: "", new: "", confirm: "" },
+          showPw: { current: false, new: false, confirm: false },
+          pwStrength: 0,
+          pwStrengthClass: "",
+          pwStrengthLabel: "",
+
+          twoFA: { app: false, sms: false },
+
+          completeness: 72,
+          completenessHint:
+            "Add your phone, DOB and social links to reach 100%",
+
+          get memberSince() {
+            return dayjs("2024-09-01").format("MMMM YYYY");
+          },
+
+          get gradYears() {
+            const years = [];
+            for (let y = new Date().getFullYear() + 5; y >= 1970; y--)
+              years.push(String(y));
+            return years;
+          },
+
+          calcCompleteness() {
+            const fields = [
+              this.form.firstName,
+              this.form.lastName,
+              this.form.email,
+              this.form.phone,
+              this.form.dob,
+              this.form.bio,
+              this.form.country,
+              this.form.github || this.form.linkedin,
+              this.form.eduLevel,
+              this.form.institution,
+            ];
+            const filled = fields.filter((f) => f && f.trim() !== "").length;
+            this.completeness = Math.round((filled / fields.length) * 100);
+            if (this.completeness < 50)
+              this.completenessHint =
+                "Fill in more details to complete your profile";
+            else if (this.completeness < 80)
+              this.completenessHint =
+                "Looking good! Add social links and education info";
+            else if (this.completeness < 100)
+              this.completenessHint = "Almost there! Just a few more fields";
+            else this.completenessHint = "🎉 Profile complete!";
+          },
+
+          calcPwStrength() {
+            const p = this.pw.new;
+            let s = 0;
+            if (p.length >= 8) s++;
+            if (/[A-Z]/.test(p)) s++;
+            if (/[0-9]/.test(p)) s++;
+            if (/[^A-Za-z0-9]/.test(p)) s++;
+            this.pwStrength = s;
+            this.pwStrengthClass =
+              s <= 1 ? "weak" : s === 2 ? "moderate" : "strong";
+            this.pwStrengthLabel =
+              ["", "Weak", "Moderate", "Strong", "Very Strong"][s] || "";
+          },
+
+          addSkill() {
+            const inp = document.getElementById("newSkillInput");
+            const val = inp.value.trim();
+            if (!val) return;
+            if (this.form.skills.includes(val)) {
+              window.lmsNotify.error("Skill already added.");
+              return;
+            }
+            this.form.skills.push(val);
+            inp.value = "";
+          },
+
+          removeSkill(i) {
+            this.form.skills.splice(i, 1);
+          },
+
+          saveProfile() {
+            window.lmsNotify.success("Profile updated successfully!");
+            this.calcCompleteness();
+          },
+
+          changePassword() {
+            if (!this.pw.current) {
+              window.lmsNotify.error("Enter your current password.");
+              return;
+            }
+            if (this.pw.new.length < 8) {
+              window.lmsNotify.error("Password must be at least 8 characters.");
+              return;
+            }
+            if (this.pw.new !== this.pw.confirm) {
+              window.lmsNotify.error("Passwords do not match.");
+              return;
+            }
+            this.pw = { current: "", new: "", confirm: "" };
+            this.pwStrength = 0;
+            window.lmsNotify.success("Password changed successfully!");
+          },
+
+          toggle2FA(type) {
+            const enabled = type === "app" ? this.twoFA.app : this.twoFA.sms;
+            window.lmsNotify.success(
+              `${type === "app" ? "Authenticator App" : "SMS"} 2FA ${enabled ? "enabled" : "disabled"}.`,
+            );
+          },
+        };
+      }
+
+      /* ── Session revoke ──────────────────────────────────────────── */
+      function revokeSession(id) {
+        window
+          .lmsConfirm({
+            title: "Revoke Session?",
+            text: "This device will be logged out immediately.",
+            icon: "warning",
+            confirmButtonText: "Revoke",
+            confirmButtonColor: "#ef4444",
+          })
+          .then((r) => {
+            if (r.isConfirmed) window.lmsNotify.success("Session revoked.");
+          });
+      }
+
+      function revokeAllSessions() {
+        window
+          .lmsConfirm({
+            title: "Revoke All Other Sessions?",
+            text: "All other devices will be logged out.",
+            icon: "warning",
+            confirmButtonText: "Revoke All",
+            confirmButtonColor: "#ef4444",
+          })
+          .then((r) => {
+            if (r.isConfirmed)
+              window.lmsNotify.success("All other sessions revoked.");
+          });
+      }
+
+      /* ── Danger zone actions ─────────────────────────────────────── */
+      function exportData() {
+        window.lmsNotify.success(
+          "Data export requested. You will receive an email when ready.",
+        );
+      }
+
+      function deactivateAccount() {
+        window
+          .lmsConfirm({
+            title: "Deactivate Account?",
+            text: "Your account will be temporarily disabled. Log in any time to reactivate.",
+            icon: "warning",
+            confirmButtonText: "Deactivate",
+            confirmButtonColor: "#f59e0b",
+          })
+          .then((r) => {
+            if (r.isConfirmed) window.lmsNotify.success("Account deactivated.");
+          });
+      }
+
+      function deleteAccount() {
+        window
+          .lmsConfirm({
+            title: "Delete Account Permanently?",
+            html: '<p class="mb-2">This will <strong>permanently delete</strong> all your data including:</p><ul class="text-start text-muted" style="font-size:.85rem;"><li>All enrolled courses & progress</li><li>Grades and assignments</li><li>Certificates earned</li></ul><p class="text-danger fw-600 mb-0">This action CANNOT be undone.</p>',
+            icon: "warning",
+            confirmButtonText: "Yes, Delete Everything",
+            confirmButtonColor: "#ef4444",
+            showCancelButton: true,
+            cancelButtonText: "Keep My Account",
+          })
+          .then((r) => {
+            if (!r.isConfirmed) return;
+            // Second confirmation
+            window
+              .lmsConfirm({
+                title: "Are you absolutely sure?",
+                input: "text",
+                inputPlaceholder: "Type DELETE to confirm",
+                confirmButtonText: "Permanently Delete",
+                confirmButtonColor: "#ef4444",
+                preConfirm: (val) => {
+                  if (val !== "DELETE") {
+                    Swal.showValidationMessage("You must type DELETE exactly");
+                    return false;
+                  }
+                  return true;
+                },
+              })
+              .then((r2) => {
+                if (r2.isConfirmed)
+                  window.lmsNotify.success("Account deletion requested.");
+              });
+          });
+      }
+
+      /* ── FilePond avatar ─────────────────────────────────────────── */
+      let avatarPond = null;
+      let pendingAvatarUrl = null;
+
+      document.addEventListener("DOMContentLoaded", () => {
+        FilePond.registerPlugin(FilePondPluginImagePreview);
+        avatarPond = FilePond.create(document.getElementById("avatarPond"), {
+          allowMultiple: false,
+          acceptedFileTypes: ["image/*"],
+          labelIdle:
+            'Drop photo here or <span class="filepond--label-action">Browse</span>',
+          imageCropAspectRatio: "1:1",
+          stylePanelLayout: "compact",
+          styleLoadIndicatorPosition: "center bottom",
+          styleProgressIndicatorPosition: "right bottom",
+          onaddfile: (err, file) => {
+            if (err) return;
+            const reader = new FileReader();
+            reader.onload = (e) => {
+              pendingAvatarUrl = e.target.result;
+              document.getElementById("avatarPreviewLg").src = pendingAvatarUrl;
+            };
+            reader.readAsDataURL(file.file);
+          },
+        });
+      });
+
+      function applyAvatar() {
+        if (pendingAvatarUrl) {
+          document.getElementById("avatarPreview").src = pendingAvatarUrl;
+          bootstrap.Modal.getInstance(
+            document.getElementById("avatarModal"),
+          )?.hide();
+          window.lmsNotify.success("Profile photo updated!");
+        } else {
+          window.lmsNotify.error("Please select a photo first.");
+        }
+      }
+
+      /* ── Flatpickr DOB ───────────────────────────────────────────── */
+      document.addEventListener("DOMContentLoaded", () => {
+        flatpickr("#dobPicker", {
+          dateFormat: "Y-m-d",
+          defaultDate: "1998-06-15",
+          maxDate: new Date(),
+          allowInput: true,
+          disableMobile: false,
+        });
+      });
+
+      /* ── Load sidebar + navbar ───────────────────────────────────── */
+      document.addEventListener("DOMContentLoaded", () => {
+        fetch("../components/student-sidebar.html")
+          .then((r) => r.text())
+          .then((html) => {
+            const el = document.getElementById("sidebar-placeholder");
+            el.innerHTML = html;
+            Alpine.initTree(el);
+            el.querySelectorAll(".sidebar-nav-item").forEach((it) => {
+              it.classList.remove("active");
+              if (it.querySelector("a")?.href.includes("profile"))
+                it.classList.add("active");
+            });
+          });
+
+        fetch("../components/student-navbar.html")
+          .then((r) => r.text())
+          .then((html) => {
+            const el = document.getElementById("navbar-placeholder");
+            el.innerHTML = html;
+            Alpine.initTree(el);
+            const t = document.getElementById("navbarPageTitle");
+            const b = document.getElementById("navbarBreadcrumbCurrent");
+            if (t) t.textContent = "My Profile";
+            if (b) b.textContent = "My Profile";
+          });
+      });
+    </script>
+  </body>
+</html>

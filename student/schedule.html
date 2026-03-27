@@ -1,0 +1,1446 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Schedule — EduLearn Student</title>
+
+    <!-- Bootstrap 5.3 -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    />
+    <!-- Bootstrap Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css"
+    />
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <!-- NProgress -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.css"
+    />
+    <!-- Notyf -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css"
+    />
+    <!-- FullCalendar -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.css"
+    />
+    <!-- Theme -->
+    <link rel="stylesheet" href="../assets/css/theme.css" />
+
+    <style>
+      /* ── Layout ───────────────────────────────────────────────── */
+      body {
+        font-family: "Poppins", sans-serif;
+        background: var(--body-bg);
+        color: var(--body-color);
+      }
+      @media (max-width: 991px) {
+        #main-content {
+          margin-left: 0 !important;
+        }
+      }
+
+      /* ── FullCalendar overrides ───────────────────────────────── */
+      .fc {
+        font-family: "Poppins", sans-serif;
+      }
+      .fc .fc-toolbar-title {
+        font-size: 1.1rem;
+        font-weight: 700;
+      }
+      .fc .fc-button {
+        background: var(--card-bg) !important;
+        border: 1px solid var(--border-color) !important;
+        color: var(--body-color) !important;
+        font-size: 0.8rem !important;
+        font-family: "Poppins", sans-serif !important;
+        font-weight: 500 !important;
+        padding: 6px 14px !important;
+        border-radius: 8px !important;
+        box-shadow: none !important;
+        transition: background 0.15s !important;
+      }
+      .fc .fc-button:hover {
+        background: rgba(13, 110, 253, 0.1) !important;
+        border-color: var(--primary) !important;
+        color: var(--primary) !important;
+      }
+      .fc .fc-button-active,
+      .fc .fc-button-primary:not(:disabled).fc-button-active {
+        background: var(--primary) !important;
+        border-color: var(--primary) !important;
+        color: #fff !important;
+      }
+      .fc .fc-button-group .fc-button {
+        border-radius: 0 !important;
+      }
+      .fc .fc-button-group .fc-button:first-child {
+        border-radius: 8px 0 0 8px !important;
+      }
+      .fc .fc-button-group .fc-button:last-child {
+        border-radius: 0 8px 8px 0 !important;
+      }
+      .fc-theme-standard td,
+      .fc-theme-standard th {
+        border-color: var(--border-color) !important;
+      }
+      .fc-theme-standard .fc-scrollgrid {
+        border-color: var(--border-color) !important;
+      }
+      .fc .fc-col-header-cell {
+        background: var(--card-bg);
+      }
+      .fc .fc-col-header-cell-cushion {
+        font-size: 0.78rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        color: var(--text-muted);
+        text-decoration: none;
+      }
+      .fc .fc-daygrid-day {
+        background: var(--card-bg);
+      }
+      .fc .fc-daygrid-day-number {
+        font-size: 0.82rem;
+        font-weight: 500;
+        color: var(--body-color);
+        text-decoration: none;
+      }
+      .fc .fc-daygrid-day.fc-day-today {
+        background: rgba(13, 110, 253, 0.06) !important;
+      }
+      .fc .fc-daygrid-day.fc-day-today .fc-daygrid-day-number {
+        color: var(--primary);
+        font-weight: 700;
+      }
+      .fc .fc-timegrid-slot {
+        font-size: 0.75rem;
+        color: var(--text-muted);
+      }
+      .fc .fc-timegrid-axis-cushion {
+        font-size: 0.75rem;
+        color: var(--text-muted);
+      }
+      .fc .fc-list-event:hover td {
+        background: rgba(13, 110, 253, 0.05) !important;
+      }
+      .fc .fc-list-day-cushion {
+        background: var(--body-bg) !important;
+        font-size: 0.8rem;
+        color: var(--text-muted);
+      }
+      .fc .fc-list-event-title a {
+        color: var(--body-color);
+        text-decoration: none;
+        font-size: 0.88rem;
+      }
+      .fc .fc-list-table {
+        font-size: 0.85rem;
+      }
+      .fc .fc-list-empty {
+        color: var(--text-muted);
+        font-size: 0.9rem;
+      }
+      .fc-event {
+        cursor: pointer;
+        border: none !important;
+        font-size: 0.78rem !important;
+        font-weight: 500 !important;
+        border-radius: 5px !important;
+      }
+      .fc-event .fc-event-title {
+        font-weight: 500;
+      }
+      .fc-daygrid-event-dot {
+        border-color: inherit !important;
+      }
+
+      /* ── Legend pills ─────────────────────────────────────────── */
+      .legend-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        flex-shrink: 0;
+      }
+      .legend-item {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        font-size: 0.8rem;
+        cursor: pointer;
+        padding: 4px 8px;
+        border-radius: 20px;
+        transition: background 0.15s;
+        user-select: none;
+      }
+      .legend-item:hover {
+        background: rgba(128, 128, 128, 0.08);
+      }
+      .legend-item.muted {
+        opacity: 0.4;
+      }
+
+      /* ── Sidebar panel ────────────────────────────────────────── */
+      .schedule-sidebar {
+        width: 280px;
+        flex-shrink: 0;
+      }
+      @media (max-width: 1199px) {
+        .schedule-sidebar {
+          display: none !important;
+        }
+      }
+
+      /* ── Upcoming event items ─────────────────────────────────── */
+      .upcoming-item {
+        display: flex;
+        gap: 12px;
+        align-items: flex-start;
+        padding: 10px 0;
+        border-bottom: 1px solid var(--border-color);
+      }
+      .upcoming-item:last-child {
+        border-bottom: none;
+      }
+      .upcoming-dot-col {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding-top: 4px;
+      }
+      .upcoming-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+      }
+      .upcoming-line {
+        width: 2px;
+        flex: 1;
+        background: var(--border-color);
+        margin-top: 4px;
+      }
+      .upcoming-title {
+        font-size: 0.85rem;
+        font-weight: 600;
+        margin-bottom: 2px;
+      }
+      .upcoming-meta {
+        font-size: 0.75rem;
+        color: var(--text-muted);
+      }
+
+      /* ── Event detail modal ───────────────────────────────────── */
+      .event-detail-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 5px 14px;
+        border-radius: 20px;
+        font-size: 0.82rem;
+        font-weight: 600;
+      }
+
+      /* ── Add event modal ──────────────────────────────────────── */
+      .type-btn {
+        flex: 1;
+        text-align: center;
+        padding: 10px 6px;
+        border: 2px solid var(--border-color);
+        border-radius: 10px;
+        cursor: pointer;
+        font-size: 0.78rem;
+        font-weight: 600;
+        transition:
+          border-color 0.15s,
+          background 0.15s;
+      }
+      .type-btn:hover {
+        background: rgba(128, 128, 128, 0.06);
+      }
+      .type-btn.selected {
+        border-color: var(--primary);
+        background: rgba(13, 110, 253, 0.08);
+        color: var(--primary);
+      }
+
+      /* ── Calendar wrapper card ────────────────────────────────── */
+      .calendar-card {
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 14px;
+        padding: 20px;
+        flex: 1;
+        min-width: 0;
+      }
+
+      /* ── Mini date strip (mobile upcoming) ───────────────────── */
+      .date-strip {
+        overflow-x: auto;
+        display: flex;
+        gap: 8px;
+        padding-bottom: 4px;
+      }
+      .date-chip {
+        flex-shrink: 0;
+        width: 48px;
+        text-align: center;
+        padding: 8px 4px;
+        border-radius: 10px;
+        border: 1px solid var(--border-color);
+        cursor: pointer;
+        transition: background 0.15s;
+        background: var(--card-bg);
+      }
+      .date-chip:hover,
+      .date-chip.active {
+        background: var(--primary);
+        border-color: var(--primary);
+        color: #fff;
+      }
+      .date-chip .day-num {
+        font-size: 1rem;
+        font-weight: 700;
+        line-height: 1;
+      }
+      .date-chip .day-name {
+        font-size: 0.65rem;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        opacity: 0.7;
+      }
+
+      /* ── Dark mode tweaks ─────────────────────────────────────── */
+      [data-theme="dark"] .fc .fc-daygrid-day {
+        background: var(--card-bg);
+      }
+      [data-theme="dark"] .fc .fc-timegrid-col {
+        background: var(--card-bg);
+      }
+      [data-theme="dark"] .fc .fc-non-business {
+        background: rgba(0, 0, 0, 0.15) !important;
+      }
+    </style>
+  </head>
+
+  <body x-data="themeToggle()" :data-theme="dark ? 'dark' : 'light'">
+    <div
+      id="layout-wrapper"
+      x-data="sidebarState()"
+      style="display: flex; min-height: 100vh"
+    >
+      <div id="sidebar-placeholder"></div>
+      <div style="flex: 1; display: flex; flex-direction: column; min-width: 0">
+        <div id="navbar-placeholder"></div>
+
+        <div
+          id="main-content"
+          :style="'margin-left:' + (collapsed ? 'var(--sidebar-collapsed)' : 'var(--sidebar-width)')"
+          style="
+            transition: margin-left 0.25s ease;
+            padding-top: var(--navbar-height);
+          "
+        >
+          <div class="container-fluid px-4 py-4">
+            <!-- ── Page Header ──────────────────────────────────── -->
+            <div
+              class="d-flex align-items-center justify-content-between mb-3 flex-wrap gap-2"
+            >
+              <div>
+                <h4 class="fw-700 mb-1">Schedule</h4>
+                <p class="text-muted mb-0" style="font-size: 0.85rem">
+                  Your classes, assignments, quizzes and events
+                </p>
+              </div>
+              <div class="d-flex gap-2 flex-wrap align-items-center">
+                <!-- Legend -->
+                <div class="d-flex gap-1 flex-wrap" id="legendContainer"></div>
+                <!-- Add event -->
+                <button
+                  class="btn btn-primary btn-sm"
+                  data-bs-toggle="modal"
+                  data-bs-target="#addEventModal"
+                >
+                  <i class="bi bi-plus-lg me-1"></i>Add Event
+                </button>
+              </div>
+            </div>
+
+            <!-- ── Main layout: calendar + sidebar ─────────────── -->
+            <div class="d-flex gap-3 align-items-start">
+              <!-- Calendar card -->
+              <div class="calendar-card">
+                <div id="mainCalendar"></div>
+              </div>
+
+              <!-- Right sidebar -->
+              <div class="schedule-sidebar d-flex flex-column gap-3">
+                <!-- Upcoming events -->
+                <div
+                  style="
+                    background: var(--card-bg);
+                    border: 1px solid var(--border-color);
+                    border-radius: 14px;
+                    padding: 18px;
+                  "
+                >
+                  <div class="fw-700 mb-3" style="font-size: 0.9rem">
+                    <i class="bi bi-calendar-week me-2 text-primary"></i
+                    >Upcoming (7 days)
+                  </div>
+                  <div id="upcomingList">
+                    <div
+                      class="text-muted text-center py-3"
+                      style="font-size: 0.82rem"
+                    >
+                      Loading…
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Stats mini -->
+                <div
+                  style="
+                    background: var(--card-bg);
+                    border: 1px solid var(--border-color);
+                    border-radius: 14px;
+                    padding: 18px;
+                  "
+                >
+                  <div class="fw-700 mb-3" style="font-size: 0.9rem">
+                    <i class="bi bi-bar-chart-line me-2 text-primary"></i>This
+                    Month
+                  </div>
+                  <div id="monthStats" class="d-flex flex-column gap-2"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- /container -->
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════════
+       EVENT DETAIL MODAL
+  ══════════════════════════════════════════════════════════════ -->
+    <div class="modal fade" id="eventDetailModal" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered">
+        <div
+          class="modal-content"
+          style="
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+          "
+        >
+          <div class="modal-header border-0 pb-0">
+            <div class="d-flex align-items-center gap-3 flex-grow-1">
+              <span id="edTypeBadge" class="event-detail-badge"></span>
+              <button
+                type="button"
+                class="btn-close ms-auto"
+                data-bs-dismiss="modal"
+              ></button>
+            </div>
+          </div>
+          <div class="modal-body pt-2">
+            <h5 class="fw-700 mb-3" id="edTitle"></h5>
+            <dl class="row mb-0" style="font-size: 0.88rem">
+              <dt class="col-4 text-muted">Date</dt>
+              <dd class="col-8" id="edDate"></dd>
+              <dt class="col-4 text-muted">Time</dt>
+              <dd class="col-8" id="edTime"></dd>
+              <dt class="col-4 text-muted">Course</dt>
+              <dd class="col-8" id="edCourse"></dd>
+              <dt class="col-4 text-muted d-none" id="edLocationLabel">
+                Location
+              </dt>
+              <dd class="col-8 d-none" id="edLocation"></dd>
+              <dt class="col-4 text-muted d-none" id="edDescLabel">Notes</dt>
+              <dd class="col-8 d-none" id="edDesc"></dd>
+            </dl>
+          </div>
+          <div class="modal-footer border-0 pt-0">
+            <button class="btn btn-outline-danger btn-sm" id="edDeleteBtn">
+              <i class="bi bi-trash me-1"></i>Delete
+            </button>
+            <button class="btn btn-primary btn-sm" data-bs-dismiss="modal">
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════════
+       ADD EVENT MODAL
+  ══════════════════════════════════════════════════════════════ -->
+    <div class="modal fade" id="addEventModal" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered">
+        <div
+          class="modal-content"
+          style="
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+          "
+        >
+          <div class="modal-header border-0">
+            <h5 class="modal-title fw-700">Add New Event</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <!-- Type picker -->
+            <div class="mb-3">
+              <label class="form-label fw-600" style="font-size: 0.82rem"
+                >Event Type</label
+              >
+              <div class="d-flex gap-2" id="typePickerRow">
+                <div
+                  class="type-btn selected"
+                  data-type="personal"
+                  onclick="selectType(this, 'personal')"
+                >
+                  <div style="font-size: 1.2rem">📝</div>
+                  Personal
+                </div>
+                <div
+                  class="type-btn"
+                  data-type="class"
+                  onclick="selectType(this, 'class')"
+                >
+                  <div style="font-size: 1.2rem">📚</div>
+                  Class
+                </div>
+                <div
+                  class="type-btn"
+                  data-type="exam"
+                  onclick="selectType(this, 'exam')"
+                >
+                  <div style="font-size: 1.2rem">📋</div>
+                  Exam
+                </div>
+                <div
+                  class="type-btn"
+                  data-type="reminder"
+                  onclick="selectType(this, 'reminder')"
+                >
+                  <div style="font-size: 1.2rem">🔔</div>
+                  Reminder
+                </div>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label fw-600" style="font-size: 0.82rem"
+                >Title <span class="text-danger">*</span></label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="newEventTitle"
+                placeholder="Event title…"
+              />
+            </div>
+
+            <div class="row g-2 mb-3">
+              <div class="col-6">
+                <label class="form-label fw-600" style="font-size: 0.82rem"
+                  >Date <span class="text-danger">*</span></label
+                >
+                <input type="date" class="form-control" id="newEventDate" />
+              </div>
+              <div class="col-3">
+                <label class="form-label fw-600" style="font-size: 0.82rem"
+                  >Start</label
+                >
+                <input
+                  type="time"
+                  class="form-control"
+                  id="newEventStart"
+                  value="09:00"
+                />
+              </div>
+              <div class="col-3">
+                <label class="form-label fw-600" style="font-size: 0.82rem"
+                  >End</label
+                >
+                <input
+                  type="time"
+                  class="form-control"
+                  id="newEventEnd"
+                  value="10:00"
+                />
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label fw-600" style="font-size: 0.82rem"
+                >Course (optional)</label
+              >
+              <select class="form-select" id="newEventCourse">
+                <option value="">— None —</option>
+                <option>JavaScript Mastery</option>
+                <option>CSS & Design</option>
+                <option>React Fundamentals</option>
+                <option>Node.js Backend</option>
+                <option>Data Structures</option>
+                <option>Python Basics</option>
+              </select>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label fw-600" style="font-size: 0.82rem"
+                >Location (optional)</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="newEventLocation"
+                placeholder="Zoom / Room 201…"
+              />
+            </div>
+
+            <div class="mb-0">
+              <label class="form-label fw-600" style="font-size: 0.82rem"
+                >Notes (optional)</label
+              >
+              <textarea
+                class="form-control"
+                id="newEventDesc"
+                rows="2"
+                placeholder="Additional notes…"
+              ></textarea>
+            </div>
+          </div>
+          <div class="modal-footer border-0">
+            <button class="btn btn-outline-secondary" data-bs-dismiss="modal">
+              Cancel
+            </button>
+            <button class="btn btn-primary" onclick="saveNewEvent()">
+              <i class="bi bi-plus-lg me-1"></i>Add to Calendar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Scripts ─────────────────────────────────────────────── -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
+      defer
+    ></script>
+    <script src="../assets/js/app.js"></script>
+
+    <script>
+      NProgress.configure({ showSpinner: false });
+      document.addEventListener("DOMContentLoaded", () => NProgress.start());
+      window.addEventListener("load", () => NProgress.done());
+
+      /* ── Event type config ───────────────────────────────────────── */
+      const EVENT_TYPES = {
+        class: {
+          label: "Class",
+          color: "#0d6efd",
+          bg: "rgba(13,110,253,.15)",
+          icon: "bi-camera-video-fill",
+        },
+        assignment: {
+          label: "Assignment",
+          color: "#f59e0b",
+          bg: "rgba(245,158,11,.15)",
+          icon: "bi-file-text-fill",
+        },
+        quiz: {
+          label: "Quiz",
+          color: "#6366f1",
+          bg: "rgba(99,102,241,.15)",
+          icon: "bi-patch-question-fill",
+        },
+        exam: {
+          label: "Exam",
+          color: "#ef4444",
+          bg: "rgba(239,68,68,.15)",
+          icon: "bi-journal-medical",
+        },
+        live: {
+          label: "Live Session",
+          color: "#10b981",
+          bg: "rgba(16,185,129,.15)",
+          icon: "bi-broadcast",
+        },
+        personal: {
+          label: "Personal",
+          color: "#8b5cf6",
+          bg: "rgba(139,92,246,.15)",
+          icon: "bi-person-fill",
+        },
+        reminder: {
+          label: "Reminder",
+          color: "#f97316",
+          bg: "rgba(249,115,22,.15)",
+          icon: "bi-bell-fill",
+        },
+      };
+
+      /* ── Build event dates relative to today ────────────────────── */
+      function rel(days, hour, min = 0) {
+        const d = dayjs().add(days, "day").hour(hour).minute(min).second(0);
+        return d.format("YYYY-MM-DDTHH:mm:ss");
+      }
+      function relEnd(days, hour, min = 0) {
+        return rel(days, hour, min);
+      }
+
+      /* ── Seed events ────────────────────────────────────────────── */
+      let calendarEvents = [
+        // ── Regular classes (recurring weekly) ──
+        {
+          id: "c1",
+          title: "JavaScript Mastery",
+          start: rel(-7, 9),
+          end: rel(-7, 10, 30),
+          extendedProps: {
+            type: "class",
+            course: "JavaScript Mastery",
+            location: "Zoom — Room A",
+            desc: "",
+          },
+        },
+        {
+          id: "c2",
+          title: "JavaScript Mastery",
+          start: rel(-3, 9),
+          end: rel(-3, 10, 30),
+          extendedProps: {
+            type: "class",
+            course: "JavaScript Mastery",
+            location: "Zoom — Room A",
+            desc: "",
+          },
+        },
+        {
+          id: "c3",
+          title: "JavaScript Mastery",
+          start: rel(4, 9),
+          end: rel(4, 10, 30),
+          extendedProps: {
+            type: "class",
+            course: "JavaScript Mastery",
+            location: "Zoom — Room A",
+            desc: "",
+          },
+        },
+        {
+          id: "c4",
+          title: "JavaScript Mastery",
+          start: rel(11, 9),
+          end: rel(11, 10, 30),
+          extendedProps: {
+            type: "class",
+            course: "JavaScript Mastery",
+            location: "Zoom — Room A",
+            desc: "",
+          },
+        },
+
+        {
+          id: "c5",
+          title: "CSS & Design",
+          start: rel(-6, 11),
+          end: rel(-6, 12, 30),
+          extendedProps: {
+            type: "class",
+            course: "CSS & Design",
+            location: "Zoom — Room B",
+            desc: "",
+          },
+        },
+        {
+          id: "c6",
+          title: "CSS & Design",
+          start: rel(-2, 11),
+          end: rel(-2, 12, 30),
+          extendedProps: {
+            type: "class",
+            course: "CSS & Design",
+            location: "Zoom — Room B",
+            desc: "",
+          },
+        },
+        {
+          id: "c7",
+          title: "CSS & Design",
+          start: rel(5, 11),
+          end: rel(5, 12, 30),
+          extendedProps: {
+            type: "class",
+            course: "CSS & Design",
+            location: "Zoom — Room B",
+            desc: "",
+          },
+        },
+        {
+          id: "c8",
+          title: "CSS & Design",
+          start: rel(12, 11),
+          end: rel(12, 12, 30),
+          extendedProps: {
+            type: "class",
+            course: "CSS & Design",
+            location: "Zoom — Room B",
+            desc: "",
+          },
+        },
+
+        {
+          id: "c9",
+          title: "React Fundamentals",
+          start: rel(-5, 14),
+          end: rel(-5, 15, 30),
+          extendedProps: {
+            type: "class",
+            course: "React Fundamentals",
+            location: "Zoom — Room C",
+            desc: "",
+          },
+        },
+        {
+          id: "c10",
+          title: "React Fundamentals",
+          start: rel(-1, 14),
+          end: rel(-1, 15, 30),
+          extendedProps: {
+            type: "class",
+            course: "React Fundamentals",
+            location: "Zoom — Room C",
+            desc: "",
+          },
+        },
+        {
+          id: "c11",
+          title: "React Fundamentals",
+          start: rel(6, 14),
+          end: rel(6, 15, 30),
+          extendedProps: {
+            type: "class",
+            course: "React Fundamentals",
+            location: "Zoom — Room C",
+            desc: "",
+          },
+        },
+        {
+          id: "c12",
+          title: "React Fundamentals",
+          start: rel(13, 14),
+          end: rel(13, 15, 30),
+          extendedProps: {
+            type: "class",
+            course: "React Fundamentals",
+            location: "Zoom — Room C",
+            desc: "",
+          },
+        },
+
+        {
+          id: "c13",
+          title: "Node.js Backend",
+          start: rel(-4, 16),
+          end: rel(-4, 17, 30),
+          extendedProps: {
+            type: "class",
+            course: "Node.js Backend",
+            location: "Zoom — Room D",
+            desc: "",
+          },
+        },
+        {
+          id: "c14",
+          title: "Node.js Backend",
+          start: rel(0, 16),
+          end: rel(0, 17, 30),
+          extendedProps: {
+            type: "class",
+            course: "Node.js Backend",
+            location: "Zoom — Room D",
+            desc: "",
+          },
+        },
+        {
+          id: "c15",
+          title: "Node.js Backend",
+          start: rel(7, 16),
+          end: rel(7, 17, 30),
+          extendedProps: {
+            type: "class",
+            course: "Node.js Backend",
+            location: "Zoom — Room D",
+            desc: "",
+          },
+        },
+
+        // ── Assignments (due dates) ──
+        {
+          id: "a1",
+          title: "DOM Manipulation Project",
+          start: rel(2, 23, 59),
+          extendedProps: {
+            type: "assignment",
+            course: "JavaScript Mastery",
+            location: "",
+            desc: "Submit via course portal",
+          },
+          allDay: true,
+        },
+        {
+          id: "a2",
+          title: "Flexbox Layout Assignment",
+          start: rel(3, 23, 59),
+          extendedProps: {
+            type: "assignment",
+            course: "CSS & Design",
+            location: "",
+            desc: "Include responsive breakpoints",
+          },
+          allDay: true,
+        },
+        {
+          id: "a3",
+          title: "State Management Task",
+          start: rel(5, 23, 59),
+          extendedProps: {
+            type: "assignment",
+            course: "React Fundamentals",
+            location: "",
+            desc: "Redux vs Context API comparison",
+          },
+          allDay: true,
+        },
+        {
+          id: "a4",
+          title: "REST API Project",
+          start: rel(9, 23, 59),
+          extendedProps: {
+            type: "assignment",
+            course: "Node.js Backend",
+            location: "",
+            desc: "Build a CRUD REST API",
+          },
+          allDay: true,
+        },
+
+        // ── Quizzes ──
+        {
+          id: "q1",
+          title: "React Hooks Quiz",
+          start: rel(1, 10),
+          end: rel(1, 10, 25),
+          extendedProps: {
+            type: "quiz",
+            course: "React Fundamentals",
+            location: "Online",
+            desc: "5 questions, 25 mins",
+          },
+        },
+        {
+          id: "q2",
+          title: "Async JS Quiz",
+          start: rel(3, 14),
+          end: rel(3, 14, 20),
+          extendedProps: {
+            type: "quiz",
+            course: "JavaScript Mastery",
+            location: "Online",
+            desc: "5 questions, 20 mins",
+          },
+        },
+        {
+          id: "q3",
+          title: "Node.js Modules Quiz",
+          start: rel(8, 9),
+          end: rel(8, 9, 30),
+          extendedProps: {
+            type: "quiz",
+            course: "Node.js Backend",
+            location: "Online",
+            desc: "5 questions, 30 mins",
+          },
+        },
+
+        // ── Exams ──
+        {
+          id: "e1",
+          title: "JS Midterm Exam",
+          start: rel(6, 9),
+          end: rel(6, 11),
+          extendedProps: {
+            type: "exam",
+            course: "JavaScript Mastery",
+            location: "Online Proctored",
+            desc: "Closed book. 40 questions.",
+          },
+        },
+        {
+          id: "e2",
+          title: "CSS Final Exam",
+          start: rel(14, 10),
+          end: rel(14, 12),
+          extendedProps: {
+            type: "exam",
+            course: "CSS & Design",
+            location: "Online Proctored",
+            desc: "Covers all modules.",
+          },
+        },
+
+        // ── Live sessions ──
+        {
+          id: "l1",
+          title: "Live Q&A — JS Workshop",
+          start: rel(0, 18),
+          end: rel(0, 19),
+          extendedProps: {
+            type: "live",
+            course: "JavaScript Mastery",
+            location: "Zoom Webinar",
+            desc: "Ask your questions live",
+          },
+        },
+        {
+          id: "l2",
+          title: "Live Code Review",
+          start: rel(4, 17),
+          end: rel(4, 18),
+          extendedProps: {
+            type: "live",
+            course: "React Fundamentals",
+            location: "Zoom Webinar",
+            desc: "Group code walkthrough",
+          },
+        },
+        {
+          id: "l3",
+          title: "Backend AMA Session",
+          start: rel(10, 18),
+          end: rel(10, 19, 30),
+          extendedProps: {
+            type: "live",
+            course: "Node.js Backend",
+            location: "Zoom Webinar",
+            desc: "Ask Me Anything",
+          },
+        },
+
+        // ── Personal / reminders ──
+        {
+          id: "p1",
+          title: "Study Session — DSA",
+          start: rel(1, 20),
+          end: rel(1, 21, 30),
+          extendedProps: {
+            type: "personal",
+            course: "",
+            location: "Home",
+            desc: "Practice binary trees",
+          },
+        },
+        {
+          id: "p2",
+          title: "Review CSS notes",
+          start: rel(2, 19),
+          end: rel(2, 20),
+          extendedProps: {
+            type: "personal",
+            course: "",
+            location: "",
+            desc: "",
+          },
+        },
+        {
+          id: "r1",
+          title: "Submit Node.js project",
+          start: rel(9, 8),
+          extendedProps: {
+            type: "reminder",
+            course: "Node.js Backend",
+            location: "",
+            desc: "Don't forget to submit!",
+          },
+        },
+      ];
+
+      /* ── FullCalendar instance ───────────────────────────────────── */
+      let calendar = null;
+      let selectedNewType = "personal";
+      let activeFilters = new Set(Object.keys(EVENT_TYPES));
+
+      function eventColor(type) {
+        return EVENT_TYPES[type]?.color || "#0d6efd";
+      }
+
+      function mapEvents() {
+        return calendarEvents
+          .filter((ev) => activeFilters.has(ev.extendedProps.type))
+          .map((ev) => ({
+            ...ev,
+            backgroundColor: eventColor(ev.extendedProps.type),
+            borderColor: eventColor(ev.extendedProps.type),
+            textColor: "#fff",
+          }));
+      }
+
+      document.addEventListener("DOMContentLoaded", () => {
+        buildLegend();
+        initCalendar();
+        renderUpcoming();
+        renderMonthStats();
+
+        // Set today's date as default for add-event modal
+        document.getElementById("newEventDate").value =
+          dayjs().format("YYYY-MM-DD");
+      });
+
+      /* ── Init FullCalendar ───────────────────────────────────────── */
+      function initCalendar() {
+        const el = document.getElementById("mainCalendar");
+        calendar = new FullCalendar.Calendar(el, {
+          initialView: "dayGridMonth",
+          headerToolbar: {
+            left: "prev,next today",
+            center: "title",
+            right: "dayGridMonth,timeGridWeek,timeGridDay,listWeek",
+          },
+          buttonText: {
+            today: "Today",
+            month: "Month",
+            week: "Week",
+            day: "Day",
+            list: "List",
+          },
+          height: "auto",
+          firstDay: 1, // Monday
+          nowIndicator: true,
+          editable: false,
+          selectable: true,
+          events: mapEvents(),
+
+          // Date click → open add modal pre-filled
+          dateClick(info) {
+            document.getElementById("newEventDate").value = info.dateStr;
+            new bootstrap.Modal(
+              document.getElementById("addEventModal"),
+            ).show();
+          },
+
+          // Event click → detail modal
+          eventClick(info) {
+            openEventDetail(info.event);
+          },
+
+          // Style event content
+          eventContent(arg) {
+            const type = arg.event.extendedProps.type;
+            const icon = EVENT_TYPES[type]?.icon || "bi-circle-fill";
+            return {
+              html: `<div class="d-flex align-items-center gap-1 px-1 py-0" style="overflow:hidden;">
+          <i class="bi ${icon}" style="font-size:.65rem; flex-shrink:0;"></i>
+          <span style="overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${arg.event.title}</span>
+        </div>`,
+            };
+          },
+        });
+        calendar.render();
+      }
+
+      /* ── Legend ──────────────────────────────────────────────────── */
+      function buildLegend() {
+        const container = document.getElementById("legendContainer");
+        container.innerHTML = Object.entries(EVENT_TYPES)
+          .map(
+            ([key, cfg]) => `
+      <div class="legend-item" data-type="${key}" onclick="toggleFilter('${key}', this)">
+        <span class="legend-dot" style="background:${cfg.color};"></span>
+        <span>${cfg.label}</span>
+      </div>
+    `,
+          )
+          .join("");
+      }
+
+      function toggleFilter(type, el) {
+        if (activeFilters.has(type)) {
+          activeFilters.delete(type);
+          el.classList.add("muted");
+        } else {
+          activeFilters.add(type);
+          el.classList.remove("muted");
+        }
+        calendar.removeAllEvents();
+        calendar.addEventSource(mapEvents());
+        renderUpcoming();
+      }
+
+      /* ── Event detail modal ──────────────────────────────────────── */
+      let activeEventId = null;
+
+      function openEventDetail(ev) {
+        activeEventId = ev.id;
+        const type = ev.extendedProps.type;
+        const cfg = EVENT_TYPES[type] || EVENT_TYPES.personal;
+        const start = ev.start;
+        const end = ev.end;
+
+        document.getElementById("edTypeBadge").innerHTML =
+          `<i class="bi ${cfg.icon}"></i> ${cfg.label}`;
+        document.getElementById("edTypeBadge").style.cssText =
+          `background:${cfg.bg}; color:${cfg.color};`;
+        document.getElementById("edTitle").textContent = ev.title;
+        document.getElementById("edDate").textContent =
+          dayjs(start).format("dddd, MMMM D, YYYY");
+        document.getElementById("edTime").textContent = ev.allDay
+          ? "All day (due date)"
+          : dayjs(start).format("h:mm A") +
+            (end ? " – " + dayjs(end).format("h:mm A") : "");
+        document.getElementById("edCourse").textContent =
+          ev.extendedProps.course || "—";
+
+        const loc = ev.extendedProps.location;
+        const desc = ev.extendedProps.desc;
+        ["edLocationLabel", "edLocation"].forEach((id) =>
+          document.getElementById(id).classList.toggle("d-none", !loc),
+        );
+        ["edDescLabel", "edDesc"].forEach((id) =>
+          document.getElementById(id).classList.toggle("d-none", !desc),
+        );
+        if (loc) document.getElementById("edLocation").textContent = loc;
+        if (desc) document.getElementById("edDesc").textContent = desc;
+
+        document.getElementById("edDeleteBtn").onclick = () =>
+          deleteEvent(activeEventId);
+
+        new bootstrap.Modal(document.getElementById("eventDetailModal")).show();
+      }
+
+      function deleteEvent(id) {
+        window
+          .lmsConfirm({
+            title: "Delete Event?",
+            text: "This event will be removed from your calendar.",
+            icon: "warning",
+            confirmButtonText: "Delete",
+            confirmButtonColor: "#ef4444",
+          })
+          .then((r) => {
+            if (!r.isConfirmed) return;
+            calendarEvents = calendarEvents.filter((e) => e.id !== id);
+            calendar.removeAllEvents();
+            calendar.addEventSource(mapEvents());
+            bootstrap.Modal.getInstance(
+              document.getElementById("eventDetailModal"),
+            )?.hide();
+            renderUpcoming();
+            renderMonthStats();
+            window.lmsNotify.success("Event deleted.");
+          });
+      }
+
+      /* ── Add event ───────────────────────────────────────────────── */
+      function selectType(el, type) {
+        document
+          .querySelectorAll(".type-btn")
+          .forEach((b) => b.classList.remove("selected"));
+        el.classList.add("selected");
+        selectedNewType = type;
+      }
+
+      function saveNewEvent() {
+        const title = document.getElementById("newEventTitle").value.trim();
+        const date = document.getElementById("newEventDate").value;
+        const start = document.getElementById("newEventStart").value;
+        const end = document.getElementById("newEventEnd").value;
+        const course = document.getElementById("newEventCourse").value;
+        const loc = document.getElementById("newEventLocation").value.trim();
+        const desc = document.getElementById("newEventDesc").value.trim();
+
+        if (!title) {
+          window.lmsNotify.error("Please enter an event title.");
+          return;
+        }
+        if (!date) {
+          window.lmsNotify.error("Please select a date.");
+          return;
+        }
+
+        const newId = "u" + Date.now();
+        calendarEvents.push({
+          id: newId,
+          title,
+          start: `${date}T${start}`,
+          end: `${date}T${end}`,
+          extendedProps: { type: selectedNewType, course, location: loc, desc },
+        });
+
+        calendar.removeAllEvents();
+        calendar.addEventSource(mapEvents());
+        renderUpcoming();
+        renderMonthStats();
+
+        // Reset form
+        document.getElementById("newEventTitle").value = "";
+        document.getElementById("newEventLocation").value = "";
+        document.getElementById("newEventDesc").value = "";
+        document.getElementById("newEventCourse").value = "";
+
+        bootstrap.Modal.getInstance(
+          document.getElementById("addEventModal"),
+        )?.hide();
+        window.lmsNotify.success("Event added to calendar!");
+      }
+
+      /* ── Upcoming events panel ───────────────────────────────────── */
+      function renderUpcoming() {
+        const now = dayjs();
+        const end7 = now.add(7, "day");
+        const upcoming = calendarEvents
+          .filter((ev) => {
+            if (!activeFilters.has(ev.extendedProps.type)) return false;
+            const d = dayjs(ev.start);
+            return d.isAfter(now) && d.isBefore(end7);
+          })
+          .sort((a, b) => dayjs(a.start) - dayjs(b.start))
+          .slice(0, 8);
+
+        const container = document.getElementById("upcomingList");
+        if (!upcoming.length) {
+          container.innerHTML = `<div class="text-center text-muted py-3" style="font-size:.82rem;">
+        <i class="bi bi-calendar-check d-block mb-1" style="font-size:1.5rem;"></i>
+        No events in the next 7 days
+      </div>`;
+          return;
+        }
+
+        container.innerHTML = upcoming
+          .map((ev, i) => {
+            const type = ev.extendedProps.type;
+            const cfg = EVENT_TYPES[type];
+            const d = dayjs(ev.start);
+            const isToday = d.isSame(now, "day");
+            const label = isToday ? "Today" : d.format("ddd, MMM D");
+            const time = ev.allDay ? "Due" : d.format("h:mm A");
+            return `
+        <div class="upcoming-item">
+          <div class="upcoming-dot-col">
+            <div class="upcoming-dot" style="background:${cfg.color};"></div>
+            ${i < upcoming.length - 1 ? '<div class="upcoming-line" style="min-height:24px;"></div>' : ""}
+          </div>
+          <div class="flex-grow-1">
+            <div class="upcoming-title">${ev.title}</div>
+            <div class="upcoming-meta">
+              <span style="color:${cfg.color}; font-weight:600;">${label}</span>
+              · ${time}
+              ${ev.extendedProps.course ? `· <span>${ev.extendedProps.course}</span>` : ""}
+            </div>
+          </div>
+        </div>
+      `;
+          })
+          .join("");
+      }
+
+      /* ── Month stats ─────────────────────────────────────────────── */
+      function renderMonthStats() {
+        const now = dayjs();
+        const start = now.startOf("month");
+        const end = now.endOf("month");
+        const inMonth = calendarEvents.filter((ev) => {
+          const d = dayjs(ev.start);
+          return d.isAfter(start) && d.isBefore(end);
+        });
+
+        const counts = {};
+        Object.keys(EVENT_TYPES).forEach((k) => (counts[k] = 0));
+        inMonth.forEach((ev) => {
+          counts[ev.extendedProps.type] =
+            (counts[ev.extendedProps.type] || 0) + 1;
+        });
+
+        document.getElementById("monthStats").innerHTML = Object.entries(
+          EVENT_TYPES,
+        )
+          .filter(([k]) => counts[k] > 0)
+          .map(
+            ([k, cfg]) => `
+        <div class="d-flex align-items-center justify-content-between">
+          <div class="d-flex align-items-center gap-2">
+            <span style="width:8px;height:8px;border-radius:50%;background:${cfg.color};display:inline-block;"></span>
+            <span style="font-size:.82rem;">${cfg.label}</span>
+          </div>
+          <span class="badge rounded-pill" style="background:${cfg.bg}; color:${cfg.color}; font-size:.75rem;">${counts[k]}</span>
+        </div>
+      `,
+          )
+          .join("");
+      }
+
+      /* ── Dark mode: refresh calendar ─────────────────────────────── */
+      new MutationObserver(() => {
+        if (calendar) {
+          calendar.removeAllEvents();
+          calendar.addEventSource(mapEvents());
+        }
+      }).observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ["data-theme"],
+      });
+
+      /* ── Load sidebar + navbar ───────────────────────────────────── */
+      document.addEventListener("DOMContentLoaded", () => {
+        fetch("../components/student-sidebar.html")
+          .then((r) => r.text())
+          .then((html) => {
+            const el = document.getElementById("sidebar-placeholder");
+            el.innerHTML = html;
+            Alpine.initTree(el);
+            el.querySelectorAll(".sidebar-nav-item").forEach((it) => {
+              it.classList.remove("active");
+              if (it.querySelector("a")?.href.includes("schedule"))
+                it.classList.add("active");
+            });
+          });
+
+        fetch("../components/student-navbar.html")
+          .then((r) => r.text())
+          .then((html) => {
+            const el = document.getElementById("navbar-placeholder");
+            el.innerHTML = html;
+            Alpine.initTree(el);
+            const t = document.getElementById("navbarPageTitle");
+            const b = document.getElementById("navbarBreadcrumbCurrent");
+            if (t) t.textContent = "Schedule";
+            if (b) b.textContent = "Schedule";
+          });
+      });
+    </script>
+  </body>
+</html>

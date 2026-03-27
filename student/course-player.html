@@ -1,0 +1,1958 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Course Player — EduLearn</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/plyr@3/dist/plyr.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.css"
+    />
+    <link rel="stylesheet" href="../assets/css/theme.css" />
+
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+      [x-cloak] {
+        display: none !important;
+      }
+
+      body {
+        margin: 0;
+        font-family: var(--font-family);
+        background: var(--surface-alt);
+        color: var(--text-primary);
+        overflow-x: hidden;
+      }
+
+      /* ═══════════════════════════════════════
+       TOP PLAYER BAR
+       ═══════════════════════════════════════ */
+      .player-topbar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 58px;
+        background: var(--surface);
+        border-bottom: 1px solid var(--border-color);
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 0 16px;
+        z-index: 1000;
+        box-shadow: 0 1px 8px rgba(0, 0, 0, 0.06);
+      }
+      .topbar-back {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        text-decoration: none;
+        color: var(--text-muted);
+        font-size: 0.82rem;
+        font-weight: 600;
+        white-space: nowrap;
+        padding: 5px 10px;
+        border-radius: 8px;
+        transition: all 0.2s;
+        flex-shrink: 0;
+      }
+      .topbar-back:hover {
+        color: var(--primary);
+        background: rgba(13, 110, 253, 0.06);
+      }
+
+      .topbar-divider {
+        width: 1px;
+        height: 28px;
+        background: var(--border-color);
+        flex-shrink: 0;
+      }
+
+      .topbar-course-info {
+        flex: 1;
+        min-width: 0;
+      }
+      .topbar-course-name {
+        font-size: 0.83rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .topbar-lesson-name {
+        font-size: 0.7rem;
+        color: var(--text-muted);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .topbar-progress-wrap {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-shrink: 0;
+      }
+      .topbar-prog-track {
+        width: 120px;
+        height: 4px;
+        background: var(--surface-alt);
+        border-radius: 99px;
+        overflow: hidden;
+      }
+      @media (max-width: 640px) {
+        .topbar-prog-track {
+          display: none;
+        }
+      }
+      .topbar-prog-fill {
+        height: 100%;
+        background: var(--primary-gradient);
+        border-radius: 99px;
+        transition: width 0.5s;
+      }
+      .topbar-prog-pct {
+        font-size: 0.72rem;
+        font-weight: 700;
+        color: var(--text-muted);
+      }
+
+      .topbar-nav-btn {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        padding: 6px 12px;
+        border-radius: 8px;
+        border: 1.5px solid var(--border-color);
+        background: transparent;
+        color: var(--text-secondary);
+        font-size: 0.75rem;
+        font-weight: 600;
+        font-family: var(--font-family);
+        cursor: pointer;
+        white-space: nowrap;
+        flex-shrink: 0;
+        transition: all 0.2s;
+      }
+      .topbar-nav-btn:hover {
+        border-color: var(--primary);
+        color: var(--primary);
+      }
+      .topbar-nav-btn.primary {
+        background: var(--primary-gradient);
+        border-color: transparent;
+        color: #fff;
+      }
+      .topbar-nav-btn.primary:hover {
+        opacity: 0.9;
+      }
+      .topbar-nav-btn:disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
+      }
+
+      .theme-toggle-btn {
+        width: 34px;
+        height: 34px;
+        border-radius: 8px;
+        border: 1.5px solid var(--border-color);
+        background: var(--surface-alt);
+        color: var(--text-muted);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        font-size: 0.9rem;
+        flex-shrink: 0;
+        transition: all 0.2s;
+      }
+      .theme-toggle-btn:hover {
+        border-color: var(--primary);
+        color: var(--primary);
+      }
+
+      /* ═══════════════════════════════════════
+       PLAYER LAYOUT
+       ═══════════════════════════════════════ */
+      .player-layout {
+        display: flex;
+        height: 100vh;
+        padding-top: 58px;
+      }
+
+      /* Left: video + tabs */
+      .player-main {
+        flex: 1;
+        min-width: 0;
+        display: flex;
+        flex-direction: column;
+        overflow-y: auto;
+      }
+
+      /* Right: curriculum sidebar */
+      .curriculum-sidebar {
+        width: 340px;
+        flex-shrink: 0;
+        background: var(--surface);
+        border-left: 1px solid var(--border-color);
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        transition: width var(--transition-base);
+      }
+      .curriculum-sidebar.collapsed {
+        width: 0;
+        overflow: hidden;
+      }
+      @media (max-width: 991px) {
+        .curriculum-sidebar {
+          display: none;
+        }
+      }
+
+      /* ═══════════════════════════════════════
+       VIDEO PLAYER
+       ═══════════════════════════════════════ */
+      .video-wrap {
+        background: #000;
+        position: relative;
+        flex-shrink: 0;
+      }
+      .video-wrap .plyr {
+        --plyr-color-main: #0d6efd;
+        border-radius: 0;
+      }
+
+      /* Lesson complete overlay */
+      .lesson-complete-overlay {
+        position: absolute;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.82);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 14px;
+        z-index: 10;
+      }
+      .complete-check {
+        width: 64px;
+        height: 64px;
+        border-radius: 50%;
+        background: rgba(16, 185, 129, 0.15);
+        border: 2px solid #10b981;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.6rem;
+        color: #10b981;
+        animation: popIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+      }
+      @keyframes popIn {
+        from {
+          transform: scale(0);
+          opacity: 0;
+        }
+        to {
+          transform: scale(1);
+          opacity: 1;
+        }
+      }
+      .complete-text {
+        color: #fff;
+        font-size: 1rem;
+        font-weight: 700;
+      }
+      .complete-sub {
+        color: rgba(255, 255, 255, 0.6);
+        font-size: 0.8rem;
+      }
+      .btn-next-lesson {
+        padding: 10px 24px;
+        border-radius: 10px;
+        border: none;
+        background: var(--primary-gradient);
+        color: #fff;
+        font-size: 0.88rem;
+        font-weight: 700;
+        font-family: var(--font-family);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: opacity 0.2s;
+      }
+      .btn-next-lesson:hover {
+        opacity: 0.9;
+      }
+
+      /* ═══════════════════════════════════════
+       TABS BELOW PLAYER
+       ═══════════════════════════════════════ */
+      .player-tabs-nav {
+        display: flex;
+        gap: 0;
+        border-bottom: 1px solid var(--border-color);
+        background: var(--surface);
+        padding: 0 20px;
+        flex-shrink: 0;
+        overflow-x: auto;
+        scrollbar-width: none;
+      }
+      .player-tabs-nav::-webkit-scrollbar {
+        display: none;
+      }
+      .ptab {
+        padding: 14px 16px;
+        font-size: 0.82rem;
+        font-weight: 600;
+        color: var(--text-muted);
+        border-bottom: 2px solid transparent;
+        cursor: pointer;
+        white-space: nowrap;
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        transition: all 0.2s;
+        flex-shrink: 0;
+        background: none;
+        border-top: none;
+        border-left: none;
+        border-right: none;
+        font-family: var(--font-family);
+      }
+      .ptab:hover {
+        color: var(--text-primary);
+      }
+      .ptab.active {
+        color: var(--primary);
+        border-bottom-color: var(--primary);
+      }
+
+      .tab-content-area {
+        flex: 1;
+        overflow-y: auto;
+        background: var(--surface);
+      }
+      .tab-pane {
+        padding: 22px 24px;
+        display: none;
+      }
+      .tab-pane.active {
+        display: block;
+      }
+      @media (max-width: 600px) {
+        .tab-pane {
+          padding: 16px 14px;
+        }
+      }
+
+      /* Overview */
+      .lesson-title-big {
+        font-size: 1.15rem;
+        font-weight: 800;
+        margin-bottom: 6px;
+      }
+      .lesson-meta-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 14px;
+        font-size: 0.75rem;
+        color: var(--text-muted);
+        margin-bottom: 16px;
+      }
+      .lesson-meta-row i {
+        margin-right: 3px;
+      }
+      .lesson-desc {
+        font-size: 0.85rem;
+        color: var(--text-secondary);
+        line-height: 1.7;
+        margin-bottom: 18px;
+      }
+      .lesson-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+      }
+      .lesson-tag {
+        background: rgba(13, 110, 253, 0.08);
+        color: var(--primary);
+        padding: 3px 10px;
+        border-radius: 99px;
+        font-size: 0.72rem;
+        font-weight: 600;
+      }
+
+      /* Resources */
+      .resource-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 11px 14px;
+        border: 1px solid var(--border-color);
+        border-radius: 10px;
+        margin-bottom: 8px;
+        text-decoration: none;
+        transition:
+          border-color 0.2s,
+          background 0.2s;
+      }
+      .resource-item:hover {
+        border-color: var(--primary);
+        background: rgba(13, 110, 253, 0.04);
+      }
+      .res-icon {
+        width: 38px;
+        height: 38px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1rem;
+        flex-shrink: 0;
+      }
+      .res-name {
+        font-size: 0.82rem;
+        font-weight: 600;
+        color: var(--text-primary);
+      }
+      .res-size {
+        font-size: 0.7rem;
+        color: var(--text-muted);
+      }
+      .res-dl {
+        margin-left: auto;
+        font-size: 0.82rem;
+        color: var(--text-muted);
+        flex-shrink: 0;
+        transition: color 0.2s;
+      }
+      .resource-item:hover .res-dl {
+        color: var(--primary);
+      }
+
+      /* Notes */
+      .notes-area {
+        width: 100%;
+        min-height: 160px;
+        border: 1.5px solid var(--border-color);
+        border-radius: 10px;
+        padding: 12px 14px;
+        background: var(--surface-alt);
+        color: var(--text-primary);
+        font-size: 0.85rem;
+        font-family: var(--font-family);
+        resize: vertical;
+        outline: none;
+        line-height: 1.65;
+        transition: border-color 0.2s;
+        margin-bottom: 10px;
+      }
+      .notes-area:focus {
+        border-color: var(--primary);
+      }
+      .notes-area::placeholder {
+        color: var(--text-muted);
+      }
+      .notes-save-btn {
+        padding: 8px 18px;
+        border-radius: 8px;
+        border: none;
+        background: var(--primary-gradient);
+        color: #fff;
+        font-size: 0.8rem;
+        font-weight: 700;
+        font-family: var(--font-family);
+        cursor: pointer;
+        transition: opacity 0.2s;
+      }
+      .notes-save-btn:hover {
+        opacity: 0.9;
+      }
+      .notes-timestamp {
+        font-size: 0.7rem;
+        color: var(--text-muted);
+      }
+      .saved-note {
+        background: var(--surface-alt);
+        border: 1px solid var(--border-color);
+        border-radius: 10px;
+        padding: 12px 14px;
+        margin-bottom: 8px;
+      }
+      .saved-note-ts {
+        font-size: 0.67rem;
+        color: var(--text-muted);
+        margin-bottom: 4px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .saved-note-text {
+        font-size: 0.82rem;
+        color: var(--text-secondary);
+        line-height: 1.55;
+      }
+      .del-note-btn {
+        background: none;
+        border: none;
+        color: var(--text-muted);
+        cursor: pointer;
+        font-size: 0.75rem;
+        padding: 0;
+        transition: color 0.2s;
+      }
+      .del-note-btn:hover {
+        color: #ef4444;
+      }
+
+      /* Q&A */
+      .qa-input-wrap {
+        margin-bottom: 20px;
+      }
+      .qa-textarea {
+        width: 100%;
+        padding: 12px 14px;
+        border: 1.5px solid var(--border-color);
+        border-radius: 10px;
+        background: var(--surface-alt);
+        color: var(--text-primary);
+        font-size: 0.83rem;
+        font-family: var(--font-family);
+        outline: none;
+        resize: none;
+        line-height: 1.55;
+        min-height: 80px;
+        transition: border-color 0.2s;
+        margin-bottom: 8px;
+      }
+      .qa-textarea:focus {
+        border-color: var(--primary);
+      }
+      .qa-textarea::placeholder {
+        color: var(--text-muted);
+      }
+      .qa-submit-btn {
+        padding: 8px 18px;
+        border-radius: 8px;
+        border: none;
+        background: var(--primary-gradient);
+        color: #fff;
+        font-size: 0.8rem;
+        font-weight: 700;
+        font-family: var(--font-family);
+        cursor: pointer;
+      }
+
+      .qa-item {
+        padding: 14px 0;
+        border-bottom: 1px solid var(--border-color);
+      }
+      .qa-item:last-child {
+        border-bottom: none;
+      }
+      .qa-author {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 7px;
+      }
+      .qa-avatar {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        object-fit: cover;
+        background: var(--primary);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        font-size: 0.75rem;
+        font-weight: 700;
+      }
+      .qa-name {
+        font-size: 0.78rem;
+        font-weight: 700;
+        color: var(--text-primary);
+      }
+      .qa-time {
+        font-size: 0.67rem;
+        color: var(--text-muted);
+      }
+      .qa-text {
+        font-size: 0.82rem;
+        color: var(--text-secondary);
+        line-height: 1.55;
+        margin-bottom: 8px;
+      }
+      .qa-actions {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .qa-like-btn {
+        background: none;
+        border: none;
+        font-size: 0.72rem;
+        color: var(--text-muted);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        padding: 0;
+        font-family: var(--font-family);
+        transition: color 0.2s;
+      }
+      .qa-like-btn:hover,
+      .qa-like-btn.liked {
+        color: var(--primary);
+      }
+      .qa-reply-btn {
+        background: none;
+        border: none;
+        font-size: 0.72rem;
+        color: var(--text-muted);
+        cursor: pointer;
+        padding: 0;
+        font-family: var(--font-family);
+        transition: color 0.2s;
+      }
+      .qa-reply-btn:hover {
+        color: var(--primary);
+      }
+
+      /* ═══════════════════════════════════════
+       CURRICULUM SIDEBAR
+       ═══════════════════════════════════════ */
+      .curr-header {
+        padding: 14px 16px;
+        border-bottom: 1px solid var(--border-color);
+        flex-shrink: 0;
+      }
+      .curr-title {
+        font-size: 0.88rem;
+        font-weight: 800;
+        color: var(--text-primary);
+        margin-bottom: 3px;
+      }
+      .curr-meta {
+        font-size: 0.7rem;
+        color: var(--text-muted);
+      }
+
+      .curr-prog-row {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: 10px;
+      }
+      .curr-prog-track {
+        flex: 1;
+        height: 5px;
+        background: var(--surface-alt);
+        border-radius: 99px;
+        overflow: hidden;
+      }
+      .curr-prog-fill {
+        height: 100%;
+        background: var(--primary-gradient);
+        border-radius: 99px;
+      }
+      .curr-prog-pct {
+        font-size: 0.7rem;
+        font-weight: 700;
+        color: var(--primary);
+      }
+
+      .curr-body {
+        flex: 1;
+        overflow-y: auto;
+        padding: 8px 0;
+        scrollbar-width: thin;
+        scrollbar-color: var(--border-color) transparent;
+      }
+      .curr-body::-webkit-scrollbar {
+        width: 4px;
+      }
+      .curr-body::-webkit-scrollbar-thumb {
+        background: var(--border-color);
+        border-radius: 4px;
+      }
+
+      /* Section */
+      .curr-section {
+        border-bottom: 1px solid var(--border-color);
+      }
+      .curr-section-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 11px 16px;
+        cursor: pointer;
+        background: none;
+        border: none;
+        width: 100%;
+        text-align: left;
+        font-family: var(--font-family);
+        transition: background 0.15s;
+      }
+      .curr-section-header:hover {
+        background: var(--surface-alt);
+      }
+      .curr-section-name {
+        font-size: 0.8rem;
+        font-weight: 700;
+        color: var(--text-primary);
+      }
+      .curr-section-meta {
+        font-size: 0.67rem;
+        color: var(--text-muted);
+        margin-top: 2px;
+      }
+      .curr-chevron {
+        color: var(--text-muted);
+        font-size: 0.75rem;
+        transition: transform 0.2s;
+        flex-shrink: 0;
+      }
+      .curr-chevron.open {
+        transform: rotate(180deg);
+      }
+
+      /* Lesson rows */
+      .curr-lesson {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 9px 16px 9px 22px;
+        cursor: pointer;
+        transition: background 0.15s;
+        border-left: 3px solid transparent;
+      }
+      .curr-lesson:hover {
+        background: var(--surface-alt);
+      }
+      .curr-lesson.active {
+        background: rgba(13, 110, 253, 0.07);
+        border-left-color: var(--primary);
+      }
+      .curr-lesson.active .lesson-row-title {
+        color: var(--primary);
+      }
+
+      .lesson-row-icon {
+        width: 24px;
+        height: 24px;
+        border-radius: 6px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.65rem;
+        flex-shrink: 0;
+      }
+      .lesson-row-icon.video {
+        background: rgba(13, 110, 253, 0.1);
+        color: #0d6efd;
+      }
+      .lesson-row-icon.quiz {
+        background: rgba(245, 158, 11, 0.1);
+        color: #f59e0b;
+      }
+      .lesson-row-icon.file {
+        background: rgba(16, 185, 129, 0.1);
+        color: #10b981;
+      }
+      .lesson-row-icon.lock {
+        background: rgba(107, 114, 128, 0.1);
+        color: #6b7280;
+      }
+      .lesson-row-icon.done {
+        background: rgba(16, 185, 129, 0.12);
+        color: #10b981;
+      }
+
+      .lesson-row-info {
+        flex: 1;
+        min-width: 0;
+      }
+      .lesson-row-title {
+        font-size: 0.77rem;
+        font-weight: 600;
+        color: var(--text-secondary);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        line-height: 1.3;
+      }
+      .lesson-row-dur {
+        font-size: 0.65rem;
+        color: var(--text-muted);
+      }
+
+      .lesson-check {
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        border: 1.5px solid var(--border-color);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        transition: all 0.2s;
+      }
+      .lesson-check.done {
+        background: #10b981;
+        border-color: #10b981;
+        color: #fff;
+        font-size: 0.55rem;
+      }
+
+      /* ═══════════════════════════════════════
+       MOBILE CURRICULUM TOGGLE
+       ═══════════════════════════════════════ */
+      .mobile-curr-btn {
+        display: none;
+        align-items: center;
+        gap: 6px;
+        padding: 10px 16px;
+        background: var(--surface);
+        border-top: 1px solid var(--border-color);
+        font-size: 0.8rem;
+        font-weight: 700;
+        color: var(--primary);
+        cursor: pointer;
+        border-bottom: 2px solid transparent;
+        border-left: none;
+        border-right: none;
+        font-family: var(--font-family);
+        width: 100%;
+      }
+      @media (max-width: 991px) {
+        .mobile-curr-btn {
+          display: flex;
+        }
+      }
+      .mobile-curr-panel {
+        background: var(--surface);
+        border-top: 1px solid var(--border-color);
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.35s ease;
+      }
+      .mobile-curr-panel.open {
+        max-height: 420px;
+        overflow-y: auto;
+      }
+    </style>
+  </head>
+
+  <body x-data="themeToggle()">
+    <div x-data="coursePlayer()">
+      <!-- ══════════════ TOP BAR ══════════════ -->
+      <header class="player-topbar">
+        <a href="my-courses.html" class="topbar-back">
+          <i class="bi bi-chevron-left"></i>
+          <span class="d-none d-sm-inline">My Courses</span>
+        </a>
+        <div class="topbar-divider"></div>
+
+        <div class="topbar-course-info">
+          <div class="topbar-course-name">
+            Complete Web Development Bootcamp
+          </div>
+          <div class="topbar-lesson-name" x-text="currentLesson.title"></div>
+        </div>
+
+        <div class="topbar-progress-wrap">
+          <div class="topbar-prog-track">
+            <div
+              class="topbar-prog-fill"
+              :style="'width:' + progress + '%'"
+            ></div>
+          </div>
+          <span class="topbar-prog-pct" x-text="progress + '%'"></span>
+        </div>
+
+        <button
+          class="topbar-nav-btn"
+          @click="prevLesson()"
+          :disabled="currentLessonIndex === 0"
+          title="Previous lesson"
+        >
+          <i class="bi bi-skip-start-fill"></i>
+          <span class="d-none d-md-inline">Prev</span>
+        </button>
+        <button
+          class="topbar-nav-btn primary"
+          @click="nextLesson()"
+          :disabled="currentLessonIndex >= allLessons.length - 1"
+        >
+          <span class="d-none d-md-inline">Next</span>
+          <i class="bi bi-skip-end-fill"></i>
+        </button>
+
+        <!-- Theme toggle -->
+        <button
+          class="theme-toggle-btn"
+          @click="toggle()"
+          :title="dark ? 'Light mode' : 'Dark mode'"
+        >
+          <i :class="dark ? 'bi bi-sun-fill' : 'bi bi-moon-fill'"></i>
+        </button>
+      </header>
+
+      <!-- ══════════════ LAYOUT ══════════════ -->
+      <div class="player-layout">
+        <!-- MAIN: video + tabs -->
+        <div class="player-main">
+          <!-- Video -->
+          <div class="video-wrap">
+            <div
+              id="player"
+              data-plyr-provider="youtube"
+              data-plyr-embed-id="dQw4w9WgXcQ"
+            ></div>
+
+            <!-- Lesson complete overlay -->
+            <div
+              class="lesson-complete-overlay"
+              x-show="lessonDone && !overlayDismissed"
+              x-transition
+            >
+              <div class="complete-check"><i class="bi bi-check-lg"></i></div>
+              <div class="complete-text">Lesson Complete! 🎉</div>
+              <div
+                class="complete-sub"
+                x-text="'Up next: ' + nextLessonTitle"
+              ></div>
+              <div class="d-flex gap-2">
+                <button class="btn-next-lesson" @click="nextLesson()">
+                  <i class="bi bi-play-fill"></i> Play Next Lesson
+                </button>
+                <button
+                  style="
+                    padding: 10px 16px;
+                    border-radius: 10px;
+                    border: 1.5px solid rgba(255, 255, 255, 0.3);
+                    background: transparent;
+                    color: #fff;
+                    font-size: 0.8rem;
+                    font-weight: 600;
+                    font-family: var(--font-family);
+                    cursor: pointer;
+                  "
+                  @click="overlayDismissed = true"
+                >
+                  Stay Here
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Mobile curriculum toggle -->
+          <button
+            class="mobile-curr-btn"
+            @click="mobileCurrOpen = !mobileCurrOpen"
+          >
+            <i
+              :class="mobileCurrOpen ? 'bi bi-chevron-up' : 'bi bi-list-ul'"
+            ></i>
+            <span
+              x-text="mobileCurrOpen ? 'Hide Curriculum' : 'Show Curriculum'"
+            ></span>
+            <span
+              style="
+                margin-left: auto;
+                font-size: 0.7rem;
+                color: var(--text-muted);
+                font-weight: 400;
+              "
+              x-text="completedCount + '/' + allLessons.length + ' lessons'"
+            ></span>
+          </button>
+          <div class="mobile-curr-panel" :class="{ open: mobileCurrOpen }">
+            <div x-html="mobileCurrContent"></div>
+          </div>
+
+          <!-- Tabs nav -->
+          <div class="player-tabs-nav">
+            <button
+              class="ptab"
+              :class="{ active: activeTab === 'overview' }"
+              @click="activeTab = 'overview'"
+            >
+              <i class="bi bi-info-circle"></i> Overview
+            </button>
+            <button
+              class="ptab"
+              :class="{ active: activeTab === 'notes' }"
+              @click="activeTab = 'notes'"
+            >
+              <i class="bi bi-pencil"></i> Notes
+              <span
+                x-show="notes.length"
+                style="
+                  background: var(--primary);
+                  color: #fff;
+                  padding: 0 5px;
+                  border-radius: 99px;
+                  font-size: 0.6rem;
+                  margin-left: 2px;
+                "
+                x-text="notes.length"
+              ></span>
+            </button>
+            <button
+              class="ptab"
+              :class="{ active: activeTab === 'qa' }"
+              @click="activeTab = 'qa'"
+            >
+              <i class="bi bi-chat-dots"></i> Q&amp;A
+              <span
+                style="
+                  background: rgba(13, 110, 253, 0.1);
+                  color: var(--primary);
+                  padding: 0 6px;
+                  border-radius: 99px;
+                  font-size: 0.6rem;
+                  margin-left: 2px;
+                "
+                >4</span
+              >
+            </button>
+            <button
+              class="ptab"
+              :class="{ active: activeTab === 'resources' }"
+              @click="activeTab = 'resources'"
+            >
+              <i class="bi bi-folder2-open"></i> Resources
+            </button>
+          </div>
+
+          <!-- Tab content -->
+          <div class="tab-content-area">
+            <!-- Overview -->
+            <div class="tab-pane" :class="{ active: activeTab === 'overview' }">
+              <div class="lesson-title-big" x-text="currentLesson.title"></div>
+              <div class="lesson-meta-row">
+                <span
+                  ><i class="bi bi-play-circle"></i>
+                  <span x-text="currentLesson.duration"></span
+                ></span>
+                <span
+                  ><i class="bi bi-film"></i> Lesson
+                  <span x-text="currentLessonIndex + 1"></span> of
+                  <span x-text="allLessons.length"></span
+                ></span>
+                <span x-show="currentLesson.type === 'video'"
+                  ><i class="bi bi-badge-hd"></i> HD Video</span
+                >
+                <span x-show="currentLesson.type === 'quiz'"
+                  ><i class="bi bi-patch-question"></i> Quiz</span
+                >
+                <span><i class="bi bi-translate"></i> English</span>
+              </div>
+              <p class="lesson-desc" x-text="currentLesson.description"></p>
+              <div class="lesson-tags">
+                <span class="lesson-tag">Web Development</span>
+                <span class="lesson-tag" x-text="currentLesson.section"></span>
+                <span
+                  class="lesson-tag"
+                  x-show="currentLesson.type !== 'quiz'"
+                  x-text="currentLesson.type === 'video' ? 'Video Lecture' : 'Resource'"
+                ></span>
+              </div>
+
+              <!-- Instructor info strip -->
+              <div
+                style="
+                  display: flex;
+                  align-items: center;
+                  gap: 12px;
+                  margin-top: 20px;
+                  padding: 14px;
+                  background: var(--surface-alt);
+                  border-radius: 12px;
+                  border: 1px solid var(--border-color);
+                "
+              >
+                <div
+                  style="
+                    width: 44px;
+                    height: 44px;
+                    border-radius: 50%;
+                    background: linear-gradient(135deg, #0d6efd, #7c3aed);
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    color: #fff;
+                    font-size: 1rem;
+                    font-weight: 700;
+                    flex-shrink: 0;
+                  "
+                >
+                  A
+                </div>
+                <div>
+                  <div
+                    style="
+                      font-size: 0.82rem;
+                      font-weight: 700;
+                      color: var(--text-primary);
+                    "
+                  >
+                    Dr. Angela Yu
+                  </div>
+                  <div style="font-size: 0.7rem; color: var(--text-muted)">
+                    Lead Instructor &bull; 4.8 ⭐ &bull; 50K+ students
+                  </div>
+                </div>
+                <a
+                  href="#"
+                  style="
+                    margin-left: auto;
+                    font-size: 0.75rem;
+                    color: var(--primary);
+                    text-decoration: none;
+                    font-weight: 600;
+                  "
+                  >View Profile →</a
+                >
+              </div>
+            </div>
+
+            <!-- Notes -->
+            <div class="tab-pane" :class="{ active: activeTab === 'notes' }">
+              <div style="margin-bottom: 16px">
+                <div
+                  style="
+                    font-size: 0.88rem;
+                    font-weight: 700;
+                    color: var(--text-primary);
+                    margin-bottom: 12px;
+                  "
+                >
+                  Add a Note
+                </div>
+                <textarea
+                  class="notes-area"
+                  x-model="noteText"
+                  placeholder="Write your notes for this lesson… (e.g., key concepts, questions to revisit)"
+                  rows="4"
+                ></textarea>
+                <div style="display: flex; align-items: center; gap: 10px">
+                  <button
+                    class="notes-save-btn"
+                    @click="saveNote()"
+                    :disabled="!noteText.trim()"
+                  >
+                    <i class="bi bi-save me-1"></i> Save Note
+                  </button>
+                  <span class="notes-timestamp" x-show="notes.length">
+                    <span x-text="notes.length"></span> note<span
+                      x-show="notes.length !== 1"
+                      >s</span
+                    >
+                    for this lesson
+                  </span>
+                </div>
+              </div>
+
+              <!-- Saved notes -->
+              <div x-show="notes.length > 0">
+                <div
+                  style="
+                    font-size: 0.82rem;
+                    font-weight: 700;
+                    color: var(--text-primary);
+                    margin-bottom: 10px;
+                  "
+                >
+                  Saved Notes
+                </div>
+                <template x-for="(note, idx) in notes" :key="idx">
+                  <div class="saved-note">
+                    <div class="saved-note-ts">
+                      <span
+                        ><i class="bi bi-clock me-1"></i
+                        ><span x-text="note.time"></span
+                      ></span>
+                      <button
+                        class="del-note-btn"
+                        @click="deleteNote(idx)"
+                        title="Delete note"
+                      >
+                        <i class="bi bi-trash"></i>
+                      </button>
+                    </div>
+                    <div class="saved-note-text" x-text="note.text"></div>
+                  </div>
+                </template>
+              </div>
+              <div
+                x-show="notes.length === 0"
+                style="
+                  text-align: center;
+                  padding: 30px;
+                  color: var(--text-muted);
+                  font-size: 0.82rem;
+                "
+              >
+                <i
+                  class="bi bi-journal-text"
+                  style="font-size: 2rem; display: block; margin-bottom: 10px"
+                ></i>
+                No notes yet. Start capturing your ideas above.
+              </div>
+            </div>
+
+            <!-- Q&A -->
+            <div class="tab-pane" :class="{ active: activeTab === 'qa' }">
+              <div class="qa-input-wrap">
+                <div
+                  style="
+                    font-size: 0.88rem;
+                    font-weight: 700;
+                    color: var(--text-primary);
+                    margin-bottom: 10px;
+                  "
+                >
+                  Ask a Question
+                </div>
+                <textarea
+                  class="qa-textarea"
+                  x-model="qaText"
+                  placeholder="Have a question about this lesson? Ask here…"
+                ></textarea>
+                <button
+                  class="qa-submit-btn"
+                  @click="submitQuestion()"
+                  :disabled="!qaText.trim()"
+                >
+                  <i class="bi bi-send me-1"></i> Post Question
+                </button>
+              </div>
+
+              <div
+                style="
+                  font-size: 0.82rem;
+                  font-weight: 700;
+                  color: var(--text-primary);
+                  margin-bottom: 12px;
+                "
+              >
+                4 Questions
+              </div>
+              <template x-for="(q, idx) in qaItems" :key="idx">
+                <div class="qa-item">
+                  <div class="qa-author">
+                    <div class="qa-avatar" x-text="q.initials"></div>
+                    <div>
+                      <div class="qa-name" x-text="q.name"></div>
+                      <div class="qa-time" x-text="q.time"></div>
+                    </div>
+                  </div>
+                  <div class="qa-text" x-text="q.text"></div>
+                  <div class="qa-actions">
+                    <button
+                      class="qa-like-btn"
+                      :class="{ liked: q.liked }"
+                      @click="q.liked = !q.liked; q.likes += q.liked ? 1 : -1"
+                    >
+                      <i
+                        :class="q.liked ? 'bi bi-hand-thumbs-up-fill' : 'bi bi-hand-thumbs-up'"
+                      ></i>
+                      <span x-text="q.likes"></span>
+                    </button>
+                    <button
+                      class="qa-reply-btn"
+                      @click="window.lmsNotify?.open({ type: 'info', message: 'Reply feature coming soon!' })"
+                    >
+                      <i class="bi bi-reply me-1"></i> Reply
+                    </button>
+                  </div>
+                </div>
+              </template>
+            </div>
+
+            <!-- Resources -->
+            <div
+              class="tab-pane"
+              :class="{ active: activeTab === 'resources' }"
+            >
+              <div
+                style="
+                  font-size: 0.88rem;
+                  font-weight: 700;
+                  color: var(--text-primary);
+                  margin-bottom: 14px;
+                "
+              >
+                Lesson Resources
+              </div>
+              <a
+                href="#"
+                class="resource-item"
+                @click.prevent="window.lmsNotify?.open({ type: 'info', message: 'Downloading starter-files.zip…' })"
+              >
+                <div
+                  class="res-icon"
+                  style="background: rgba(13, 110, 253, 0.1); color: #0d6efd"
+                >
+                  <i class="bi bi-file-zip-fill"></i>
+                </div>
+                <div>
+                  <div class="res-name">Starter Files</div>
+                  <div class="res-size">ZIP &bull; 2.4 MB</div>
+                </div>
+                <i class="bi bi-download res-dl"></i>
+              </a>
+              <a
+                href="#"
+                class="resource-item"
+                @click.prevent="window.lmsNotify?.open({ type: 'info', message: 'Opening lesson-slides.pdf…' })"
+              >
+                <div
+                  class="res-icon"
+                  style="background: rgba(239, 68, 68, 0.1); color: #ef4444"
+                >
+                  <i class="bi bi-file-pdf-fill"></i>
+                </div>
+                <div>
+                  <div class="res-name">Lesson Slides</div>
+                  <div class="res-size">PDF &bull; 1.1 MB</div>
+                </div>
+                <i class="bi bi-download res-dl"></i>
+              </a>
+              <a
+                href="#"
+                class="resource-item"
+                @click.prevent="window.lmsNotify?.open({ type: 'info', message: 'Opening cheatsheet.pdf…' })"
+              >
+                <div
+                  class="res-icon"
+                  style="background: rgba(16, 185, 129, 0.1); color: #10b981"
+                >
+                  <i class="bi bi-file-text-fill"></i>
+                </div>
+                <div>
+                  <div class="res-name">CSS Cheatsheet</div>
+                  <div class="res-size">PDF &bull; 320 KB</div>
+                </div>
+                <i class="bi bi-download res-dl"></i>
+              </a>
+              <a
+                href="#"
+                class="resource-item"
+                @click.prevent="window.lmsNotify?.open({ type: 'info', message: 'Opening exercise.html…' })"
+              >
+                <div
+                  class="res-icon"
+                  style="background: rgba(245, 158, 11, 0.1); color: #f59e0b"
+                >
+                  <i class="bi bi-filetype-html"></i>
+                </div>
+                <div>
+                  <div class="res-name">Exercise File</div>
+                  <div class="res-size">HTML &bull; 4 KB</div>
+                </div>
+                <i class="bi bi-download res-dl"></i>
+              </a>
+              <div
+                style="
+                  margin-top: 16px;
+                  padding: 12px 14px;
+                  background: rgba(13, 110, 253, 0.06);
+                  border: 1px solid rgba(13, 110, 253, 0.15);
+                  border-radius: 10px;
+                  font-size: 0.78rem;
+                  color: var(--text-secondary);
+                "
+              >
+                <i
+                  class="bi bi-info-circle me-2"
+                  style="color: var(--primary)"
+                ></i>
+                Resources are available for download for the lifetime of the
+                course.
+              </div>
+            </div>
+          </div>
+          <!-- /tab-content-area -->
+        </div>
+        <!-- /player-main -->
+
+        <!-- ══════════════ CURRICULUM SIDEBAR ══════════════ -->
+        <aside class="curriculum-sidebar">
+          <div class="curr-header">
+            <div class="curr-title">Course Curriculum</div>
+            <div class="curr-meta">7 sections &bull; 50 lessons</div>
+            <div class="curr-prog-row">
+              <div class="curr-prog-track">
+                <div
+                  class="curr-prog-fill"
+                  :style="'width:' + progress + '%'"
+                ></div>
+              </div>
+              <span
+                class="curr-prog-pct"
+                x-text="progress + '% complete'"
+              ></span>
+            </div>
+          </div>
+
+          <div class="curr-body">
+            <template x-for="(section, sIdx) in curriculum" :key="sIdx">
+              <div class="curr-section">
+                <button
+                  class="curr-section-header"
+                  @click="section.open = !section.open"
+                >
+                  <div>
+                    <div
+                      class="curr-section-name"
+                      x-text="'Section ' + (sIdx+1) + ': ' + section.title"
+                    ></div>
+                    <div
+                      class="curr-section-meta"
+                      x-text="section.lessons.length + ' lessons &bull; ' + section.duration"
+                    ></div>
+                  </div>
+                  <i
+                    class="bi bi-chevron-down curr-chevron"
+                    :class="{ open: section.open }"
+                  ></i>
+                </button>
+
+                <div x-show="section.open" x-transition>
+                  <template
+                    x-for="(lesson, lIdx) in section.lessons"
+                    :key="lesson.globalIdx"
+                  >
+                    <div
+                      class="curr-lesson"
+                      :class="{ active: lesson.globalIdx === currentLessonIndex }"
+                      @click="jumpToLesson(lesson.globalIdx)"
+                    >
+                      <div
+                        class="lesson-row-icon"
+                        :class="lesson.completed ? 'done' : lesson.type"
+                      >
+                        <i
+                          :class="lesson.completed ? 'bi bi-check-lg' : lesson.type === 'video' ? 'bi bi-play-fill' : lesson.type === 'quiz' ? 'bi bi-question-lg' : lesson.type === 'lock' ? 'bi bi-lock-fill' : 'bi bi-file-earmark-text'"
+                        ></i>
+                      </div>
+                      <div class="lesson-row-info">
+                        <div
+                          class="lesson-row-title"
+                          x-text="lesson.title"
+                        ></div>
+                        <div
+                          class="lesson-row-dur"
+                          x-text="lesson.duration"
+                        ></div>
+                      </div>
+                      <div
+                        class="lesson-check"
+                        :class="{ done: lesson.completed }"
+                      >
+                        <i class="bi bi-check-lg" x-show="lesson.completed"></i>
+                      </div>
+                    </div>
+                  </template>
+                </div>
+              </div>
+            </template>
+          </div>
+          <!-- /curr-body -->
+        </aside>
+      </div>
+      <!-- /player-layout -->
+    </div>
+    <!-- /x-data coursePlayer -->
+
+    <!-- ═══════════════════ SCRIPTS ═══════════════════ -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/plyr@3/dist/plyr.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.js"></script>
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
+    ></script>
+    <script src="../assets/js/app.js"></script>
+
+    <script>
+      NProgress.configure({ showSpinner: false });
+      document.addEventListener("DOMContentLoaded", () => NProgress.start());
+      window.addEventListener("load", () => NProgress.done());
+
+      /* ── Plyr init ──────────────────────────────── */
+      let plyrPlayer = null;
+      window.addEventListener("load", () => {
+        const el = document.getElementById("player");
+        if (el && typeof Plyr !== "undefined") {
+          plyrPlayer = new Plyr(el, {
+            controls: [
+              "play-large",
+              "rewind",
+              "play",
+              "fast-forward",
+              "progress",
+              "current-time",
+              "duration",
+              "mute",
+              "volume",
+              "captions",
+              "settings",
+              "pip",
+              "airplay",
+              "fullscreen",
+            ],
+            youtube: { noCookie: true, rel: 0, showinfo: 0, iv_load_policy: 3 },
+            tooltips: { controls: true },
+          });
+          plyrPlayer.on("ended", () => {
+            window.dispatchEvent(new CustomEvent("plyr-ended"));
+          });
+        }
+      });
+
+      /* ── Alpine component ───────────────────────── */
+      document.addEventListener("alpine:init", () => {
+        Alpine.data("coursePlayer", () => ({
+          activeTab: "overview",
+          lessonDone: false,
+          overlayDismissed: false,
+          mobileCurrOpen: false,
+          noteText: "",
+          qaText: "",
+
+          notes: [
+            {
+              text: "Remember: CSS specificity order → inline > id > class > element",
+              time: "Lesson 12 · 2 days ago",
+            },
+            {
+              text: "Box model: content → padding → border → margin. Very important for layout!",
+              time: "Lesson 10 · 4 days ago",
+            },
+          ],
+
+          qaItems: [
+            {
+              initials: "JD",
+              name: "John Doe",
+              time: "2 hours ago",
+              text: "Why does flexbox not work inside an inline element? I tried using display:flex on a span but it didn't apply properly.",
+              likes: 8,
+              liked: false,
+            },
+            {
+              initials: "SM",
+              name: "Sarah Miller",
+              time: "Yesterday",
+              text: "Can we use CSS Grid and Flexbox together? Or should we pick one for the whole layout?",
+              likes: 5,
+              liked: false,
+            },
+            {
+              initials: "KP",
+              name: "Kevin Park",
+              time: "3 days ago",
+              text: "The z-index explanation was really helpful. But what happens when two elements have the same z-index?",
+              likes: 12,
+              liked: false,
+            },
+            {
+              initials: "RL",
+              name: "Rachel Lee",
+              time: "a week ago",
+              text: 'Great lecture! Just one thing — you mentioned "stacking context" briefly. Is there a dedicated lesson for that?',
+              likes: 3,
+              liked: false,
+            },
+          ],
+
+          /* ── Curriculum data ── */
+          curriculum: [
+            {
+              title: "Introduction & Setup",
+              duration: "45 min",
+              open: true,
+              lessons: [
+                {
+                  title: "Welcome to the Course!",
+                  duration: "3:14",
+                  type: "video",
+                  completed: true,
+                },
+                {
+                  title: "Course Roadmap Overview",
+                  duration: "5:20",
+                  type: "video",
+                  completed: true,
+                },
+                {
+                  title: "Install VS Code & Extensions",
+                  duration: "8:45",
+                  type: "video",
+                  completed: true,
+                },
+                {
+                  title: "Setup Checklist",
+                  duration: "1:00",
+                  type: "file",
+                  completed: true,
+                },
+              ],
+            },
+            {
+              title: "HTML Fundamentals",
+              duration: "2h 10m",
+              open: true,
+              lessons: [
+                {
+                  title: "HTML Document Structure",
+                  duration: "12:30",
+                  type: "video",
+                  completed: true,
+                },
+                {
+                  title: "Tags, Elements & Attributes",
+                  duration: "15:00",
+                  type: "video",
+                  completed: true,
+                },
+                {
+                  title: "Forms & Input Types",
+                  duration: "18:22",
+                  type: "video",
+                  completed: true,
+                },
+                {
+                  title: "Semantic HTML5",
+                  duration: "14:10",
+                  type: "video",
+                  completed: true,
+                },
+                {
+                  title: "HTML Quiz",
+                  duration: "10 questions",
+                  type: "quiz",
+                  completed: true,
+                },
+              ],
+            },
+            {
+              title: "CSS — Styling the Web",
+              duration: "3h 25m",
+              open: true,
+              lessons: [
+                {
+                  title: "CSS Selectors & Specificity",
+                  duration: "16:44",
+                  type: "video",
+                  completed: true,
+                },
+                {
+                  title: "Box Model Deep Dive",
+                  duration: "20:15",
+                  type: "video",
+                  completed: true,
+                },
+                {
+                  title: "CSS Grid Layout",
+                  duration: "24:00",
+                  type: "video",
+                  completed: false,
+                },
+                {
+                  title: "Flexbox Mastery",
+                  duration: "22:30",
+                  type: "video",
+                  completed: false,
+                },
+                {
+                  title: "CSS Animations & Transitions",
+                  duration: "18:00",
+                  type: "video",
+                  completed: false,
+                },
+                {
+                  title: "CSS Resources Pack",
+                  duration: "Download",
+                  type: "file",
+                  completed: false,
+                },
+              ],
+            },
+            {
+              title: "JavaScript Essentials",
+              duration: "4h 50m",
+              open: false,
+              lessons: [
+                {
+                  title: "Variables, Types & Scope",
+                  duration: "19:00",
+                  type: "video",
+                  completed: false,
+                },
+                {
+                  title: "Functions & Arrow Functions",
+                  duration: "22:00",
+                  type: "video",
+                  completed: false,
+                },
+                {
+                  title: "DOM Manipulation",
+                  duration: "28:00",
+                  type: "video",
+                  completed: false,
+                },
+                {
+                  title: "Events & Callbacks",
+                  duration: "17:30",
+                  type: "video",
+                  completed: false,
+                },
+                {
+                  title: "Promises & Async/Await",
+                  duration: "25:00",
+                  type: "video",
+                  completed: false,
+                },
+                {
+                  title: "JS Quiz",
+                  duration: "15 questions",
+                  type: "quiz",
+                  completed: false,
+                },
+              ],
+            },
+            {
+              title: "React.js Basics",
+              duration: "3h 15m",
+              open: false,
+              lessons: [
+                {
+                  title: "React Intro & JSX",
+                  duration: "15:00",
+                  type: "video",
+                  completed: false,
+                },
+                {
+                  title: "Props & State",
+                  duration: "20:00",
+                  type: "video",
+                  completed: false,
+                },
+                {
+                  title: "Hooks Overview",
+                  duration: "25:00",
+                  type: "video",
+                  completed: false,
+                },
+                {
+                  title: "Building Your First App",
+                  duration: "40:00",
+                  type: "video",
+                  completed: false,
+                },
+              ],
+            },
+            {
+              title: "Backend with Node.js",
+              duration: "2h 40m",
+              open: false,
+              lessons: [
+                {
+                  title: "Node.js Intro",
+                  duration: "12:00",
+                  type: "lock",
+                  completed: false,
+                },
+                {
+                  title: "Express Framework",
+                  duration: "20:00",
+                  type: "lock",
+                  completed: false,
+                },
+                {
+                  title: "REST APIs",
+                  duration: "28:00",
+                  type: "lock",
+                  completed: false,
+                },
+              ],
+            },
+            {
+              title: "Final Project & Deployment",
+              duration: "1h 30m",
+              open: false,
+              lessons: [
+                {
+                  title: "Project Setup",
+                  duration: "10:00",
+                  type: "lock",
+                  completed: false,
+                },
+                {
+                  title: "Deploy to Netlify",
+                  duration: "15:00",
+                  type: "lock",
+                  completed: false,
+                },
+                {
+                  title: "Course Completion",
+                  duration: "5:00",
+                  type: "lock",
+                  completed: false,
+                },
+              ],
+            },
+          ],
+
+          /* ── Derived state ── */
+          allLessons: [],
+          currentLessonIndex: 12, // CSS Grid Layout (0-indexed)
+
+          get currentLesson() {
+            return this.allLessons[this.currentLessonIndex] || {};
+          },
+          get completedCount() {
+            return this.allLessons.filter((l) => l.completed).length;
+          },
+          get progress() {
+            if (!this.allLessons.length) return 0;
+            return Math.round(
+              (this.completedCount / this.allLessons.length) * 100,
+            );
+          },
+          get nextLessonTitle() {
+            const next = this.allLessons[this.currentLessonIndex + 1];
+            return next ? next.title : "End of course";
+          },
+
+          init() {
+            // Flatten all lessons with global index
+            let idx = 0;
+            this.curriculum.forEach((section) => {
+              section.lessons.forEach((lesson) => {
+                lesson.globalIdx = idx++;
+                lesson.section = section.title;
+              });
+            });
+            // Build flat list
+            this.allLessons = this.curriculum.flatMap((s) => s.lessons);
+
+            // Listen for Plyr ended event
+            window.addEventListener("plyr-ended", () => {
+              this.lessonDone = true;
+              this.overlayDismissed = false;
+              this.markCurrentComplete();
+            });
+          },
+
+          jumpToLesson(idx) {
+            this.currentLessonIndex = idx;
+            this.lessonDone = false;
+            this.overlayDismissed = false;
+            this.mobileCurrOpen = false;
+            window.lmsNotify?.open({
+              type: "info",
+              message: `Now playing: ${this.allLessons[idx]?.title}`,
+            });
+            // In a real app, update Plyr source here
+          },
+
+          nextLesson() {
+            if (this.currentLessonIndex < this.allLessons.length - 1) {
+              this.markCurrentComplete();
+              this.currentLessonIndex++;
+              this.lessonDone = false;
+              this.overlayDismissed = false;
+            }
+          },
+
+          prevLesson() {
+            if (this.currentLessonIndex > 0) {
+              this.currentLessonIndex--;
+              this.lessonDone = false;
+              this.overlayDismissed = false;
+            }
+          },
+
+          markCurrentComplete() {
+            const lesson = this.allLessons[this.currentLessonIndex];
+            if (lesson && !lesson.completed) {
+              lesson.completed = true;
+              window.lmsNotify?.success(`"${lesson.title}" marked complete!`);
+            }
+          },
+
+          saveNote() {
+            if (!this.noteText.trim()) return;
+            this.notes.unshift({
+              text: this.noteText.trim(),
+              time: `Lesson ${this.currentLessonIndex + 1} · just now`,
+            });
+            this.noteText = "";
+            window.lmsNotify?.success("Note saved!");
+          },
+
+          deleteNote(idx) {
+            this.notes.splice(idx, 1);
+            window.lmsNotify?.open({ type: "info", message: "Note deleted." });
+          },
+
+          submitQuestion() {
+            if (!this.qaText.trim()) return;
+            this.qaItems.unshift({
+              initials: "AJ",
+              name: "Alex Johnson (You)",
+              time: "just now",
+              text: this.qaText.trim(),
+              likes: 0,
+              liked: false,
+            });
+            this.qaText = "";
+            window.lmsNotify?.success("Question posted!");
+          },
+        }));
+      });
+    </script>
+  </body>
+</html>

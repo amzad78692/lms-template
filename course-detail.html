@@ -1,0 +1,2274 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="The Complete JavaScript Developer Bootcamp — Learn modern JavaScript from scratch to advanced. 142 lessons, 28h of content, certificate included."
+    />
+    <title>The Complete JavaScript Developer Bootcamp — EduLearn</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- CSS Libraries -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.css"
+    />
+
+    <!-- Project theme -->
+    <link rel="stylesheet" href="assets/css/theme.css" />
+
+    <style>
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        font-family: var(--font-family);
+        background: var(--surface-alt);
+        color: var(--text-primary);
+      }
+
+      /* NProgress */
+      #nprogress .bar {
+        background: var(--primary) !important;
+      }
+      #nprogress .peg {
+        box-shadow:
+          0 0 10px var(--primary),
+          0 0 5px var(--primary) !important;
+      }
+
+      /* ══════════════════════════════════════════
+       HERO BANNER
+       ══════════════════════════════════════════ */
+      .course-hero {
+        background: #0b0d17;
+        padding: 52px 0 0;
+        position: relative;
+        overflow: hidden;
+      }
+      .course-hero::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(
+          ellipse 70% 60% at 20% 50%,
+          rgba(13, 110, 253, 0.18) 0%,
+          transparent 70%
+        );
+        pointer-events: none;
+      }
+      .course-hero-grid {
+        display: grid;
+        grid-template-columns: 1fr 380px;
+        gap: 48px;
+        align-items: start;
+      }
+      @media (max-width: 991px) {
+        .course-hero-grid {
+          grid-template-columns: 1fr;
+        }
+        .course-hero-card {
+          display: none;
+        }
+      }
+
+      /* Breadcrumb */
+      .hero-breadcrumb {
+        font-size: 0.78rem;
+        margin-bottom: 16px;
+      }
+      .hero-breadcrumb a {
+        color: rgba(255, 255, 255, 0.5);
+        text-decoration: none;
+      }
+      .hero-breadcrumb a:hover {
+        color: #fff;
+      }
+      .hero-breadcrumb span {
+        color: rgba(255, 255, 255, 0.3);
+        margin: 0 5px;
+      }
+      .hero-breadcrumb .current {
+        color: rgba(255, 255, 255, 0.7);
+      }
+
+      /* Left copy */
+      .course-hero-copy {
+        padding-bottom: 40px;
+      }
+      .hero-cat-badge {
+        display: inline-block;
+        background: rgba(13, 110, 253, 0.25);
+        color: #93c5fd;
+        font-size: 0.72rem;
+        font-weight: 700;
+        padding: 4px 12px;
+        border-radius: 20px;
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+        margin-bottom: 14px;
+        border: 1px solid rgba(13, 110, 253, 0.35);
+      }
+      .hero-title {
+        font-size: clamp(1.5rem, 2.8vw, 2.1rem);
+        font-weight: 800;
+        color: #fff;
+        line-height: 1.3;
+        margin-bottom: 14px;
+      }
+      .hero-subtitle {
+        font-size: 0.95rem;
+        color: rgba(255, 255, 255, 0.65);
+        line-height: 1.7;
+        margin-bottom: 20px;
+      }
+      .hero-badges {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-bottom: 20px;
+      }
+      .hero-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        font-size: 0.72rem;
+        font-weight: 700;
+        padding: 4px 10px;
+        border-radius: 6px;
+        text-transform: uppercase;
+        letter-spacing: 0.4px;
+      }
+      .hero-badge-hot {
+        background: rgba(220, 38, 38, 0.9);
+        color: #fff;
+      }
+      .hero-badge-new {
+        background: rgba(5, 150, 105, 0.9);
+        color: #fff;
+      }
+      .hero-badge-sale {
+        background: rgba(217, 119, 6, 0.9);
+        color: #fff;
+      }
+      .hero-badge-cert {
+        background: rgba(124, 58, 237, 0.9);
+        color: #fff;
+      }
+
+      .hero-rating-row {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-bottom: 18px;
+      }
+      .hero-stars {
+        color: #fbbf24;
+        font-size: 0.9rem;
+      }
+      .hero-rating-val {
+        font-size: 0.95rem;
+        font-weight: 800;
+        color: #fbbf24;
+      }
+      .hero-rating-cnt {
+        font-size: 0.82rem;
+        color: rgba(255, 255, 255, 0.5);
+      }
+      .hero-students {
+        font-size: 0.82rem;
+        color: rgba(255, 255, 255, 0.55);
+        display: flex;
+        align-items: center;
+        gap: 4px;
+      }
+      .hero-instructor-row {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 0.82rem;
+        color: rgba(255, 255, 255, 0.6);
+        margin-bottom: 18px;
+        flex-wrap: wrap;
+      }
+      .hero-instructor-row img {
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        border: 2px solid rgba(255, 255, 255, 0.2);
+      }
+      .hero-instructor-row a {
+        color: #93c5fd;
+        text-decoration: none;
+        font-weight: 600;
+      }
+      .hero-instructor-row a:hover {
+        color: #fff;
+      }
+      .hero-meta-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 14px;
+        font-size: 0.78rem;
+        color: rgba(255, 255, 255, 0.5);
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+        padding-top: 18px;
+      }
+      .hero-meta-item {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+      }
+      .hero-meta-item i {
+        color: rgba(255, 255, 255, 0.35);
+      }
+
+      /* ── Sticky Enrol Card ───────────────────────── */
+      .course-hero-card {
+        position: sticky;
+        top: calc(var(--navbar-height) + 16px);
+        background: var(--surface);
+        border-radius: var(--border-radius-lg);
+        overflow: hidden;
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+        z-index: 10;
+        transform: translateY(28px);
+      }
+      .enrol-preview {
+        position: relative;
+        aspect-ratio: 16/9;
+        background: #000;
+        cursor: pointer;
+        overflow: hidden;
+      }
+      .enrol-preview img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        opacity: 0.72;
+        transition: opacity 0.3s;
+      }
+      .enrol-preview:hover img {
+        opacity: 0.55;
+      }
+      .enrol-play {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+      }
+      .enrol-play-btn {
+        width: 64px;
+        height: 64px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.95);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.4rem;
+        color: var(--primary);
+        box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+        transition: transform 0.2s;
+      }
+      .enrol-preview:hover .enrol-play-btn {
+        transform: scale(1.1);
+      }
+      .enrol-play span {
+        font-size: 0.72rem;
+        color: rgba(255, 255, 255, 0.8);
+        font-weight: 600;
+      }
+
+      .enrol-body {
+        padding: 22px;
+      }
+      .enrol-price {
+        font-size: 1.9rem;
+        font-weight: 900;
+        color: var(--text-primary);
+        line-height: 1;
+        margin-bottom: 4px;
+      }
+      .enrol-price-orig {
+        font-size: 0.95rem;
+        color: var(--text-muted);
+        text-decoration: line-through;
+        margin-left: 8px;
+      }
+      .enrol-price-discount {
+        display: inline-block;
+        background: rgba(220, 38, 38, 0.1);
+        color: #dc2626;
+        font-size: 0.72rem;
+        font-weight: 800;
+        padding: 2px 8px;
+        border-radius: 5px;
+        margin-left: 8px;
+        border: 1px solid rgba(220, 38, 38, 0.2);
+      }
+      .enrol-timer {
+        font-size: 0.75rem;
+        color: #dc2626;
+        margin-bottom: 16px;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+      }
+      .btn-enrol {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        width: 100%;
+        padding: 14px;
+        background: var(--primary-gradient);
+        border: none;
+        border-radius: 10px;
+        color: #fff;
+        font-size: 1rem;
+        font-weight: 700;
+        font-family: var(--font-family);
+        cursor: pointer;
+        transition:
+          opacity 0.2s,
+          transform 0.2s;
+        margin-bottom: 12px;
+        text-decoration: none;
+      }
+      .btn-enrol:hover {
+        opacity: 0.9;
+        transform: translateY(-1px);
+        color: #fff;
+      }
+      .btn-wishlist-card {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        width: 100%;
+        padding: 12px;
+        background: transparent;
+        border: 1.5px solid var(--border-color);
+        border-radius: 10px;
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+        font-weight: 600;
+        font-family: var(--font-family);
+        cursor: pointer;
+        transition: all 0.2s;
+        margin-bottom: 18px;
+      }
+      .btn-wishlist-card:hover,
+      .btn-wishlist-card.wishlisted {
+        border-color: #ef4444;
+        color: #ef4444;
+        background: rgba(239, 68, 68, 0.06);
+      }
+
+      .enrol-includes {
+        font-size: 0.78rem;
+      }
+      .enrol-includes .ei-title {
+        font-size: 0.72rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.7px;
+        color: var(--text-muted);
+        margin-bottom: 10px;
+      }
+      .enrol-includes ul {
+        list-style: none;
+        padding: 0;
+        margin: 0 0 16px;
+      }
+      .enrol-includes ul li {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 5px 0;
+        color: var(--text-secondary);
+        font-size: 0.8rem;
+      }
+      .enrol-includes ul li i {
+        color: var(--primary);
+        width: 14px;
+        font-size: 0.78rem;
+      }
+
+      .enrol-share {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        padding-top: 14px;
+        border-top: 1px solid var(--border-color);
+      }
+      .enrol-share-btn {
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        border: 1.5px solid var(--border-color);
+        background: transparent;
+        color: var(--text-muted);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.82rem;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+      .enrol-share-btn:hover {
+        border-color: var(--primary);
+        color: var(--primary);
+      }
+
+      /* ══════════════════════════════════════════
+       MOBILE ENROL BAR (bottom sticky)
+       ══════════════════════════════════════════ */
+      .mobile-enrol-bar {
+        display: none;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: var(--surface);
+        border-top: 1px solid var(--border-color);
+        padding: 14px 20px;
+        z-index: 1000;
+        gap: 12px;
+        align-items: center;
+        box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.08);
+      }
+      @media (max-width: 991px) {
+        .mobile-enrol-bar {
+          display: flex;
+        }
+      }
+      .mobile-enrol-price {
+        font-size: 1.3rem;
+        font-weight: 900;
+        color: var(--primary);
+      }
+      .mobile-enrol-orig {
+        font-size: 0.78rem;
+        color: var(--text-muted);
+        text-decoration: line-through;
+      }
+
+      /* ══════════════════════════════════════════
+       CONTENT LAYOUT
+       ══════════════════════════════════════════ */
+      .course-body {
+        display: grid;
+        grid-template-columns: 1fr 380px;
+        gap: 48px;
+        padding: 40px 0 80px;
+        align-items: start;
+      }
+      @media (max-width: 991px) {
+        .course-body {
+          grid-template-columns: 1fr;
+        }
+        .course-body-side {
+          display: none;
+        }
+      }
+
+      /* ── Section titles ──────────────────────── */
+      .section-title {
+        font-size: 1.2rem;
+        font-weight: 800;
+        color: var(--text-primary);
+        margin-bottom: 20px;
+        padding-bottom: 12px;
+        border-bottom: 2px solid var(--border-color);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .section-title i {
+        color: var(--primary);
+      }
+
+      /* ── What you'll learn ───────────────────── */
+      .learn-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+      }
+      @media (max-width: 575px) {
+        .learn-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+      .learn-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        font-size: 0.82rem;
+        color: var(--text-secondary);
+        line-height: 1.5;
+      }
+      .learn-item i {
+        color: var(--primary);
+        margin-top: 2px;
+        font-size: 0.78rem;
+        flex-shrink: 0;
+      }
+
+      /* ── Requirements ────────────────────────── */
+      .req-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      .req-list li {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        padding: 6px 0;
+        font-size: 0.85rem;
+        color: var(--text-secondary);
+      }
+      .req-list li::before {
+        content: "›";
+        color: var(--primary);
+        font-size: 1rem;
+        font-weight: 700;
+        line-height: 1.3;
+        flex-shrink: 0;
+      }
+
+      /* ── Curriculum accordion ────────────────── */
+      .curriculum-header-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-bottom: 14px;
+      }
+      .curriculum-summary {
+        font-size: 0.78rem;
+        color: var(--text-muted);
+      }
+      .curriculum-expand-all {
+        font-size: 0.78rem;
+        font-weight: 600;
+        color: var(--primary);
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-family: var(--font-family);
+        padding: 0;
+      }
+      .curriculum-expand-all:hover {
+        text-decoration: underline;
+      }
+
+      .curr-section {
+        border: 1px solid var(--border-color);
+        border-radius: 10px;
+        margin-bottom: 8px;
+        overflow: hidden;
+      }
+      .curr-section-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 14px 18px;
+        background: var(--surface);
+        cursor: pointer;
+        user-select: none;
+        transition: background 0.2s;
+      }
+      .curr-section-header:hover {
+        background: var(--surface-alt);
+      }
+      .curr-section-title {
+        font-size: 0.875rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        flex: 1;
+      }
+      .curr-section-meta {
+        font-size: 0.72rem;
+        color: var(--text-muted);
+        white-space: nowrap;
+        margin: 0 14px;
+      }
+      .curr-section-chevron {
+        font-size: 0.78rem;
+        color: var(--text-muted);
+        transition: transform 0.25s;
+      }
+      .curr-section-chevron.open {
+        transform: rotate(180deg);
+      }
+
+      .curr-lessons {
+        background: var(--surface-alt);
+      }
+      .curr-lesson {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 11px 18px;
+        border-top: 1px solid var(--border-color);
+        font-size: 0.82rem;
+        color: var(--text-secondary);
+        transition: background 0.15s;
+      }
+      .curr-lesson:hover {
+        background: var(--surface);
+      }
+      .curr-lesson-icon {
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.72rem;
+        flex-shrink: 0;
+      }
+      .curr-lesson-icon.video {
+        background: rgba(13, 110, 253, 0.1);
+        color: var(--primary);
+      }
+      .curr-lesson-icon.quiz {
+        background: rgba(124, 58, 237, 0.1);
+        color: #7c3aed;
+      }
+      .curr-lesson-icon.file {
+        background: rgba(5, 150, 105, 0.1);
+        color: #059669;
+      }
+      .curr-lesson-icon.lock {
+        background: var(--surface);
+        color: var(--text-muted);
+        border: 1px solid var(--border-color);
+      }
+
+      .curr-lesson-title {
+        flex: 1;
+      }
+      .curr-lesson-preview {
+        font-size: 0.68rem;
+        font-weight: 700;
+        color: var(--primary);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        background: rgba(13, 110, 253, 0.08);
+        padding: 2px 7px;
+        border-radius: 4px;
+      }
+      .curr-lesson-duration {
+        font-size: 0.72rem;
+        color: var(--text-muted);
+        white-space: nowrap;
+      }
+
+      /* ── Instructor card ─────────────────────── */
+      .instructor-card {
+        display: flex;
+        gap: 20px;
+        padding: 22px;
+        background: var(--surface);
+        border: 1px solid var(--border-color);
+        border-radius: var(--border-radius-lg);
+        margin-bottom: 16px;
+      }
+      .instructor-avatar {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        object-fit: cover;
+        flex-shrink: 0;
+        border: 3px solid var(--border-color);
+      }
+      .instructor-name {
+        font-size: 1rem;
+        font-weight: 800;
+        color: var(--text-primary);
+        margin-bottom: 3px;
+      }
+      .instructor-title {
+        font-size: 0.78rem;
+        color: var(--text-muted);
+        margin-bottom: 10px;
+      }
+      .instructor-stats-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+        margin-bottom: 12px;
+      }
+      .instructor-stat {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        font-size: 0.78rem;
+        color: var(--text-secondary);
+      }
+      .instructor-stat i {
+        color: var(--primary);
+      }
+      .instructor-bio {
+        font-size: 0.82rem;
+        color: var(--text-secondary);
+        line-height: 1.7;
+        margin: 0;
+      }
+
+      /* ── Reviews ─────────────────────────────── */
+      .reviews-summary {
+        display: flex;
+        gap: 28px;
+        flex-wrap: wrap;
+        align-items: center;
+        background: var(--surface);
+        border: 1px solid var(--border-color);
+        border-radius: var(--border-radius-lg);
+        padding: 22px;
+        margin-bottom: 24px;
+      }
+      .reviews-big-score {
+        text-align: center;
+        flex-shrink: 0;
+      }
+      .reviews-big-score .score-num {
+        font-size: 3.5rem;
+        font-weight: 900;
+        color: var(--primary);
+        line-height: 1;
+      }
+      .reviews-big-score .score-stars {
+        color: #fbbf24;
+        font-size: 1rem;
+      }
+      .reviews-big-score .score-label {
+        font-size: 0.72rem;
+        color: var(--text-muted);
+        margin-top: 3px;
+      }
+
+      .reviews-bars {
+        flex: 1;
+        min-width: 180px;
+      }
+      .review-bar-row {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 6px;
+      }
+      .review-bar-label {
+        font-size: 0.72rem;
+        color: var(--text-muted);
+        white-space: nowrap;
+        width: 30px;
+        text-align: right;
+      }
+      .review-bar-track {
+        flex: 1;
+        height: 6px;
+        background: var(--border-color);
+        border-radius: 10px;
+        overflow: hidden;
+      }
+      .review-bar-fill {
+        height: 100%;
+        background: #fbbf24;
+        border-radius: 10px;
+        transition: width 0.6s ease;
+      }
+      .review-bar-pct {
+        font-size: 0.68rem;
+        color: var(--text-muted);
+        width: 28px;
+      }
+
+      .review-card {
+        background: var(--surface);
+        border: 1px solid var(--border-color);
+        border-radius: var(--border-radius-lg);
+        padding: 20px;
+        margin-bottom: 14px;
+      }
+      .review-card-top {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        margin-bottom: 10px;
+      }
+      .review-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        object-fit: cover;
+        flex-shrink: 0;
+      }
+      .review-name {
+        font-size: 0.875rem;
+        font-weight: 700;
+        color: var(--text-primary);
+      }
+      .review-date {
+        font-size: 0.72rem;
+        color: var(--text-muted);
+      }
+      .review-stars {
+        color: #fbbf24;
+        font-size: 0.75rem;
+        letter-spacing: 1px;
+      }
+      .review-text {
+        font-size: 0.82rem;
+        color: var(--text-secondary);
+        line-height: 1.7;
+        margin: 0;
+      }
+
+      /* ── Tags section ────────────────────────── */
+      .tag-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        font-size: 0.78rem;
+        font-weight: 600;
+        color: var(--text-secondary);
+        background: var(--surface);
+        border: 1px solid var(--border-color);
+        padding: 6px 14px;
+        border-radius: 20px;
+        text-decoration: none;
+        transition: all 0.2s;
+      }
+      .tag-pill:hover {
+        border-color: var(--primary);
+        color: var(--primary);
+        background: rgba(13, 110, 253, 0.05);
+      }
+
+      /* ══════════════════════════════════════════
+       RELATED COURSES SWIPER
+       ══════════════════════════════════════════ */
+      .related-section {
+        background: var(--surface);
+        border-top: 1px solid var(--border-color);
+        padding: 60px 0;
+      }
+      .related-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 28px;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+      .related-head h2 {
+        font-size: 1.4rem;
+        font-weight: 800;
+        color: var(--text-primary);
+        margin: 0;
+      }
+      .swiper-nav-pair {
+        display: flex;
+        gap: 8px;
+      }
+      .swpr-nav-btn {
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        border: 1.5px solid var(--border-color);
+        background: var(--surface);
+        color: var(--text-secondary);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.2s;
+        font-size: 0.85rem;
+      }
+      .swpr-nav-btn:hover {
+        background: var(--primary);
+        border-color: var(--primary);
+        color: #fff;
+      }
+
+      /* Related card (reusing course card styles) */
+      .rc-card {
+        background: var(--surface-alt);
+        border: 1px solid var(--border-color);
+        border-radius: var(--border-radius-lg);
+        overflow: hidden;
+        cursor: pointer;
+        transition:
+          transform 0.3s,
+          box-shadow 0.3s;
+      }
+      .rc-card:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--card-shadow-hover);
+      }
+      .rc-thumb {
+        aspect-ratio: 16/9;
+        overflow: hidden;
+        position: relative;
+        background: #000;
+      }
+      .rc-thumb img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.4s;
+      }
+      .rc-card:hover .rc-thumb img {
+        transform: scale(1.06);
+      }
+      .rc-body {
+        padding: 14px 16px 16px;
+      }
+      .rc-title {
+        font-size: 0.875rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin-bottom: 6px;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+      .rc-instructor {
+        font-size: 0.72rem;
+        color: var(--text-muted);
+        margin-bottom: 8px;
+      }
+      .rc-rating {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        margin-bottom: 10px;
+      }
+      .rc-stars {
+        color: #fbbf24;
+        font-size: 0.7rem;
+      }
+      .rc-rating-val {
+        font-size: 0.78rem;
+        font-weight: 700;
+        color: var(--text-primary);
+      }
+      .rc-rating-cnt {
+        font-size: 0.68rem;
+        color: var(--text-muted);
+      }
+      .rc-footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .rc-price {
+        font-size: 1rem;
+        font-weight: 900;
+        color: var(--primary);
+      }
+      .rc-price-free {
+        color: var(--success);
+      }
+
+      /* ══════════════════════════════════════════
+       STICKY TOC (right column below enrol card)
+       ══════════════════════════════════════════ */
+      .toc-card {
+        background: var(--surface);
+        border: 1px solid var(--border-color);
+        border-radius: var(--border-radius-lg);
+        padding: 20px;
+        margin-top: 20px;
+      }
+      .toc-title {
+        font-size: 0.75rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+        color: var(--text-muted);
+        margin-bottom: 12px;
+      }
+      .toc-link {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 10px;
+        border-radius: 8px;
+        font-size: 0.82rem;
+        color: var(--text-secondary);
+        text-decoration: none;
+        transition:
+          background 0.15s,
+          color 0.15s;
+      }
+      .toc-link:hover,
+      .toc-link.active {
+        background: rgba(13, 110, 253, 0.08);
+        color: var(--primary);
+      }
+      .toc-link i {
+        width: 16px;
+        text-align: center;
+      }
+    </style>
+  </head>
+
+  <body x-data="themeToggle()" :data-theme="theme">
+    <!-- Navbar -->
+    <div id="navbar-ph"></div>
+
+    <!-- ══════════════════════════════════════════════════════
+       HERO BANNER
+       ══════════════════════════════════════════════════════ -->
+    <section class="course-hero" id="course-overview">
+      <div class="container">
+        <div class="course-hero-grid">
+          <!-- LEFT: Copy -->
+          <div class="course-hero-copy">
+            <nav class="hero-breadcrumb">
+              <a href="index.html">Home</a>
+              <span>/</span>
+              <a href="courses.html">Courses</a>
+              <span>/</span>
+              <a href="courses.html?cat=development">Development</a>
+              <span>/</span>
+              <span class="current">JavaScript Bootcamp</span>
+            </nav>
+
+            <span class="hero-cat-badge">Development</span>
+
+            <h1 class="hero-title">
+              The Complete JavaScript Developer Bootcamp
+            </h1>
+            <p class="hero-subtitle">
+              Master modern JavaScript from fundamentals to advanced patterns.
+              Build real-world projects, understand ES2024+, async/await, APIs,
+              and ship production-ready code with confidence.
+            </p>
+
+            <div class="hero-badges">
+              <span class="hero-badge hero-badge-hot"
+                ><i class="bi bi-fire"></i> Bestseller</span
+              >
+              <span class="hero-badge hero-badge-cert"
+                ><i class="bi bi-patch-check"></i> Certificate</span
+              >
+              <span class="hero-badge hero-badge-sale"
+                ><i class="bi bi-tag"></i> 40% Off</span
+              >
+            </div>
+
+            <div class="hero-rating-row">
+              <span class="hero-rating-val">4.9</span>
+              <span class="hero-stars">★★★★★</span>
+              <span class="hero-rating-cnt">(12,400 ratings)</span>
+              <span class="hero-students"
+                ><i class="bi bi-people-fill"></i> 18,200 students</span
+              >
+            </div>
+
+            <div class="hero-instructor-row">
+              <img
+                src="https://placehold.co/28x28/0d6efd/fff?text=DM"
+                alt="David Miller"
+              />
+              Created by <a href="#">David Miller</a> &nbsp;·&nbsp;
+              <i class="bi bi-translate" style="font-size: 0.78rem"></i> English
+              &nbsp;·&nbsp;
+              <i class="bi bi-calendar3" style="font-size: 0.78rem"></i> Last
+              updated Mar 2026
+            </div>
+
+            <div class="hero-meta-row">
+              <span class="hero-meta-item"
+                ><i class="bi bi-play-circle"></i> 142 lessons</span
+              >
+              <span class="hero-meta-item"
+                ><i class="bi bi-clock"></i> 28h 40m total</span
+              >
+              <span class="hero-meta-item"
+                ><i class="bi bi-bar-chart"></i> All levels</span
+              >
+              <span class="hero-meta-item"
+                ><i class="bi bi-phone"></i> Mobile & desktop</span
+              >
+              <span class="hero-meta-item"
+                ><i class="bi bi-download"></i> 24 downloadable resources</span
+              >
+              <span class="hero-meta-item"
+                ><i class="bi bi-infinity"></i> Lifetime access</span
+              >
+            </div>
+          </div>
+
+          <!-- RIGHT: Enrol Card -->
+          <div class="course-hero-card" data-aos="fade-left">
+            <div class="enrol-preview">
+              <img
+                src="https://placehold.co/640x360/0d6efd/ffffff?text=JavaScript"
+                alt="Course preview"
+              />
+              <div class="enrol-play">
+                <div class="enrol-play-btn">
+                  <i class="bi bi-play-fill"></i>
+                </div>
+                <span>Preview this course</span>
+              </div>
+            </div>
+
+            <div class="enrol-body" x-data="enrolCard()">
+              <div class="d-flex align-items-baseline flex-wrap gap-1 mb-2">
+                <span class="enrol-price">$89</span>
+                <span class="enrol-price-orig">$149</span>
+                <span class="enrol-price-discount">40% OFF</span>
+              </div>
+              <div class="enrol-timer">
+                <i class="bi bi-clock-history"></i>
+                <strong>2 days</strong> left at this price!
+              </div>
+
+              <a href="student/dashboard.html" class="btn-enrol">
+                <i class="bi bi-lightning-fill"></i> Enrol Now
+              </a>
+
+              <button
+                class="btn-wishlist-card"
+                :class="{ wishlisted: wishlisted }"
+                @click="toggleWishlist()"
+              >
+                <i :class="wishlisted ? 'bi bi-heart-fill' : 'bi bi-heart'"></i>
+                <span
+                  x-text="wishlisted ? 'Saved to Wishlist' : 'Add to Wishlist'"
+                ></span>
+              </button>
+
+              <div class="enrol-includes">
+                <p class="ei-title">This course includes:</p>
+                <ul>
+                  <li>
+                    <i class="bi bi-camera-video"></i> 28h 40m on-demand video
+                  </li>
+                  <li>
+                    <i class="bi bi-file-earmark-code"></i> 24 coding exercises
+                  </li>
+                  <li>
+                    <i class="bi bi-download"></i> 24 downloadable resources
+                  </li>
+                  <li><i class="bi bi-patch-question"></i> 8 quizzes</li>
+                  <li>
+                    <i class="bi bi-phone"></i> Access on mobile & desktop
+                  </li>
+                  <li><i class="bi bi-infinity"></i> Full lifetime access</li>
+                  <li>
+                    <i class="bi bi-patch-check"></i> Certificate of completion
+                  </li>
+                </ul>
+              </div>
+
+              <div class="enrol-share">
+                <span
+                  style="
+                    font-size: 0.72rem;
+                    color: var(--text-muted);
+                    margin-right: 6px;
+                  "
+                  >Share:</span
+                >
+                <button class="enrol-share-btn" title="Share on Twitter">
+                  <i class="bi bi-twitter-x"></i>
+                </button>
+                <button class="enrol-share-btn" title="Share on LinkedIn">
+                  <i class="bi bi-linkedin"></i>
+                </button>
+                <button
+                  class="enrol-share-btn"
+                  title="Copy link"
+                  @click="copyLink()"
+                >
+                  <i class="bi bi-link-45deg"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════
+       BODY
+       ══════════════════════════════════════════════════════ -->
+    <div class="container">
+      <div class="course-body">
+        <!-- ════════════════════════ LEFT COLUMN ════════════════════════ -->
+        <div>
+          <!-- 1. What you'll learn -->
+          <section id="learn" class="mb-5" data-aos="fade-up">
+            <h2 class="section-title">
+              <i class="bi bi-mortarboard"></i> What You'll Learn
+            </h2>
+            <div class="learn-grid">
+              <div class="learn-item">
+                <i class="bi bi-check-circle-fill"></i> Master ES2024+
+                JavaScript syntax and features
+              </div>
+              <div class="learn-item">
+                <i class="bi bi-check-circle-fill"></i> Build interactive web
+                apps with DOM manipulation
+              </div>
+              <div class="learn-item">
+                <i class="bi bi-check-circle-fill"></i> Work with Promises,
+                async/await and error handling
+              </div>
+              <div class="learn-item">
+                <i class="bi bi-check-circle-fill"></i> Consume REST APIs and
+                handle JSON data
+              </div>
+              <div class="learn-item">
+                <i class="bi bi-check-circle-fill"></i> Understand closures,
+                prototypes, and OOP patterns
+              </div>
+              <div class="learn-item">
+                <i class="bi bi-check-circle-fill"></i> Write clean, testable,
+                and maintainable code
+              </div>
+              <div class="learn-item">
+                <i class="bi bi-check-circle-fill"></i> Use modern tooling: npm,
+                webpack, ESLint
+              </div>
+              <div class="learn-item">
+                <i class="bi bi-check-circle-fill"></i> Deploy projects to
+                GitHub Pages and Netlify
+              </div>
+              <div class="learn-item">
+                <i class="bi bi-check-circle-fill"></i> Debug like a pro using
+                Chrome DevTools
+              </div>
+              <div class="learn-item">
+                <i class="bi bi-check-circle-fill"></i> Apply design patterns in
+                real project scenarios
+              </div>
+            </div>
+          </section>
+
+          <!-- 2. Requirements -->
+          <section id="requirements" class="mb-5" data-aos="fade-up">
+            <h2 class="section-title">
+              <i class="bi bi-list-check"></i> Requirements
+            </h2>
+            <ul class="req-list">
+              <li>Basic understanding of HTML and CSS</li>
+              <li>A computer with internet access (Windows, Mac, or Linux)</li>
+              <li>
+                No prior JavaScript experience needed — we start from zero
+              </li>
+              <li>Willingness to practice and complete the exercises</li>
+            </ul>
+          </section>
+
+          <!-- 3. Curriculum -->
+          <section id="curriculum" class="mb-5" data-aos="fade-up">
+            <h2 class="section-title">
+              <i class="bi bi-journal-code"></i> Course Curriculum
+            </h2>
+            <div class="curriculum-header-row">
+              <span class="curriculum-summary"
+                >12 sections • 142 lessons • 28h 40m total length</span
+              >
+              <button
+                class="curriculum-expand-all"
+                x-data="{ allOpen: false }"
+                @click="allOpen = !allOpen; $dispatch('toggle-all', { open: allOpen })"
+                x-text="allOpen ? 'Collapse All' : 'Expand All'"
+              ></button>
+            </div>
+
+            <!-- Section items with x-data for accordion -->
+            <div
+              x-data="curriculumAccordion()"
+              @toggle-all.window="toggleAll($event.detail.open)"
+            >
+              <template x-for="(sec, si) in sections" :key="si">
+                <div class="curr-section">
+                  <div class="curr-section-header" @click="toggle(si)">
+                    <span class="curr-section-title" x-text="sec.title"></span>
+                    <span
+                      class="curr-section-meta"
+                      x-text="sec.lessons + ' lessons · ' + sec.duration"
+                    ></span>
+                    <i
+                      class="bi bi-chevron-down curr-section-chevron"
+                      :class="{ open: sec.open }"
+                    ></i>
+                  </div>
+                  <div class="curr-lessons" x-show="sec.open" x-transition>
+                    <template x-for="(lesson, li) in sec.items" :key="li">
+                      <div class="curr-lesson">
+                        <div class="curr-lesson-icon" :class="lesson.type">
+                          <i
+                            :class="lesson.type === 'video' ? 'bi bi-play-fill' : lesson.type === 'quiz' ? 'bi bi-question-circle' : lesson.type === 'file' ? 'bi bi-file-earmark-text' : 'bi bi-lock'"
+                          ></i>
+                        </div>
+                        <span
+                          class="curr-lesson-title"
+                          x-text="lesson.title"
+                        ></span>
+                        <span
+                          class="curr-lesson-preview"
+                          x-show="lesson.preview"
+                          >Preview</span
+                        >
+                        <span
+                          class="curr-lesson-duration"
+                          x-text="lesson.duration"
+                        ></span>
+                      </div>
+                    </template>
+                  </div>
+                </div>
+              </template>
+            </div>
+          </section>
+
+          <!-- 4. Instructor -->
+          <section id="instructor" class="mb-5" data-aos="fade-up">
+            <h2 class="section-title">
+              <i class="bi bi-person-badge"></i> Instructor
+            </h2>
+            <div class="instructor-card">
+              <img
+                src="https://placehold.co/80x80/0d6efd/fff?text=DM"
+                alt="David Miller"
+                class="instructor-avatar"
+              />
+              <div>
+                <div class="instructor-name">David Miller</div>
+                <div class="instructor-title">
+                  Senior Full-Stack Engineer · Ex-Google · 12 yrs experience
+                </div>
+                <div class="instructor-stats-row">
+                  <span class="instructor-stat"
+                    ><i class="bi bi-star-fill"></i> 4.9 rating</span
+                  >
+                  <span class="instructor-stat"
+                    ><i class="bi bi-people-fill"></i> 52,000+ students</span
+                  >
+                  <span class="instructor-stat"
+                    ><i class="bi bi-play-btn"></i> 4 courses</span
+                  >
+                  <span class="instructor-stat"
+                    ><i class="bi bi-award"></i> Top Instructor</span
+                  >
+                </div>
+                <p class="instructor-bio">
+                  David is a seasoned full-stack developer with over 12 years of
+                  professional experience at companies including Google, Stripe,
+                  and various high-growth startups. He has a passion for
+                  breaking down complex topics into digestible, practical
+                  lessons. His courses have helped over 52,000 students
+                  worldwide launch their careers in web development.
+                </p>
+              </div>
+            </div>
+          </section>
+
+          <!-- 5. Reviews -->
+          <section id="reviews" class="mb-5" data-aos="fade-up">
+            <h2 class="section-title">
+              <i class="bi bi-star-half"></i> Student Reviews
+            </h2>
+
+            <div class="reviews-summary">
+              <div class="reviews-big-score">
+                <div class="score-num">4.9</div>
+                <div class="score-stars">★★★★★</div>
+                <div class="score-label">Course Rating</div>
+              </div>
+              <div class="reviews-bars">
+                <div class="review-bar-row">
+                  <span class="review-bar-label">5 ★</span>
+                  <div class="review-bar-track">
+                    <div class="review-bar-fill" style="width: 82%"></div>
+                  </div>
+                  <span class="review-bar-pct">82%</span>
+                </div>
+                <div class="review-bar-row">
+                  <span class="review-bar-label">4 ★</span>
+                  <div class="review-bar-track">
+                    <div class="review-bar-fill" style="width: 13%"></div>
+                  </div>
+                  <span class="review-bar-pct">13%</span>
+                </div>
+                <div class="review-bar-row">
+                  <span class="review-bar-label">3 ★</span>
+                  <div class="review-bar-track">
+                    <div class="review-bar-fill" style="width: 3%"></div>
+                  </div>
+                  <span class="review-bar-pct">3%</span>
+                </div>
+                <div class="review-bar-row">
+                  <span class="review-bar-label">2 ★</span>
+                  <div class="review-bar-track">
+                    <div class="review-bar-fill" style="width: 1%"></div>
+                  </div>
+                  <span class="review-bar-pct">1%</span>
+                </div>
+                <div class="review-bar-row">
+                  <span class="review-bar-label">1 ★</span>
+                  <div class="review-bar-track">
+                    <div class="review-bar-fill" style="width: 1%"></div>
+                  </div>
+                  <span class="review-bar-pct">1%</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Review cards -->
+            <div class="review-card" data-aos="fade-up">
+              <div class="review-card-top">
+                <img
+                  src="https://placehold.co/40x40/6366f1/fff?text=AN"
+                  alt="Alex N."
+                  class="review-avatar"
+                />
+                <div>
+                  <div class="review-name">Alex Nguyen</div>
+                  <div class="review-date">March 2026</div>
+                  <div class="review-stars">★★★★★</div>
+                </div>
+              </div>
+              <p class="review-text">
+                This is by far the best JavaScript course I've taken. David's
+                explanations are crystal-clear and the projects are genuinely
+                useful. I landed my first developer job 3 months after
+                completing this course!
+              </p>
+            </div>
+
+            <div class="review-card" data-aos="fade-up">
+              <div class="review-card-top">
+                <img
+                  src="https://placehold.co/40x40/ec4899/fff?text=MR"
+                  alt="Maria R."
+                  class="review-avatar"
+                />
+                <div>
+                  <div class="review-name">Maria Rodriguez</div>
+                  <div class="review-date">February 2026</div>
+                  <div class="review-stars">★★★★★</div>
+                </div>
+              </div>
+              <p class="review-text">
+                Coming from a design background, I was nervous about coding.
+                This course made JavaScript feel approachable. The section on
+                async/await finally clicked for me after years of confusion.
+              </p>
+            </div>
+
+            <div class="review-card" data-aos="fade-up">
+              <div class="review-card-top">
+                <img
+                  src="https://placehold.co/40x40/f59e0b/000?text=TK"
+                  alt="Tom K."
+                  class="review-avatar"
+                />
+                <div>
+                  <div class="review-name">Tom Keller</div>
+                  <div class="review-date">January 2026</div>
+                  <div class="review-stars">★★★★☆</div>
+                </div>
+              </div>
+              <p class="review-text">
+                Excellent content and well-structured curriculum. The coding
+                exercises really reinforce the concepts. Knocked off one star
+                only because I wished the tooling section was longer.
+              </p>
+            </div>
+
+            <button
+              class="btn btn-outline-secondary btn-sm rounded-pill px-4 mt-2"
+              onclick="
+                window.lmsNotify?.open({
+                  type: 'info',
+                  message: 'Loading more reviews…',
+                })
+              "
+            >
+              Show all 12,400 reviews
+            </button>
+          </section>
+
+          <!-- 6. Tags -->
+          <section id="tags" class="mb-5" data-aos="fade-up">
+            <h2 class="section-title"><i class="bi bi-tags"></i> Tags</h2>
+            <div class="d-flex flex-wrap gap-2">
+              <a href="courses.html?q=javascript" class="tag-pill"
+                ><i class="bi bi-hash"></i>JavaScript</a
+              >
+              <a href="courses.html?q=es6" class="tag-pill"
+                ><i class="bi bi-hash"></i>ES6+</a
+              >
+              <a href="courses.html?q=web+development" class="tag-pill"
+                ><i class="bi bi-hash"></i>Web Development</a
+              >
+              <a href="courses.html?q=frontend" class="tag-pill"
+                ><i class="bi bi-hash"></i>Frontend</a
+              >
+              <a href="courses.html?q=dom" class="tag-pill"
+                ><i class="bi bi-hash"></i>DOM</a
+              >
+              <a href="courses.html?q=async" class="tag-pill"
+                ><i class="bi bi-hash"></i>Async/Await</a
+              >
+              <a href="courses.html?q=api" class="tag-pill"
+                ><i class="bi bi-hash"></i>REST API</a
+              >
+              <a href="courses.html?q=node" class="tag-pill"
+                ><i class="bi bi-hash"></i>Node.js</a
+              >
+              <a href="courses.html?cat=development" class="tag-pill"
+                ><i class="bi bi-hash"></i>Programming</a
+              >
+            </div>
+          </section>
+        </div>
+        <!-- /Left column -->
+
+        <!-- ════════════════════════ RIGHT SIDEBAR ════════════════════════ -->
+        <div class="course-body-side">
+          <!-- ToC card (desktop) -->
+          <div class="toc-card">
+            <div class="toc-title">On this page</div>
+            <a href="#learn" class="toc-link"
+              ><i class="bi bi-mortarboard"></i> What you'll learn</a
+            >
+            <a href="#requirements" class="toc-link"
+              ><i class="bi bi-list-check"></i> Requirements</a
+            >
+            <a href="#curriculum" class="toc-link"
+              ><i class="bi bi-journal-code"></i> Curriculum</a
+            >
+            <a href="#instructor" class="toc-link"
+              ><i class="bi bi-person-badge"></i> Instructor</a
+            >
+            <a href="#reviews" class="toc-link"
+              ><i class="bi bi-star-half"></i> Reviews</a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /container -->
+
+    <!-- ══════════════════════════════════════════════════════
+       RELATED COURSES (Swiper)
+       ══════════════════════════════════════════════════════ -->
+    <section class="related-section">
+      <div class="container">
+        <div class="related-head" data-aos="fade-up">
+          <h2>Students Also Bought</h2>
+          <div class="swiper-nav-pair">
+            <button class="swpr-nav-btn" id="relPrev">
+              <i class="bi bi-chevron-left"></i>
+            </button>
+            <button class="swpr-nav-btn" id="relNext">
+              <i class="bi bi-chevron-right"></i>
+            </button>
+          </div>
+        </div>
+
+        <div
+          class="swiper"
+          id="relatedSwiper"
+          data-aos="fade-up"
+          data-aos-delay="80"
+        >
+          <div class="swiper-wrapper">
+            <div class="swiper-slide">
+              <div class="rc-card">
+                <div class="rc-thumb">
+                  <img
+                    src="https://placehold.co/640x360/0891b2/fff?text=React+Next"
+                    alt="React Next.js"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="rc-body">
+                  <div class="rc-title">
+                    React 18 + Next.js 14: Full-Stack Web Apps
+                  </div>
+                  <div class="rc-instructor">David Miller</div>
+                  <div class="rc-rating">
+                    <span class="rc-stars">★★★★★</span
+                    ><span class="rc-rating-val">4.8</span
+                    ><span class="rc-rating-cnt">(9,400)</span>
+                  </div>
+                  <div class="rc-footer">
+                    <span class="rc-price">$99</span
+                    ><span style="font-size: 0.72rem; color: var(--text-muted)"
+                      >16,800 students</span
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="swiper-slide">
+              <div class="rc-card">
+                <div class="rc-thumb">
+                  <img
+                    src="https://placehold.co/640x360/16a34a/fff?text=Node.js"
+                    alt="Node.js"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="rc-body">
+                  <div class="rc-title">
+                    The Complete Node.js REST API Course
+                  </div>
+                  <div class="rc-instructor">David Miller</div>
+                  <div class="rc-rating">
+                    <span class="rc-stars">★★★★★</span
+                    ><span class="rc-rating-val">4.7</span
+                    ><span class="rc-rating-cnt">(5,800)</span>
+                  </div>
+                  <div class="rc-footer">
+                    <span class="rc-price">$79</span
+                    ><span style="font-size: 0.72rem; color: var(--text-muted)"
+                      >10,200 students</span
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="swiper-slide">
+              <div class="rc-card">
+                <div class="rc-thumb">
+                  <img
+                    src="https://placehold.co/640x360/4f46e5/fff?text=Python+ML"
+                    alt="Python ML"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="rc-body">
+                  <div class="rc-title">
+                    Python for Data Science & Machine Learning
+                  </div>
+                  <div class="rc-instructor">Priya Sharma</div>
+                  <div class="rc-rating">
+                    <span class="rc-stars">★★★★★</span
+                    ><span class="rc-rating-val">4.9</span
+                    ><span class="rc-rating-cnt">(15,600)</span>
+                  </div>
+                  <div class="rc-footer">
+                    <span class="rc-price">$94</span
+                    ><span style="font-size: 0.72rem; color: var(--text-muted)"
+                      >24,700 students</span
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="swiper-slide">
+              <div class="rc-card">
+                <div class="rc-thumb">
+                  <img
+                    src="https://placehold.co/640x360/7c3aed/fff?text=UI+UX"
+                    alt="UI UX"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="rc-body">
+                  <div class="rc-title">
+                    UI/UX Design Masterclass: Figma to Prototype
+                  </div>
+                  <div class="rc-instructor">Sarah Chen</div>
+                  <div class="rc-rating">
+                    <span class="rc-stars">★★★★★</span
+                    ><span class="rc-rating-val">4.8</span
+                    ><span class="rc-rating-cnt">(8,100)</span>
+                  </div>
+                  <div class="rc-footer">
+                    <span class="rc-price">$79</span
+                    ><span style="font-size: 0.72rem; color: var(--text-muted)"
+                      >11,300 students</span
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="swiper-slide">
+              <div class="rc-card">
+                <div class="rc-thumb">
+                  <img
+                    src="https://placehold.co/640x360/7c3aed/fff?text=Deep+Learning"
+                    alt="Deep Learning"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="rc-body">
+                  <div class="rc-title">
+                    Deep Learning & Neural Networks with TensorFlow
+                  </div>
+                  <div class="rc-instructor">Priya Sharma</div>
+                  <div class="rc-rating">
+                    <span class="rc-stars">★★★★★</span
+                    ><span class="rc-rating-val">4.9</span
+                    ><span class="rc-rating-cnt">(11,200)</span>
+                  </div>
+                  <div class="rc-footer">
+                    <span class="rc-price">$109</span
+                    ><span style="font-size: 0.72rem; color: var(--text-muted)"
+                      >19,600 students</span
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="swiper-slide">
+              <div class="rc-card">
+                <div class="rc-thumb">
+                  <img
+                    src="https://placehold.co/640x360/db2777/fff?text=Marketing"
+                    alt="Marketing"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="rc-body">
+                  <div class="rc-title">
+                    Digital Marketing: SEO, Ads & Social Media
+                  </div>
+                  <div class="rc-instructor">Emma Roberts</div>
+                  <div class="rc-rating">
+                    <span class="rc-stars">★★★★★</span
+                    ><span class="rc-rating-val">4.7</span
+                    ><span class="rc-rating-cnt">(7,900)</span>
+                  </div>
+                  <div class="rc-footer">
+                    <span class="rc-price">$74</span
+                    ><span style="font-size: 0.72rem; color: var(--text-muted)"
+                      >13,400 students</span
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Mobile Enrol Bar -->
+    <div class="mobile-enrol-bar" x-data="enrolCard()">
+      <div>
+        <div class="mobile-enrol-price">$89</div>
+        <div class="mobile-enrol-orig">$149</div>
+      </div>
+      <a
+        href="student/dashboard.html"
+        class="btn btn-primary fw-bold rounded-pill flex-fill text-center py-2"
+      >
+        <i class="bi bi-lightning-fill me-1"></i> Enrol Now
+      </a>
+      <button
+        class="btn btn-outline-secondary rounded-circle p-0 d-flex align-items-center justify-content-center"
+        style="width: 42px; height: 42px"
+        :class="{ 'btn-outline-danger text-danger': wishlisted }"
+        @click="toggleWishlist()"
+      >
+        <i :class="wishlisted ? 'bi bi-heart-fill' : 'bi bi-heart'"></i>
+      </button>
+    </div>
+
+    <!-- Footer -->
+    <div
+      id="footer-ph"
+      style="padding-bottom: 80px"
+      class="d-lg-block d-none"
+    ></div>
+    <div
+      id="footer-ph-mobile"
+      style="display: none"
+      class="d-block d-lg-none"
+    ></div>
+
+    <!-- ══════════════════════════════════════════════════════
+       SCRIPTS
+       ══════════════════════════════════════════════════════ -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.js"></script>
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
+    ></script>
+    <script src="assets/js/app.js"></script>
+
+    <script>
+      /* NProgress */
+      NProgress.configure({ showSpinner: false });
+      NProgress.start();
+      window.addEventListener("load", () => NProgress.done());
+
+      /* Fragment loader */
+      async function loadFrag(id, src) {
+        try {
+          const r = await fetch(src);
+          const h = await r.text();
+          const el = document.getElementById(id);
+          if (el) el.outerHTML = h;
+        } catch (e) {
+          console.warn("Fragment load failed:", src);
+        }
+      }
+      (async () => {
+        await Promise.all([
+          loadFrag("navbar-ph", "components/public-navbar.html"),
+          loadFrag("footer-ph", "components/public-footer.html"),
+          loadFrag("footer-ph-mobile", "components/public-footer.html"),
+        ]);
+        AOS.init({ duration: 600, once: true, offset: 60 });
+
+        /* Related courses Swiper */
+        new Swiper("#relatedSwiper", {
+          slidesPerView: 1,
+          spaceBetween: 20,
+          navigation: { nextEl: "#relNext", prevEl: "#relPrev" },
+          breakpoints: {
+            576: { slidesPerView: 2 },
+            992: { slidesPerView: 3 },
+            1280: { slidesPerView: 4 },
+          },
+        });
+      })();
+
+      /* ── Alpine components ─────────────────────────────── */
+      document.addEventListener("alpine:init", () => {
+        /* Enrol card (shared by desktop card + mobile bar) */
+        Alpine.data("enrolCard", () => ({
+          wishlisted: false,
+          toggleWishlist() {
+            this.wishlisted = !this.wishlisted;
+            if (window.lmsNotify) {
+              if (this.wishlisted) {
+                window.lmsNotify.success("Course added to your wishlist!");
+              } else {
+                window.lmsNotify.open({
+                  type: "info",
+                  message: "Removed from wishlist.",
+                });
+              }
+            }
+          },
+          copyLink() {
+            navigator.clipboard
+              ?.writeText(window.location.href)
+              .then(() => {
+                window.lmsNotify?.success("Link copied to clipboard!");
+              })
+              .catch(() => {
+                window.lmsNotify?.open({
+                  type: "info",
+                  message: "Copy this URL: " + window.location.href,
+                });
+              });
+          },
+        }));
+
+        /* Curriculum accordion */
+        Alpine.data("curriculumAccordion", () => ({
+          sections: [
+            {
+              title: "Getting Started: Setup & JavaScript Basics",
+              lessons: 10,
+              duration: "1h 45m",
+              open: true,
+              items: [
+                {
+                  title: "Welcome & Course Overview",
+                  type: "video",
+                  duration: "04:12",
+                  preview: true,
+                },
+                {
+                  title: "Setting Up VSCode & Extensions",
+                  type: "video",
+                  duration: "08:30",
+                  preview: true,
+                },
+                {
+                  title: "How JavaScript Works in the Browser",
+                  type: "video",
+                  duration: "11:20",
+                  preview: false,
+                },
+                {
+                  title: "Variables: var, let & const",
+                  type: "video",
+                  duration: "14:05",
+                  preview: false,
+                },
+                {
+                  title: "Data Types & Type Coercion",
+                  type: "video",
+                  duration: "12:40",
+                  preview: false,
+                },
+                {
+                  title: "Operators & Expressions",
+                  type: "video",
+                  duration: "10:15",
+                  preview: false,
+                },
+                {
+                  title: "Conditionals & Switch Statements",
+                  type: "video",
+                  duration: "09:50",
+                  preview: false,
+                },
+                {
+                  title: "Loops: for, while, for…of",
+                  type: "video",
+                  duration: "11:00",
+                  preview: false,
+                },
+                {
+                  title: "Section 1 Quiz",
+                  type: "quiz",
+                  duration: "5 questions",
+                  preview: false,
+                },
+                {
+                  title: "Section Resources",
+                  type: "file",
+                  duration: "Download",
+                  preview: false,
+                },
+              ],
+            },
+            {
+              title: "Functions, Scope & Closures",
+              lessons: 12,
+              duration: "2h 20m",
+              open: false,
+              items: [
+                {
+                  title: "Declaring Functions: Declarations vs Expressions",
+                  type: "video",
+                  duration: "12:00",
+                  preview: false,
+                },
+                {
+                  title: "Arrow Functions Deep Dive",
+                  type: "video",
+                  duration: "10:30",
+                  preview: false,
+                },
+                {
+                  title: "Scope: Global, Function, Block",
+                  type: "video",
+                  duration: "13:45",
+                  preview: false,
+                },
+                {
+                  title: "Closures Explained",
+                  type: "video",
+                  duration: "15:20",
+                  preview: false,
+                },
+                {
+                  title: "IIFE & Module Pattern",
+                  type: "video",
+                  duration: "09:10",
+                  preview: false,
+                },
+                {
+                  title: "Higher-Order Functions",
+                  type: "video",
+                  duration: "14:00",
+                  preview: false,
+                },
+                {
+                  title: "Section 2 Quiz",
+                  type: "quiz",
+                  duration: "8 questions",
+                  preview: false,
+                },
+              ],
+            },
+            {
+              title: "Arrays, Objects & Destructuring",
+              lessons: 14,
+              duration: "2h 55m",
+              open: false,
+              items: [
+                {
+                  title: "Array Methods: map, filter, reduce",
+                  type: "video",
+                  duration: "18:00",
+                  preview: false,
+                },
+                {
+                  title: "Spread & Rest Operators",
+                  type: "video",
+                  duration: "11:30",
+                  preview: false,
+                },
+                {
+                  title: "Object Literals & Shorthand",
+                  type: "video",
+                  duration: "12:00",
+                  preview: false,
+                },
+                {
+                  title: "Destructuring Arrays & Objects",
+                  type: "video",
+                  duration: "16:20",
+                  preview: false,
+                },
+                {
+                  title: "Optional Chaining & Nullish Coalescing",
+                  type: "video",
+                  duration: "09:45",
+                  preview: false,
+                },
+              ],
+            },
+            {
+              title: "Asynchronous JavaScript",
+              lessons: 18,
+              duration: "4h 10m",
+              open: false,
+              items: [
+                {
+                  title: "The Event Loop Explained",
+                  type: "video",
+                  duration: "14:00",
+                  preview: false,
+                },
+                {
+                  title: "Callbacks & Callback Hell",
+                  type: "video",
+                  duration: "11:20",
+                  preview: false,
+                },
+                {
+                  title: "Promises: Creating & Chaining",
+                  type: "video",
+                  duration: "18:30",
+                  preview: false,
+                },
+                {
+                  title: "Promise.all, race & allSettled",
+                  type: "video",
+                  duration: "13:40",
+                  preview: false,
+                },
+                {
+                  title: "async/await in Practice",
+                  type: "video",
+                  duration: "16:00",
+                  preview: false,
+                },
+                {
+                  title: "Error Handling with try/catch",
+                  type: "video",
+                  duration: "12:10",
+                  preview: false,
+                },
+                {
+                  title: "Fetching Data with the Fetch API",
+                  type: "video",
+                  duration: "20:00",
+                  preview: false,
+                },
+                {
+                  title: "Section 4 Quiz",
+                  type: "quiz",
+                  duration: "10 questions",
+                  preview: false,
+                },
+              ],
+            },
+            {
+              title: "DOM Manipulation & Events",
+              lessons: 16,
+              duration: "3h 30m",
+              open: false,
+              items: [
+                {
+                  title: "Selecting & Traversing the DOM",
+                  type: "video",
+                  duration: "14:00",
+                  preview: false,
+                },
+                {
+                  title: "Creating, Modifying & Removing Elements",
+                  type: "video",
+                  duration: "16:20",
+                  preview: false,
+                },
+                {
+                  title: "Event Listeners & Delegation",
+                  type: "video",
+                  duration: "18:00",
+                  preview: false,
+                },
+                {
+                  title: "Forms & Input Validation",
+                  type: "video",
+                  duration: "20:10",
+                  preview: false,
+                },
+                {
+                  title: "Project: Interactive To-Do App",
+                  type: "lock",
+                  duration: "45:00",
+                  preview: false,
+                },
+              ],
+            },
+            {
+              title: "Object-Oriented Programming",
+              lessons: 14,
+              duration: "3h 05m",
+              open: false,
+              items: [
+                {
+                  title: "Prototypes & Prototype Chain",
+                  type: "video",
+                  duration: "16:00",
+                  preview: false,
+                },
+                {
+                  title: "ES6 Classes & Inheritance",
+                  type: "video",
+                  duration: "18:20",
+                  preview: false,
+                },
+                {
+                  title: "Encapsulation with Private Fields",
+                  type: "video",
+                  duration: "12:40",
+                  preview: false,
+                },
+                {
+                  title: "Design Patterns: Factory, Observer",
+                  type: "lock",
+                  duration: "22:00",
+                  preview: false,
+                },
+              ],
+            },
+            {
+              title: "Modern Tooling & Deployment",
+              lessons: 12,
+              duration: "2h 40m",
+              open: false,
+              items: [
+                {
+                  title: "npm & package.json Essentials",
+                  type: "video",
+                  duration: "14:00",
+                  preview: false,
+                },
+                {
+                  title: "Bundling with Webpack",
+                  type: "lock",
+                  duration: "22:00",
+                  preview: false,
+                },
+                {
+                  title: "ESLint & Code Quality",
+                  type: "lock",
+                  duration: "12:00",
+                  preview: false,
+                },
+                {
+                  title: "Deploying to GitHub Pages & Netlify",
+                  type: "lock",
+                  duration: "18:30",
+                  preview: false,
+                },
+              ],
+            },
+          ],
+          toggle(i) {
+            this.sections[i].open = !this.sections[i].open;
+          },
+          toggleAll(open) {
+            this.sections.forEach((s) => (s.open = open));
+          },
+        }));
+      });
+
+      /* ToC scroll-spy */
+      const tocLinks = document.querySelectorAll(".toc-link");
+      const sections = Array.from(tocLinks).map((l) =>
+        document.querySelector(l.getAttribute("href")),
+      );
+      const spy = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) {
+              tocLinks.forEach((l) =>
+                l.classList.toggle(
+                  "active",
+                  l.getAttribute("href") === "#" + e.target.id,
+                ),
+              );
+            }
+          });
+        },
+        { threshold: 0.35 },
+      );
+      sections.forEach((s) => s && spy.observe(s));
+    </script>
+  </body>
+</html>

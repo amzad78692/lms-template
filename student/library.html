@@ -1,0 +1,1723 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Resource Library — EduLearn Student</title>
+
+    <!-- Bootstrap 5.3 -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    />
+    <!-- Bootstrap Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css"
+    />
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <!-- NProgress -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.css"
+    />
+    <!-- Notyf -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css"
+    />
+    <!-- Theme -->
+    <link rel="stylesheet" href="../assets/css/theme.css" />
+
+    <style>
+      body {
+        font-family: "Poppins", sans-serif;
+        background: var(--body-bg);
+        color: var(--body-color);
+      }
+      @media (max-width: 991px) {
+        #main-content {
+          margin-left: 0 !important;
+        }
+      }
+
+      /* ── Stats bar ──────────────────────────────────────────── */
+      .stat-card {
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 14px;
+        padding: 18px 20px;
+        display: flex;
+        align-items: center;
+        gap: 14px;
+      }
+      .stat-icon {
+        width: 44px;
+        height: 44px;
+        border-radius: 11px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+        flex-shrink: 0;
+      }
+      .stat-val {
+        font-size: 1.5rem;
+        font-weight: 800;
+        line-height: 1;
+      }
+      .stat-lbl {
+        font-size: 0.72rem;
+        color: var(--text-muted);
+        margin-top: 3px;
+        text-transform: uppercase;
+        letter-spacing: 0.03em;
+      }
+
+      /* ── Toolbar ────────────────────────────────────────────── */
+      .toolbar {
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 12px;
+        padding: 14px 18px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        align-items: center;
+      }
+      .search-wrap {
+        position: relative;
+        flex: 1;
+        min-width: 200px;
+      }
+      .search-wrap i {
+        position: absolute;
+        left: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--text-muted);
+        font-size: 0.9rem;
+        pointer-events: none;
+      }
+      .search-input {
+        width: 100%;
+        background: var(--body-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        padding: 8px 14px 8px 38px;
+        color: var(--body-color);
+        font-size: 0.85rem;
+        font-family: "Poppins", sans-serif;
+        outline: none;
+        transition: border-color 0.2s;
+      }
+      .search-input:focus {
+        border-color: var(--primary);
+      }
+      .filter-select {
+        background: var(--body-bg);
+        border: 1px solid var(--border-color);
+        color: var(--body-color);
+        border-radius: 8px;
+        padding: 7px 12px;
+        font-size: 0.82rem;
+        font-family: "Poppins", sans-serif;
+        outline: none;
+        cursor: pointer;
+      }
+      .filter-select:focus {
+        border-color: var(--primary);
+      }
+      .view-toggle button {
+        background: var(--body-bg);
+        border: 1px solid var(--border-color);
+        color: var(--text-muted);
+        padding: 7px 11px;
+        font-size: 0.9rem;
+        transition: all 0.15s;
+        cursor: pointer;
+        line-height: 1;
+      }
+      .view-toggle button:first-child {
+        border-radius: 8px 0 0 8px;
+      }
+      .view-toggle button:last-child {
+        border-radius: 0 8px 8px 0;
+      }
+      .view-toggle button.active {
+        background: var(--primary);
+        border-color: var(--primary);
+        color: #fff;
+      }
+
+      /* ── Category pills ─────────────────────────────────────── */
+      .cat-pill {
+        padding: 6px 14px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 500;
+        cursor: pointer;
+        border: 1px solid var(--border-color);
+        background: var(--body-bg);
+        color: var(--text-muted);
+        transition: all 0.15s;
+        white-space: nowrap;
+      }
+      .cat-pill:hover,
+      .cat-pill.active {
+        background: var(--primary);
+        border-color: var(--primary);
+        color: #fff;
+      }
+
+      /* ── Resource card (grid) ───────────────────────────────── */
+      .resource-card {
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 14px;
+        overflow: hidden;
+        transition:
+          transform 0.2s,
+          box-shadow 0.2s;
+        cursor: pointer;
+      }
+      .resource-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 28px rgba(0, 0, 0, 0.1);
+      }
+      .resource-thumb {
+        height: 120px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 3rem;
+        position: relative;
+        overflow: hidden;
+      }
+      .resource-thumb::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.04);
+      }
+      .resource-type-badge {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        z-index: 2;
+        font-size: 0.65rem;
+        font-weight: 700;
+        padding: 3px 8px;
+        border-radius: 6px;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+      }
+      .resource-new-badge {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        z-index: 2;
+        font-size: 0.65rem;
+        font-weight: 700;
+        padding: 3px 8px;
+        border-radius: 6px;
+        background: #10b981;
+        color: #fff;
+      }
+      .resource-body {
+        padding: 14px 16px;
+      }
+      .resource-title {
+        font-size: 0.875rem;
+        font-weight: 700;
+        line-height: 1.35;
+        margin-bottom: 5px;
+      }
+      .resource-meta {
+        font-size: 0.73rem;
+        color: var(--text-muted);
+      }
+      .resource-actions {
+        display: flex;
+        gap: 6px;
+        margin-top: 12px;
+      }
+
+      /* ── Resource list item ─────────────────────────────────── */
+      .resource-list-item {
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 12px;
+        padding: 14px 18px;
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        margin-bottom: 8px;
+        transition: box-shadow 0.15s;
+        cursor: pointer;
+      }
+      .resource-list-item:hover {
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.07);
+      }
+      .resource-list-icon {
+        width: 52px;
+        height: 52px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        flex-shrink: 0;
+      }
+      .resource-list-info {
+        flex: 1;
+        min-width: 0;
+      }
+      .resource-list-actions {
+        display: flex;
+        gap: 6px;
+        flex-shrink: 0;
+      }
+
+      /* ── Featured banner ────────────────────────────────────── */
+      .featured-banner {
+        background: linear-gradient(135deg, #0d6efd 0%, #6610f2 100%);
+        border-radius: 16px;
+        padding: 28px 32px;
+        color: #fff;
+        position: relative;
+        overflow: hidden;
+        margin-bottom: 28px;
+      }
+      .featured-banner::before {
+        content: "📚";
+        position: absolute;
+        right: 24px;
+        bottom: -8px;
+        font-size: 7rem;
+        opacity: 0.12;
+        line-height: 1;
+      }
+      .featured-banner-title {
+        font-size: 1.3rem;
+        font-weight: 800;
+        margin-bottom: 6px;
+      }
+      .featured-banner-sub {
+        font-size: 0.85rem;
+        opacity: 0.85;
+        margin-bottom: 18px;
+      }
+
+      /* ── Recently viewed sidebar ────────────────────────────── */
+      .recent-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 0;
+        border-bottom: 1px solid var(--border-color);
+      }
+      .recent-item:last-child {
+        border-bottom: none;
+      }
+      .recent-item-icon {
+        width: 34px;
+        height: 34px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1rem;
+        flex-shrink: 0;
+      }
+
+      /* ── Empty state ────────────────────────────────────────── */
+      .empty-state {
+        text-align: center;
+        padding: 60px 20px;
+        color: var(--text-muted);
+      }
+      .empty-state-icon {
+        font-size: 4rem;
+        margin-bottom: 14px;
+        opacity: 0.3;
+      }
+
+      /* ── Preview modal ──────────────────────────────────────── */
+      .modal-content {
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 16px;
+      }
+      .modal-header,
+      .modal-footer {
+        border-color: var(--border-color);
+      }
+      .preview-frame {
+        width: 100%;
+        min-height: 320px;
+        border: 1px solid var(--border-color);
+        border-radius: 10px;
+        background: var(--body-bg);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        gap: 12px;
+        color: var(--text-muted);
+      }
+      .preview-frame-icon {
+        font-size: 4rem;
+        opacity: 0.35;
+      }
+
+      /* ── Tag chips ──────────────────────────────────────────── */
+      .tag-chip {
+        display: inline-block;
+        font-size: 0.7rem;
+        font-weight: 500;
+        padding: 2px 8px;
+        border-radius: 5px;
+        background: var(--body-bg);
+        border: 1px solid var(--border-color);
+        color: var(--text-muted);
+      }
+
+      /* ── Sort dropdown ──────────────────────────────────────── */
+      .sort-btn {
+        background: var(--body-bg);
+        border: 1px solid var(--border-color);
+        color: var(--body-color);
+        border-radius: 8px;
+        padding: 7px 12px;
+        font-size: 0.82rem;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        cursor: pointer;
+        white-space: nowrap;
+      }
+      .sort-btn:hover {
+        border-color: var(--primary);
+        color: var(--primary);
+      }
+      .dropdown-menu {
+        background: var(--card-bg);
+        border-color: var(--border-color);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+      }
+      .dropdown-item {
+        color: var(--body-color);
+        font-size: 0.85rem;
+      }
+      .dropdown-item:hover {
+        background: var(--body-bg);
+        color: var(--primary);
+      }
+      .dropdown-item.active {
+        background: rgba(13, 110, 253, 0.08);
+        color: var(--primary);
+        font-weight: 600;
+      }
+    </style>
+  </head>
+
+  <body x-data="themeToggle()" :data-theme="dark ? 'dark' : 'light'">
+    <div
+      id="layout-wrapper"
+      x-data="sidebarState()"
+      style="display: flex; min-height: 100vh"
+    >
+      <div id="sidebar-placeholder"></div>
+      <div style="flex: 1; display: flex; flex-direction: column; min-width: 0">
+        <div id="navbar-placeholder"></div>
+
+        <div
+          id="main-content"
+          :style="'margin-left:' + (collapsed ? 'var(--sidebar-collapsed)' : 'var(--sidebar-width)')"
+          style="
+            transition: margin-left 0.25s ease;
+            padding-top: var(--navbar-height);
+          "
+        >
+          <div class="container-fluid px-4 py-4" x-data="libraryPage()">
+            <!-- ── Page header ─────────────────────────────────── -->
+            <div
+              class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-4"
+            >
+              <div>
+                <h4 class="fw-700 mb-1">Resource Library</h4>
+                <p class="text-muted mb-0" style="font-size: 0.85rem">
+                  All your course materials, references and learning assets in
+                  one place
+                </p>
+              </div>
+              <button class="btn btn-primary btn-sm" @click="requestResource()">
+                <i class="bi bi-plus-lg me-1"></i>Request Resource
+              </button>
+            </div>
+
+            <!-- ── Stats row ──────────────────────────────────── -->
+            <div class="row g-3 mb-4">
+              <div class="col-6 col-xl-3">
+                <div class="stat-card">
+                  <div
+                    class="stat-icon"
+                    style="
+                      background: rgba(13, 110, 253, 0.12);
+                      color: var(--primary);
+                    "
+                  >
+                    <i class="bi bi-collection-fill"></i>
+                  </div>
+                  <div>
+                    <div
+                      class="stat-val"
+                      style="color: var(--primary)"
+                      x-text="resources.length"
+                    ></div>
+                    <div class="stat-lbl">Total Resources</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-6 col-xl-3">
+                <div class="stat-card">
+                  <div
+                    class="stat-icon"
+                    style="background: rgba(239, 68, 68, 0.12); color: #ef4444"
+                  >
+                    <i class="bi bi-file-earmark-pdf-fill"></i>
+                  </div>
+                  <div>
+                    <div class="stat-val" style="color: #ef4444">14</div>
+                    <div class="stat-lbl">PDFs &amp; Docs</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-6 col-xl-3">
+                <div class="stat-card">
+                  <div
+                    class="stat-icon"
+                    style="background: rgba(16, 185, 129, 0.12); color: #10b981"
+                  >
+                    <i class="bi bi-download"></i>
+                  </div>
+                  <div>
+                    <div class="stat-val" style="color: #10b981">47</div>
+                    <div class="stat-lbl">Downloads</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-6 col-xl-3">
+                <div class="stat-card">
+                  <div
+                    class="stat-icon"
+                    style="background: rgba(245, 158, 11, 0.12); color: #f59e0b"
+                  >
+                    <i class="bi bi-bookmark-star-fill"></i>
+                  </div>
+                  <div>
+                    <div
+                      class="stat-val"
+                      style="color: #f59e0b"
+                      x-text="resources.filter(r=>r.bookmarked).length"
+                    ></div>
+                    <div class="stat-lbl">Saved Items</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- ── Featured banner ───────────────────────────── -->
+            <div class="featured-banner">
+              <div class="row align-items-center">
+                <div class="col-lg-8">
+                  <div class="featured-banner-title">
+                    📖 New Resources Added This Week
+                  </div>
+                  <div class="featured-banner-sub">
+                    12 new materials have been uploaded by your instructors,
+                    including the JavaScript Design Patterns e-book and React 19
+                    cheat sheet.
+                  </div>
+                  <div class="d-flex gap-2 flex-wrap">
+                    <button
+                      class="btn btn-light btn-sm fw-600"
+                      @click="filterType='all'; search=''"
+                    >
+                      <i class="bi bi-eye me-1"></i>Browse All
+                    </button>
+                    <button
+                      class="btn btn-outline-light btn-sm"
+                      @click="sortBy='newest'"
+                    >
+                      <i class="bi bi-sort-down me-1"></i>Sort by Newest
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row g-4">
+              <!-- ── Main content ──────────────────────────── -->
+              <div class="col-xl-9">
+                <!-- Toolbar -->
+                <div class="toolbar mb-3">
+                  <div class="search-wrap">
+                    <i class="bi bi-search"></i>
+                    <input
+                      type="text"
+                      class="search-input"
+                      placeholder="Search resources, courses, tags…"
+                      x-model="search"
+                    />
+                  </div>
+                  <select class="filter-select" x-model="filterCourse">
+                    <option value="all">All Courses</option>
+                    <option>JavaScript Masterclass</option>
+                    <option>UI/UX Design Fundamentals</option>
+                    <option>Python for Data Science</option>
+                    <option>React & Next.js Advanced</option>
+                    <option>AWS Cloud Practitioner</option>
+                    <option>Node.js Backend Mastery</option>
+                  </select>
+                  <!-- Sort -->
+                  <div class="dropdown">
+                    <button
+                      class="sort-btn dropdown-toggle"
+                      data-bs-toggle="dropdown"
+                    >
+                      <i class="bi bi-sort-down-alt"></i>
+                      <span x-text="sortLabel"></span>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                      <li>
+                        <button
+                          class="dropdown-item"
+                          :class="{active:sortBy==='newest'}"
+                          @click="sortBy='newest'"
+                        >
+                          Newest First
+                        </button>
+                      </li>
+                      <li>
+                        <button
+                          class="dropdown-item"
+                          :class="{active:sortBy==='oldest'}"
+                          @click="sortBy='oldest'"
+                        >
+                          Oldest First
+                        </button>
+                      </li>
+                      <li>
+                        <button
+                          class="dropdown-item"
+                          :class="{active:sortBy==='name'}"
+                          @click="sortBy='name'"
+                        >
+                          Name A–Z
+                        </button>
+                      </li>
+                      <li>
+                        <button
+                          class="dropdown-item"
+                          :class="{active:sortBy==='size'}"
+                          @click="sortBy='size'"
+                        >
+                          File Size
+                        </button>
+                      </li>
+                      <li>
+                        <button
+                          class="dropdown-item"
+                          :class="{active:sortBy==='popular'}"
+                          @click="sortBy='popular'"
+                        >
+                          Most Downloaded
+                        </button>
+                      </li>
+                    </ul>
+                  </div>
+                  <!-- View toggle -->
+                  <div class="view-toggle">
+                    <button
+                      :class="{active:view==='grid'}"
+                      @click="view='grid'"
+                    >
+                      <i class="bi bi-grid-3x3-gap-fill"></i>
+                    </button>
+                    <button
+                      :class="{active:view==='list'}"
+                      @click="view='list'"
+                    >
+                      <i class="bi bi-list-ul"></i>
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Category pills -->
+                <div class="d-flex gap-2 flex-wrap mb-4">
+                  <button
+                    class="cat-pill"
+                    :class="{active:filterType==='all'}"
+                    @click="filterType='all'"
+                  >
+                    <i class="bi bi-grid me-1"></i>All
+                    <span
+                      class="ms-1 opacity-75"
+                      x-text="'(' + resources.length + ')'"
+                    ></span>
+                  </button>
+                  <button
+                    class="cat-pill"
+                    :class="{active:filterType==='pdf'}"
+                    @click="filterType='pdf'"
+                  >
+                    📄 PDFs
+                  </button>
+                  <button
+                    class="cat-pill"
+                    :class="{active:filterType==='video'}"
+                    @click="filterType='video'"
+                  >
+                    🎬 Videos
+                  </button>
+                  <button
+                    class="cat-pill"
+                    :class="{active:filterType==='slides'}"
+                    @click="filterType='slides'"
+                  >
+                    📊 Slides
+                  </button>
+                  <button
+                    class="cat-pill"
+                    :class="{active:filterType==='ebook'}"
+                    @click="filterType='ebook'"
+                  >
+                    📚 E-Books
+                  </button>
+                  <button
+                    class="cat-pill"
+                    :class="{active:filterType==='code'}"
+                    @click="filterType='code'"
+                  >
+                    💻 Code
+                  </button>
+                  <button
+                    class="cat-pill"
+                    :class="{active:filterType==='cheatsheet'}"
+                    @click="filterType='cheatsheet'"
+                  >
+                    📝 Cheat Sheets
+                  </button>
+                  <button
+                    class="cat-pill"
+                    :class="{active:filterType==='bookmarked'}"
+                    @click="filterType='bookmarked'"
+                  >
+                    <i class="bi bi-bookmark-fill me-1"></i>Saved
+                  </button>
+                </div>
+
+                <!-- Results count -->
+                <div
+                  class="d-flex align-items-center justify-content-between mb-3"
+                >
+                  <span class="text-muted" style="font-size: 0.82rem">
+                    Showing
+                    <span
+                      class="fw-700 text-body"
+                      x-text="filteredResources.length"
+                    ></span>
+                    resources
+                    <span
+                      x-show="search || filterType !== 'all' || filterCourse !== 'all'"
+                    >
+                      (filtered)</span
+                    >
+                  </span>
+                  <button
+                    class="btn btn-sm btn-link text-muted p-0"
+                    style="font-size: 0.8rem"
+                    x-show="search || filterType !== 'all' || filterCourse !== 'all'"
+                    @click="search=''; filterType='all'; filterCourse='all'"
+                  >
+                    <i class="bi bi-x-circle me-1"></i>Clear filters
+                  </button>
+                </div>
+
+                <!-- ── GRID VIEW ─────────────────────────────── -->
+                <div x-show="view==='grid'" x-transition>
+                  <div class="row g-3">
+                    <template x-for="res in filteredResources" :key="res.id">
+                      <div class="col-sm-6 col-md-4">
+                        <div class="resource-card" @click="openPreview(res)">
+                          <div
+                            class="resource-thumb"
+                            :style="'background:' + res.bgColor + ';'"
+                          >
+                            <span
+                              x-text="res.emoji"
+                              style="position: relative; z-index: 1"
+                            ></span>
+                            <span
+                              class="resource-type-badge"
+                              :style="'background:' + res.badgeColor + '; color:#fff;'"
+                              x-text="res.type.toUpperCase()"
+                            ></span>
+                            <span class="resource-new-badge" x-show="res.isNew"
+                              >NEW</span
+                            >
+                          </div>
+                          <div class="resource-body">
+                            <div
+                              class="resource-title"
+                              x-text="res.title"
+                            ></div>
+                            <div class="resource-meta mb-1">
+                              <i class="bi bi-book me-1"></i
+                              ><span x-text="res.course"></span>
+                            </div>
+                            <div class="resource-meta mb-2">
+                              <span x-text="res.size"></span>
+                              <span class="mx-1">·</span>
+                              <span x-text="res.added"></span>
+                              <span class="mx-1">·</span>
+                              <i class="bi bi-download me-1"></i
+                              ><span x-text="res.downloads"></span>
+                            </div>
+                            <div class="d-flex flex-wrap gap-1 mb-2">
+                              <template x-for="tag in res.tags" :key="tag">
+                                <span class="tag-chip" x-text="tag"></span>
+                              </template>
+                            </div>
+                            <div class="resource-actions" @click.stop>
+                              <button
+                                class="btn btn-primary btn-sm flex-grow-1"
+                                @click="downloadResource(res)"
+                              >
+                                <i class="bi bi-download me-1"></i>Download
+                              </button>
+                              <button
+                                class="btn btn-outline-secondary btn-sm"
+                                @click="toggleBookmark(res)"
+                                :title="res.bookmarked ? 'Remove bookmark' : 'Bookmark'"
+                              >
+                                <i
+                                  class="bi"
+                                  :class="res.bookmarked ? 'bi-bookmark-fill text-warning' : 'bi-bookmark'"
+                                ></i>
+                              </button>
+                              <button
+                                class="btn btn-outline-secondary btn-sm"
+                                @click="shareResource(res)"
+                                title="Share"
+                              >
+                                <i class="bi bi-share"></i>
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </template>
+                    <!-- Empty -->
+                    <div x-show="filteredResources.length === 0" class="col-12">
+                      <div class="empty-state">
+                        <div class="empty-state-icon">
+                          <i class="bi bi-collection"></i>
+                        </div>
+                        <h5 class="fw-600">No resources found</h5>
+                        <p class="text-muted" style="font-size: 0.85rem">
+                          Try adjusting your search or filter options.
+                        </p>
+                        <button
+                          class="btn btn-outline-primary btn-sm"
+                          @click="search=''; filterType='all'; filterCourse='all'"
+                        >
+                          Clear Filters
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- ── LIST VIEW ─────────────────────────────── -->
+                <div x-show="view==='list'" x-transition>
+                  <template x-for="res in filteredResources" :key="res.id">
+                    <div class="resource-list-item" @click="openPreview(res)">
+                      <div
+                        class="resource-list-icon"
+                        :style="'background:' + res.bgColor + ';'"
+                      >
+                        <span x-text="res.emoji"></span>
+                      </div>
+                      <div class="resource-list-info">
+                        <div class="d-flex align-items-center gap-2 flex-wrap">
+                          <span
+                            class="fw-600"
+                            style="font-size: 0.875rem"
+                            x-text="res.title"
+                          ></span>
+                          <span
+                            class="resource-type-badge"
+                            :style="'background:' + res.badgeColor + '; color:#fff; position:static;'"
+                            x-text="res.type.toUpperCase()"
+                            style="font-size: 0.62rem"
+                          ></span>
+                          <span
+                            class="resource-new-badge"
+                            x-show="res.isNew"
+                            style="position: static; font-size: 0.62rem"
+                            >NEW</span
+                          >
+                        </div>
+                        <div
+                          class="d-flex flex-wrap gap-3 mt-1"
+                          style="font-size: 0.76rem; color: var(--text-muted)"
+                        >
+                          <span
+                            ><i class="bi bi-book me-1"></i
+                            ><span x-text="res.course"></span
+                          ></span>
+                          <span
+                            ><i class="bi bi-hdd me-1"></i
+                            ><span x-text="res.size"></span
+                          ></span>
+                          <span
+                            ><i class="bi bi-clock me-1"></i
+                            ><span x-text="res.added"></span
+                          ></span>
+                          <span
+                            ><i class="bi bi-download me-1"></i
+                            ><span x-text="res.downloads + ' downloads'"></span
+                          ></span>
+                        </div>
+                      </div>
+                      <div class="d-none d-md-flex flex-wrap gap-1">
+                        <template x-for="tag in res.tags.slice(0,2)" :key="tag">
+                          <span class="tag-chip" x-text="tag"></span>
+                        </template>
+                      </div>
+                      <div class="resource-list-actions" @click.stop>
+                        <button
+                          class="btn btn-outline-secondary btn-sm"
+                          @click="toggleBookmark(res)"
+                          :title="res.bookmarked ? 'Remove' : 'Save'"
+                        >
+                          <i
+                            class="bi"
+                            :class="res.bookmarked ? 'bi-bookmark-fill text-warning' : 'bi-bookmark'"
+                          ></i>
+                        </button>
+                        <button
+                          class="btn btn-outline-secondary btn-sm d-none d-md-inline-flex"
+                          @click="shareResource(res)"
+                        >
+                          <i class="bi bi-share"></i>
+                        </button>
+                        <button
+                          class="btn btn-primary btn-sm"
+                          @click="downloadResource(res)"
+                        >
+                          <i class="bi bi-download me-1"></i>Download
+                        </button>
+                      </div>
+                    </div>
+                  </template>
+                  <div x-show="filteredResources.length === 0">
+                    <div class="empty-state">
+                      <div class="empty-state-icon">
+                        <i class="bi bi-collection"></i>
+                      </div>
+                      <h5 class="fw-600">No resources found</h5>
+                      <p class="text-muted" style="font-size: 0.85rem">
+                        Try adjusting your search or filter options.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- /col-xl-9 -->
+
+              <!-- ── Right sidebar ──────────────────────────── -->
+              <div class="col-xl-3 d-none d-xl-block">
+                <!-- Recently viewed -->
+                <div
+                  class="mb-3"
+                  style="
+                    background: var(--card-bg);
+                    border: 1px solid var(--border-color);
+                    border-radius: 14px;
+                    padding: 18px;
+                  "
+                >
+                  <div class="fw-700 mb-3" style="font-size: 0.9rem">
+                    <i class="bi bi-clock-history me-2 text-primary"></i
+                    >Recently Viewed
+                  </div>
+                  <template x-for="r in recentlyViewed" :key="r.id">
+                    <div
+                      class="recent-item"
+                      @click="openPreview(r)"
+                      style="cursor: pointer"
+                    >
+                      <div
+                        class="recent-item-icon"
+                        :style="'background:' + r.bgColor + ';'"
+                        x-text="r.emoji"
+                      ></div>
+                      <div class="flex-grow-1" style="min-width: 0">
+                        <div
+                          class="fw-600 text-truncate"
+                          style="font-size: 0.8rem"
+                          x-text="r.title"
+                        ></div>
+                        <div
+                          class="text-muted"
+                          style="font-size: 0.72rem"
+                          x-text="r.type.toUpperCase() + ' · ' + r.size"
+                        ></div>
+                      </div>
+                    </div>
+                  </template>
+                </div>
+
+                <!-- Top downloads -->
+                <div
+                  class="mb-3"
+                  style="
+                    background: var(--card-bg);
+                    border: 1px solid var(--border-color);
+                    border-radius: 14px;
+                    padding: 18px;
+                  "
+                >
+                  <div class="fw-700 mb-3" style="font-size: 0.9rem">
+                    <i class="bi bi-fire me-2 text-danger"></i>Most Downloaded
+                  </div>
+                  <template x-for="(r, i) in topDownloads" :key="r.id">
+                    <div
+                      class="recent-item"
+                      @click="openPreview(r)"
+                      style="cursor: pointer"
+                    >
+                      <div
+                        class="fw-800 text-muted"
+                        style="width: 20px; font-size: 0.85rem; flex-shrink: 0"
+                        x-text="(i+1) + '.'"
+                      ></div>
+                      <div class="flex-grow-1" style="min-width: 0">
+                        <div
+                          class="fw-600 text-truncate"
+                          style="font-size: 0.8rem"
+                          x-text="r.title"
+                        ></div>
+                        <div class="text-muted" style="font-size: 0.72rem">
+                          <i class="bi bi-download me-1"></i
+                          ><span x-text="r.downloads + ' downloads'"></span>
+                        </div>
+                      </div>
+                      <button
+                        class="btn btn-outline-primary btn-sm py-0"
+                        style="font-size: 0.72rem; padding: 3px 8px"
+                        @click.stop="downloadResource(r)"
+                      >
+                        Get
+                      </button>
+                    </div>
+                  </template>
+                </div>
+
+                <!-- Storage usage -->
+                <div
+                  style="
+                    background: var(--card-bg);
+                    border: 1px solid var(--border-color);
+                    border-radius: 14px;
+                    padding: 18px;
+                  "
+                >
+                  <div class="fw-700 mb-1" style="font-size: 0.9rem">
+                    <i class="bi bi-hdd-stack me-2 text-success"></i>Storage
+                  </div>
+                  <div class="text-muted mb-3" style="font-size: 0.76rem">
+                    Your downloaded resources
+                  </div>
+                  <div
+                    style="
+                      background: var(--border-color);
+                      border-radius: 8px;
+                      height: 8px;
+                      overflow: hidden;
+                      margin-bottom: 10px;
+                    "
+                  >
+                    <div
+                      style="
+                        width: 38%;
+                        height: 100%;
+                        background: linear-gradient(90deg, #0d6efd, #6610f2);
+                        border-radius: 8px;
+                      "
+                    ></div>
+                  </div>
+                  <div
+                    class="d-flex justify-content-between"
+                    style="font-size: 0.76rem; color: var(--text-muted)"
+                  >
+                    <span>380 MB used</span>
+                    <span>1 GB total</span>
+                  </div>
+                  <div class="mt-3 d-flex flex-wrap gap-2">
+                    <div
+                      class="d-flex align-items-center gap-1"
+                      style="font-size: 0.74rem"
+                    >
+                      <span
+                        style="
+                          width: 8px;
+                          height: 8px;
+                          background: #ef4444;
+                          border-radius: 2px;
+                          display: inline-block;
+                        "
+                      ></span>
+                      PDFs (140 MB)
+                    </div>
+                    <div
+                      class="d-flex align-items-center gap-1"
+                      style="font-size: 0.74rem"
+                    >
+                      <span
+                        style="
+                          width: 8px;
+                          height: 8px;
+                          background: #0d6efd;
+                          border-radius: 2px;
+                          display: inline-block;
+                        "
+                      ></span>
+                      Videos (190 MB)
+                    </div>
+                    <div
+                      class="d-flex align-items-center gap-1"
+                      style="font-size: 0.74rem"
+                    >
+                      <span
+                        style="
+                          width: 8px;
+                          height: 8px;
+                          background: #10b981;
+                          border-radius: 2px;
+                          display: inline-block;
+                        "
+                      ></span>
+                      Other (50 MB)
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- /sidebar -->
+            </div>
+            <!-- /row -->
+          </div>
+          <!-- /container -->
+        </div>
+        <!-- /main-content -->
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════════
+       RESOURCE PREVIEW MODAL
+  ══════════════════════════════════════════════════════════════ -->
+    <div class="modal fade" id="previewModal" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+          <div class="modal-header border-0">
+            <h5 class="modal-title fw-700" id="previewModalTitle">
+              Resource Preview
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+            ></button>
+          </div>
+          <div class="modal-body" id="previewModalBody"><!-- injected --></div>
+          <div class="modal-footer border-0">
+            <button class="btn btn-outline-secondary" data-bs-dismiss="modal">
+              Close
+            </button>
+            <button class="btn btn-outline-secondary" id="previewShareBtn">
+              <i class="bi bi-share me-1"></i>Share
+            </button>
+            <button class="btn btn-primary" id="previewDownloadBtn">
+              <i class="bi bi-download me-1"></i>Download
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════════
+       REQUEST RESOURCE MODAL
+  ══════════════════════════════════════════════════════════════ -->
+    <div class="modal fade" id="requestModal" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header border-0">
+            <h5 class="modal-title fw-700">
+              <i class="bi bi-plus-circle me-2 text-primary"></i>Request a
+              Resource
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <div class="mb-3">
+              <label
+                class="form-label"
+                style="font-size: 0.82rem; font-weight: 600"
+                >Resource Title / Description</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="reqTitle"
+                placeholder="e.g. React Hooks cheat sheet"
+              />
+            </div>
+            <div class="mb-3">
+              <label
+                class="form-label"
+                style="font-size: 0.82rem; font-weight: 600"
+                >Related Course</label
+              >
+              <select class="form-select" id="reqCourse">
+                <option>Select course…</option>
+                <option>JavaScript Masterclass</option>
+                <option>UI/UX Design Fundamentals</option>
+                <option>Python for Data Science</option>
+                <option>React & Next.js Advanced</option>
+                <option>AWS Cloud Practitioner</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label
+                class="form-label"
+                style="font-size: 0.82rem; font-weight: 600"
+                >Resource Type</label
+              >
+              <select class="form-select" id="reqType">
+                <option>PDF / Document</option>
+                <option>Video</option>
+                <option>Slides</option>
+                <option>E-Book</option>
+                <option>Code Sample</option>
+                <option>Cheat Sheet</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label
+                class="form-label"
+                style="font-size: 0.82rem; font-weight: 600"
+                >Additional Notes</label
+              >
+              <textarea
+                class="form-control"
+                rows="3"
+                id="reqNotes"
+                placeholder="Why do you need this resource? Any specific topic?"
+              ></textarea>
+            </div>
+          </div>
+          <div class="modal-footer border-0">
+            <button class="btn btn-outline-secondary" data-bs-dismiss="modal">
+              Cancel
+            </button>
+            <button class="btn btn-primary" onclick="submitRequest()">
+              <i class="bi bi-send me-1"></i>Submit Request
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Scripts ─────────────────────────────────────────────── -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1/plugin/relativeTime.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
+      defer
+    ></script>
+    <script src="../assets/js/app.js"></script>
+
+    <script>
+      dayjs.extend(dayjs_plugin_relativeTime);
+      NProgress.configure({ showSpinner: false });
+      document.addEventListener("DOMContentLoaded", () => NProgress.start());
+      window.addEventListener("load", () => NProgress.done());
+
+      /* ── Resource data ───────────────────────────────────────────── */
+      const RESOURCES = [
+        {
+          id: 1,
+          title: "JavaScript Design Patterns",
+          type: "ebook",
+          course: "JavaScript Masterclass",
+          size: "4.2 MB",
+          downloads: 312,
+          added: "2 days ago",
+          isNew: true,
+          bookmarked: true,
+          emoji: "📚",
+          bgColor: "rgba(245,158,11,.12)",
+          badgeColor: "#f59e0b",
+          tags: ["JS", "Patterns", "OOP"],
+        },
+        {
+          id: 2,
+          title: "ES2024 Cheat Sheet",
+          type: "cheatsheet",
+          course: "JavaScript Masterclass",
+          size: "180 KB",
+          downloads: 489,
+          added: "1 week ago",
+          isNew: false,
+          bookmarked: false,
+          emoji: "📝",
+          bgColor: "rgba(245,158,11,.12)",
+          badgeColor: "#8b5cf6",
+          tags: ["JS", "ES6+"],
+        },
+        {
+          id: 3,
+          title: "React 19 – What's New Slides",
+          type: "slides",
+          course: "React & Next.js Advanced",
+          size: "8.7 MB",
+          downloads: 276,
+          added: "3 days ago",
+          isNew: true,
+          bookmarked: true,
+          emoji: "📊",
+          bgColor: "rgba(13,110,253,.12)",
+          badgeColor: "#0d6efd",
+          tags: ["React", "Slides"],
+        },
+        {
+          id: 4,
+          title: "Node.js Architecture Guide",
+          type: "pdf",
+          course: "Node.js Backend Mastery",
+          size: "2.1 MB",
+          downloads: 198,
+          added: "5 days ago",
+          isNew: false,
+          bookmarked: false,
+          emoji: "📄",
+          bgColor: "rgba(239,68,68,.12)",
+          badgeColor: "#ef4444",
+          tags: ["Node", "Architecture"],
+        },
+        {
+          id: 5,
+          title: "Async/Await Masterclass Video",
+          type: "video",
+          course: "JavaScript Masterclass",
+          size: "220 MB",
+          downloads: 341,
+          added: "1 week ago",
+          isNew: false,
+          bookmarked: false,
+          emoji: "🎬",
+          bgColor: "rgba(16,185,129,.12)",
+          badgeColor: "#10b981",
+          tags: ["JS", "Async"],
+        },
+        {
+          id: 6,
+          title: "Figma Component Library Starter",
+          type: "code",
+          course: "UI/UX Design Fundamentals",
+          size: "12 MB",
+          downloads: 167,
+          added: "2 weeks ago",
+          isNew: false,
+          bookmarked: true,
+          emoji: "💻",
+          bgColor: "rgba(139,92,246,.12)",
+          badgeColor: "#8b5cf6",
+          tags: ["Figma", "Design"],
+        },
+        {
+          id: 7,
+          title: "Python Data Structures Handbook",
+          type: "ebook",
+          course: "Python for Data Science",
+          size: "5.8 MB",
+          downloads: 222,
+          added: "3 days ago",
+          isNew: true,
+          bookmarked: false,
+          emoji: "📚",
+          bgColor: "rgba(16,185,129,.12)",
+          badgeColor: "#f59e0b",
+          tags: ["Python", "DS"],
+        },
+        {
+          id: 8,
+          title: "Pandas & NumPy Quick Reference",
+          type: "cheatsheet",
+          course: "Python for Data Science",
+          size: "340 KB",
+          downloads: 415,
+          added: "4 days ago",
+          isNew: true,
+          bookmarked: false,
+          emoji: "📝",
+          bgColor: "rgba(16,185,129,.12)",
+          badgeColor: "#8b5cf6",
+          tags: ["Pandas", "NumPy"],
+        },
+        {
+          id: 9,
+          title: "AWS Services Overview Slides",
+          type: "slides",
+          course: "AWS Cloud Practitioner",
+          size: "14 MB",
+          downloads: 189,
+          added: "1 week ago",
+          isNew: false,
+          bookmarked: true,
+          emoji: "📊",
+          bgColor: "rgba(245,158,11,.12)",
+          badgeColor: "#0d6efd",
+          tags: ["AWS", "Cloud"],
+        },
+        {
+          id: 10,
+          title: "Cloud Architecture Whitepaper",
+          type: "pdf",
+          course: "AWS Cloud Practitioner",
+          size: "3.4 MB",
+          downloads: 142,
+          added: "2 weeks ago",
+          isNew: false,
+          bookmarked: false,
+          emoji: "📄",
+          bgColor: "rgba(245,158,11,.12)",
+          badgeColor: "#ef4444",
+          tags: ["AWS", "Architecture"],
+        },
+        {
+          id: 11,
+          title: "UX Research Methods – Full Course",
+          type: "video",
+          course: "UI/UX Design Fundamentals",
+          size: "480 MB",
+          downloads: 93,
+          added: "3 weeks ago",
+          isNew: false,
+          bookmarked: false,
+          emoji: "🎬",
+          bgColor: "rgba(236,72,153,.12)",
+          badgeColor: "#10b981",
+          tags: ["UX", "Research"],
+        },
+        {
+          id: 12,
+          title: "CSS Grid & Flexbox Complete Guide",
+          type: "pdf",
+          course: "JavaScript Masterclass",
+          size: "1.6 MB",
+          downloads: 367,
+          added: "1 month ago",
+          isNew: false,
+          bookmarked: false,
+          emoji: "📄",
+          bgColor: "rgba(13,110,253,.12)",
+          badgeColor: "#ef4444",
+          tags: ["CSS", "Layout"],
+        },
+        {
+          id: 13,
+          title: "Next.js 14 App Router Codebase",
+          type: "code",
+          course: "React & Next.js Advanced",
+          size: "28 MB",
+          downloads: 254,
+          added: "5 days ago",
+          isNew: true,
+          bookmarked: false,
+          emoji: "💻",
+          bgColor: "rgba(13,110,253,.12)",
+          badgeColor: "#8b5cf6",
+          tags: ["Next.js", "Code"],
+        },
+        {
+          id: 14,
+          title: "SQL for Backend Developers",
+          type: "ebook",
+          course: "Node.js Backend Mastery",
+          size: "6.2 MB",
+          downloads: 178,
+          added: "2 weeks ago",
+          isNew: false,
+          bookmarked: true,
+          emoji: "📚",
+          bgColor: "rgba(239,68,68,.12)",
+          badgeColor: "#f59e0b",
+          tags: ["SQL", "Backend"],
+        },
+        {
+          id: 15,
+          title: "HTTP Status Codes Cheat Sheet",
+          type: "cheatsheet",
+          course: "Node.js Backend Mastery",
+          size: "90 KB",
+          downloads: 521,
+          added: "1 month ago",
+          isNew: false,
+          bookmarked: false,
+          emoji: "📝",
+          bgColor: "rgba(239,68,68,.12)",
+          badgeColor: "#8b5cf6",
+          tags: ["HTTP", "Reference"],
+        },
+        {
+          id: 16,
+          title: "Design Systems Principles Slides",
+          type: "slides",
+          course: "UI/UX Design Fundamentals",
+          size: "18 MB",
+          downloads: 205,
+          added: "4 days ago",
+          isNew: true,
+          bookmarked: false,
+          emoji: "📊",
+          bgColor: "rgba(236,72,153,.12)",
+          badgeColor: "#0d6efd",
+          tags: ["Design", "Systems"],
+        },
+        {
+          id: 17,
+          title: "Machine Learning Intro Video Series",
+          type: "video",
+          course: "Python for Data Science",
+          size: "650 MB",
+          downloads: 138,
+          added: "1 week ago",
+          isNew: false,
+          bookmarked: true,
+          emoji: "🎬",
+          bgColor: "rgba(16,185,129,.12)",
+          badgeColor: "#10b981",
+          tags: ["ML", "Python"],
+        },
+        {
+          id: 18,
+          title: "React Hooks Reference Card",
+          type: "cheatsheet",
+          course: "React & Next.js Advanced",
+          size: "120 KB",
+          downloads: 608,
+          added: "3 weeks ago",
+          isNew: false,
+          bookmarked: false,
+          emoji: "📝",
+          bgColor: "rgba(13,110,253,.12)",
+          badgeColor: "#8b5cf6",
+          tags: ["React", "Hooks"],
+        },
+      ];
+
+      /* ── Alpine component ────────────────────────────────────────── */
+      function libraryPage() {
+        return {
+          view: "grid",
+          search: "",
+          filterType: "all",
+          filterCourse: "all",
+          sortBy: "newest",
+          resources: RESOURCES,
+
+          get sortLabel() {
+            const m = {
+              newest: "Newest",
+              oldest: "Oldest",
+              name: "Name A–Z",
+              size: "Size",
+              popular: "Popular",
+            };
+            return m[this.sortBy] || "Sort";
+          },
+
+          get filteredResources() {
+            let list = this.resources.slice();
+            // type filter
+            if (this.filterType === "bookmarked")
+              list = list.filter((r) => r.bookmarked);
+            else if (this.filterType !== "all")
+              list = list.filter((r) => r.type === this.filterType);
+            // course filter
+            if (this.filterCourse !== "all")
+              list = list.filter((r) => r.course === this.filterCourse);
+            // search
+            if (this.search) {
+              const q = this.search.toLowerCase();
+              list = list.filter(
+                (r) =>
+                  r.title.toLowerCase().includes(q) ||
+                  r.course.toLowerCase().includes(q) ||
+                  r.tags.some((t) => t.toLowerCase().includes(q)),
+              );
+            }
+            // sort
+            if (this.sortBy === "newest") list.sort((a, b) => b.id - a.id);
+            if (this.sortBy === "oldest") list.sort((a, b) => a.id - b.id);
+            if (this.sortBy === "name")
+              list.sort((a, b) => a.title.localeCompare(b.title));
+            if (this.sortBy === "popular")
+              list.sort((a, b) => b.downloads - a.downloads);
+            return list;
+          },
+
+          get recentlyViewed() {
+            return this.resources.slice(0, 5);
+          },
+
+          get topDownloads() {
+            return this.resources
+              .slice()
+              .sort((a, b) => b.downloads - a.downloads)
+              .slice(0, 5);
+          },
+
+          downloadResource(res) {
+            res.downloads++;
+            window.lmsNotify.success(`Downloading "${res.title}"…`);
+            setTimeout(
+              () => window.lmsNotify.success("Download complete!"),
+              1600,
+            );
+          },
+
+          toggleBookmark(res) {
+            res.bookmarked = !res.bookmarked;
+            window.lmsNotify.success(
+              res.bookmarked
+                ? "Resource saved to bookmarks."
+                : "Removed from bookmarks.",
+            );
+          },
+
+          shareResource(res) {
+            navigator.clipboard
+              ?.writeText(`https://edulearn.io/library/${res.id}`)
+              .catch(() => {});
+            window.lmsNotify.success("Resource link copied to clipboard!");
+          },
+
+          openPreview(res) {
+            window._previewRes = res;
+            const modal = document.getElementById("previewModal");
+            document.getElementById("previewModalTitle").textContent =
+              res.title;
+            document.getElementById("previewModalBody").innerHTML = `
+          <div class="preview-frame mb-3">
+            <div class="preview-frame-icon">${res.emoji}</div>
+            <div style="font-size:.82rem; font-weight:600;">${res.title}</div>
+            <div style="font-size:.76rem; color:var(--bs-secondary);">${res.type.toUpperCase()} · ${res.size}</div>
+            ${res.type === "video" ? '<div class="mt-2"><span class="badge bg-danger bg-opacity-15 text-danger"><i class="bi bi-play-circle me-1"></i>Video Preview</span></div>' : ""}
+          </div>
+          <div class="row g-3 mb-3">
+            <div class="col-6"><div style="font-size:.75rem;color:var(--bs-secondary);font-weight:600;">COURSE</div><div style="font-size:.85rem;font-weight:600;">${res.course}</div></div>
+            <div class="col-6"><div style="font-size:.75rem;color:var(--bs-secondary);font-weight:600;">TYPE</div><div style="font-size:.85rem;font-weight:600;">${res.type.toUpperCase()}</div></div>
+            <div class="col-6"><div style="font-size:.75rem;color:var(--bs-secondary);font-weight:600;">SIZE</div><div style="font-size:.85rem;font-weight:600;">${res.size}</div></div>
+            <div class="col-6"><div style="font-size:.75rem;color:var(--bs-secondary);font-weight:600;">DOWNLOADS</div><div style="font-size:.85rem;font-weight:600;">${res.downloads}</div></div>
+            <div class="col-12"><div style="font-size:.75rem;color:var(--bs-secondary);font-weight:600;margin-bottom:6px;">TAGS</div>
+              <div class="d-flex flex-wrap gap-1">${res.tags.map((t) => `<span class="tag-chip">${t}</span>`).join("")}</div>
+            </div>
+          </div>
+        `;
+            document.getElementById("previewDownloadBtn").onclick = () => {
+              Alpine.store && Alpine.store("library");
+              res.downloads++;
+              window.lmsNotify.success(`Downloading "${res.title}"…`);
+              bootstrap.Modal.getInstance(modal)?.hide();
+            };
+            document.getElementById("previewShareBtn").onclick = () => {
+              navigator.clipboard
+                ?.writeText(`https://edulearn.io/library/${res.id}`)
+                .catch(() => {});
+              window.lmsNotify.success("Link copied to clipboard!");
+            };
+            new bootstrap.Modal(modal).show();
+          },
+
+          requestResource() {
+            new bootstrap.Modal(document.getElementById("requestModal")).show();
+          },
+        };
+      }
+
+      /* ── Request submit ──────────────────────────────────────────── */
+      function submitRequest() {
+        const title = document.getElementById("reqTitle").value.trim();
+        if (!title) {
+          window.lmsNotify.error("Please enter a resource title.");
+          return;
+        }
+        bootstrap.Modal.getInstance(
+          document.getElementById("requestModal"),
+        )?.hide();
+        window.lmsNotify.success(
+          "Request submitted! Your instructor will be notified.",
+        );
+      }
+
+      /* ── Load sidebar + navbar ───────────────────────────────────── */
+      document.addEventListener("DOMContentLoaded", () => {
+        fetch("../components/student-sidebar.html")
+          .then((r) => r.text())
+          .then((html) => {
+            const el = document.getElementById("sidebar-placeholder");
+            el.innerHTML = html;
+            Alpine.initTree(el);
+            el.querySelectorAll(".sidebar-nav-item").forEach((it) => {
+              it.classList.remove("active");
+              if (it.querySelector("a")?.href.includes("library"))
+                it.classList.add("active");
+            });
+          });
+
+        fetch("../components/student-navbar.html")
+          .then((r) => r.text())
+          .then((html) => {
+            const el = document.getElementById("navbar-placeholder");
+            el.innerHTML = html;
+            Alpine.initTree(el);
+            const t = document.getElementById("navbarPageTitle");
+            const b = document.getElementById("navbarBreadcrumbCurrent");
+            if (t) t.textContent = "Resource Library";
+            if (b) b.textContent = "Library";
+          });
+      });
+    </script>
+  </body>
+</html>

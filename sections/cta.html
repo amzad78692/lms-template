@@ -1,0 +1,550 @@
+<!-- ============================================================
+     EduLearn LMS — CTA / Newsletter Section
+     File: sections/cta.html
+     Libraries used: AOS 2.3.x, Notyf 3.x (window.lmsNotify)
+     (CDN links live in index.html)
+     ============================================================ -->
+
+<style>
+  /* ── Section Wrapper ────────────────────────────────────────── */
+  .cta-section {
+    padding: 100px 0;
+    font-family: var(--font-family);
+    background: var(--surface-alt);
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* ── Main CTA Card ──────────────────────────────────────────── */
+  .cta-card {
+    background: var(--accent); /* black */
+    border-radius: 24px;
+    padding: 72px 64px;
+    position: relative;
+    overflow: hidden;
+    color: #fff;
+  }
+
+  /* Gradient orbs */
+  .cta-card::before {
+    content: "";
+    position: absolute;
+    width: 500px;
+    height: 500px;
+    border-radius: 50%;
+    background: radial-gradient(
+      circle,
+      rgba(13, 110, 253, 0.45) 0%,
+      transparent 70%
+    );
+    top: -180px;
+    left: -120px;
+    pointer-events: none;
+  }
+  .cta-card::after {
+    content: "";
+    position: absolute;
+    width: 380px;
+    height: 380px;
+    border-radius: 50%;
+    background: radial-gradient(
+      circle,
+      rgba(124, 58, 237, 0.35) 0%,
+      transparent 70%
+    );
+    bottom: -140px;
+    right: -60px;
+    pointer-events: none;
+  }
+
+  /* dot-grid overlay */
+  .cta-card-dots {
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(
+      rgba(255, 255, 255, 0.07) 1px,
+      transparent 1px
+    );
+    background-size: 24px 24px;
+    pointer-events: none;
+  }
+
+  .cta-card .container-fluid,
+  .cta-card > .row {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ── Left: copy ─────────────────────────────────────────────── */
+  .cta-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    background: rgba(255, 255, 255, 0.12);
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    padding: 5px 14px;
+    border-radius: 20px;
+    margin-bottom: 18px;
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+  }
+  .cta-title {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 900;
+    color: #fff;
+    line-height: 1.15;
+    letter-spacing: -0.8px;
+    margin-bottom: 18px;
+  }
+  .cta-title .cta-highlight {
+    background: linear-gradient(90deg, #60a5fa, #a78bfa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .cta-desc {
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.75;
+    margin-bottom: 32px;
+    max-width: 460px;
+  }
+
+  /* CTA buttons row */
+  .cta-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 36px;
+  }
+  .btn-cta-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 13px 32px;
+    border-radius: 50px;
+    background: var(--primary-gradient);
+    color: #fff;
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-decoration: none;
+    font-family: var(--font-family);
+    border: none;
+    box-shadow: 0 4px 20px rgba(13, 110, 253, 0.45);
+    transition:
+      transform 0.2s ease,
+      box-shadow 0.2s ease;
+  }
+  .btn-cta-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 28px rgba(13, 110, 253, 0.6);
+    color: #fff;
+    text-decoration: none;
+  }
+  .btn-cta-ghost {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 13px 30px;
+    border-radius: 50px;
+    background: transparent;
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-decoration: none;
+    font-family: var(--font-family);
+    border: 1.5px solid rgba(255, 255, 255, 0.3);
+    transition: all 0.2s ease;
+  }
+  .btn-cta-ghost:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.6);
+    color: #fff;
+    transform: translateY(-2px);
+    text-decoration: none;
+  }
+
+  /* Social proof mini-row */
+  .cta-social-proof {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .cta-avatars {
+    display: flex;
+  }
+  .cta-avatars img {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    margin-left: -8px;
+    object-fit: cover;
+  }
+  .cta-avatars img:first-child {
+    margin-left: 0;
+  }
+  .cta-sp-text {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.65);
+  }
+  .cta-sp-text strong {
+    color: #fff;
+  }
+
+  /* ── Right: Newsletter form box ─────────────────────────────── */
+  .cta-newsletter-box {
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 20px;
+    padding: 40px 36px;
+    backdrop-filter: blur(8px);
+  }
+  .cta-newsletter-title {
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: #fff;
+    margin-bottom: 6px;
+  }
+  .cta-newsletter-sub {
+    font-size: 0.82rem;
+    color: rgba(255, 255, 255, 0.6);
+    margin-bottom: 24px;
+    line-height: 1.55;
+  }
+
+  /* Input group */
+  .cta-input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  .cta-form-control {
+    width: 100%;
+    padding: 12px 16px;
+    border-radius: 12px;
+    border: 1.5px solid rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.08);
+    color: #fff;
+    font-size: 0.875rem;
+    font-family: var(--font-family);
+    outline: none;
+    transition:
+      border-color 0.2s ease,
+      background 0.2s ease;
+  }
+  .cta-form-control::placeholder {
+    color: rgba(255, 255, 255, 0.4);
+  }
+  .cta-form-control:focus {
+    border-color: rgba(96, 165, 250, 0.7);
+    background: rgba(255, 255, 255, 0.12);
+  }
+  .cta-form-control.error {
+    border-color: rgba(248, 113, 113, 0.7);
+  }
+
+  .btn-subscribe {
+    width: 100%;
+    padding: 13px 24px;
+    border-radius: 12px;
+    background: var(--primary-gradient);
+    color: #fff;
+    font-size: 0.9rem;
+    font-weight: 700;
+    border: none;
+    font-family: var(--font-family);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    box-shadow: 0 4px 16px rgba(13, 110, 253, 0.4);
+    transition:
+      transform 0.2s ease,
+      box-shadow 0.2s ease,
+      opacity 0.2s ease;
+  }
+  .btn-subscribe:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(13, 110, 253, 0.55);
+  }
+  .btn-subscribe:disabled {
+    opacity: 0.6;
+    pointer-events: none;
+  }
+
+  /* Privacy note */
+  .cta-privacy {
+    font-size: 0.72rem;
+    color: rgba(255, 255, 255, 0.45);
+    line-height: 1.55;
+    text-align: center;
+  }
+  .cta-privacy a {
+    color: rgba(255, 255, 255, 0.65);
+    text-decoration: underline;
+  }
+
+  /* Benefits checklist */
+  .cta-benefits {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .cta-benefits li {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.65);
+  }
+  .cta-benefits li i {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: rgba(96, 165, 250, 0.2);
+    color: #93c5fd;
+    font-size: 0.6rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  /* ── Responsive ─────────────────────────────────────────────── */
+  @media (max-width: 991px) {
+    .cta-card {
+      padding: 52px 32px;
+    }
+    .cta-newsletter-box {
+      margin-top: 40px;
+    }
+  }
+  @media (max-width: 575px) {
+    .cta-card {
+      padding: 40px 24px;
+      border-radius: 16px;
+    }
+    .cta-newsletter-box {
+      padding: 28px 20px;
+    }
+  }
+</style>
+
+<!-- ════════════════════════════════════════════════════════════
+     CTA / NEWSLETTER SECTION
+     ════════════════════════════════════════════════════════════ -->
+<section class="cta-section" id="cta">
+  <div class="container">
+    <div class="cta-card" data-aos="fade-up">
+      <div class="cta-card-dots"></div>
+
+      <div class="row align-items-center g-5">
+        <!-- ── Left: Big CTA copy ──────────────────────────────── -->
+        <div class="col-lg-7" data-aos="fade-right" data-aos-delay="60">
+          <div class="cta-eyebrow">
+            <i class="bi bi-lightning-charge-fill"></i>
+            Start Learning Today
+          </div>
+          <h2 class="cta-title">
+            Take the Next Step<br />in Your
+            <span class="cta-highlight">Career Journey</span>
+          </h2>
+          <p class="cta-desc">
+            Join over 50,000 learners who have transformed their skills and
+            landed their dream jobs with EduLearn. Your first course is on us.
+          </p>
+
+          <div class="cta-buttons">
+            <a href="register.html" class="btn-cta-primary">
+              <i class="bi bi-rocket-takeoff-fill"></i>
+              Get Started — It's Free
+            </a>
+            <a href="public/courses.html" class="btn-cta-ghost">
+              <i class="bi bi-play-circle"></i>
+              Browse Courses
+            </a>
+          </div>
+
+          <!-- Social proof -->
+          <div class="cta-social-proof">
+            <div class="cta-avatars">
+              <img
+                src="https://placehold.co/32x32/0d6efd/ffffff?text=A"
+                alt="Student 1"
+              />
+              <img
+                src="https://placehold.co/32x32/7c3aed/ffffff?text=B"
+                alt="Student 2"
+              />
+              <img
+                src="https://placehold.co/32x32/db2777/ffffff?text=C"
+                alt="Student 3"
+              />
+              <img
+                src="https://placehold.co/32x32/d97706/ffffff?text=D"
+                alt="Student 4"
+              />
+              <img
+                src="https://placehold.co/32x32/059669/ffffff?text=E"
+                alt="Student 5"
+              />
+            </div>
+            <p class="cta-sp-text mb-0">
+              <strong>2,400+</strong> students enrolled this week · ⭐⭐⭐⭐⭐
+              <strong>4.9/5</strong>
+            </p>
+          </div>
+        </div>
+
+        <!-- ── Right: Newsletter form ──────────────────────────── -->
+        <div class="col-lg-5" data-aos="fade-left" data-aos-delay="120">
+          <div
+            class="cta-newsletter-box"
+            x-data="{
+                 name:    '',
+                 email:   '',
+                 loading: false,
+                 submitted: false,
+                 async submit() {
+                   if (!this.email || !this.email.includes('@')) {
+                     document.getElementById('ctaEmailInput').classList.add('error');
+                     if (window.lmsNotify) window.lmsNotify.error('Please enter a valid email address.');
+                     return;
+                   }
+                   document.getElementById('ctaEmailInput').classList.remove('error');
+                   this.loading = true;
+                   await new Promise(r => setTimeout(r, 1200));
+                   this.loading  = false;
+                   this.submitted = true;
+                   if (window.lmsNotify)
+                     window.lmsNotify.success('🎉 You\'re subscribed! Check your inbox.');
+                   this.name  = '';
+                   this.email = '';
+                   setTimeout(() => { this.submitted = false; }, 5000);
+                 }
+               }"
+          >
+            <!-- Normal state -->
+            <template x-if="!submitted">
+              <div>
+                <div class="cta-newsletter-title">
+                  <i
+                    class="bi bi-envelope-paper-fill me-2"
+                    style="color: #60a5fa"
+                  ></i>
+                  Get Free Learning Tips
+                </div>
+                <p class="cta-newsletter-sub">
+                  Weekly curated articles, course recommendations, and career
+                  advice. No spam — unsubscribe any time.
+                </p>
+
+                <div class="cta-input-group">
+                  <input
+                    type="text"
+                    class="cta-form-control"
+                    placeholder="Your first name"
+                    x-model="name"
+                    autocomplete="given-name"
+                  />
+                  <input
+                    id="ctaEmailInput"
+                    type="email"
+                    class="cta-form-control"
+                    placeholder="Your best email address"
+                    x-model="email"
+                    autocomplete="email"
+                    @keydown.enter="submit()"
+                  />
+                </div>
+
+                <button
+                  class="btn-subscribe"
+                  @click="submit()"
+                  :disabled="loading"
+                >
+                  <template x-if="!loading">
+                    <span class="d-flex align-items-center gap-2">
+                      <i class="bi bi-send-fill"></i> Subscribe for Free
+                    </span>
+                  </template>
+                  <template x-if="loading">
+                    <span class="d-flex align-items-center gap-2">
+                      <span
+                        class="spinner-border spinner-border-sm"
+                        role="status"
+                      ></span>
+                      Subscribing…
+                    </span>
+                  </template>
+                </button>
+
+                <p class="cta-privacy mt-3">
+                  By subscribing you agree to our
+                  <a href="#">Privacy Policy</a>. We'll never share your data.
+                </p>
+
+                <ul class="cta-benefits">
+                  <li>
+                    <i class="bi bi-check"></i> Weekly curated course picks
+                  </li>
+                  <li><i class="bi bi-check"></i> Exclusive discount codes</li>
+                  <li>
+                    <i class="bi bi-check"></i> Career tips from top instructors
+                  </li>
+                  <li>
+                    <i class="bi bi-check"></i> Early access to new content
+                  </li>
+                </ul>
+              </div>
+            </template>
+
+            <!-- Success state -->
+            <template x-if="submitted">
+              <div class="text-center py-3">
+                <div style="font-size: 3rem; margin-bottom: 14px">🎉</div>
+                <h4 style="color: #fff; font-weight: 800; margin-bottom: 10px">
+                  You're in!
+                </h4>
+                <p
+                  style="
+                    color: rgba(255, 255, 255, 0.65);
+                    font-size: 0.875rem;
+                    line-height: 1.6;
+                    margin-bottom: 24px;
+                  "
+                >
+                  Welcome to the EduLearn community.<br />
+                  Check your inbox for your first newsletter.
+                </p>
+                <a
+                  href="public/courses.html"
+                  class="btn-cta-primary"
+                  style="display: inline-flex"
+                >
+                  <i class="bi bi-play-circle-fill"></i>
+                  Start Browsing Courses
+                </a>
+              </div>
+            </template>
+          </div>
+        </div>
+        <!-- /Right -->
+      </div>
+      <!-- /row -->
+    </div>
+    <!-- /cta-card -->
+  </div>
+</section>
+<!-- /CTA SECTION -->

@@ -1,0 +1,615 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="EduLearn — The modern online learning platform with 200+ expert-led courses, live sessions, and verified certificates."
+    />
+    <meta name="theme-color" content="#0d6efd" />
+    <title>EduLearn — Learn Skills That Matter</title>
+
+    <!-- ── Favicon placeholder ──────────────────────────────────── -->
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎓</text></svg>"
+    />
+
+    <!-- ══════════════════════════════════════════════════════════
+       FONTS
+       ══════════════════════════════════════════════════════════ -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- ══════════════════════════════════════════════════════════
+       CSS LIBRARIES
+       ══════════════════════════════════════════════════════════ -->
+
+    <!-- Bootstrap 5.3 -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Bootstrap Icons 1.11 -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css"
+      rel="stylesheet"
+    />
+    <!-- AOS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css"
+      rel="stylesheet"
+    />
+    <!-- Swiper.js -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+    />
+    <!-- Notyf -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css"
+    />
+
+    <!-- ── Project theme ──────────────────────────────────────── -->
+    <link rel="stylesheet" href="assets/css/theme.css" />
+
+    <!-- ══════════════════════════════════════════════════════════
+       INLINE PAGE STYLES
+       ══════════════════════════════════════════════════════════ -->
+    <style>
+      /* Smooth scroll */
+      html {
+        scroll-behavior: smooth;
+      }
+
+      /* Page transition fade-in */
+      body {
+        opacity: 0;
+        animation: pageFadeIn 0.35s ease forwards;
+      }
+      @keyframes pageFadeIn {
+        to {
+          opacity: 1;
+        }
+      }
+
+      /* ── Section separators ─────────────────────────────────── */
+      .section-divider {
+        height: 1px;
+        background: var(--border-color);
+        margin: 0;
+      }
+
+      /* ── Back-to-top button ─────────────────────────────────── */
+      #backToTop {
+        position: fixed;
+        bottom: 28px;
+        right: 28px;
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        background: var(--primary);
+        color: #fff;
+        border: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1rem;
+        cursor: pointer;
+        z-index: 1050;
+        box-shadow: 0 4px 16px rgba(13, 110, 253, 0.4);
+        opacity: 0;
+        transform: translateY(12px);
+        pointer-events: none;
+        transition:
+          opacity 0.25s ease,
+          transform 0.25s ease;
+      }
+      #backToTop.visible {
+        opacity: 1;
+        transform: translateY(0);
+        pointer-events: auto;
+      }
+      #backToTop:hover {
+        background: var(--primary-dark);
+        transform: translateY(-2px);
+      }
+
+      /* ── Cookie banner ──────────────────────────────────────── */
+      #cookieBanner {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: var(--surface-elevated);
+        border-top: 1px solid var(--border-color);
+        padding: 16px 24px;
+        z-index: 2000;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        flex-wrap: wrap;
+        box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.08);
+        font-family: var(--font-family);
+        font-size: 0.85rem;
+        color: var(--text-secondary);
+      }
+      #cookieBanner.hidden {
+        display: none;
+      }
+      .cookie-actions {
+        display: flex;
+        gap: 10px;
+        flex-shrink: 0;
+      }
+      .btn-cookie-accept {
+        padding: 8px 20px;
+        border-radius: 50px;
+        background: var(--primary);
+        color: #fff;
+        border: none;
+        font-size: 0.82rem;
+        font-weight: 700;
+        font-family: var(--font-family);
+        cursor: pointer;
+        transition: background 0.2s;
+      }
+      .btn-cookie-accept:hover {
+        background: var(--primary-dark);
+      }
+      .btn-cookie-decline {
+        padding: 8px 16px;
+        border-radius: 50px;
+        background: transparent;
+        color: var(--text-muted);
+        border: 1px solid var(--border-color);
+        font-size: 0.82rem;
+        font-weight: 600;
+        font-family: var(--font-family);
+        cursor: pointer;
+        transition:
+          border-color 0.2s,
+          color 0.2s;
+      }
+      .btn-cookie-decline:hover {
+        border-color: var(--text-muted);
+        color: var(--text-primary);
+      }
+    </style>
+  </head>
+
+  <body x-data="themeToggle()" :data-theme="theme">
+    <!-- ══════════════════════════════════════════════════════════
+       PUBLIC NAVBAR
+       ══════════════════════════════════════════════════════════ -->
+    <!-- #include components/public-navbar.html -->
+    <div id="public-navbar-placeholder"></div>
+
+    <!-- ══════════════════════════════════════════════════════════
+       MAIN CONTENT
+       ══════════════════════════════════════════════════════════ -->
+    <main id="main-content">
+      <!-- 1 ── HERO ──────────────────────────────────────────────── -->
+      <!-- #include sections/hero.html -->
+      <div id="hero-placeholder"></div>
+
+      <!-- 2 ── STATS BAND ──────────────────────────────────────── -->
+      <!-- #include sections/stats.html -->
+      <div id="stats-placeholder"></div>
+
+      <!-- 3 ── FEATURES ─────────────────────────────────────────── -->
+      <!-- #include sections/features.html -->
+      <div id="features-placeholder"></div>
+
+      <!-- 4 ── POPULAR COURSES ─────────────────────────────────── -->
+      <!-- #include sections/popular-courses.html -->
+      <div id="popular-courses-placeholder"></div>
+
+      <!-- Divider -->
+      <div class="section-divider"></div>
+
+      <!-- 5 ── INSTRUCTORS ─────────────────────────────────────── -->
+      <!-- #include sections/instructors.html -->
+      <div id="instructors-placeholder"></div>
+
+      <!-- 6 ── TESTIMONIALS ────────────────────────────────────── -->
+      <!-- #include sections/testimonials.html -->
+      <div id="testimonials-placeholder"></div>
+
+      <!-- 7 ── PRICING ─────────────────────────────────────────── -->
+      <!-- #include sections/pricing.html -->
+      <div id="pricing-placeholder"></div>
+
+      <!-- 8 ── CTA / NEWSLETTER ────────────────────────────────── -->
+      <!-- #include sections/cta.html -->
+      <div id="cta-placeholder"></div>
+    </main>
+
+    <!-- ══════════════════════════════════════════════════════════
+       PUBLIC FOOTER
+       ══════════════════════════════════════════════════════════ -->
+    <!-- #include components/public-footer.html -->
+    <div id="public-footer-placeholder"></div>
+
+    <!-- ══════════════════════════════════════════════════════════
+       BACK TO TOP BUTTON
+       ══════════════════════════════════════════════════════════ -->
+    <button id="backToTop" aria-label="Back to top">
+      <i class="bi bi-chevron-up"></i>
+    </button>
+
+    <!-- ══════════════════════════════════════════════════════════
+       COOKIE CONSENT BANNER
+       ══════════════════════════════════════════════════════════ -->
+    <div id="cookieBanner">
+      <span>
+        <i class="bi bi-cookie me-2 text-warning"></i>
+        We use cookies to improve your experience. By continuing you agree to
+        our
+        <a href="#" style="color: var(--primary); font-weight: 600"
+          >Cookie Policy</a
+        >.
+      </span>
+      <div class="cookie-actions">
+        <button class="btn-cookie-accept" onclick="acceptCookies()">
+          Accept All
+        </button>
+        <button class="btn-cookie-decline" onclick="declineCookies()">
+          Decline
+        </button>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════════
+       GLOBAL SEARCH OVERLAY (from app.js globalSearch())
+       ══════════════════════════════════════════════════════════ -->
+    <div
+      x-data="globalSearch()"
+      @keydown.window.escape="close()"
+      @keydown.window.meta.k.prevent="open()"
+      @keydown.window.ctrl.k.prevent="open()"
+    >
+      <!-- Backdrop -->
+      <div
+        x-show="isOpen"
+        x-transition:enter="transition ease-out duration-200"
+        x-transition:enter-start="opacity-0"
+        x-transition:enter-end="opacity-100"
+        x-transition:leave="transition ease-in duration-150"
+        x-transition:leave-start="opacity-100"
+        x-transition:leave-end="opacity-0"
+        class="position-fixed top-0 start-0 w-100 h-100"
+        style="
+          background: rgba(0, 0, 0, 0.55);
+          z-index: 1060;
+          backdrop-filter: blur(4px);
+        "
+        @click="close()"
+      ></div>
+
+      <!-- Search Panel -->
+      <div
+        x-show="isOpen"
+        x-transition:enter="transition ease-out duration-200"
+        x-transition:enter-start="opacity-0 translate-y-[-20px]"
+        x-transition:enter-end="opacity-100 translate-y-0"
+        x-transition:leave="transition ease-in duration-150"
+        x-transition:leave-start="opacity-100"
+        x-transition:leave-end="opacity-0"
+        class="position-fixed top-0 start-50 translate-middle-x mt-5"
+        style="width: min(580px, 92vw); z-index: 1061"
+      >
+        <div
+          class="card border-0 shadow-lg rounded-3 overflow-hidden"
+          style="background: var(--surface)"
+        >
+          <!-- Input -->
+          <div
+            class="d-flex align-items-center gap-2 px-3 py-2 border-bottom"
+            style="border-color: var(--border-color) !important"
+          >
+            <i class="bi bi-search fs-5" style="color: var(--text-muted)"></i>
+            <input
+              x-ref="searchInput"
+              type="text"
+              x-model="query"
+              @input="search()"
+              placeholder="Search pages, courses, settings…"
+              class="border-0 flex-grow-1 bg-transparent py-2"
+              style="
+                outline: none;
+                color: var(--text-primary);
+                font-family: var(--font-family);
+                font-size: 0.95rem;
+              "
+            />
+            <kbd
+              class="d-none d-sm-inline-flex align-items-center gap-1 px-2 py-1 rounded"
+              style="
+                background: var(--surface-alt);
+                border: 1px solid var(--border-color);
+                font-size: 0.65rem;
+                color: var(--text-muted);
+              "
+            >
+              ESC
+            </kbd>
+            <button class="btn-close d-sm-none" @click="close()"></button>
+          </div>
+          <!-- Results -->
+          <div class="py-1" style="max-height: 360px; overflow-y: auto">
+            <template x-if="results.length === 0 && query.length > 0">
+              <div
+                class="text-center py-4"
+                style="color: var(--text-muted); font-size: 0.875rem"
+              >
+                <i class="bi bi-search d-block mb-2 fs-4"></i>
+                No results for "<span x-text="query"></span>"
+              </div>
+            </template>
+            <template x-if="results.length === 0 && query.length === 0">
+              <div
+                class="px-3 py-2"
+                style="
+                  color: var(--text-muted);
+                  font-size: 0.8rem;
+                  font-weight: 600;
+                  text-transform: uppercase;
+                  letter-spacing: 0.8px;
+                "
+              >
+                Quick links
+              </div>
+            </template>
+            <template
+              x-for="item in (query.length === 0 ? pages.slice(0,6) : results)"
+              :key="item.title"
+            >
+              <a
+                :href="item.url"
+                class="d-flex align-items-center gap-3 px-3 py-2 text-decoration-none"
+                style="color: var(--text-primary); transition: background 0.15s"
+                @mouseover="$el.style.background='var(--surface-alt)'"
+                @mouseleave="$el.style.background='transparent'"
+              >
+                <span
+                  class="d-flex align-items-center justify-content-center rounded-2 flex-shrink-0"
+                  style="
+                    width: 32px;
+                    height: 32px;
+                    background: var(--primary-light);
+                    color: var(--primary);
+                    font-size: 0.85rem;
+                  "
+                >
+                  <i :class="'bi ' + (item.icon || 'bi-link-45deg')"></i>
+                </span>
+                <span>
+                  <span
+                    class="d-block"
+                    style="font-size: 0.875rem; font-weight: 600"
+                    x-text="item.title"
+                  ></span>
+                  <span
+                    style="font-size: 0.75rem; color: var(--text-muted)"
+                    x-text="item.url"
+                  ></span>
+                </span>
+              </a>
+            </template>
+          </div>
+          <!-- Footer hint -->
+          <div
+            class="px-3 py-2 border-top d-flex align-items-center gap-3"
+            style="
+              border-color: var(--border-color) !important;
+              font-size: 0.72rem;
+              color: var(--text-muted);
+            "
+          >
+            <span
+              ><kbd
+                style="
+                  background: var(--surface-alt);
+                  border: 1px solid var(--border-color);
+                  border-radius: 4px;
+                  padding: 2px 6px;
+                "
+                >↑↓</kbd
+              >
+              navigate</span
+            >
+            <span
+              ><kbd
+                style="
+                  background: var(--surface-alt);
+                  border: 1px solid var(--border-color);
+                  border-radius: 4px;
+                  padding: 2px 6px;
+                "
+                >↵</kbd
+              >
+              open</span
+            >
+            <span
+              ><kbd
+                style="
+                  background: var(--surface-alt);
+                  border: 1px solid var(--border-color);
+                  border-radius: 4px;
+                  padding: 2px 6px;
+                "
+                >ESC</kbd
+              >
+              close</span
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════════
+       JS LIBRARIES
+       ══════════════════════════════════════════════════════════ -->
+
+    <!-- Bootstrap 5.3 bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- AOS -->
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+
+    <!-- Typed.js (hero section) -->
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.1.0/dist/typed.umd.js"></script>
+
+    <!-- Swiper.js (instructors + testimonials) -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+    <!-- CountUp.js (stats section) -->
+    <script src="https://cdn.jsdelivr.net/npm/countup.js@2.8.0/dist/countUp.umd.js"></script>
+
+    <!-- Notyf -->
+    <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
+
+    <!-- Alpine.js (MUST be last before app.js) -->
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
+    ></script>
+
+    <!-- Project app.js (Alpine components + lmsNotify + lmsConfirm) -->
+    <script src="assets/js/app.js"></script>
+
+    <!-- ══════════════════════════════════════════════════════════
+       INLINE PAGE SCRIPTS
+       ══════════════════════════════════════════════════════════ -->
+    <script>
+      /* ── Section loader (fetch + inject) ──────────────────────
+       Loads each section/component HTML fragment and injects it
+       into the matching placeholder div, then boots AOS once all
+       sections are ready.
+    ──────────────────────────────────────────────────────────── */
+      const fragments = [
+        {
+          id: "public-navbar-placeholder",
+          src: "components/public-navbar.html",
+        },
+        { id: "hero-placeholder", src: "sections/hero.html" },
+        { id: "stats-placeholder", src: "sections/stats.html" },
+        { id: "features-placeholder", src: "sections/features.html" },
+        {
+          id: "popular-courses-placeholder",
+          src: "sections/popular-courses.html",
+        },
+        { id: "instructors-placeholder", src: "sections/instructors.html" },
+        { id: "testimonials-placeholder", src: "sections/testimonials.html" },
+        { id: "pricing-placeholder", src: "sections/pricing.html" },
+        { id: "cta-placeholder", src: "sections/cta.html" },
+        {
+          id: "public-footer-placeholder",
+          src: "components/public-footer.html",
+        },
+      ];
+
+      async function loadFragment(frag) {
+        try {
+          const res = await fetch(frag.src);
+          const html = await res.text();
+          const el = document.getElementById(frag.id);
+          if (el) el.outerHTML = html;
+        } catch (e) {
+          console.warn("[EduLearn] Could not load fragment:", frag.src, e);
+        }
+      }
+
+      (async () => {
+        await Promise.all(fragments.map(loadFragment));
+
+        /* Boot AOS after all sections are in the DOM */
+        if (typeof AOS !== "undefined") {
+          AOS.init({ duration: 600, once: true, offset: 80 });
+        }
+
+        /* Re-initialise Bootstrap tooltips injected by components */
+        document
+          .querySelectorAll('[data-bs-toggle="tooltip"]')
+          .forEach((el) => {
+            new bootstrap.Tooltip(el);
+          });
+      })();
+
+      /* ── Back-to-top ──────────────────────────────────────── */
+      const bttBtn = document.getElementById("backToTop");
+      window.addEventListener("scroll", () => {
+        bttBtn.classList.toggle("visible", window.scrollY > 400);
+      });
+      bttBtn.addEventListener("click", () => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
+
+      /* ── Cookie banner ────────────────────────────────────── */
+      (function () {
+        const banner = document.getElementById("cookieBanner");
+        if (localStorage.getItem("lms-cookies-accepted")) {
+          banner.classList.add("hidden");
+        }
+      })();
+
+      function acceptCookies() {
+        localStorage.setItem("lms-cookies-accepted", "1");
+        document.getElementById("cookieBanner").classList.add("hidden");
+        if (window.lmsNotify)
+          window.lmsNotify.success("Preferences saved. Thank you!");
+      }
+      function declineCookies() {
+        document.getElementById("cookieBanner").classList.add("hidden");
+      }
+
+      /* ── Active nav link via scroll spy ──────────────────── */
+      const navSections = [
+        "#hero",
+        "#stats",
+        "#features",
+        "#popular-courses",
+        "#instructors",
+        "#testimonials",
+        "#pricing",
+        "#cta",
+      ];
+      const io = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            const id = entry.target.id;
+            document
+              .querySelectorAll(".navbar-nav .nav-link")
+              .forEach((link) => {
+                link.classList.toggle(
+                  "active",
+                  link.getAttribute("href") === "#" + id,
+                );
+              });
+          });
+        },
+        { threshold: 0.35 },
+      );
+
+      // observe once sections are injected
+      setTimeout(() => {
+        navSections.forEach((sel) => {
+          const el = document.querySelector(sel);
+          if (el) io.observe(el);
+        });
+      }, 800);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,1482 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Grades — EduLearn Student</title>
+
+    <!-- Bootstrap 5.3 -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    />
+    <!-- Bootstrap Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css"
+    />
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <!-- NProgress -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.css"
+    />
+    <!-- Notyf -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css"
+    />
+    <!-- DataTables -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css"
+    />
+    <!-- Theme -->
+    <link rel="stylesheet" href="../assets/css/theme.css" />
+
+    <style>
+      /* ── Layout ───────────────────────────────────────────────── */
+      body {
+        font-family: "Poppins", sans-serif;
+        background: var(--body-bg);
+        color: var(--body-color);
+      }
+      @media (max-width: 991px) {
+        #main-content {
+          margin-left: 0 !important;
+        }
+      }
+
+      /* ── Stat cards ───────────────────────────────────────────── */
+      .stat-card {
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 14px;
+        padding: 20px;
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        transition:
+          box-shadow 0.2s,
+          transform 0.15s;
+      }
+      .stat-card:hover {
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        transform: translateY(-2px);
+      }
+      .stat-icon {
+        width: 50px;
+        height: 50px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.4rem;
+        flex-shrink: 0;
+      }
+      .stat-val {
+        font-size: 1.5rem;
+        font-weight: 700;
+        line-height: 1;
+      }
+      .stat-lbl {
+        font-size: 0.72rem;
+        color: var(--text-muted);
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        margin-top: 3px;
+      }
+      .stat-sub {
+        font-size: 0.75rem;
+        color: var(--text-muted);
+        margin-top: 4px;
+      }
+
+      /* ── Chart cards ──────────────────────────────────────────── */
+      .chart-card {
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 14px;
+        padding: 20px 20px 12px;
+      }
+      .chart-card-title {
+        font-size: 0.9rem;
+        font-weight: 600;
+        margin-bottom: 4px;
+      }
+      .chart-card-sub {
+        font-size: 0.78rem;
+        color: var(--text-muted);
+        margin-bottom: 14px;
+      }
+
+      /* ── GPA banner ───────────────────────────────────────────── */
+      .gpa-banner {
+        background: linear-gradient(135deg, #0d6efd 0%, #6610f2 100%);
+        border-radius: 16px;
+        padding: 28px 28px;
+        color: #fff;
+        position: relative;
+        overflow: hidden;
+      }
+      .gpa-banner::after {
+        content: "";
+        position: absolute;
+        right: -30px;
+        top: -30px;
+        width: 180px;
+        height: 180px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.07);
+      }
+      .gpa-big {
+        font-size: 3.2rem;
+        font-weight: 800;
+        line-height: 1;
+      }
+      .gpa-scale {
+        font-size: 0.9rem;
+        opacity: 0.8;
+      }
+      .gpa-label {
+        font-size: 0.78rem;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        opacity: 0.75;
+      }
+
+      /* ── Grade badge ──────────────────────────────────────────── */
+      .grade-badge {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 36px;
+        height: 36px;
+        border-radius: 8px;
+        font-weight: 700;
+        font-size: 0.85rem;
+        flex-shrink: 0;
+      }
+      .grade-A {
+        background: rgba(16, 185, 129, 0.15);
+        color: #10b981;
+      }
+      .grade-B {
+        background: rgba(13, 110, 253, 0.15);
+        color: #0d6efd;
+      }
+      .grade-C {
+        background: rgba(245, 158, 11, 0.15);
+        color: #f59e0b;
+      }
+      .grade-D {
+        background: rgba(249, 115, 22, 0.15);
+        color: #f97316;
+      }
+      .grade-F {
+        background: rgba(239, 68, 68, 0.15);
+        color: #ef4444;
+      }
+
+      /* ── Score bar ────────────────────────────────────────────── */
+      .score-bar {
+        height: 6px;
+        border-radius: 6px;
+        background: var(--border-color);
+        overflow: hidden;
+      }
+      .score-bar-fill {
+        height: 100%;
+        border-radius: 6px;
+        transition: width 0.6s ease;
+      }
+
+      /* ── DataTables custom ────────────────────────────────────── */
+      .dataTables_wrapper .dataTables_filter input,
+      .dataTables_wrapper .dataTables_length select {
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        color: var(--body-color);
+        border-radius: 8px;
+        padding: 6px 10px;
+      }
+      .dataTables_wrapper .dataTables_filter label,
+      .dataTables_wrapper .dataTables_length label,
+      .dataTables_wrapper .dataTables_info {
+        color: var(--text-muted);
+        font-size: 0.82rem;
+      }
+      .dataTables_wrapper .dataTables_paginate .paginate_button {
+        border-radius: 6px !important;
+        color: var(--body-color) !important;
+        font-size: 0.82rem;
+        padding: 4px 10px !important;
+      }
+      .dataTables_wrapper .dataTables_paginate .paginate_button.current,
+      .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
+        background: var(--primary) !important;
+        border-color: var(--primary) !important;
+        color: #fff !important;
+      }
+      .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+        background: rgba(13, 110, 253, 0.1) !important;
+        border-color: transparent !important;
+        color: var(--primary) !important;
+      }
+      table.dataTable thead th {
+        font-size: 0.78rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: var(--text-muted);
+        border-bottom: 2px solid var(--border-color) !important;
+        background: var(--card-bg);
+        font-weight: 600;
+      }
+      table.dataTable tbody td {
+        font-size: 0.88rem;
+        vertical-align: middle;
+        border-color: var(--border-color) !important;
+        background: var(--card-bg);
+        color: var(--body-color);
+      }
+      table.dataTable tbody tr:hover td {
+        background: rgba(13, 110, 253, 0.04) !important;
+      }
+
+      /* ── Course summary cards ─────────────────────────────────── */
+      .course-summary-card {
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 12px;
+        padding: 16px 18px;
+        transition: box-shadow 0.2s;
+      }
+      .course-summary-card:hover {
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+      }
+      .course-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        flex-shrink: 0;
+      }
+
+      /* ── Grade distribution bars ──────────────────────────────── */
+      .dist-row {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 8px;
+      }
+      .dist-label {
+        width: 22px;
+        font-size: 0.82rem;
+        font-weight: 700;
+        flex-shrink: 0;
+      }
+      .dist-bar {
+        flex: 1;
+        height: 10px;
+        background: var(--border-color);
+        border-radius: 10px;
+        overflow: hidden;
+      }
+      .dist-bar-fill {
+        height: 100%;
+        border-radius: 10px;
+        transition: width 0.6s ease;
+      }
+      .dist-count {
+        width: 24px;
+        font-size: 0.8rem;
+        color: var(--text-muted);
+        text-align: right;
+      }
+
+      /* ── Term selector ────────────────────────────────────────── */
+      .term-pill {
+        padding: 6px 16px;
+        border-radius: 20px;
+        border: 1px solid var(--border-color);
+        background: transparent;
+        color: var(--body-color);
+        font-size: 0.82rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition:
+          background 0.15s,
+          border-color 0.15s,
+          color 0.15s;
+      }
+      .term-pill.active {
+        background: var(--primary);
+        border-color: var(--primary);
+        color: #fff;
+      }
+
+      /* ── Dark mode tweaks ─────────────────────────────────────── */
+      [data-theme="dark"] .stat-card:hover {
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+      }
+      [data-theme="dark"] table.dataTable tbody tr:hover td {
+        background: rgba(255, 255, 255, 0.03) !important;
+      }
+    </style>
+  </head>
+
+  <body x-data="themeToggle()" :data-theme="dark ? 'dark' : 'light'">
+    <!-- ── Layout Wrapper ──────────────────────────────────────── -->
+    <div
+      id="layout-wrapper"
+      x-data="sidebarState()"
+      style="display: flex; min-height: 100vh"
+    >
+      <div id="sidebar-placeholder"></div>
+      <div style="flex: 1; display: flex; flex-direction: column; min-width: 0">
+        <div id="navbar-placeholder"></div>
+
+        <!-- Main content -->
+        <div
+          id="main-content"
+          :style="'margin-left:' + (collapsed ? 'var(--sidebar-collapsed)' : 'var(--sidebar-width)')"
+          style="
+            transition: margin-left 0.25s ease;
+            padding-top: var(--navbar-height);
+          "
+        >
+          <div class="container-fluid px-4 py-4">
+            <!-- ── Page Header ──────────────────────────────────── -->
+            <div
+              class="d-flex align-items-center justify-content-between mb-4 flex-wrap gap-2"
+            >
+              <div>
+                <h4 class="fw-700 mb-1">Grades</h4>
+                <p class="text-muted mb-0" style="font-size: 0.85rem">
+                  Your academic performance across all courses
+                </p>
+              </div>
+              <div class="d-flex align-items-center gap-2 flex-wrap">
+                <!-- Term selector -->
+                <div class="d-flex gap-1" id="termPills">
+                  <button
+                    class="term-pill active"
+                    data-term="all"
+                    onclick="switchTerm(this, 'all')"
+                  >
+                    All Terms
+                  </button>
+                  <button
+                    class="term-pill"
+                    data-term="spring25"
+                    onclick="switchTerm(this, 'spring25')"
+                  >
+                    Spring '25
+                  </button>
+                  <button
+                    class="term-pill"
+                    data-term="fall24"
+                    onclick="switchTerm(this, 'fall24')"
+                  >
+                    Fall '24
+                  </button>
+                </div>
+                <!-- Export -->
+                <button
+                  class="btn btn-outline-primary btn-sm"
+                  onclick="exportGrades()"
+                >
+                  <i class="bi bi-download me-1"></i>Export
+                </button>
+              </div>
+            </div>
+
+            <!-- ── GPA Banner + Stats row ───────────────────────── -->
+            <div class="row g-3 mb-4 align-items-stretch">
+              <!-- GPA banner -->
+              <div class="col-12 col-md-5 col-xl-4">
+                <div class="gpa-banner h-100">
+                  <div class="gpa-label mb-2">
+                    <i class="bi bi-mortarboard-fill me-1"></i>Cumulative GPA
+                  </div>
+                  <div class="d-flex align-items-end gap-3 mb-2">
+                    <div class="gpa-big" id="gpaDisplay">3.7</div>
+                    <div>
+                      <div class="gpa-scale">/ 4.0</div>
+                      <div
+                        id="gpaLetterBadge"
+                        style="font-size: 1.1rem; font-weight: 700"
+                      >
+                        A–
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    id="gpaRadial"
+                    style="margin-top: -8px; margin-left: -10px"
+                  ></div>
+                </div>
+              </div>
+
+              <!-- Stat cards (3 in a column) -->
+              <div class="col-12 col-md-7 col-xl-8">
+                <div class="row g-3 h-100">
+                  <div class="col-6 col-lg-3">
+                    <div class="stat-card h-100">
+                      <div
+                        class="stat-icon"
+                        style="
+                          background: rgba(16, 185, 129, 0.12);
+                          color: #10b981;
+                        "
+                      >
+                        <i class="bi bi-trophy-fill"></i>
+                      </div>
+                      <div>
+                        <div class="stat-val text-success" id="bestScoreVal">
+                          95%
+                        </div>
+                        <div class="stat-lbl">Best Score</div>
+                        <div class="stat-sub" id="bestScoreCourse">
+                          REST API Design
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-6 col-lg-3">
+                    <div class="stat-card h-100">
+                      <div
+                        class="stat-icon"
+                        style="
+                          background: rgba(245, 158, 11, 0.12);
+                          color: #f59e0b;
+                        "
+                      >
+                        <i class="bi bi-graph-up"></i>
+                      </div>
+                      <div>
+                        <div class="stat-val" id="avgScoreVal">79%</div>
+                        <div class="stat-lbl">Average</div>
+                        <div class="stat-sub">Across all items</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-6 col-lg-3">
+                    <div class="stat-card h-100">
+                      <div
+                        class="stat-icon"
+                        style="
+                          background: rgba(99, 102, 241, 0.12);
+                          color: #6366f1;
+                        "
+                      >
+                        <i class="bi bi-journal-check"></i>
+                      </div>
+                      <div>
+                        <div class="stat-val" id="totalItemsVal">24</div>
+                        <div class="stat-lbl">Graded Items</div>
+                        <div class="stat-sub" id="passedItemsVal">
+                          21 passed
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-6 col-lg-3">
+                    <div class="stat-card h-100">
+                      <div
+                        class="stat-icon"
+                        style="
+                          background: rgba(239, 68, 68, 0.12);
+                          color: #ef4444;
+                        "
+                      >
+                        <i class="bi bi-arrow-down-circle"></i>
+                      </div>
+                      <div>
+                        <div class="stat-val text-danger" id="lowestScoreVal">
+                          62%
+                        </div>
+                        <div class="stat-lbl">Lowest Score</div>
+                        <div class="stat-sub" id="lowestScoreCourse">
+                          Python Functions
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- ── Charts row ────────────────────────────────────── -->
+            <div class="row g-3 mb-4">
+              <!-- Bar chart: Score per course -->
+              <div class="col-12 col-xl-7">
+                <div class="chart-card h-100">
+                  <div class="chart-card-title">Performance by Course</div>
+                  <div class="chart-card-sub">
+                    Average score across all graded items per course
+                  </div>
+                  <canvas id="courseBarChart" height="210"></canvas>
+                </div>
+              </div>
+
+              <!-- Grade distribution -->
+              <div class="col-12 col-xl-5">
+                <div class="chart-card h-100">
+                  <div class="chart-card-title">Grade Distribution</div>
+                  <div class="chart-card-sub">Count of grades by letter</div>
+                  <div id="gradeDonutChart" style="margin-top: -8px"></div>
+                  <!-- Letter bars -->
+                  <div id="gradeBars" class="px-2 mt-1"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- ── Course summaries ──────────────────────────────── -->
+            <div class="row g-3 mb-4" id="courseSummaryRow">
+              <!-- Injected by JS -->
+            </div>
+
+            <!-- ── Detailed grade table ──────────────────────────── -->
+            <div class="chart-card">
+              <div
+                class="d-flex align-items-center justify-content-between mb-3 flex-wrap gap-2"
+              >
+                <div>
+                  <div class="chart-card-title mb-0">Detailed Grade Log</div>
+                  <div class="chart-card-sub mb-0">
+                    All assignments, quizzes and exams
+                  </div>
+                </div>
+                <div class="d-flex gap-2">
+                  <select
+                    class="form-select form-select-sm"
+                    id="typeFilter"
+                    onchange="filterTable()"
+                    style="width: 130px"
+                  >
+                    <option value="">All Types</option>
+                    <option value="Assignment">Assignment</option>
+                    <option value="Quiz">Quiz</option>
+                    <option value="Exam">Exam</option>
+                    <option value="Project">Project</option>
+                  </select>
+                  <select
+                    class="form-select form-select-sm"
+                    id="courseFilter"
+                    onchange="filterTable()"
+                    style="width: 180px"
+                  >
+                    <option value="">All Courses</option>
+                  </select>
+                </div>
+              </div>
+              <div class="table-responsive">
+                <table
+                  id="gradesTable"
+                  class="table table-hover align-middle"
+                  style="width: 100%"
+                >
+                  <thead>
+                    <tr>
+                      <th>Item</th>
+                      <th>Course</th>
+                      <th>Type</th>
+                      <th>Score</th>
+                      <th>Grade</th>
+                      <th>Weight</th>
+                      <th>Date</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody id="gradesTableBody"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <!-- /container -->
+        </div>
+        <!-- /main-content -->
+      </div>
+    </div>
+
+    <!-- ── Scripts ─────────────────────────────────────────────── -->
+    <!-- jQuery (required for DataTables) -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts@3.44.0/dist/apexcharts.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
+      defer
+    ></script>
+    <script src="../assets/js/app.js"></script>
+
+    <script>
+      NProgress.configure({ showSpinner: false });
+      document.addEventListener("DOMContentLoaded", () => NProgress.start());
+      window.addEventListener("load", () => NProgress.done());
+
+      /* ── Grade data ──────────────────────────────────────────────── */
+      const GRADE_DATA = [
+        // JavaScript Mastery
+        {
+          id: 1,
+          item: "JS Fundamentals Quiz",
+          course: "JavaScript Mastery",
+          type: "Quiz",
+          score: 84,
+          maxScore: 100,
+          weight: 10,
+          date: "2025-01-18",
+          term: "spring25",
+          passed: true,
+        },
+        {
+          id: 2,
+          item: "Array Methods Assignment",
+          course: "JavaScript Mastery",
+          type: "Assignment",
+          score: 78,
+          maxScore: 100,
+          weight: 15,
+          date: "2025-01-25",
+          term: "spring25",
+          passed: true,
+        },
+        {
+          id: 3,
+          item: "Async JS & Promises Quiz",
+          course: "JavaScript Mastery",
+          type: "Quiz",
+          score: 91,
+          maxScore: 100,
+          weight: 10,
+          date: "2025-02-10",
+          term: "spring25",
+          passed: true,
+        },
+        {
+          id: 4,
+          item: "DOM Manipulation Project",
+          course: "JavaScript Mastery",
+          type: "Project",
+          score: 88,
+          maxScore: 100,
+          weight: 25,
+          date: "2025-02-28",
+          term: "spring25",
+          passed: true,
+        },
+        {
+          id: 5,
+          item: "Midterm Exam",
+          course: "JavaScript Mastery",
+          type: "Exam",
+          score: 76,
+          maxScore: 100,
+          weight: 40,
+          date: "2025-03-15",
+          term: "spring25",
+          passed: true,
+        },
+        // CSS & Design
+        {
+          id: 6,
+          item: "CSS Selectors Quiz",
+          course: "CSS & Design",
+          type: "Quiz",
+          score: 92,
+          maxScore: 100,
+          weight: 10,
+          date: "2025-01-21",
+          term: "spring25",
+          passed: true,
+        },
+        {
+          id: 7,
+          item: "Flexbox Layout Assignment",
+          course: "CSS & Design",
+          type: "Assignment",
+          score: 85,
+          maxScore: 100,
+          weight: 15,
+          date: "2025-02-05",
+          term: "spring25",
+          passed: true,
+        },
+        {
+          id: 8,
+          item: "Responsive Design Project",
+          course: "CSS & Design",
+          type: "Project",
+          score: 90,
+          maxScore: 100,
+          weight: 30,
+          date: "2025-03-01",
+          term: "spring25",
+          passed: true,
+        },
+        {
+          id: 9,
+          item: "CSS Animations Exam",
+          course: "CSS & Design",
+          type: "Exam",
+          score: 87,
+          maxScore: 100,
+          weight: 45,
+          date: "2025-03-20",
+          term: "spring25",
+          passed: true,
+        },
+        // React Fundamentals
+        {
+          id: 10,
+          item: "Components & Props Quiz",
+          course: "React Fundamentals",
+          type: "Quiz",
+          score: 73,
+          maxScore: 100,
+          weight: 10,
+          date: "2025-02-12",
+          term: "spring25",
+          passed: true,
+        },
+        {
+          id: 11,
+          item: "State Management Assignment",
+          course: "React Fundamentals",
+          type: "Assignment",
+          score: 80,
+          maxScore: 100,
+          weight: 20,
+          date: "2025-02-25",
+          term: "spring25",
+          passed: true,
+        },
+        {
+          id: 12,
+          item: "React Hooks Quiz",
+          course: "React Fundamentals",
+          type: "Quiz",
+          score: 68,
+          maxScore: 100,
+          weight: 10,
+          date: "2025-03-08",
+          term: "spring25",
+          passed: true,
+        },
+        {
+          id: 13,
+          item: "Todo App Project",
+          course: "React Fundamentals",
+          type: "Project",
+          score: 82,
+          maxScore: 100,
+          weight: 30,
+          date: "2025-03-22",
+          term: "spring25",
+          passed: true,
+        },
+        // Node.js Backend
+        {
+          id: 14,
+          item: "REST API Design Quiz",
+          course: "Node.js Backend",
+          type: "Quiz",
+          score: 95,
+          maxScore: 100,
+          weight: 10,
+          date: "2025-01-29",
+          term: "fall24",
+          passed: true,
+        },
+        {
+          id: 15,
+          item: "Express.js Assignment",
+          course: "Node.js Backend",
+          type: "Assignment",
+          score: 88,
+          maxScore: 100,
+          weight: 20,
+          date: "2025-02-18",
+          term: "fall24",
+          passed: true,
+        },
+        {
+          id: 16,
+          item: "Authentication Project",
+          course: "Node.js Backend",
+          type: "Project",
+          score: 91,
+          maxScore: 100,
+          weight: 35,
+          date: "2025-03-10",
+          term: "fall24",
+          passed: true,
+        },
+        {
+          id: 17,
+          item: "Backend Final Exam",
+          course: "Node.js Backend",
+          type: "Exam",
+          score: 83,
+          maxScore: 100,
+          weight: 35,
+          date: "2025-03-28",
+          term: "fall24",
+          passed: true,
+        },
+        // Data Structures
+        {
+          id: 18,
+          item: "Big O Notation Quiz",
+          course: "Data Structures",
+          type: "Quiz",
+          score: 0,
+          maxScore: 100,
+          weight: 10,
+          date: "2025-01-10",
+          term: "fall24",
+          passed: false,
+        },
+        {
+          id: 19,
+          item: "Linked Lists Assignment",
+          course: "Data Structures",
+          type: "Assignment",
+          score: 72,
+          maxScore: 100,
+          weight: 20,
+          date: "2025-01-30",
+          term: "fall24",
+          passed: true,
+        },
+        {
+          id: 20,
+          item: "Binary Trees Quiz",
+          course: "Data Structures",
+          type: "Quiz",
+          score: 65,
+          maxScore: 100,
+          weight: 10,
+          date: "2025-02-20",
+          term: "fall24",
+          passed: true,
+        },
+        {
+          id: 21,
+          item: "Algorithm Challenges",
+          course: "Data Structures",
+          type: "Project",
+          score: 70,
+          maxScore: 100,
+          weight: 30,
+          date: "2025-03-05",
+          term: "fall24",
+          passed: true,
+        },
+        // Python Basics
+        {
+          id: 22,
+          item: "List Comprehensions Quiz",
+          course: "Python Basics",
+          type: "Quiz",
+          score: 70,
+          maxScore: 100,
+          weight: 10,
+          date: "2025-01-27",
+          term: "fall24",
+          passed: true,
+        },
+        {
+          id: 23,
+          item: "File I/O Assignment",
+          course: "Python Basics",
+          type: "Assignment",
+          score: 75,
+          maxScore: 100,
+          weight: 20,
+          date: "2025-02-14",
+          term: "fall24",
+          passed: true,
+        },
+        {
+          id: 24,
+          item: "Python Functions & Scope",
+          course: "Python Basics",
+          type: "Quiz",
+          score: 62,
+          maxScore: 100,
+          weight: 10,
+          date: "2025-02-04",
+          term: "fall24",
+          passed: false,
+        },
+      ];
+
+      const COURSE_COLORS = {
+        "JavaScript Mastery": "#f59e0b",
+        "CSS & Design": "#6366f1",
+        "React Fundamentals": "#0ea5e9",
+        "Node.js Backend": "#10b981",
+        "Data Structures": "#ef4444",
+        "Python Basics": "#8b5cf6",
+      };
+
+      /* ── Helpers ─────────────────────────────────────────────────── */
+      function letterGrade(score) {
+        if (score >= 90) return "A";
+        if (score >= 80) return "B";
+        if (score >= 70) return "C";
+        if (score >= 60) return "D";
+        return "F";
+      }
+
+      function gradeGPA(score) {
+        if (score >= 93) return 4.0;
+        if (score >= 90) return 3.7;
+        if (score >= 87) return 3.3;
+        if (score >= 83) return 3.0;
+        if (score >= 80) return 2.7;
+        if (score >= 77) return 2.3;
+        if (score >= 73) return 2.0;
+        if (score >= 70) return 1.7;
+        if (score >= 67) return 1.3;
+        if (score >= 63) return 1.0;
+        if (score >= 60) return 0.7;
+        return 0.0;
+      }
+
+      function gradeBgClass(g) {
+        return (
+          {
+            A: "grade-A",
+            B: "grade-B",
+            C: "grade-C",
+            D: "grade-D",
+            F: "grade-F",
+          }[g] || "grade-F"
+        );
+      }
+
+      let currentTerm = "all";
+      let dtInstance = null;
+      let barChart = null;
+      let donutChart = null;
+
+      function filteredData() {
+        if (currentTerm === "all") return GRADE_DATA;
+        return GRADE_DATA.filter((d) => d.term === currentTerm);
+      }
+
+      /* ── Term switch ──────────────────────────────────────────────── */
+      function switchTerm(btn, term) {
+        document
+          .querySelectorAll(".term-pill")
+          .forEach((p) => p.classList.remove("active"));
+        btn.classList.add("active");
+        currentTerm = term;
+        renderAll();
+      }
+
+      /* ── Export ──────────────────────────────────────────────────── */
+      function exportGrades() {
+        window.lmsNotify.success("Grade report exported as PDF!");
+      }
+
+      /* ── Render everything ────────────────────────────────────────── */
+      function renderAll() {
+        renderStats();
+        renderGPABadge();
+        renderBarChart();
+        renderDonut();
+        renderDistBars();
+        renderCourseSummaries();
+        renderTable();
+      }
+
+      /* ── Stats ───────────────────────────────────────────────────── */
+      function renderStats() {
+        const data = filteredData().filter((d) => d.score > 0);
+        const scores = data.map((d) => d.score);
+        const best = Math.max(...scores);
+        const lowest = Math.min(...scores);
+        const avg =
+          Math.round(scores.reduce((a, b) => a + b, 0) / scores.length) || 0;
+        const passed = filteredData().filter((d) => d.passed).length;
+
+        document.getElementById("bestScoreVal").textContent = best + "%";
+        document.getElementById("avgScoreVal").textContent = avg + "%";
+        document.getElementById("totalItemsVal").textContent =
+          filteredData().length;
+        document.getElementById("lowestScoreVal").textContent = lowest + "%";
+        document.getElementById("passedItemsVal").textContent =
+          passed + " passed";
+
+        const bestItem = data.find((d) => d.score === best);
+        const lowestItem = data.find((d) => d.score === lowest);
+        if (bestItem)
+          document.getElementById("bestScoreCourse").textContent =
+            bestItem.course;
+        if (lowestItem)
+          document.getElementById("lowestScoreCourse").textContent =
+            lowestItem.item;
+      }
+
+      /* ── GPA ─────────────────────────────────────────────────────── */
+      function renderGPABadge() {
+        const data = filteredData().filter((d) => d.score > 0);
+        const gpa = (
+          data.reduce((s, d) => s + gradeGPA(d.score), 0) / data.length
+        ).toFixed(2);
+        const ltr =
+          gpa >= 3.7
+            ? "A"
+            : gpa >= 3.3
+              ? "A–"
+              : gpa >= 3.0
+                ? "B+"
+                : gpa >= 2.7
+                  ? "B"
+                  : gpa >= 2.3
+                    ? "B–"
+                    : gpa >= 2.0
+                      ? "C+"
+                      : "C";
+        document.getElementById("gpaDisplay").textContent = gpa;
+        document.getElementById("gpaLetterBadge").textContent = ltr;
+
+        // Re-render ApexCharts GPA radial
+        const el = document.getElementById("gpaRadial");
+        el.innerHTML = "";
+        new ApexCharts(el, {
+          chart: {
+            type: "radialBar",
+            height: 100,
+            sparkline: { enabled: true },
+          },
+          series: [Math.round((parseFloat(gpa) / 4) * 100)],
+          colors: ["rgba(255,255,255,.9)"],
+          plotOptions: {
+            radialBar: {
+              startAngle: -90,
+              endAngle: 90,
+              hollow: { size: "62%" },
+              dataLabels: {
+                name: { show: false },
+                value: { show: false },
+              },
+              track: { background: "rgba(255,255,255,.25)" },
+            },
+          },
+          stroke: { lineCap: "round" },
+        }).render();
+      }
+
+      /* ── Bar chart: avg score per course ─────────────────────────── */
+      function renderBarChart() {
+        const isDark =
+          document.documentElement.getAttribute("data-theme") === "dark";
+        const textColor = isDark ? "#adb5bd" : "#6c757d";
+        const gridColor = isDark ? "rgba(255,255,255,.07)" : "rgba(0,0,0,.06)";
+
+        const courses = [...new Set(filteredData().map((d) => d.course))];
+        const avgs = courses.map((c) => {
+          const items = filteredData().filter(
+            (d) => d.course === c && d.score > 0,
+          );
+          return items.length
+            ? Math.round(items.reduce((s, d) => s + d.score, 0) / items.length)
+            : 0;
+        });
+        const colors = courses.map((c) => COURSE_COLORS[c] || "#0d6efd");
+        const shortNames = courses.map((c) =>
+          c.length > 14 ? c.substring(0, 14) + "…" : c,
+        );
+
+        if (barChart) barChart.destroy();
+        const ctx = document.getElementById("courseBarChart").getContext("2d");
+        barChart = new Chart(ctx, {
+          type: "bar",
+          data: {
+            labels: shortNames,
+            datasets: [
+              {
+                label: "Avg Score (%)",
+                data: avgs,
+                backgroundColor: colors.map((c) => c + "cc"),
+                borderColor: colors,
+                borderWidth: 2,
+                borderRadius: 8,
+                borderSkipped: false,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            plugins: {
+              legend: { display: false },
+              tooltip: {
+                callbacks: {
+                  label: (ctx) =>
+                    " " +
+                    ctx.parsed.y +
+                    "% avg — " +
+                    (ctx.parsed.y >= 90
+                      ? "A"
+                      : ctx.parsed.y >= 80
+                        ? "B"
+                        : ctx.parsed.y >= 70
+                          ? "C"
+                          : ctx.parsed.y >= 60
+                            ? "D"
+                            : "F"),
+                },
+              },
+            },
+            scales: {
+              x: {
+                ticks: {
+                  color: textColor,
+                  font: { family: "Poppins", size: 11 },
+                },
+                grid: { display: false },
+                border: { display: false },
+              },
+              y: {
+                min: 0,
+                max: 100,
+                ticks: {
+                  color: textColor,
+                  font: { family: "Poppins", size: 11 },
+                  callback: (v) => v + "%",
+                },
+                grid: { color: gridColor },
+                border: { display: false },
+              },
+            },
+          },
+        });
+      }
+
+      /* ── Donut: grade distribution ────────────────────────────────── */
+      function renderDonut() {
+        const data = filteredData();
+        const counts = { A: 0, B: 0, C: 0, D: 0, F: 0 };
+        data.forEach((d) => {
+          const g = letterGrade(d.score);
+          counts[g]++;
+        });
+
+        const el = document.getElementById("gradeDonutChart");
+        el.innerHTML = "";
+        new ApexCharts(el, {
+          chart: { type: "donut", height: 200 },
+          series: [counts.A, counts.B, counts.C, counts.D, counts.F],
+          labels: [
+            "A (90–100)",
+            "B (80–89)",
+            "C (70–79)",
+            "D (60–69)",
+            "F (<60)",
+          ],
+          colors: ["#10b981", "#0d6efd", "#f59e0b", "#f97316", "#ef4444"],
+          legend: {
+            position: "right",
+            fontSize: "12px",
+            fontFamily: "Poppins",
+            labels: { colors: "var(--body-color)" },
+          },
+          dataLabels: { enabled: false },
+          plotOptions: {
+            pie: {
+              donut: {
+                size: "65%",
+                labels: {
+                  show: true,
+                  total: {
+                    show: true,
+                    label: "Total",
+                    fontSize: "13px",
+                    fontFamily: "Poppins",
+                    color: "var(--body-color)",
+                    formatter: (w) =>
+                      w.globals.seriesTotals.reduce((a, b) => a + b, 0),
+                  },
+                },
+              },
+            },
+          },
+          stroke: { show: false },
+          tooltip: {
+            theme:
+              document.documentElement.getAttribute("data-theme") === "dark"
+                ? "dark"
+                : "light",
+          },
+        }).render();
+      }
+
+      /* ── Distribution bars ────────────────────────────────────────── */
+      function renderDistBars() {
+        const data = filteredData();
+        const total = data.length || 1;
+        const counts = { A: 0, B: 0, C: 0, D: 0, F: 0 };
+        data.forEach((d) => {
+          const g = letterGrade(d.score);
+          counts[g]++;
+        });
+        const colorMap = {
+          A: "#10b981",
+          B: "#0d6efd",
+          C: "#f59e0b",
+          D: "#f97316",
+          F: "#ef4444",
+        };
+
+        document.getElementById("gradeBars").innerHTML = [
+          "A",
+          "B",
+          "C",
+          "D",
+          "F",
+        ]
+          .map(
+            (g) => `
+      <div class="dist-row">
+        <span class="dist-label" style="color:${colorMap[g]}">${g}</span>
+        <div class="dist-bar">
+          <div class="dist-bar-fill" style="width:${((counts[g] / total) * 100).toFixed(1)}%; background:${colorMap[g]};"></div>
+        </div>
+        <span class="dist-count">${counts[g]}</span>
+      </div>
+    `,
+          )
+          .join("");
+      }
+
+      /* ── Course summaries ─────────────────────────────────────────── */
+      function renderCourseSummaries() {
+        const courses = [...new Set(GRADE_DATA.map((d) => d.course))];
+        const row = document.getElementById("courseSummaryRow");
+        row.innerHTML = courses
+          .map((c) => {
+            const items = filteredData().filter((d) => d.course === c);
+            if (!items.length) return "";
+            const valid = items.filter((d) => d.score > 0);
+            const avg = valid.length
+              ? Math.round(
+                  valid.reduce((s, d) => s + d.score, 0) / valid.length,
+                )
+              : 0;
+            const best = valid.length
+              ? Math.max(...valid.map((d) => d.score))
+              : 0;
+            const grade = letterGrade(avg);
+            const color = COURSE_COLORS[c] || "#0d6efd";
+            const pct = avg;
+            const barColor =
+              avg >= 80 ? "#10b981" : avg >= 70 ? "#f59e0b" : "#ef4444";
+            return `
+        <div class="col-12 col-md-6 col-xl-4">
+          <div class="course-summary-card">
+            <div class="d-flex align-items-center gap-2 mb-2">
+              <span class="course-dot" style="background:${color};"></span>
+              <span class="fw-600" style="font-size:.88rem;">${c}</span>
+              <span class="badge ms-auto ${gradeBgClass(grade)} grade-badge">${grade}</span>
+            </div>
+            <div class="d-flex justify-content-between align-items-center mb-1">
+              <span style="font-size:.8rem; color:var(--text-muted);">${items.length} items · Best: ${best}%</span>
+              <span class="fw-700" style="font-size:.95rem;">${avg}%</span>
+            </div>
+            <div class="score-bar">
+              <div class="score-bar-fill" style="width:${pct}%; background:${barColor};"></div>
+            </div>
+          </div>
+        </div>
+      `;
+          })
+          .join("");
+      }
+
+      /* ── DataTable ────────────────────────────────────────────────── */
+      function buildTableRows(data) {
+        return data.map((d) => {
+          const grade = letterGrade(d.score);
+          const scoreColor =
+            d.score >= 80 ? "#10b981" : d.score >= 60 ? "#f59e0b" : "#ef4444";
+          const typeIcon =
+            {
+              Quiz: "patch-question-fill",
+              Assignment: "file-text-fill",
+              Exam: "journal-medical",
+              Project: "kanban-fill",
+            }[d.type] || "file";
+          const courseDot = COURSE_COLORS[d.course] || "#0d6efd";
+          return [
+            `<span class="fw-600" style="font-size:.86rem;">${d.item}</span>`,
+            `<span style="font-size:.82rem;"><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:${courseDot};margin-right:5px;"></span>${d.course}</span>`,
+            `<span class="badge bg-secondary bg-opacity-15 text-body" style="font-size:.76rem;"><i class="bi bi-${typeIcon} me-1"></i>${d.type}</span>`,
+            `<div>
+          <span class="fw-700" style="color:${scoreColor};">${d.score}%</span>
+          <div class="score-bar mt-1" style="width:80px;">
+            <div class="score-bar-fill" style="width:${d.score}%;background:${scoreColor};"></div>
+          </div>
+        </div>`,
+            `<span class="grade-badge ${gradeBgClass(grade)}">${grade}</span>`,
+            `<span style="font-size:.82rem;">${d.weight}%</span>`,
+            `<span style="font-size:.82rem; color:var(--text-muted);">${dayjs(d.date).format("MMM D, YYYY")}</span>`,
+            d.passed
+              ? `<span class="badge bg-success" style="font-size:.75rem;">Passed</span>`
+              : d.score === 0
+                ? `<span class="badge bg-secondary" style="font-size:.75rem;">Missed</span>`
+                : `<span class="badge bg-danger" style="font-size:.75rem;">Failed</span>`,
+          ];
+        });
+      }
+
+      function renderTable() {
+        if (dtInstance) {
+          dtInstance.destroy();
+          dtInstance = null;
+        }
+
+        const tbody = document.getElementById("gradesTableBody");
+        tbody.innerHTML = "";
+
+        const data = filteredData();
+        data.forEach((d) => {
+          const row = document.createElement("tr");
+          row.innerHTML = buildTableRows([d])[0]
+            .map((cell) => `<td>${cell}</td>`)
+            .join("");
+          tbody.appendChild(row);
+        });
+
+        dtInstance = $("#gradesTable").DataTable({
+          pageLength: 10,
+          order: [[6, "desc"]],
+          columnDefs: [{ orderable: false, targets: [3, 4, 7] }],
+          language: {
+            search: "",
+            searchPlaceholder: "Search grades…",
+            lengthMenu: "Show _MENU_",
+            info: "Showing _START_–_END_ of _TOTAL_ items",
+            paginate: { previous: "‹", next: "›" },
+          },
+          drawCallback: function () {
+            // re-apply score bar animations
+            document.querySelectorAll(".score-bar-fill").forEach((el) => {
+              const w = el.style.width;
+              el.style.width = "0";
+              requestAnimationFrame(() => (el.style.width = w));
+            });
+          },
+        });
+
+        // Populate course filter dropdown
+        const courseFilter = document.getElementById("courseFilter");
+        const courses = [...new Set(GRADE_DATA.map((d) => d.course))];
+        if (courseFilter.options.length <= 1) {
+          courses.forEach((c) => {
+            const opt = new Option(c, c);
+            courseFilter.add(opt);
+          });
+        }
+      }
+
+      function filterTable() {
+        const type = document.getElementById("typeFilter").value;
+        const course = document.getElementById("courseFilter").value;
+
+        if (dtInstance) {
+          dtInstance.destroy();
+          dtInstance = null;
+        }
+
+        const tbody = document.getElementById("gradesTableBody");
+        tbody.innerHTML = "";
+
+        let data = filteredData();
+        if (type) data = data.filter((d) => d.type === type);
+        if (course) data = data.filter((d) => d.course === course);
+
+        data.forEach((d) => {
+          const row = document.createElement("tr");
+          row.innerHTML = buildTableRows([d])[0]
+            .map((cell) => `<td>${cell}</td>`)
+            .join("");
+          tbody.appendChild(row);
+        });
+
+        dtInstance = $("#gradesTable").DataTable({
+          pageLength: 10,
+          order: [[6, "desc"]],
+          columnDefs: [{ orderable: false, targets: [3, 4, 7] }],
+          language: {
+            search: "",
+            searchPlaceholder: "Search grades…",
+            lengthMenu: "Show _MENU_",
+            info: "Showing _START_–_END_ of _TOTAL_ items",
+            paginate: { previous: "‹", next: "›" },
+          },
+        });
+      }
+
+      /* ── Dark mode observer ───────────────────────────────────────── */
+      new MutationObserver(() => {
+        renderBarChart();
+        renderDonut();
+      }).observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ["data-theme"],
+      });
+
+      /* ── Init ────────────────────────────────────────────────────── */
+      document.addEventListener("DOMContentLoaded", () => {
+        // Load sidebar
+        fetch("../components/student-sidebar.html")
+          .then((r) => r.text())
+          .then((html) => {
+            const el = document.getElementById("sidebar-placeholder");
+            el.innerHTML = html;
+            Alpine.initTree(el);
+            el.querySelectorAll(".sidebar-nav-item").forEach((it) => {
+              it.classList.remove("active");
+              if (it.querySelector("a")?.href.includes("grades"))
+                it.classList.add("active");
+            });
+          });
+
+        // Load navbar
+        fetch("../components/student-navbar.html")
+          .then((r) => r.text())
+          .then((html) => {
+            const el = document.getElementById("navbar-placeholder");
+            el.innerHTML = html;
+            Alpine.initTree(el);
+            const t = document.getElementById("navbarPageTitle");
+            const b = document.getElementById("navbarBreadcrumbCurrent");
+            if (t) t.textContent = "Grades";
+            if (b) b.textContent = "Grades";
+          });
+
+        // Render after a short delay to allow Alpine to hydrate
+        setTimeout(renderAll, 100);
+      });
+    </script>
+  </body>
+</html>

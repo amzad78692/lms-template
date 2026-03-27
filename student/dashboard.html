@@ -1,0 +1,1474 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard — EduLearn Student</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.css"
+    />
+    <link rel="stylesheet" href="../assets/css/theme.css" />
+
+    <style>
+      /* ═══════════════════════════════════════════════
+       PAGE LAYOUT
+       ═══════════════════════════════════════════════ */
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: var(--font-family);
+        background: var(--surface-alt);
+        color: var(--text-primary);
+      }
+
+      .student-main {
+        margin-left: var(--sidebar-width);
+        padding-top: var(--navbar-height);
+        min-height: 100vh;
+        transition: margin-left var(--transition-base);
+      }
+      .student-main.sidebar-collapsed {
+        margin-left: var(--sidebar-collapsed);
+      }
+      @media (max-width: 991.98px) {
+        .student-main {
+          margin-left: 0;
+        }
+      }
+
+      .page-content {
+        padding: 28px 24px;
+        max-width: 1440px;
+      }
+      @media (max-width: 767px) {
+        .page-content {
+          padding: 18px 14px;
+        }
+      }
+
+      [x-cloak] {
+        display: none !important;
+      }
+
+      /* ═══════════════════════════════════════════════
+       WELCOME BANNER
+       ═══════════════════════════════════════════════ */
+      .welcome-banner {
+        background: linear-gradient(
+          130deg,
+          #0d6efd 0%,
+          #0a58ca 45%,
+          #7c3aed 100%
+        );
+        border-radius: var(--border-radius-lg);
+        padding: 28px 32px;
+        position: relative;
+        overflow: hidden;
+        margin-bottom: 24px;
+      }
+      .welcome-banner::before,
+      .welcome-banner::after {
+        content: "";
+        position: absolute;
+        border-radius: 50%;
+        pointer-events: none;
+      }
+      .welcome-banner::before {
+        top: -60px;
+        right: -60px;
+        width: 220px;
+        height: 220px;
+        background: rgba(255, 255, 255, 0.06);
+      }
+      .welcome-banner::after {
+        bottom: -50px;
+        right: 130px;
+        width: 160px;
+        height: 160px;
+        background: rgba(255, 255, 255, 0.04);
+      }
+      .welcome-inner {
+        position: relative;
+        z-index: 1;
+      }
+      .welcome-greeting {
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: #fff;
+        line-height: 1.2;
+        margin-bottom: 6px;
+      }
+      .welcome-subtitle {
+        font-size: 0.86rem;
+        color: rgba(255, 255, 255, 0.72);
+        margin-bottom: 18px;
+      }
+      .welcome-pills {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+      .welcome-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        background: rgba(255, 255, 255, 0.12);
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        color: rgba(255, 255, 255, 0.9);
+        padding: 5px 13px;
+        border-radius: 20px;
+        font-size: 0.78rem;
+        font-weight: 500;
+      }
+      .streak-pill {
+        background: rgba(255, 193, 7, 0.18);
+        border-color: rgba(255, 193, 7, 0.3);
+        color: #ffd54f;
+      }
+      .goal-block {
+        text-align: right;
+        flex-shrink: 0;
+      }
+      .goal-label {
+        font-size: 0.74rem;
+        color: rgba(255, 255, 255, 0.65);
+        margin-bottom: 4px;
+      }
+      .goal-value {
+        font-size: 1.55rem;
+        font-weight: 800;
+        color: #fff;
+        line-height: 1;
+      }
+      .goal-value span {
+        font-size: 0.85rem;
+        font-weight: 400;
+        opacity: 0.7;
+      }
+      .goal-bar-track {
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 99px;
+        height: 6px;
+        width: 150px;
+        margin-top: 8px;
+        margin-left: auto;
+      }
+      .goal-bar-fill {
+        background: #fff;
+        border-radius: 99px;
+        height: 100%;
+        width: 72%;
+        transition: width 1.2s ease;
+      }
+      @media (max-width: 576px) {
+        .welcome-banner {
+          padding: 20px 18px;
+        }
+        .welcome-greeting {
+          font-size: 1.2rem;
+        }
+        .goal-block {
+          display: none;
+        }
+      }
+
+      /* ═══════════════════════════════════════════════
+       KPI CARDS
+       ═══════════════════════════════════════════════ */
+      .kpi-card {
+        background: var(--surface);
+        border: 1px solid var(--border-color);
+        border-radius: var(--border-radius-lg);
+        padding: 20px 22px;
+        display: flex;
+        align-items: flex-start;
+        gap: 16px;
+        transition:
+          box-shadow 0.25s,
+          transform 0.25s;
+      }
+      .kpi-card:hover {
+        box-shadow: var(--card-shadow-hover);
+        transform: translateY(-2px);
+      }
+      .kpi-icon {
+        width: 50px;
+        height: 50px;
+        border-radius: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.35rem;
+        flex-shrink: 0;
+      }
+      .kpi-icon.blue {
+        background: rgba(13, 110, 253, 0.12);
+        color: #0d6efd;
+      }
+      .kpi-icon.green {
+        background: rgba(16, 185, 129, 0.12);
+        color: #10b981;
+      }
+      .kpi-icon.yellow {
+        background: rgba(245, 158, 11, 0.12);
+        color: #f59e0b;
+      }
+      .kpi-icon.purple {
+        background: rgba(124, 58, 237, 0.12);
+        color: #7c3aed;
+      }
+
+      .kpi-value {
+        font-size: 1.7rem;
+        font-weight: 800;
+        color: var(--text-primary);
+        line-height: 1.1;
+        margin-bottom: 3px;
+      }
+      .kpi-unit {
+        font-size: 1rem;
+        font-weight: 500;
+      }
+      .kpi-label {
+        font-size: 0.77rem;
+        color: var(--text-muted);
+        font-weight: 500;
+        margin-bottom: 8px;
+      }
+      .kpi-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 3px;
+        font-size: 0.69rem;
+        font-weight: 700;
+        padding: 2px 8px;
+        border-radius: 99px;
+      }
+      .kpi-badge.up {
+        background: rgba(16, 185, 129, 0.1);
+        color: #10b981;
+      }
+      .kpi-badge.neutral {
+        background: rgba(107, 114, 128, 0.1);
+        color: #6b7280;
+      }
+
+      /* ═══════════════════════════════════════════════
+       PANEL CARDS
+       ═══════════════════════════════════════════════ */
+      .panel-card {
+        background: var(--surface);
+        border: 1px solid var(--border-color);
+        border-radius: var(--border-radius-lg);
+        padding: 22px;
+      }
+      .panel-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 16px;
+      }
+      .panel-title {
+        font-size: 0.95rem;
+        font-weight: 800;
+        color: var(--text-primary);
+      }
+      .panel-title-sub {
+        font-size: 0.72rem;
+        color: var(--text-muted);
+        margin-top: 2px;
+      }
+      .panel-link {
+        font-size: 0.78rem;
+        color: var(--primary);
+        text-decoration: none;
+        font-weight: 600;
+        white-space: nowrap;
+      }
+      .panel-link:hover {
+        text-decoration: underline;
+      }
+
+      /* ═══════════════════════════════════════════════
+       CHART PERIOD SELECTOR
+       ═══════════════════════════════════════════════ */
+      .chart-period-btn {
+        font-size: 0.72rem;
+        font-weight: 600;
+        padding: 4px 10px;
+        border-radius: 8px;
+        border: 1px solid var(--border-color);
+        background: var(--surface-alt);
+        color: var(--text-muted);
+        cursor: pointer;
+        transition: all 0.2s;
+        font-family: var(--font-family);
+      }
+      .chart-period-btn.active,
+      .chart-period-btn:hover {
+        border-color: var(--primary);
+        color: var(--primary);
+        background: rgba(13, 110, 253, 0.06);
+      }
+
+      /* ═══════════════════════════════════════════════
+       COURSE PROGRESS ROWS
+       ═══════════════════════════════════════════════ */
+      .course-row {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding: 13px 10px;
+        margin: 0 -10px;
+        text-decoration: none;
+        border-radius: 10px;
+        transition: background 0.15s;
+        border-bottom: 1px solid var(--border-color);
+      }
+      .course-row:last-child {
+        border-bottom: none;
+      }
+      .course-row:hover {
+        background: var(--surface-alt);
+      }
+
+      .course-thumb-icon {
+        width: 50px;
+        height: 50px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.3rem;
+        color: #fff;
+        flex-shrink: 0;
+      }
+      .course-row-info {
+        flex: 1;
+        min-width: 0;
+      }
+      .course-row-title {
+        font-size: 0.83rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        margin-bottom: 3px;
+      }
+      .course-row-meta {
+        font-size: 0.7rem;
+        color: var(--text-muted);
+        margin-bottom: 7px;
+      }
+      .progress-track {
+        background: var(--surface-alt);
+        border-radius: 99px;
+        height: 5px;
+        overflow: hidden;
+      }
+      .progress-fill {
+        height: 100%;
+        border-radius: 99px;
+        background: var(--primary-gradient);
+        transition: width 1s ease;
+      }
+      .course-pct {
+        font-size: 0.72rem;
+        font-weight: 700;
+        color: var(--text-muted);
+        min-width: 32px;
+        text-align: right;
+        flex-shrink: 0;
+      }
+
+      /* ═══════════════════════════════════════════════
+       DONUT LEGEND
+       ═══════════════════════════════════════════════ */
+      .donut-legend-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 5px 0;
+      }
+      .donut-legend-row + .donut-legend-row {
+        border-top: 1px solid var(--border-color);
+      }
+      .donut-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 3px;
+        flex-shrink: 0;
+      }
+
+      /* ═══════════════════════════════════════════════
+       DEADLINES
+       ═══════════════════════════════════════════════ */
+      .deadline-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        padding: 12px 0;
+        border-bottom: 1px solid var(--border-color);
+      }
+      .deadline-item:last-child {
+        border-bottom: none;
+      }
+      .deadline-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        margin-top: 6px;
+        flex-shrink: 0;
+      }
+      .deadline-title {
+        font-size: 0.82rem;
+        font-weight: 600;
+        color: var(--text-primary);
+        margin-bottom: 3px;
+      }
+      .deadline-time {
+        font-size: 0.7rem;
+        color: var(--text-muted);
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .dl-badge {
+        font-size: 0.63rem;
+        font-weight: 700;
+        padding: 1px 7px;
+        border-radius: 99px;
+      }
+      .dl-badge.red {
+        background: rgba(239, 68, 68, 0.1);
+        color: #ef4444;
+      }
+      .dl-badge.yellow {
+        background: rgba(245, 158, 11, 0.1);
+        color: #f59e0b;
+      }
+      .dl-badge.gray {
+        background: rgba(107, 114, 128, 0.1);
+        color: #6b7280;
+      }
+
+      /* ═══════════════════════════════════════════════
+       ACTIVITY FEED
+       ═══════════════════════════════════════════════ */
+      .activity-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      .activity-item {
+        display: flex;
+        gap: 12px;
+        padding: 10px 0;
+        border-bottom: 1px solid var(--border-color);
+      }
+      .activity-item:last-child {
+        border-bottom: none;
+      }
+      .activity-icon {
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.82rem;
+        flex-shrink: 0;
+      }
+      .activity-text {
+        font-size: 0.79rem;
+        color: var(--text-secondary);
+        line-height: 1.5;
+      }
+      .activity-text strong {
+        color: var(--text-primary);
+        font-weight: 700;
+      }
+      .activity-ts {
+        font-size: 0.67rem;
+        color: var(--text-muted);
+        margin-top: 2px;
+      }
+
+      /* ═══════════════════════════════════════════════
+       SUGGESTED COURSES
+       ═══════════════════════════════════════════════ */
+      .suggest-card {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        background: var(--surface-alt);
+        border: 1px solid var(--border-color);
+        border-radius: var(--border-radius);
+        padding: 14px;
+        text-decoration: none;
+        transition:
+          border-color 0.2s,
+          box-shadow 0.2s,
+          transform 0.2s;
+        height: 100%;
+      }
+      .suggest-card:hover {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.07);
+        transform: translateY(-1px);
+      }
+      .suggest-thumb {
+        width: 44px;
+        height: 44px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+        flex-shrink: 0;
+      }
+      .suggest-title {
+        font-size: 0.8rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        line-height: 1.35;
+        margin-bottom: 3px;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        line-clamp: 2;
+        overflow: hidden;
+      }
+      .suggest-meta {
+        font-size: 0.69rem;
+        color: var(--text-muted);
+      }
+
+      /* ═══════════════════════════════════════════════
+       MINI STATS STRIP
+       ═══════════════════════════════════════════════ */
+      .mini-stat-strip {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding: 12px 16px;
+        background: rgba(13, 110, 253, 0.05);
+        border: 1px solid rgba(13, 110, 253, 0.15);
+        border-radius: var(--border-radius);
+        font-size: 0.78rem;
+        color: var(--text-secondary);
+        font-weight: 500;
+      }
+      .mini-stat-strip strong {
+        color: var(--primary);
+        font-weight: 800;
+      }
+    </style>
+  </head>
+
+  <body x-data="themeToggle()">
+    <div id="student-layout" x-data="sidebarState()">
+      <!-- Sidebar (injected via fetch) -->
+      <div id="sidebar-placeholder"></div>
+
+      <!-- Navbar (injected via fetch) -->
+      <div id="navbar-placeholder"></div>
+
+      <!-- ══════════════════════════════════════════════════
+       MAIN CONTENT
+       ══════════════════════════════════════════════════ -->
+      <main class="student-main" :class="{ 'sidebar-collapsed': collapsed }">
+        <div class="page-content">
+          <!-- ─── Welcome Banner ───────────────────────────────── -->
+          <div
+            class="welcome-banner"
+            x-data="{ greeting: '' }"
+            x-init="const h = new Date().getHours(); greeting = h < 12 ? 'Good morning' : h < 17 ? 'Good afternoon' : 'Good evening';"
+          >
+            <div
+              class="welcome-inner d-flex flex-column flex-sm-row align-items-sm-center justify-content-sm-between gap-3"
+            >
+              <div>
+                <div class="welcome-greeting" x-text="greeting + ', Alex! 👋'">
+                  Good morning, Alex! 👋
+                </div>
+                <div class="welcome-subtitle">
+                  Here's what's happening with your learning today.
+                </div>
+                <div class="welcome-pills">
+                  <span class="welcome-pill streak-pill"
+                    ><i class="bi bi-fire"></i> 12-day streak!</span
+                  >
+                  <span class="welcome-pill"
+                    ><i class="bi bi-calendar3"></i>
+                    <span id="today-date">Friday, Mar 27</span></span
+                  >
+                  <span class="welcome-pill"
+                    ><i class="bi bi-mortarboard"></i> Week 12 of learning</span
+                  >
+                </div>
+              </div>
+              <div class="goal-block">
+                <div class="goal-label">Weekly Goal Progress</div>
+                <div class="goal-value">18 <span>/ 25 hrs</span></div>
+                <div class="goal-bar-track">
+                  <div class="goal-bar-fill"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ─── KPI Cards ─────────────────────────────────────── -->
+          <div class="row g-3 mb-4">
+            <div class="col-6 col-xl-3">
+              <div class="kpi-card">
+                <div class="kpi-icon blue">
+                  <i class="bi bi-journal-bookmark-fill"></i>
+                </div>
+                <div>
+                  <div class="kpi-value">8</div>
+                  <div class="kpi-label">Enrolled Courses</div>
+                  <span class="kpi-badge up"
+                    ><i class="bi bi-arrow-up-short"></i> 2 this month</span
+                  >
+                </div>
+              </div>
+            </div>
+            <div class="col-6 col-xl-3">
+              <div class="kpi-card">
+                <div class="kpi-icon green">
+                  <i class="bi bi-patch-check-fill"></i>
+                </div>
+                <div>
+                  <div class="kpi-value">3</div>
+                  <div class="kpi-label">Completed</div>
+                  <span class="kpi-badge neutral"
+                    ><i class="bi bi-dash"></i> 37.5% rate</span
+                  >
+                </div>
+              </div>
+            </div>
+            <div class="col-6 col-xl-3">
+              <div class="kpi-card">
+                <div class="kpi-icon yellow">
+                  <i class="bi bi-clock-history"></i>
+                </div>
+                <div>
+                  <div class="kpi-value">
+                    124<span class="kpi-unit">h</span>
+                  </div>
+                  <div class="kpi-label">Total Study Hours</div>
+                  <span class="kpi-badge up"
+                    ><i class="bi bi-arrow-up-short"></i> 18h this month</span
+                  >
+                </div>
+              </div>
+            </div>
+            <div class="col-6 col-xl-3">
+              <div class="kpi-card">
+                <div class="kpi-icon purple">
+                  <i class="bi bi-award-fill"></i>
+                </div>
+                <div>
+                  <div class="kpi-value">3</div>
+                  <div class="kpi-label">Certificates Earned</div>
+                  <span class="kpi-badge up"
+                    ><i class="bi bi-arrow-up-short"></i> 1 new</span
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ─── Charts Row ────────────────────────────────────── -->
+          <div class="row g-3 mb-4">
+            <!-- Weekly Activity Bar Chart -->
+            <div class="col-lg-8">
+              <div class="panel-card h-100" x-data="{ period: 'week' }">
+                <div class="panel-header">
+                  <div>
+                    <div class="panel-title">Weekly Study Activity</div>
+                    <div class="panel-title-sub">Hours studied per day</div>
+                  </div>
+                  <div class="d-flex gap-2">
+                    <button
+                      class="chart-period-btn"
+                      :class="{ active: period === 'week' }"
+                      @click="period = 'week'; updateChart('week')"
+                    >
+                      Week
+                    </button>
+                    <button
+                      class="chart-period-btn"
+                      :class="{ active: period === 'month' }"
+                      @click="period = 'month'; updateChart('month')"
+                    >
+                      Month
+                    </button>
+                    <button
+                      class="chart-period-btn d-none d-sm-block"
+                      :class="{ active: period === 'year' }"
+                      @click="period = 'year'; updateChart('year')"
+                    >
+                      Year
+                    </button>
+                  </div>
+                </div>
+                <canvas id="weeklyChart" height="105"></canvas>
+              </div>
+            </div>
+
+            <!-- Progress Doughnut -->
+            <div class="col-lg-4">
+              <div class="panel-card h-100">
+                <div class="panel-header">
+                  <div class="panel-title">Course Progress</div>
+                </div>
+                <div
+                  style="
+                    position: relative;
+                    max-width: 200px;
+                    margin: 0 auto 16px;
+                  "
+                >
+                  <canvas id="progressChart"></canvas>
+                  <div
+                    style="
+                      position: absolute;
+                      inset: 0;
+                      display: flex;
+                      flex-direction: column;
+                      align-items: center;
+                      justify-content: center;
+                      pointer-events: none;
+                    "
+                  >
+                    <div
+                      style="
+                        font-size: 1.6rem;
+                        font-weight: 800;
+                        color: var(--text-primary);
+                      "
+                    >
+                      37%
+                    </div>
+                    <div
+                      style="
+                        font-size: 0.66rem;
+                        color: var(--text-muted);
+                        font-weight: 600;
+                        text-transform: uppercase;
+                        letter-spacing: 0.5px;
+                      "
+                    >
+                      Overall
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <div class="donut-legend-row">
+                    <div class="d-flex align-items-center gap-2">
+                      <div class="donut-dot" style="background: #0d6efd"></div>
+                      <span
+                        style="font-size: 0.75rem; color: var(--text-secondary)"
+                        >Completed</span
+                      >
+                    </div>
+                    <span
+                      style="
+                        font-size: 0.75rem;
+                        font-weight: 700;
+                        color: var(--text-primary);
+                      "
+                      >3 courses</span
+                    >
+                  </div>
+                  <div class="donut-legend-row">
+                    <div class="d-flex align-items-center gap-2">
+                      <div class="donut-dot" style="background: #10b981"></div>
+                      <span
+                        style="font-size: 0.75rem; color: var(--text-secondary)"
+                        >In Progress</span
+                      >
+                    </div>
+                    <span
+                      style="
+                        font-size: 0.75rem;
+                        font-weight: 700;
+                        color: var(--text-primary);
+                      "
+                      >4 courses</span
+                    >
+                  </div>
+                  <div class="donut-legend-row">
+                    <div class="d-flex align-items-center gap-2">
+                      <div
+                        class="donut-dot"
+                        style="background: var(--border-color)"
+                      ></div>
+                      <span
+                        style="font-size: 0.75rem; color: var(--text-secondary)"
+                        >Not Started</span
+                      >
+                    </div>
+                    <span
+                      style="
+                        font-size: 0.75rem;
+                        font-weight: 700;
+                        color: var(--text-primary);
+                      "
+                      >1 course</span
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ─── Bottom Row ────────────────────────────────────── -->
+          <div class="row g-3 mb-4">
+            <!-- Active Courses -->
+            <div class="col-lg-7">
+              <div class="panel-card h-100">
+                <div class="panel-header">
+                  <div class="panel-title">Active Courses</div>
+                  <a href="my-courses.html" class="panel-link">View all →</a>
+                </div>
+
+                <a href="course-player.html" class="course-row">
+                  <div
+                    class="course-thumb-icon"
+                    style="
+                      background: linear-gradient(135deg, #0d6efd, #7c3aed);
+                    "
+                  >
+                    <i class="bi bi-code-slash"></i>
+                  </div>
+                  <div class="course-row-info">
+                    <div class="course-row-title">
+                      Complete Web Development Bootcamp
+                    </div>
+                    <div class="course-row-meta">
+                      156 / 200 lessons &bull; Last: "CSS Grid Layout"
+                    </div>
+                    <div class="progress-track">
+                      <div class="progress-fill" style="width: 78%"></div>
+                    </div>
+                  </div>
+                  <div class="course-pct">78%</div>
+                </a>
+
+                <a href="course-player.html" class="course-row">
+                  <div
+                    class="course-thumb-icon"
+                    style="
+                      background: linear-gradient(135deg, #ec4899, #7c3aed);
+                    "
+                  >
+                    <i class="bi bi-palette-fill"></i>
+                  </div>
+                  <div class="course-row-info">
+                    <div class="course-row-title">
+                      UI/UX Design Fundamentals
+                    </div>
+                    <div class="course-row-meta">
+                      54 / 120 lessons &bull; Last: "Wireframing Basics"
+                    </div>
+                    <div class="progress-track">
+                      <div class="progress-fill" style="width: 45%"></div>
+                    </div>
+                  </div>
+                  <div class="course-pct">45%</div>
+                </a>
+
+                <a href="course-player.html" class="course-row">
+                  <div
+                    class="course-thumb-icon"
+                    style="
+                      background: linear-gradient(135deg, #10b981, #0d6efd);
+                    "
+                  >
+                    <i class="bi bi-graph-up-arrow"></i>
+                  </div>
+                  <div class="course-row-info">
+                    <div class="course-row-title">Data Science with Python</div>
+                    <div class="course-row-meta">
+                      32 / 140 lessons &bull; Last: "Pandas DataFrames"
+                    </div>
+                    <div class="progress-track">
+                      <div class="progress-fill" style="width: 23%"></div>
+                    </div>
+                  </div>
+                  <div class="course-pct">23%</div>
+                </a>
+
+                <a href="course-player.html" class="course-row">
+                  <div
+                    class="course-thumb-icon"
+                    style="
+                      background: linear-gradient(135deg, #f59e0b, #ef4444);
+                    "
+                  >
+                    <i class="bi bi-cpu-fill"></i>
+                  </div>
+                  <div class="course-row-info">
+                    <div class="course-row-title">Machine Learning A-Z</div>
+                    <div class="course-row-meta">
+                      20 / 160 lessons &bull; Last: "Linear Regression"
+                    </div>
+                    <div class="progress-track">
+                      <div class="progress-fill" style="width: 12%"></div>
+                    </div>
+                  </div>
+                  <div class="course-pct">12%</div>
+                </a>
+
+                <a href="course-player.html" class="course-row">
+                  <div
+                    class="course-thumb-icon"
+                    style="
+                      background: linear-gradient(135deg, #0d6efd, #10b981);
+                    "
+                  >
+                    <i class="bi bi-filetype-jsx"></i>
+                  </div>
+                  <div class="course-row-info">
+                    <div class="course-row-title">
+                      React.js Advanced Patterns
+                    </div>
+                    <div class="course-row-meta">
+                      135 / 150 lessons &bull; Last: "Custom Hooks"
+                    </div>
+                    <div class="progress-track">
+                      <div class="progress-fill" style="width: 90%"></div>
+                    </div>
+                  </div>
+                  <div class="course-pct">90%</div>
+                </a>
+
+                <!-- Mini hint -->
+                <div class="mini-stat-strip mt-3">
+                  <i class="bi bi-lightbulb-fill" style="color: #f59e0b"></i>
+                  Keep it up! You need <strong>2 more lessons</strong> to
+                  complete React.js Advanced Patterns.
+                </div>
+              </div>
+            </div>
+
+            <!-- Right Column -->
+            <div class="col-lg-5 d-flex flex-column gap-3">
+              <!-- Upcoming Deadlines -->
+              <div class="panel-card">
+                <div class="panel-header">
+                  <div class="panel-title">Upcoming Deadlines</div>
+                  <a href="assignments.html" class="panel-link">View all →</a>
+                </div>
+
+                <div class="deadline-item">
+                  <div class="deadline-dot" style="background: #ef4444"></div>
+                  <div style="flex: 1">
+                    <div class="deadline-title">Web Dev Assignment #3</div>
+                    <div class="deadline-time">
+                      <i class="bi bi-calendar2-event"></i>
+                      Tomorrow, 11:59 PM
+                      <span class="dl-badge red">Urgent</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="deadline-item">
+                  <div class="deadline-dot" style="background: #f59e0b"></div>
+                  <div style="flex: 1">
+                    <div class="deadline-title">UX Design Case Study</div>
+                    <div class="deadline-time">
+                      <i class="bi bi-calendar2-event"></i>
+                      Mar 30, 2026
+                      <span class="dl-badge yellow">3 days left</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="deadline-item">
+                  <div class="deadline-dot" style="background: #0d6efd"></div>
+                  <div style="flex: 1">
+                    <div class="deadline-title">Python Quiz #4</div>
+                    <div class="deadline-time">
+                      <i class="bi bi-calendar2-event"></i>
+                      Apr 1, 2026
+                      <span class="dl-badge gray">5 days left</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="deadline-item">
+                  <div class="deadline-dot" style="background: #10b981"></div>
+                  <div style="flex: 1">
+                    <div class="deadline-title">ML Project Proposal</div>
+                    <div class="deadline-time">
+                      <i class="bi bi-calendar2-event"></i>
+                      Apr 3, 2026
+                      <span class="dl-badge gray">7 days left</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Recent Activity -->
+              <div class="panel-card flex-grow-1">
+                <div class="panel-header">
+                  <div class="panel-title">Recent Activity</div>
+                </div>
+                <ul class="activity-list">
+                  <li class="activity-item">
+                    <div
+                      class="activity-icon"
+                      style="
+                        background: rgba(16, 185, 129, 0.12);
+                        color: #10b981;
+                      "
+                    >
+                      <i class="bi bi-check-circle-fill"></i>
+                    </div>
+                    <div>
+                      <div class="activity-text">
+                        Completed <strong>"CSS Grid Layout"</strong> in Web Dev
+                        Bootcamp
+                      </div>
+                      <div class="activity-ts" id="act-1">2 hours ago</div>
+                    </div>
+                  </li>
+                  <li class="activity-item">
+                    <div
+                      class="activity-icon"
+                      style="
+                        background: rgba(245, 158, 11, 0.12);
+                        color: #f59e0b;
+                      "
+                    >
+                      <i class="bi bi-trophy-fill"></i>
+                    </div>
+                    <div>
+                      <div class="activity-text">
+                        Earned the <strong>"HTML Master"</strong> badge 🏆
+                      </div>
+                      <div class="activity-ts" id="act-2">Yesterday</div>
+                    </div>
+                  </li>
+                  <li class="activity-item">
+                    <div
+                      class="activity-icon"
+                      style="
+                        background: rgba(13, 110, 253, 0.12);
+                        color: #0d6efd;
+                      "
+                    >
+                      <i class="bi bi-upload"></i>
+                    </div>
+                    <div>
+                      <div class="activity-text">
+                        Submitted <strong>Assignment #2</strong> for Web Dev
+                      </div>
+                      <div class="activity-ts" id="act-3">2 days ago</div>
+                    </div>
+                  </li>
+                  <li class="activity-item">
+                    <div
+                      class="activity-icon"
+                      style="
+                        background: rgba(124, 58, 237, 0.12);
+                        color: #7c3aed;
+                      "
+                    >
+                      <i class="bi bi-camera-video-fill"></i>
+                    </div>
+                    <div>
+                      <div class="activity-text">
+                        Attended live: <strong>"React Hooks Deep Dive"</strong>
+                      </div>
+                      <div class="activity-ts" id="act-4">3 days ago</div>
+                    </div>
+                  </li>
+                  <li class="activity-item">
+                    <div
+                      class="activity-icon"
+                      style="
+                        background: rgba(236, 72, 153, 0.12);
+                        color: #ec4899;
+                      "
+                    >
+                      <i class="bi bi-plus-circle-fill"></i>
+                    </div>
+                    <div>
+                      <div class="activity-text">
+                        Enrolled in <strong>"Machine Learning A-Z"</strong>
+                      </div>
+                      <div class="activity-ts" id="act-5">a week ago</div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- ─── Recommended Courses ───────────────────────────── -->
+          <div class="panel-card">
+            <div class="panel-header">
+              <div class="panel-title">Recommended For You</div>
+              <a href="../public/courses.html" class="panel-link"
+                >Browse all →</a
+              >
+            </div>
+            <div class="row g-3">
+              <div class="col-sm-6 col-xl-3">
+                <a href="../public/course-detail.html" class="suggest-card">
+                  <div
+                    class="suggest-thumb"
+                    style="background: rgba(13, 110, 253, 0.1); color: #0d6efd"
+                  >
+                    <i class="bi bi-cloud-fill"></i>
+                  </div>
+                  <div>
+                    <div class="suggest-title">AWS Cloud Practitioner</div>
+                    <div class="suggest-meta">
+                      ⭐ 4.8 &bull; 42h &bull; Free
+                    </div>
+                  </div>
+                </a>
+              </div>
+              <div class="col-sm-6 col-xl-3">
+                <a href="../public/course-detail.html" class="suggest-card">
+                  <div
+                    class="suggest-thumb"
+                    style="background: rgba(124, 58, 237, 0.1); color: #7c3aed"
+                  >
+                    <i class="bi bi-phone-fill"></i>
+                  </div>
+                  <div>
+                    <div class="suggest-title">Flutter App Development</div>
+                    <div class="suggest-meta">⭐ 4.7 &bull; 38h &bull; $29</div>
+                  </div>
+                </a>
+              </div>
+              <div class="col-sm-6 col-xl-3">
+                <a href="../public/course-detail.html" class="suggest-card">
+                  <div
+                    class="suggest-thumb"
+                    style="background: rgba(16, 185, 129, 0.1); color: #10b981"
+                  >
+                    <i class="bi bi-shield-lock-fill"></i>
+                  </div>
+                  <div>
+                    <div class="suggest-title">
+                      Ethical Hacking & Cybersecurity
+                    </div>
+                    <div class="suggest-meta">⭐ 4.9 &bull; 55h &bull; $19</div>
+                  </div>
+                </a>
+              </div>
+              <div class="col-sm-6 col-xl-3">
+                <a href="../public/course-detail.html" class="suggest-card">
+                  <div
+                    class="suggest-thumb"
+                    style="background: rgba(245, 158, 11, 0.1); color: #f59e0b"
+                  >
+                    <i class="bi bi-bar-chart-fill"></i>
+                  </div>
+                  <div>
+                    <div class="suggest-title">
+                      Power BI & Data Visualization
+                    </div>
+                    <div class="suggest-meta">⭐ 4.6 &bull; 28h &bull; $24</div>
+                  </div>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- /page-content -->
+      </main>
+    </div>
+    <!-- /student-layout -->
+
+    <!-- ═══════════════════════════════════════════
+     SCRIPTS
+     ═══════════════════════════════════════════ -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@latest/dayjs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@latest/plugin/relativeTime.js"></script>
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
+    ></script>
+    <script src="../assets/js/app.js"></script>
+
+    <script>
+      /* ── NProgress ────────────────────────────────────────── */
+      NProgress.configure({ showSpinner: false });
+      document.addEventListener("DOMContentLoaded", () => NProgress.start());
+      window.addEventListener("load", () => NProgress.done());
+
+      /* ── Load sidebar + navbar components ────────────────── */
+      async function loadComponents() {
+        try {
+          const [sidebarHTML, navbarHTML] = await Promise.all([
+            fetch("../components/student-sidebar.html").then((r) => r.text()),
+            fetch("../components/student-navbar.html").then((r) => r.text()),
+          ]);
+          const sp = document.getElementById("sidebar-placeholder");
+          const np = document.getElementById("navbar-placeholder");
+          sp.innerHTML = sidebarHTML;
+          np.innerHTML = navbarHTML;
+          // Re-initialize Alpine on injected HTML so bindings work within parent sidebarState() scope
+          if (typeof Alpine !== "undefined") {
+            Alpine.initTree(sp);
+            Alpine.initTree(np);
+          }
+        } catch (e) {
+          console.warn("Component load failed:", e);
+        }
+      }
+      // Wait for Alpine to be fully initialized before injecting components
+      document.addEventListener("alpine:initialized", loadComponents);
+
+      /* ── Day.js: relative timestamps + today label ───────── */
+      function initDayjs() {
+        if (typeof dayjs === "undefined") return;
+        dayjs.extend(window.dayjs_plugin_relativeTime);
+        const todayEl = document.getElementById("today-date");
+        if (todayEl) todayEl.textContent = dayjs().format("dddd, MMM D");
+        const now = dayjs();
+        const stamps = [
+          { id: "act-1", sub: [2, "hour"] },
+          { id: "act-2", sub: [1, "day"] },
+          { id: "act-3", sub: [2, "day"] },
+          { id: "act-4", sub: [3, "day"] },
+          { id: "act-5", sub: [7, "day"] },
+        ];
+        stamps.forEach(({ id, sub }) => {
+          const el = document.getElementById(id);
+          if (el) el.textContent = now.subtract(...sub).fromNow();
+        });
+      }
+
+      /* ── Chart.js ─────────────────────────────────────────── */
+      let weeklyChart = null;
+      let progressChart = null;
+
+      const CHART_DATA = {
+        week: {
+          labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+          data: [2.5, 3.0, 1.5, 4.0, 3.5, 2.0, 1.5],
+        },
+        month: {
+          labels: ["W1", "W2", "W3", "W4"],
+          data: [11, 16, 13, 18],
+        },
+        year: {
+          labels: [
+            "Jan",
+            "Feb",
+            "Mar",
+            "Apr",
+            "May",
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep",
+            "Oct",
+            "Nov",
+            "Dec",
+          ],
+          data: [30, 28, 42, 38, 44, 35, 20, 18, 40, 48, 36, 22],
+        },
+      };
+
+      function getChartTheme() {
+        const dark =
+          document.documentElement.getAttribute("data-theme") === "dark";
+        return {
+          grid: dark ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.06)",
+          text: dark ? "#94a3b8" : "#6b7280",
+        };
+      }
+
+      function initCharts() {
+        if (typeof Chart === "undefined") return;
+        const t = getChartTheme();
+
+        /* Bar chart */
+        const wCtx = document.getElementById("weeklyChart")?.getContext("2d");
+        if (wCtx) {
+          weeklyChart = new Chart(wCtx, {
+            type: "bar",
+            data: {
+              labels: CHART_DATA.week.labels,
+              datasets: [
+                {
+                  label: "Hours",
+                  data: CHART_DATA.week.data,
+                  backgroundColor: (ctx) => {
+                    const g = ctx.chart.ctx.createLinearGradient(0, 0, 0, 220);
+                    g.addColorStop(0, "rgba(13,110,253,0.9)");
+                    g.addColorStop(1, "rgba(13,110,253,0.4)");
+                    return g;
+                  },
+                  hoverBackgroundColor: "#0d6efd",
+                  borderRadius: 8,
+                  borderSkipped: false,
+                  barPercentage: 0.65,
+                },
+              ],
+            },
+            options: {
+              responsive: true,
+              maintainAspectRatio: true,
+              plugins: {
+                legend: { display: false },
+                tooltip: {
+                  callbacks: { label: (ctx) => `  ${ctx.raw}h studied` },
+                  backgroundColor: "#1e293b",
+                  titleColor: "#f1f5f9",
+                  bodyColor: "#94a3b8",
+                  borderColor: "rgba(255,255,255,0.08)",
+                  borderWidth: 1,
+                  cornerRadius: 8,
+                  padding: 10,
+                },
+              },
+              scales: {
+                x: {
+                  grid: { color: t.grid, drawBorder: false },
+                  ticks: {
+                    color: t.text,
+                    font: { family: "Poppins", size: 11 },
+                  },
+                  border: { display: false },
+                },
+                y: {
+                  grid: { color: t.grid, drawBorder: false },
+                  ticks: {
+                    color: t.text,
+                    font: { family: "Poppins", size: 11 },
+                    callback: (v) => v + "h",
+                    stepSize: 1,
+                  },
+                  border: { display: false },
+                  beginAtZero: true,
+                  max: 6,
+                },
+              },
+            },
+          });
+        }
+
+        /* Doughnut chart */
+        const pCtx = document.getElementById("progressChart")?.getContext("2d");
+        if (pCtx) {
+          progressChart = new Chart(pCtx, {
+            type: "doughnut",
+            data: {
+              labels: ["Completed", "In Progress", "Not Started"],
+              datasets: [
+                {
+                  data: [3, 4, 1],
+                  backgroundColor: [
+                    "#0d6efd",
+                    "#10b981",
+                    "rgba(107,114,128,0.2)",
+                  ],
+                  borderWidth: 4,
+                  borderColor: "transparent",
+                  hoverOffset: 6,
+                },
+              ],
+            },
+            options: {
+              responsive: true,
+              cutout: "74%",
+              plugins: {
+                legend: { display: false },
+                tooltip: {
+                  backgroundColor: "#1e293b",
+                  titleColor: "#f1f5f9",
+                  bodyColor: "#94a3b8",
+                  cornerRadius: 8,
+                  padding: 10,
+                },
+              },
+            },
+          });
+        }
+      }
+
+      /* Update chart period */
+      function updateChart(period) {
+        if (!weeklyChart) return;
+        const d = CHART_DATA[period];
+        weeklyChart.data.labels = d.labels;
+        weeklyChart.data.datasets[0].data = d.data;
+        if (period === "year") {
+          weeklyChart.options.scales.y.max = 60;
+          weeklyChart.options.scales.y.ticks.stepSize = 10;
+        } else if (period === "month") {
+          weeklyChart.options.scales.y.max = 25;
+          weeklyChart.options.scales.y.ticks.stepSize = 5;
+        } else {
+          weeklyChart.options.scales.y.max = 6;
+          weeklyChart.options.scales.y.ticks.stepSize = 1;
+        }
+        weeklyChart.update();
+      }
+      // Expose for Alpine button handlers
+      window.updateChart = updateChart;
+
+      /* Sync chart colours on dark/light toggle */
+      new MutationObserver(() => {
+        const t = getChartTheme();
+        [weeklyChart].forEach((ch) => {
+          if (!ch) return;
+          ch.options.scales.x.grid.color = t.grid;
+          ch.options.scales.x.ticks.color = t.text;
+          ch.options.scales.y.grid.color = t.grid;
+          ch.options.scales.y.ticks.color = t.text;
+          ch.update("none");
+        });
+      }).observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ["data-theme"],
+      });
+
+      /* ── Boot ─────────────────────────────────────────────── */
+      document.addEventListener("DOMContentLoaded", initDayjs);
+      window.addEventListener("load", initCharts);
+    </script>
+  </body>
+</html>

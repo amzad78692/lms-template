@@ -1,0 +1,913 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>500 — Server Error | EduLearn</title>
+
+    <!-- Bootstrap 5.3 -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    />
+    <!-- Bootstrap Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css"
+    />
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <!-- NProgress -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.css"
+    />
+    <!-- Notyf -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css"
+    />
+
+    <style>
+      :root {
+        --primary: #6366f1;
+        --primary-dark: #4f46e5;
+        --danger: #ef4444;
+        --danger-dark: #dc2626;
+        --accent: #f59e0b;
+        --bg-light: #f8fafc;
+        --bg-dark: #0f172a;
+        --card-light: #ffffff;
+        --card-dark: #1e293b;
+        --text-light: #1e293b;
+        --text-dark: #f1f5f9;
+        --text-muted-light: #64748b;
+        --text-muted-dark: #94a3b8;
+        --border-light: #e2e8f0;
+        --border-dark: #334155;
+      }
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html,
+      body {
+        height: 100%;
+        font-family: "Poppins", sans-serif;
+      }
+
+      /* ── Light theme ── */
+      [data-theme="light"] {
+        background-color: var(--bg-light);
+        color: var(--text-light);
+      }
+      [data-theme="light"] .error-card {
+        background: var(--card-light);
+        border: 1px solid var(--border-light);
+      }
+      [data-theme="light"] .text-muted-custom {
+        color: var(--text-muted-light);
+      }
+      [data-theme="light"] .status-box {
+        background: #fef2f2;
+        border: 1px solid #fecaca;
+        color: var(--danger);
+      }
+      [data-theme="light"] .error-id {
+        background: #f1f5f9;
+        border: 1px dashed var(--border-light);
+      }
+      [data-theme="light"] .quick-link {
+        background: #f1f5f9;
+        color: var(--text-light);
+        border: 1px solid var(--border-light);
+      }
+      [data-theme="light"] .quick-link:hover {
+        background: var(--primary);
+        color: #fff;
+        border-color: var(--primary);
+      }
+      [data-theme="light"] .theme-btn {
+        background: #f1f5f9;
+        border: 1px solid var(--border-light);
+        color: var(--text-light);
+      }
+      [data-theme="light"] .timeline-item {
+        border-left: 2px solid var(--border-light);
+      }
+
+      /* ── Dark theme ── */
+      [data-theme="dark"] {
+        background-color: var(--bg-dark);
+        color: var(--text-dark);
+      }
+      [data-theme="dark"] .error-card {
+        background: var(--card-dark);
+        border: 1px solid var(--border-dark);
+      }
+      [data-theme="dark"] .text-muted-custom {
+        color: var(--text-muted-dark);
+      }
+      [data-theme="dark"] .status-box {
+        background: rgba(239, 68, 68, 0.1);
+        border: 1px solid rgba(239, 68, 68, 0.3);
+        color: #fca5a5;
+      }
+      [data-theme="dark"] .error-id {
+        background: #0f172a;
+        border: 1px dashed var(--border-dark);
+        color: var(--text-dark);
+      }
+      [data-theme="dark"] .quick-link {
+        background: #1e293b;
+        color: var(--text-dark);
+        border: 1px solid var(--border-dark);
+      }
+      [data-theme="dark"] .quick-link:hover {
+        background: var(--primary);
+        color: #fff;
+        border-color: var(--primary);
+      }
+      [data-theme="dark"] .theme-btn {
+        background: #1e293b;
+        border: 1px solid var(--border-dark);
+        color: var(--text-dark);
+      }
+      [data-theme="dark"] .timeline-item {
+        border-left: 2px solid var(--border-dark);
+      }
+
+      /* ── Layout ── */
+      .error-page {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 6rem 1.5rem 5rem;
+        position: relative;
+      }
+
+      /* ── Top bar ── */
+      .error-topbar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1rem 2rem;
+        z-index: 100;
+      }
+      .brand-logo {
+        font-size: 1.4rem;
+        font-weight: 800;
+        background: linear-gradient(135deg, var(--primary), #06b6d4);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        text-decoration: none;
+      }
+      .theme-btn {
+        border: none;
+        border-radius: 50%;
+        width: 38px;
+        height: 38px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        font-size: 0.95rem;
+        transition: all 0.2s;
+      }
+      .theme-btn:hover {
+        transform: scale(1.1);
+      }
+
+      /* ── Main card ── */
+      .error-card {
+        border-radius: 1.5rem;
+        padding: 3rem 2.5rem;
+        max-width: 580px;
+        width: 100%;
+        text-align: center;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+      }
+
+      /* ── Server illustration ── */
+      .server-wrap {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 180px;
+        height: 180px;
+        margin: 0 auto 1.5rem;
+      }
+      .server-bg {
+        width: 180px;
+        height: 180px;
+        border-radius: 50%;
+        background: linear-gradient(
+          135deg,
+          #ef4444 0%,
+          #f59e0b 50%,
+          #ec4899 100%
+        );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        overflow: hidden;
+      }
+      .server-bg::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: repeating-linear-gradient(
+          -45deg,
+          rgba(255, 255, 255, 0.05) 0,
+          rgba(255, 255, 255, 0.05) 2px,
+          transparent 2px,
+          transparent 12px
+        );
+      }
+      .server-icon {
+        font-size: 5rem;
+        position: relative;
+        z-index: 1;
+        animation: serverShake 1.5s ease-in-out infinite;
+      }
+      @keyframes serverShake {
+        0%,
+        100% {
+          transform: rotate(0deg) scale(1);
+        }
+        20% {
+          transform: rotate(-8deg) scale(1.05);
+        }
+        40% {
+          transform: rotate(8deg) scale(0.95);
+        }
+        60% {
+          transform: rotate(-4deg) scale(1.02);
+        }
+        80% {
+          transform: rotate(4deg) scale(0.98);
+        }
+      }
+
+      /* ── Sparks ── */
+      .spark {
+        position: absolute;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        animation: sparkFly 1.8s ease-out infinite;
+      }
+      .spark:nth-child(1) {
+        background: #f59e0b;
+        top: 10%;
+        left: 20%;
+        animation-delay: 0s;
+      }
+      .spark:nth-child(2) {
+        background: #ef4444;
+        top: 15%;
+        right: 18%;
+        animation-delay: 0.4s;
+      }
+      .spark:nth-child(3) {
+        background: #fbbf24;
+        bottom: 20%;
+        left: 12%;
+        animation-delay: 0.8s;
+      }
+      .spark:nth-child(4) {
+        background: #ec4899;
+        bottom: 15%;
+        right: 22%;
+        animation-delay: 1.2s;
+      }
+      .spark:nth-child(5) {
+        background: #f97316;
+        top: 50%;
+        left: 5%;
+        animation-delay: 0.2s;
+      }
+      @keyframes sparkFly {
+        0% {
+          opacity: 1;
+          transform: scale(1) translate(0, 0);
+        }
+        100% {
+          opacity: 0;
+          transform: scale(0) translate(var(--tx, 20px), var(--ty, -30px));
+        }
+      }
+      .spark:nth-child(1) {
+        --tx: 15px;
+        --ty: -25px;
+      }
+      .spark:nth-child(2) {
+        --tx: -15px;
+        --ty: -20px;
+      }
+      .spark:nth-child(3) {
+        --tx: 20px;
+        --ty: 20px;
+      }
+      .spark:nth-child(4) {
+        --tx: -10px;
+        --ty: 25px;
+      }
+      .spark:nth-child(5) {
+        --tx: 30px;
+        --ty: -10px;
+      }
+
+      /* ── Error Number ── */
+      .error-number {
+        font-size: 7rem;
+        font-weight: 800;
+        line-height: 1;
+        background: linear-gradient(135deg, var(--danger), var(--accent));
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        letter-spacing: -4px;
+        animation: errorFlicker 3s ease-in-out infinite;
+      }
+      @keyframes errorFlicker {
+        0%,
+        90%,
+        100% {
+          opacity: 1;
+        }
+        92% {
+          opacity: 0.4;
+        }
+        94% {
+          opacity: 1;
+        }
+        96% {
+          opacity: 0.6;
+        }
+        98% {
+          opacity: 1;
+        }
+      }
+
+      /* ── Status notice ── */
+      .status-box {
+        border-radius: 0.75rem;
+        padding: 0.75rem 1rem;
+        font-size: 0.82rem;
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        margin: 1.25rem 0;
+        text-align: left;
+      }
+      .status-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--danger);
+        flex-shrink: 0;
+        animation: statusPulse 1.2s ease-in-out infinite;
+      }
+      @keyframes statusPulse {
+        0%,
+        100% {
+          box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.6);
+        }
+        50% {
+          box-shadow: 0 0 0 6px rgba(239, 68, 68, 0);
+        }
+      }
+
+      /* ── Error ID ── */
+      .error-id {
+        border-radius: 0.5rem;
+        padding: 0.5rem 1rem;
+        font-size: 0.78rem;
+        font-family: "Courier New", monospace;
+        letter-spacing: 0.5px;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin: 0.5rem 0 1rem;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+      .error-id:hover {
+        opacity: 0.75;
+      }
+
+      /* ── Dot divider ── */
+      .dot-divider {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        margin: 1rem 0;
+      }
+      .dot-divider span {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--danger), var(--accent));
+        display: inline-block;
+      }
+      .dot-divider span:nth-child(2) {
+        width: 10px;
+        height: 10px;
+      }
+
+      /* ── Action buttons ── */
+      .action-btns {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        justify-content: center;
+        margin: 1.5rem 0 1rem;
+      }
+      .btn-danger-custom {
+        background: linear-gradient(135deg, var(--danger), var(--danger-dark));
+        color: #fff;
+        border: none;
+        border-radius: 50px;
+        padding: 0.65rem 1.5rem;
+        font-size: 0.9rem;
+        font-family: "Poppins", sans-serif;
+        font-weight: 500;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        text-decoration: none;
+        transition: all 0.2s;
+      }
+      .btn-danger-custom:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(239, 68, 68, 0.35);
+        color: #fff;
+      }
+      .btn-outline-custom {
+        background: transparent;
+        color: var(--primary);
+        border: 1.5px solid var(--primary);
+        border-radius: 50px;
+        padding: 0.65rem 1.5rem;
+        font-size: 0.9rem;
+        font-family: "Poppins", sans-serif;
+        font-weight: 500;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        text-decoration: none;
+        transition: all 0.2s;
+      }
+      .btn-outline-custom:hover {
+        background: var(--primary);
+        color: #fff;
+        transform: translateY(-2px);
+      }
+      .btn-ghost-custom {
+        background: transparent;
+        color: var(--danger);
+        border: 1.5px solid var(--danger);
+        border-radius: 50px;
+        padding: 0.65rem 1.5rem;
+        font-size: 0.9rem;
+        font-family: "Poppins", sans-serif;
+        font-weight: 500;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        text-decoration: none;
+        transition: all 0.2s;
+      }
+      .btn-ghost-custom:hover {
+        background: var(--danger);
+        color: #fff;
+        transform: translateY(-2px);
+      }
+
+      /* ── Quick links ── */
+      .quick-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        justify-content: center;
+        margin-top: 0.5rem;
+      }
+      .quick-link {
+        padding: 0.35rem 0.9rem;
+        border-radius: 50px;
+        font-size: 0.8rem;
+        font-weight: 500;
+        cursor: pointer;
+        text-decoration: none;
+        transition: all 0.2s;
+        display: flex;
+        align-items: center;
+        gap: 0.35rem;
+      }
+
+      /* ── What happened section ── */
+      .timeline {
+        text-align: left;
+        margin: 1.25rem 0;
+      }
+      .timeline-item {
+        padding: 0.5rem 0 0.5rem 1.25rem;
+        font-size: 0.82rem;
+        position: relative;
+        margin-bottom: 0.25rem;
+      }
+      .timeline-item::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0.7rem;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--danger);
+      }
+
+      /* ── Footer ── */
+      .error-footer {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        text-align: center;
+        padding: 1rem;
+        font-size: 0.78rem;
+      }
+      [data-theme="light"] .error-footer {
+        color: var(--text-muted-light);
+      }
+      [data-theme="dark"] .error-footer {
+        color: var(--text-muted-dark);
+      }
+
+      /* ── Background grid ── */
+      .bg-grid {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+        opacity: 0.03;
+        background-image:
+          linear-gradient(rgba(239, 68, 68, 1) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(239, 68, 68, 1) 1px, transparent 1px);
+        background-size: 40px 40px;
+        animation: gridPulse 4s ease-in-out infinite;
+      }
+      @keyframes gridPulse {
+        0%,
+        100% {
+          opacity: 0.03;
+        }
+        50% {
+          opacity: 0.06;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .error-card {
+          padding: 2rem 1.25rem;
+        }
+        .error-number {
+          font-size: 5rem;
+        }
+        .server-bg {
+          width: 140px;
+          height: 140px;
+        }
+        .server-icon {
+          font-size: 3.5rem;
+        }
+        .action-btns {
+          flex-direction: column;
+          align-items: center;
+        }
+        .btn-danger-custom,
+        .btn-outline-custom,
+        .btn-ghost-custom {
+          width: 100%;
+          justify-content: center;
+        }
+      }
+    </style>
+  </head>
+  <body x-data="errorPage500()" :data-theme="dark ? 'dark' : 'light'">
+    <!-- Background grid -->
+    <div class="bg-grid" aria-hidden="true"></div>
+
+    <!-- Top Bar -->
+    <header class="error-topbar">
+      <a href="index.html" class="brand-logo">
+        <i
+          class="bi bi-mortarboard-fill"
+          style="
+            -webkit-text-fill-color: initial;
+            color: var(--primary);
+            font-size: 1.2rem;
+          "
+        ></i>
+        EduLearn
+      </a>
+      <button
+        class="theme-btn"
+        @click="dark = !dark"
+        :title="dark ? 'Switch to Light Mode' : 'Switch to Dark Mode'"
+      >
+        <i class="bi" :class="dark ? 'bi-sun-fill' : 'bi-moon-fill'"></i>
+      </button>
+    </header>
+
+    <!-- Main Content -->
+    <main class="error-page" style="z-index: 1">
+      <div class="error-card">
+        <!-- Server illustration -->
+        <div class="server-wrap">
+          <div class="server-bg">
+            <span class="spark"></span>
+            <span class="spark"></span>
+            <span class="spark"></span>
+            <span class="spark"></span>
+            <span class="spark"></span>
+            <span class="server-icon" role="img" aria-label="Broken server"
+              >🔧</span
+            >
+          </div>
+        </div>
+
+        <!-- Error Number -->
+        <div class="error-number">500</div>
+
+        <!-- Dot divider -->
+        <div class="dot-divider"><span></span><span></span><span></span></div>
+
+        <!-- Headline & sub -->
+        <h1 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem">
+          Internal Server Error
+        </h1>
+        <p
+          class="text-muted-custom"
+          style="font-size: 0.93rem; line-height: 1.6; margin-bottom: 0"
+        >
+          Something went wrong on our end. Don't worry &mdash; it's not you,
+          it's us.<br />
+          Our engineering team has been automatically notified.
+        </p>
+
+        <!-- Status notice -->
+        <div class="status-box">
+          <span class="status-dot"></span>
+          <span
+            >Our team is actively investigating and typically resolves issues
+            within <strong>30 minutes</strong>.</span
+          >
+        </div>
+
+        <!-- Error ID -->
+        <div>
+          <span
+            class="error-id"
+            title="Click to copy error ID"
+            @click="copyErrorId()"
+            x-text="'Error ID: ' + errorId"
+          ></span>
+        </div>
+
+        <!-- What happened accordion -->
+        <details style="text-align: left; margin-bottom: 1rem">
+          <summary
+            style="
+              font-size: 0.85rem;
+              font-weight: 600;
+              cursor: pointer;
+              user-select: none;
+              list-style: none;
+              display: flex;
+              align-items: center;
+              gap: 0.5rem;
+              padding: 0.5rem 0;
+            "
+            class="text-muted-custom"
+          >
+            <i
+              class="bi bi-chevron-right"
+              style="font-size: 0.7rem; transition: transform 0.2s"
+              id="detailsIcon"
+            ></i>
+            What might have caused this?
+          </summary>
+          <div class="timeline" style="margin-top: 0.5rem">
+            <div class="timeline-item text-muted-custom">
+              A temporary database connection issue
+            </div>
+            <div class="timeline-item text-muted-custom">
+              Server memory or resource limit exceeded
+            </div>
+            <div class="timeline-item text-muted-custom">
+              An unexpected error in our application code
+            </div>
+            <div class="timeline-item text-muted-custom">
+              Scheduled maintenance or deployment in progress
+            </div>
+          </div>
+        </details>
+
+        <!-- Action buttons -->
+        <div class="action-btns">
+          <button class="btn-danger-custom" @click="retryPage()">
+            <i class="bi bi-arrow-clockwise"></i> Try Again
+          </button>
+          <a href="index.html" class="btn-outline-custom">
+            <i class="bi bi-house-fill"></i> Back to Home
+          </a>
+          <a href="contact.html" class="btn-ghost-custom">
+            <i class="bi bi-envelope-fill"></i> Contact Support
+          </a>
+        </div>
+
+        <!-- Quick links -->
+        <p
+          class="text-muted-custom"
+          style="
+            font-size: 0.78rem;
+            margin-bottom: 0.6rem;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+          "
+        >
+          You can also try
+        </p>
+        <div class="quick-links">
+          <a href="student/dashboard.html" class="quick-link">
+            <i class="bi bi-speedometer2" style="color: var(--primary)"></i>
+            Dashboard
+          </a>
+          <a href="student/my-courses.html" class="quick-link">
+            <i class="bi bi-book-half" style="color: #10b981"></i> My Courses
+          </a>
+          <a href="student/grades.html" class="quick-link">
+            <i class="bi bi-bar-chart-fill" style="color: #06b6d4"></i> Grades
+          </a>
+          <a href="student/schedule.html" class="quick-link">
+            <i class="bi bi-calendar3" style="color: #f59e0b"></i> Schedule
+          </a>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="error-footer">
+      &copy; 2026 EduLearn LMS &mdash; All rights reserved. &nbsp;|&nbsp;
+      <a href="contact.html" style="color: inherit; text-decoration: none"
+        >Contact Support</a
+      >
+      &nbsp;|&nbsp;
+      <a href="index.html" style="color: inherit; text-decoration: none"
+        >Home</a
+      >
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
+    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+      // NProgress
+      NProgress.configure({ showSpinner: false, trickleSpeed: 200 });
+      NProgress.start();
+      window.addEventListener("load", () => NProgress.done());
+
+      // Notyf global
+      window.lmsNotify = new Notyf({
+        duration: 3500,
+        position: { x: "right", y: "top" },
+        types: [
+          {
+            type: "success",
+            background: "linear-gradient(135deg,#10b981,#059669)",
+            icon: {
+              className: "bi bi-check-circle-fill",
+              tagName: "i",
+              color: "#fff",
+            },
+          },
+          {
+            type: "error",
+            background: "linear-gradient(135deg,#ef4444,#dc2626)",
+            icon: {
+              className: "bi bi-x-circle-fill",
+              tagName: "i",
+              color: "#fff",
+            },
+          },
+          {
+            type: "info",
+            background: "linear-gradient(135deg,#3b82f6,#2563eb)",
+            icon: {
+              className: "bi bi-info-circle-fill",
+              tagName: "i",
+              color: "#fff",
+            },
+          },
+        ],
+      });
+
+      // Details chevron toggle
+      document
+        .querySelector("details")
+        ?.addEventListener("toggle", function () {
+          const icon = document.getElementById("detailsIcon");
+          if (icon)
+            icon.style.transform = this.open ? "rotate(90deg)" : "rotate(0deg)";
+        });
+
+      // Alpine component
+      document.addEventListener("alpine:init", () => {
+        Alpine.data("errorPage500", () => {
+          // Generate error ID once
+          const now = new Date();
+          const pad = (n) => String(n).padStart(2, "0");
+          const errorId = `#ERR-${now.getFullYear()}${pad(now.getMonth() + 1)}${pad(now.getDate())}-500`;
+
+          return {
+            dark: localStorage.getItem("lms-theme") === "dark",
+            errorId,
+            retrying: false,
+
+            init() {
+              this.$watch("dark", (val) =>
+                localStorage.setItem("lms-theme", val ? "dark" : "light"),
+              );
+            },
+
+            retryPage() {
+              if (this.retrying) return;
+              this.retrying = true;
+              window.lmsNotify.open({
+                type: "info",
+                message: "Retrying... Please wait.",
+              });
+              NProgress.start();
+              setTimeout(() => {
+                NProgress.done();
+                this.retrying = false;
+                window.lmsNotify.open({
+                  type: "error",
+                  message:
+                    "Server is still unavailable. Please try again later.",
+                });
+              }, 2500);
+            },
+
+            copyErrorId() {
+              navigator.clipboard
+                ?.writeText(this.errorId)
+                .then(() => {
+                  window.lmsNotify.open({
+                    type: "success",
+                    message: "Error ID copied to clipboard!",
+                  });
+                })
+                .catch(() => {
+                  window.lmsNotify.open({
+                    type: "info",
+                    message: `Error ID: ${this.errorId}`,
+                  });
+                });
+            },
+          };
+        });
+      });
+    </script>
+  </body>
+</html>

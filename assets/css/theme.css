@@ -1,0 +1,71 @@
+/* ============================================================
+   EduLearn LMS — CSS Custom Properties (theme.css)
+   Version: 2.0 | Date: 2026-03-27
+   Stack: Bootstrap 5.3 · Alpine.js 3.x · Bootstrap Icons
+   ============================================================ */
+
+:root {
+  /* ── Brand Colors ─────────────────────────────────────────── */
+  --primary:            #0d6efd;
+  --primary-dark:       #0a58ca;
+  --primary-light:      #cfe2ff;
+  --primary-gradient:   linear-gradient(135deg, #0d6efd 0%, #0a58ca 100%);
+  --accent:             #000000;
+
+  /* ── Surface / Background ─────────────────────────────────── */
+  --surface:            #ffffff;
+  --surface-alt:        #f8f9fa;
+  --surface-elevated:   #ffffff;
+
+  /* ── Sidebar ──────────────────────────────────────────────── */
+  --sidebar-bg:         #000000;
+  --sidebar-text:       #ffffff;
+  --sidebar-muted:      #adb5bd;
+  --sidebar-active-bg:  #0d6efd;
+  --sidebar-hover-bg:   rgba(255, 255, 255, 0.08);
+  --sidebar-width:      260px;
+  --sidebar-collapsed:  64px;
+
+  /* ── Typography ───────────────────────────────────────────── */
+  --text-primary:       #212529;
+  --text-secondary:     #495057;
+  --text-muted:         #6c757d;
+  --font-family:        'Poppins', sans-serif;
+
+  /* ── Borders ──────────────────────────────────────────────── */
+  --border-color:       #dee2e6;
+  --border-radius:      0.5rem;
+  --border-radius-lg:   1rem;
+
+  /* ── Shadows ──────────────────────────────────────────────── */
+  --card-shadow:        0 2px 12px rgba(0, 0, 0, 0.08);
+  --card-shadow-hover:  0 8px 24px rgba(0, 0, 0, 0.14);
+
+  /* ── Status Colors ────────────────────────────────────────── */
+  --success:            #198754;
+  --warning:            #ffc107;
+  --danger:             #dc3545;
+  --info:               #0dcaf0;
+
+  /* ── Navbar ───────────────────────────────────────────────── */
+  --navbar-height:      64px;
+  --navbar-bg:          #ffffff;
+
+  /* ── Transitions ──────────────────────────────────────────── */
+  --transition-base:    0.25s ease;
+}
+
+/* ============================================================
+   Dark Theme Overrides
+   Usage: <html data-theme="dark"> or [data-theme="dark"]
+   ============================================================ */
+[data-theme="dark"] {
+  --surface:            #1a1a2e;
+  --surface-alt:        #16213e;
+  --surface-elevated:   #0f3460;
+  --text-primary:       #e9ecef;
+  --text-secondary:     #adb5bd;
+  --border-color:       #2d3748;
+  --navbar-bg:          #1a1a2e;
+  --card-shadow:        0 2px 12px rgba(0, 0, 0, 0.4);
+}

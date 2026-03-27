@@ -1,0 +1,969 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>About Us — EduLearn</title>
+    <meta
+      name="description"
+      content="Learn about EduLearn's mission to make world-class education accessible to everyone, everywhere."
+    />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.css"
+    />
+    <link rel="stylesheet" href="assets/css/theme.css" />
+
+    <style>
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        font-family: var(--font-family);
+        background: var(--surface-alt);
+        color: var(--text-primary);
+        padding-top: 64px;
+      }
+      #nprogress .bar {
+        background: var(--primary) !important;
+      }
+
+      /* ── Hero ── */
+      .about-hero {
+        background: var(--accent);
+        padding: 80px 0 64px;
+        position: relative;
+        overflow: hidden;
+      }
+      .about-hero::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image: radial-gradient(
+          rgba(255, 255, 255, 0.05) 1px,
+          transparent 1px
+        );
+        background-size: 24px 24px;
+      }
+      .hero-label {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        color: rgba(255, 255, 255, 0.9);
+        padding: 0.35rem 0.9rem;
+        border-radius: 50px;
+        font-size: 0.78rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.6px;
+        margin-bottom: 1rem;
+      }
+
+      /* ── Stats ── */
+      .stat-card {
+        background: var(--surface);
+        border-radius: 1rem;
+        padding: 2rem 1.5rem;
+        text-align: center;
+        box-shadow: var(--card-shadow);
+        transition:
+          transform 0.25s,
+          box-shadow 0.25s;
+      }
+      .stat-card:hover {
+        transform: translateY(-4px);
+        box-shadow: var(--card-shadow-hover);
+      }
+      .stat-value {
+        font-size: 2.5rem;
+        font-weight: 800;
+        color: var(--primary);
+        line-height: 1;
+      }
+      .stat-label {
+        font-size: 0.83rem;
+        color: var(--text-muted);
+        margin-top: 0.35rem;
+      }
+
+      /* ── Mission / Values ── */
+      .value-card {
+        background: var(--surface);
+        border-radius: 1rem;
+        padding: 1.75rem;
+        box-shadow: var(--card-shadow);
+        height: 100%;
+        border-left: 4px solid transparent;
+        transition: transform 0.25s;
+      }
+      .value-card:hover {
+        transform: translateY(-3px);
+      }
+      .value-card.v-primary {
+        border-left-color: var(--primary);
+      }
+      .value-card.v-success {
+        border-left-color: #198754;
+      }
+      .value-card.v-warning {
+        border-left-color: #ffc107;
+      }
+      .value-card.v-info {
+        border-left-color: #0dcaf0;
+      }
+      .value-icon {
+        width: 48px;
+        height: 48px;
+        border-radius: 0.75rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.3rem;
+        margin-bottom: 1rem;
+      }
+
+      /* ── Team ── */
+      .team-card {
+        background: var(--surface);
+        border-radius: 1.25rem;
+        box-shadow: var(--card-shadow);
+        overflow: hidden;
+        transition:
+          transform 0.25s,
+          box-shadow 0.25s;
+        text-align: center;
+      }
+      .team-card:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--card-shadow-hover);
+      }
+      .team-avatar {
+        width: 100%;
+        aspect-ratio: 1/1;
+        object-fit: cover;
+        max-height: 220px;
+      }
+      .team-body {
+        padding: 1.25rem;
+      }
+      .team-name {
+        font-size: 0.97rem;
+        font-weight: 700;
+        margin-bottom: 0.2rem;
+      }
+      .team-role {
+        font-size: 0.78rem;
+        color: var(--primary);
+        font-weight: 600;
+        margin-bottom: 0.6rem;
+      }
+      .team-bio {
+        font-size: 0.8rem;
+        color: var(--text-muted);
+        line-height: 1.6;
+        margin-bottom: 0.75rem;
+      }
+      .team-socials {
+        display: flex;
+        gap: 0.5rem;
+        justify-content: center;
+      }
+      .team-social-btn {
+        width: 32px;
+        height: 32px;
+        border-radius: 0.5rem;
+        background: var(--surface-alt);
+        border: 1px solid var(--border-color);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--text-muted);
+        font-size: 0.9rem;
+        text-decoration: none;
+        transition: all 0.2s;
+      }
+      .team-social-btn:hover {
+        background: var(--primary);
+        color: #fff;
+        border-color: var(--primary);
+      }
+
+      /* ── Timeline ── */
+      .timeline {
+        position: relative;
+        padding-left: 2rem;
+      }
+      .timeline::before {
+        content: "";
+        position: absolute;
+        left: 0.75rem;
+        top: 0;
+        bottom: 0;
+        width: 2px;
+        background: var(--border-color);
+      }
+      .timeline-item {
+        position: relative;
+        margin-bottom: 2rem;
+      }
+      .timeline-dot {
+        position: absolute;
+        left: -1.85rem;
+        top: 0.3rem;
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        background: var(--primary);
+        border: 3px solid var(--surface-alt);
+        z-index: 1;
+      }
+      .timeline-year {
+        font-size: 0.72rem;
+        font-weight: 700;
+        color: var(--primary);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 0.2rem;
+      }
+      .timeline-title {
+        font-size: 0.97rem;
+        font-weight: 700;
+        margin-bottom: 0.3rem;
+      }
+      .timeline-text {
+        font-size: 0.83rem;
+        color: var(--text-muted);
+        line-height: 1.6;
+      }
+
+      /* ── CTA ── */
+      .cta-section {
+        background: var(--accent);
+        border-radius: 1.5rem;
+        padding: 3.5rem 2rem;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+      .cta-section::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image: radial-gradient(
+          rgba(255, 255, 255, 0.04) 1px,
+          transparent 1px
+        );
+        background-size: 20px 20px;
+      }
+      .btn-cta {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: var(--primary);
+        color: #fff;
+        border: none;
+        border-radius: 50px;
+        padding: 0.75rem 2rem;
+        font-family: var(--font-family);
+        font-size: 0.97rem;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.2s;
+      }
+      .btn-cta:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 24px rgba(13, 110, 253, 0.4);
+        color: #fff;
+      }
+      .btn-cta-outline {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: transparent;
+        color: #fff;
+        border: 2px solid rgba(255, 255, 255, 0.4);
+        border-radius: 50px;
+        padding: 0.75rem 2rem;
+        font-family: var(--font-family);
+        font-size: 0.97rem;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.2s;
+      }
+      .btn-cta-outline:hover {
+        background: rgba(255, 255, 255, 0.1);
+        color: #fff;
+      }
+
+      /* ── Partners ── */
+      .partner-logo {
+        height: 40px;
+        filter: grayscale(100%) opacity(0.5);
+        transition:
+          filter 0.2s,
+          transform 0.2s;
+        object-fit: contain;
+      }
+      .partner-logo:hover {
+        filter: grayscale(0%) opacity(1);
+        transform: scale(1.05);
+      }
+      .partner-pill {
+        background: var(--surface);
+        border: 1px solid var(--border-color);
+        border-radius: 0.75rem;
+        padding: 0.75rem 1.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.97rem;
+        font-weight: 700;
+        color: var(--text-muted);
+        letter-spacing: 0.5px;
+        transition: all 0.2s;
+      }
+      .partner-pill:hover {
+        border-color: var(--primary);
+        color: var(--primary);
+        transform: translateY(-2px);
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="navbar-ph"></div>
+
+    <!-- ── Hero ── -->
+    <section class="about-hero">
+      <div class="container">
+        <div class="row justify-content-center text-center">
+          <div class="col-lg-8" data-aos="fade-up">
+            <span class="hero-label"
+              ><i class="bi bi-mortarboard-fill"></i> About EduLearn</span
+            >
+            <h1
+              style="
+                font-size: clamp(2.2rem, 6vw, 3.5rem);
+                font-weight: 800;
+                color: #fff;
+                margin-bottom: 1rem;
+              "
+            >
+              Empowering Learners,<br />
+              <span style="color: rgba(255, 255, 255, 0.7)"
+                >One Course at a Time</span
+              >
+            </h1>
+            <p
+              style="
+                color: rgba(255, 255, 255, 0.75);
+                font-size: 1.05rem;
+                line-height: 1.7;
+                max-width: 600px;
+                margin: 0 auto 2rem;
+              "
+            >
+              Founded in 2020, EduLearn has grown into a global learning
+              platform trusted by over
+              <strong style="color: #fff">1.2 million</strong> learners across
+              40+ countries. Our mission is simple: make world-class education
+              accessible to everyone, everywhere.
+            </p>
+            <div
+              style="
+                display: flex;
+                flex-wrap: wrap;
+                gap: 1rem;
+                justify-content: center;
+              "
+            >
+              <a href="courses.html" class="btn-cta"
+                ><i class="bi bi-book-fill"></i> Explore Courses</a
+              >
+              <a href="contact.html" class="btn-cta-outline"
+                ><i class="bi bi-chat-fill"></i> Get in Touch</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Stats ── -->
+    <section class="py-5">
+      <div class="container">
+        <div class="row g-4">
+          <div class="col-sm-6 col-lg-3" data-aos="fade-up" data-aos-delay="0">
+            <div class="stat-card">
+              <div class="stat-value">1.2M+</div>
+              <div class="stat-label">Active Learners</div>
+            </div>
+          </div>
+          <div class="col-sm-6 col-lg-3" data-aos="fade-up" data-aos-delay="80">
+            <div class="stat-card">
+              <div class="stat-value">50k+</div>
+              <div class="stat-label">Courses Available</div>
+            </div>
+          </div>
+          <div
+            class="col-sm-6 col-lg-3"
+            data-aos="fade-up"
+            data-aos-delay="160"
+          >
+            <div class="stat-card">
+              <div class="stat-value">200+</div>
+              <div class="stat-label">Expert Instructors</div>
+            </div>
+          </div>
+          <div
+            class="col-sm-6 col-lg-3"
+            data-aos="fade-up"
+            data-aos-delay="240"
+          >
+            <div class="stat-card">
+              <div class="stat-value">40+</div>
+              <div class="stat-label">Countries Reached</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Mission ── -->
+    <section class="pb-5">
+      <div class="container">
+        <div class="row g-5 align-items-center">
+          <div class="col-lg-5" data-aos="fade-right">
+            <span
+              style="
+                font-size: 0.78rem;
+                font-weight: 700;
+                color: var(--primary);
+                letter-spacing: 1.5px;
+                text-transform: uppercase;
+              "
+              >Our Mission</span
+            >
+            <h2
+              style="font-size: 2rem; font-weight: 800; margin: 0.5rem 0 1rem"
+            >
+              Education Without Borders
+            </h2>
+            <p
+              style="
+                color: var(--text-muted);
+                line-height: 1.8;
+                margin-bottom: 1.25rem;
+              "
+            >
+              We believe education is the most powerful tool for changing lives.
+              EduLearn was built to break down the barriers — cost, geography,
+              language, and time — that have historically kept quality education
+              out of reach.
+            </p>
+            <p style="color: var(--text-muted); line-height: 1.8">
+              From our AI-powered learning paths to our community of peer
+              mentors, every feature we build is designed with one question in
+              mind: <em>"Does this help a learner succeed?"</em>
+            </p>
+          </div>
+          <div class="col-lg-7" data-aos="fade-left">
+            <div class="row g-3">
+              <div class="col-sm-6">
+                <div class="value-card v-primary">
+                  <div
+                    class="value-icon"
+                    style="
+                      background: rgba(13, 110, 253, 0.1);
+                      color: var(--primary);
+                    "
+                  >
+                    <i class="bi bi-globe2"></i>
+                  </div>
+                  <h6 style="font-weight: 700; margin-bottom: 0.4rem">
+                    Accessible Learning
+                  </h6>
+                  <p
+                    style="
+                      font-size: 0.83rem;
+                      color: var(--text-muted);
+                      margin: 0;
+                      line-height: 1.6;
+                    "
+                  >
+                    Free courses, flexible schedules, and multi-language support
+                    ensure nobody is left behind.
+                  </p>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="value-card v-success">
+                  <div
+                    class="value-icon"
+                    style="background: rgba(25, 135, 84, 0.1); color: #198754"
+                  >
+                    <i class="bi bi-shield-check-fill"></i>
+                  </div>
+                  <h6 style="font-weight: 700; margin-bottom: 0.4rem">
+                    Quality First
+                  </h6>
+                  <p
+                    style="
+                      font-size: 0.83rem;
+                      color: var(--text-muted);
+                      margin: 0;
+                      line-height: 1.6;
+                    "
+                  >
+                    Every course is peer-reviewed, industry-vetted, and kept
+                    up-to-date with the latest practices.
+                  </p>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="value-card v-warning">
+                  <div
+                    class="value-icon"
+                    style="background: rgba(255, 193, 7, 0.15); color: #e6a800"
+                  >
+                    <i class="bi bi-people-fill"></i>
+                  </div>
+                  <h6 style="font-weight: 700; margin-bottom: 0.4rem">
+                    Community Driven
+                  </h6>
+                  <p
+                    style="
+                      font-size: 0.83rem;
+                      color: var(--text-muted);
+                      margin: 0;
+                      line-height: 1.6;
+                    "
+                  >
+                    Our learner community, forums, and live sessions create
+                    genuine peer-to-peer support.
+                  </p>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="value-card v-info">
+                  <div
+                    class="value-icon"
+                    style="background: rgba(13, 202, 240, 0.12); color: #0dcaf0"
+                  >
+                    <i class="bi bi-cpu-fill"></i>
+                  </div>
+                  <h6 style="font-weight: 700; margin-bottom: 0.4rem">
+                    Innovation Led
+                  </h6>
+                  <p
+                    style="
+                      font-size: 0.83rem;
+                      color: var(--text-muted);
+                      margin: 0;
+                      line-height: 1.6;
+                    "
+                  >
+                    AI-powered recommendations, adaptive paths, and blockchain
+                    credentials push learning forward.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Team ── -->
+    <section class="pb-5">
+      <div class="container">
+        <div
+          class="row justify-content-center text-center mb-5"
+          data-aos="fade-up"
+        >
+          <div class="col-lg-6">
+            <span
+              style="
+                font-size: 0.78rem;
+                font-weight: 700;
+                color: var(--primary);
+                letter-spacing: 1.5px;
+                text-transform: uppercase;
+              "
+              >The Team</span
+            >
+            <h2
+              style="
+                font-size: 2rem;
+                font-weight: 800;
+                margin: 0.5rem 0 0.75rem;
+              "
+            >
+              Meet the People Behind EduLearn
+            </h2>
+            <p style="color: var(--text-muted); font-size: 0.9rem">
+              A diverse team of educators, engineers, and designers united by a
+              passion for learning.
+            </p>
+          </div>
+        </div>
+        <div class="row g-4">
+          <!-- Team members -->
+          <div class="col-sm-6 col-lg-3" data-aos="fade-up" data-aos-delay="0">
+            <div class="team-card">
+              <img
+                src="https://placehold.co/300x300/0d6efd/ffffff?text=SM"
+                alt="Sarah Mitchell"
+                class="team-avatar"
+              />
+              <div class="team-body">
+                <div class="team-name">Sarah Mitchell</div>
+                <div class="team-role">Co-founder &amp; CEO</div>
+                <p class="team-bio">
+                  Former Stanford professor with 15 years in EdTech. Passionate
+                  about closing the education gap globally.
+                </p>
+                <div class="team-socials">
+                  <a href="#" class="team-social-btn" title="LinkedIn"
+                    ><i class="bi bi-linkedin"></i
+                  ></a>
+                  <a href="#" class="team-social-btn" title="Twitter"
+                    ><i class="bi bi-twitter-x"></i
+                  ></a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6 col-lg-3" data-aos="fade-up" data-aos-delay="80">
+            <div class="team-card">
+              <img
+                src="https://placehold.co/300x300/198754/ffffff?text=JW"
+                alt="James Wilson"
+                class="team-avatar"
+              />
+              <div class="team-body">
+                <div class="team-name">James Wilson</div>
+                <div class="team-role">Co-founder &amp; CTO</div>
+                <p class="team-bio">
+                  Ex-Google engineer and AI researcher. Leads our technology and
+                  platform architecture.
+                </p>
+                <div class="team-socials">
+                  <a href="#" class="team-social-btn"
+                    ><i class="bi bi-linkedin"></i
+                  ></a>
+                  <a href="#" class="team-social-btn"
+                    ><i class="bi bi-github"></i
+                  ></a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="col-sm-6 col-lg-3"
+            data-aos="fade-up"
+            data-aos-delay="160"
+          >
+            <div class="team-card">
+              <img
+                src="https://placehold.co/300x300/dc3545/ffffff?text=PR"
+                alt="Priya Rajan"
+                class="team-avatar"
+              />
+              <div class="team-body">
+                <div class="team-name">Priya Rajan</div>
+                <div class="team-role">Head of Curriculum</div>
+                <p class="team-bio">
+                  Curriculum strategist with expertise in adult learning theory
+                  and professional development.
+                </p>
+                <div class="team-socials">
+                  <a href="#" class="team-social-btn"
+                    ><i class="bi bi-linkedin"></i
+                  ></a>
+                  <a href="#" class="team-social-btn"
+                    ><i class="bi bi-twitter-x"></i
+                  ></a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="col-sm-6 col-lg-3"
+            data-aos="fade-up"
+            data-aos-delay="240"
+          >
+            <div class="team-card">
+              <img
+                src="https://placehold.co/300x300/ffc107/000000?text=TK"
+                alt="Tom Kawasaki"
+                class="team-avatar"
+              />
+              <div class="team-body">
+                <div class="team-name">Tom Kawasaki</div>
+                <div class="team-role">Head of Design</div>
+                <p class="team-bio">
+                  Award-winning UX designer focused on making learning
+                  experiences intuitive and delightful.
+                </p>
+                <div class="team-socials">
+                  <a href="#" class="team-social-btn"
+                    ><i class="bi bi-linkedin"></i
+                  ></a>
+                  <a href="#" class="team-social-btn"
+                    ><i class="bi bi-dribbble"></i
+                  ></a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="text-center mt-4">
+          <a
+            href="contact.html"
+            style="
+              color: var(--primary);
+              font-weight: 600;
+              font-size: 0.9rem;
+              text-decoration: none;
+            "
+          >
+            <i class="bi bi-person-plus-fill"></i> Interested in joining our
+            team? Get in touch →
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Timeline ── -->
+    <section class="pb-5">
+      <div class="container">
+        <div class="row g-5 align-items-start">
+          <div class="col-lg-5" data-aos="fade-right">
+            <span
+              style="
+                font-size: 0.78rem;
+                font-weight: 700;
+                color: var(--primary);
+                letter-spacing: 1.5px;
+                text-transform: uppercase;
+              "
+              >Our Journey</span
+            >
+            <h2
+              style="font-size: 2rem; font-weight: 800; margin: 0.5rem 0 1rem"
+            >
+              From Idea to Global Platform
+            </h2>
+            <p style="color: var(--text-muted); line-height: 1.8">
+              Five years. One mission. A whole lot of learning.
+            </p>
+          </div>
+          <div class="col-lg-7" data-aos="fade-left">
+            <div class="timeline">
+              <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-year">2020</div>
+                <div class="timeline-title">EduLearn Founded</div>
+                <div class="timeline-text">
+                  Sarah and James launch EduLearn from a San Francisco garage
+                  with 12 courses and a vision to democratise education.
+                </div>
+              </div>
+              <div class="timeline-item">
+                <div class="timeline-dot" style="background: #198754"></div>
+                <div class="timeline-year">2021</div>
+                <div class="timeline-title">100,000 Learners</div>
+                <div class="timeline-text">
+                  Hit 100k enrolled students. Closed a $5M seed round led by
+                  Horizon Ventures. Expanded the team to 30 people.
+                </div>
+              </div>
+              <div class="timeline-item">
+                <div class="timeline-dot" style="background: #ffc107"></div>
+                <div class="timeline-year">2022</div>
+                <div class="timeline-title">AI Learning Engine Launched</div>
+                <div class="timeline-text">
+                  Introduced our adaptive AI engine, personalising learning
+                  paths for every student and increasing course completion rates
+                  by 47%.
+                </div>
+              </div>
+              <div class="timeline-item">
+                <div class="timeline-dot" style="background: #0dcaf0"></div>
+                <div class="timeline-year">2023</div>
+                <div class="timeline-title">Went Global</div>
+                <div class="timeline-text">
+                  Launched multi-language support in 12 languages. Crossed
+                  500,000 learners across 30 countries. Series B of $25M.
+                </div>
+              </div>
+              <div class="timeline-item" style="margin-bottom: 0">
+                <div class="timeline-dot" style="background: #dc3545"></div>
+                <div class="timeline-year">2024 – Present</div>
+                <div class="timeline-title">
+                  1.2 Million Learners &amp; Growing
+                </div>
+                <div class="timeline-text">
+                  Now serving 1.2M+ learners in 40+ countries. Building EduLearn
+                  2.0 with blockchain credentials and live cohort rooms.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Partners ── -->
+    <section class="pb-5">
+      <div class="container">
+        <p
+          style="
+            text-align: center;
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 2rem;
+          "
+          data-aos="fade-up"
+        >
+          Trusted by teams at world-class companies
+        </p>
+        <div
+          class="row g-3 justify-content-center"
+          data-aos="fade-up"
+          data-aos-delay="100"
+        >
+          <div class="col-6 col-sm-4 col-md-2">
+            <div class="partner-pill">Google</div>
+          </div>
+          <div class="col-6 col-sm-4 col-md-2">
+            <div class="partner-pill">Microsoft</div>
+          </div>
+          <div class="col-6 col-sm-4 col-md-2">
+            <div class="partner-pill">Spotify</div>
+          </div>
+          <div class="col-6 col-sm-4 col-md-2">
+            <div class="partner-pill">Airbnb</div>
+          </div>
+          <div class="col-6 col-sm-4 col-md-2">
+            <div class="partner-pill">Stripe</div>
+          </div>
+          <div class="col-6 col-sm-4 col-md-2">
+            <div class="partner-pill">Netflix</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── CTA ── -->
+    <section class="pb-5">
+      <div class="container" data-aos="fade-up">
+        <div class="cta-section">
+          <h2
+            style="
+              font-size: 2rem;
+              font-weight: 800;
+              color: #fff;
+              margin-bottom: 0.75rem;
+            "
+          >
+            Ready to Start Learning?
+          </h2>
+          <p
+            style="
+              color: rgba(255, 255, 255, 0.75);
+              max-width: 480px;
+              margin: 0 auto 2rem;
+              font-size: 0.97rem;
+            "
+          >
+            Join 1.2 million learners who are advancing their careers with
+            EduLearn.
+          </p>
+          <div
+            style="
+              display: flex;
+              flex-wrap: wrap;
+              gap: 1rem;
+              justify-content: center;
+            "
+          >
+            <a href="register.html" class="btn-cta"
+              ><i class="bi bi-rocket-takeoff-fill"></i> Get Started — It's
+              Free</a
+            >
+            <a href="courses.html" class="btn-cta-outline"
+              ><i class="bi bi-compass"></i> Browse Courses</a
+            >
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div id="footer-ph"></div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
+    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/app.js"></script>
+    <script>
+      NProgress.configure({ showSpinner: false, trickleSpeed: 200 });
+      NProgress.start();
+      window.addEventListener("load", () => NProgress.done());
+      window.lmsNotify = new Notyf({
+        duration: 3500,
+        position: { x: "right", y: "top" },
+      });
+      AOS.init({ duration: 650, once: true, offset: 60 });
+      const loadFrag = (id, url) =>
+        fetch(url)
+          .then((r) => r.text())
+          .then((html) => {
+            const el = document.getElementById(id);
+            if (el) {
+              el.innerHTML = html;
+              if (window.Alpine) Alpine.initTree(el);
+            }
+          });
+      Promise.all([
+        loadFrag("navbar-ph", "components/public-navbar.html"),
+        loadFrag("footer-ph", "components/public-footer.html"),
+      ]);
+    </script>
+  </body>
+</html>

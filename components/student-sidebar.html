@@ -1,0 +1,708 @@
+<!-- ============================================================
+     EduLearn LMS — Student Panel Sidebar Component
+     File: components/student-sidebar.html
+     Dependencies: Bootstrap 5.3, Bootstrap Icons, Alpine.js 3.x
+     Usage: Paste inside the .d-flex wrapper in student shell pages.
+            Requires sidebarState() from assets/js/app.js on parent.
+     ============================================================ -->
+
+<style>
+  /* ── Sidebar Shell ──────────────────────────────────────────── */
+  #student-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    background: var(--sidebar-bg);
+    color: var(--sidebar-text);
+    font-family: var(--font-family);
+    z-index: 1020;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    transition: width var(--transition-base);
+    box-shadow: 2px 0 16px rgba(0, 0, 0, 0.25);
+  }
+
+  /* ── Logo Row ───────────────────────────────────────────────── */
+  .sidebar-logo-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 16px 14px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    min-height: 64px;
+    flex-shrink: 0;
+  }
+  .sidebar-logo-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    overflow: hidden;
+  }
+  .sidebar-logo-icon {
+    font-size: 1.5rem;
+    color: var(--primary);
+    flex-shrink: 0;
+  }
+  .sidebar-logo-text {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #fff;
+    white-space: nowrap;
+    transition:
+      opacity var(--transition-base),
+      width var(--transition-base);
+  }
+  .sidebar-collapse-btn {
+    background: rgba(255, 255, 255, 0.08);
+    border: none;
+    color: var(--sidebar-muted);
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition:
+      background var(--transition-base),
+      color var(--transition-base);
+  }
+  .sidebar-collapse-btn:hover {
+    background: rgba(255, 255, 255, 0.15);
+    color: #fff;
+  }
+
+  /* ── Profile Card ───────────────────────────────────────────── */
+  .sidebar-profile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 16px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+  .sidebar-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--primary);
+    flex-shrink: 0;
+  }
+  .sidebar-profile-info {
+    overflow: hidden;
+    transition: opacity var(--transition-base);
+  }
+  .sidebar-profile-name {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #fff;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.3;
+  }
+  .sidebar-profile-badge {
+    font-size: 0.68rem;
+    font-weight: 600;
+    background: var(--primary);
+    color: #fff;
+    padding: 1px 8px;
+    border-radius: 20px;
+    display: inline-block;
+    margin-top: 2px;
+  }
+
+  /* ── Nav Body ───────────────────────────────────────────────── */
+  .sidebar-nav-body {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 10px 8px;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.1) transparent;
+  }
+  .sidebar-nav-body::-webkit-scrollbar {
+    width: 4px;
+  }
+  .sidebar-nav-body::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+  }
+
+  /* ── Section Label ──────────────────────────────────────────── */
+  .sidebar-section-label {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: var(--sidebar-muted);
+    padding: 10px 10px 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    transition:
+      opacity var(--transition-base),
+      height var(--transition-base);
+  }
+
+  /* ── Nav Item ───────────────────────────────────────────────── */
+  .sidebar-nav-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 9px 10px;
+    border-radius: 8px;
+    text-decoration: none;
+    color: rgba(255, 255, 255, 0.72);
+    font-size: 0.875rem;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    transition:
+      background var(--transition-base),
+      color var(--transition-base);
+    position: relative;
+    cursor: pointer;
+    margin-bottom: 2px;
+  }
+  .sidebar-nav-item i {
+    font-size: 1.05rem;
+    flex-shrink: 0;
+    width: 20px;
+    text-align: center;
+    transition: color var(--transition-base);
+  }
+  .sidebar-nav-item .nav-label {
+    flex: 1;
+    transition: opacity var(--transition-base);
+  }
+  .sidebar-nav-item:hover {
+    background: var(--sidebar-hover-bg);
+    color: #fff;
+  }
+  .sidebar-nav-item.active {
+    background: var(--sidebar-active-bg);
+    color: #fff;
+  }
+  .sidebar-nav-item.active i {
+    color: #fff;
+  }
+
+  /* Danger item (Logout) */
+  .sidebar-nav-item.danger {
+    color: rgba(220, 53, 69, 0.85);
+  }
+  .sidebar-nav-item.danger:hover {
+    background: rgba(220, 53, 69, 0.15);
+    color: #f87171;
+  }
+
+  /* ── Badge on nav item ──────────────────────────────────────── */
+  .nav-badge {
+    font-size: 0.65rem;
+    font-weight: 700;
+    background: var(--danger);
+    color: #fff;
+    padding: 1px 6px;
+    border-radius: 20px;
+    flex-shrink: 0;
+    transition: opacity var(--transition-base);
+  }
+
+  /* ── Section separator ──────────────────────────────────────── */
+  .sidebar-separator {
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    margin: 6px 0;
+  }
+
+  /* ── Collapsed state overrides ──────────────────────────────── */
+  .sidebar-collapsed .sidebar-logo-text,
+  .sidebar-collapsed .sidebar-profile-info,
+  .sidebar-collapsed .sidebar-section-label,
+  .sidebar-collapsed .nav-label,
+  .sidebar-collapsed .nav-badge {
+    opacity: 0;
+    pointer-events: none;
+    width: 0;
+    overflow: hidden;
+  }
+  .sidebar-collapsed .sidebar-profile {
+    justify-content: center;
+    padding: 14px 0;
+  }
+  .sidebar-collapsed .sidebar-logo-row {
+    justify-content: center;
+    padding: 18px 0 14px;
+  }
+  .sidebar-collapsed .sidebar-collapse-btn {
+    display: none;
+  }
+  .sidebar-collapsed .sidebar-nav-item {
+    justify-content: center;
+    padding: 10px 0;
+  }
+
+  /* ── Mobile Off-canvas Sidebar ──────────────────────────────── */
+  #mobileSidebarOffcanvas {
+    width: var(--sidebar-width) !important;
+    background: var(--sidebar-bg) !important;
+    color: var(--sidebar-text);
+  }
+  #mobileSidebarOffcanvas .offcanvas-header {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    padding: 16px;
+  }
+  #mobileSidebarOffcanvas .btn-close {
+    filter: invert(1);
+    opacity: 0.6;
+  }
+  #mobileSidebarOffcanvas .btn-close:hover {
+    opacity: 1;
+  }
+</style>
+
+<!-- ════════════════════════════════════════════════════════════
+     DESKTOP SIDEBAR (hidden on mobile < 992px)
+     ════════════════════════════════════════════════════════════ -->
+<aside
+  id="student-sidebar"
+  :style="'width:' + (collapsed ? 'var(--sidebar-collapsed)' : 'var(--sidebar-width)')"
+  :class="{ 'sidebar-collapsed': collapsed }"
+  class="d-none d-lg-flex flex-column"
+  x-data
+>
+  <!-- ── Logo Row ─────────────────────────────────────────────── -->
+  <div class="sidebar-logo-row">
+    <a href="../student/dashboard.html" class="sidebar-logo-link">
+      <i class="bi bi-mortarboard-fill sidebar-logo-icon"></i>
+      <span class="sidebar-logo-text">EduLearn</span>
+    </a>
+    <button
+      class="sidebar-collapse-btn"
+      @click="toggle()"
+      :title="collapsed ? 'Expand sidebar' : 'Collapse sidebar'"
+      aria-label="Toggle sidebar"
+    >
+      <i
+        :class="collapsed ? 'bi bi-chevron-right' : 'bi bi-chevron-left'"
+        style="font-size: 0.8rem"
+      ></i>
+    </button>
+  </div>
+
+  <!-- ── Profile Card ─────────────────────────────────────────── -->
+  <div class="sidebar-profile">
+    <img
+      src="https://placehold.co/40x40/0d6efd/ffffff?text=AJ"
+      alt="Alex Johnson"
+      class="sidebar-avatar"
+      data-bs-toggle="tooltip"
+      data-bs-placement="right"
+      :title="collapsed ? 'Alex Johnson' : ''"
+    />
+    <div class="sidebar-profile-info">
+      <div class="sidebar-profile-name">Alex Johnson</div>
+      <span class="sidebar-profile-badge">Student</span>
+    </div>
+  </div>
+
+  <!-- ── Nav Body ─────────────────────────────────────────────── -->
+  <nav class="sidebar-nav-body">
+    <!-- MAIN ────────────────────────────────────────────────── -->
+    <div class="sidebar-section-label">Main</div>
+
+    <a
+      href="../student/dashboard.html"
+      class="sidebar-nav-item active"
+      data-bs-toggle="tooltip"
+      data-bs-placement="right"
+      :title="collapsed ? 'Dashboard' : ''"
+    >
+      <i class="bi bi-house-fill"></i>
+      <span class="nav-label">Dashboard</span>
+    </a>
+
+    <a
+      href="../student/my-courses.html"
+      class="sidebar-nav-item"
+      data-bs-toggle="tooltip"
+      data-bs-placement="right"
+      :title="collapsed ? 'My Courses' : ''"
+    >
+      <i class="bi bi-journal-bookmark-fill"></i>
+      <span class="nav-label">My Courses</span>
+    </a>
+
+    <a
+      href="../student/schedule.html"
+      class="sidebar-nav-item"
+      data-bs-toggle="tooltip"
+      data-bs-placement="right"
+      :title="collapsed ? 'Schedule' : ''"
+    >
+      <i class="bi bi-calendar3"></i>
+      <span class="nav-label">Schedule</span>
+    </a>
+
+    <a
+      href="../student/assignments.html"
+      class="sidebar-nav-item"
+      data-bs-toggle="tooltip"
+      data-bs-placement="right"
+      :title="collapsed ? 'Assignments' : ''"
+    >
+      <i class="bi bi-pencil-square"></i>
+      <span class="nav-label">Assignments</span>
+    </a>
+
+    <a
+      href="../student/quizzes.html"
+      class="sidebar-nav-item"
+      data-bs-toggle="tooltip"
+      data-bs-placement="right"
+      :title="collapsed ? 'Quizzes' : ''"
+    >
+      <i class="bi bi-patch-question-fill"></i>
+      <span class="nav-label">Quizzes</span>
+    </a>
+
+    <a
+      href="../student/grades.html"
+      class="sidebar-nav-item"
+      data-bs-toggle="tooltip"
+      data-bs-placement="right"
+      :title="collapsed ? 'Grades' : ''"
+    >
+      <i class="bi bi-bar-chart-line-fill"></i>
+      <span class="nav-label">Grades</span>
+    </a>
+
+    <!-- RESOURCES ───────────────────────────────────────────── -->
+    <div class="sidebar-separator"></div>
+    <div class="sidebar-section-label">Resources</div>
+
+    <a
+      href="../student/library.html"
+      class="sidebar-nav-item"
+      data-bs-toggle="tooltip"
+      data-bs-placement="right"
+      :title="collapsed ? 'Library' : ''"
+    >
+      <i class="bi bi-folder2-open"></i>
+      <span class="nav-label">Library</span>
+    </a>
+
+    <a
+      href="../student/live-sessions.html"
+      class="sidebar-nav-item"
+      data-bs-toggle="tooltip"
+      data-bs-placement="right"
+      :title="collapsed ? 'Live Sessions' : ''"
+    >
+      <i class="bi bi-camera-video-fill"></i>
+      <span class="nav-label">Live Sessions</span>
+    </a>
+
+    <a
+      href="../student/forum.html"
+      class="sidebar-nav-item"
+      data-bs-toggle="tooltip"
+      data-bs-placement="right"
+      :title="collapsed ? 'Forum' : ''"
+    >
+      <i class="bi bi-chat-dots-fill"></i>
+      <span class="nav-label">Forum</span>
+    </a>
+
+    <a
+      href="../student/announcements.html"
+      class="sidebar-nav-item"
+      data-bs-toggle="tooltip"
+      data-bs-placement="right"
+      :title="collapsed ? 'Announcements' : ''"
+    >
+      <i class="bi bi-megaphone-fill"></i>
+      <span class="nav-label">Announcements</span>
+      <span class="nav-badge">3</span>
+    </a>
+
+    <!-- ACCOUNT ─────────────────────────────────────────────── -->
+    <div class="sidebar-separator"></div>
+    <div class="sidebar-section-label">Account</div>
+
+    <a
+      href="../student/profile.html"
+      class="sidebar-nav-item"
+      data-bs-toggle="tooltip"
+      data-bs-placement="right"
+      :title="collapsed ? 'Profile' : ''"
+    >
+      <i class="bi bi-person-circle"></i>
+      <span class="nav-label">Profile</span>
+    </a>
+
+    <a
+      href="../student/certificates.html"
+      class="sidebar-nav-item"
+      data-bs-toggle="tooltip"
+      data-bs-placement="right"
+      :title="collapsed ? 'Certificates' : ''"
+    >
+      <i class="bi bi-award-fill"></i>
+      <span class="nav-label">Certificates</span>
+    </a>
+
+    <a
+      href="../student/settings.html"
+      class="sidebar-nav-item"
+      data-bs-toggle="tooltip"
+      data-bs-placement="right"
+      :title="collapsed ? 'Settings' : ''"
+    >
+      <i class="bi bi-gear-fill"></i>
+      <span class="nav-label">Settings</span>
+    </a>
+
+    <!-- OTHER ───────────────────────────────────────────────── -->
+    <div class="sidebar-separator"></div>
+    <div class="sidebar-section-label">Other</div>
+
+    <a
+      href="../contact.html"
+      class="sidebar-nav-item"
+      data-bs-toggle="tooltip"
+      data-bs-placement="right"
+      :title="collapsed ? 'Help & Contact' : ''"
+    >
+      <i class="bi bi-question-circle-fill"></i>
+      <span class="nav-label">Help &amp; Contact</span>
+    </a>
+
+    <a
+      href="../login.html"
+      class="sidebar-nav-item danger"
+      data-bs-toggle="tooltip"
+      data-bs-placement="right"
+      :title="collapsed ? 'Logout' : ''"
+    >
+      <i class="bi bi-box-arrow-right"></i>
+      <span class="nav-label">Logout</span>
+    </a>
+  </nav>
+  <!-- /Nav Body -->
+
+  <!-- ── Collapsed Expand Button (shown at bottom when collapsed) -->
+  <div
+    x-show="collapsed"
+    class="d-flex justify-content-center py-2 border-top"
+    style="border-color: rgba(255, 255, 255, 0.07) !important"
+  >
+    <button
+      class="sidebar-collapse-btn"
+      @click="toggle()"
+      title="Expand sidebar"
+      aria-label="Expand sidebar"
+    >
+      <i class="bi bi-chevron-right" style="font-size: 0.8rem"></i>
+    </button>
+  </div>
+</aside>
+<!-- /DESKTOP SIDEBAR -->
+
+<!-- ════════════════════════════════════════════════════════════
+     MOBILE OFF-CANVAS SIDEBAR (visible on < 992px)
+     Triggered by hamburger in student-navbar.html
+     ════════════════════════════════════════════════════════════ -->
+<div
+  class="offcanvas offcanvas-start d-lg-none"
+  tabindex="-1"
+  id="mobileSidebarOffcanvas"
+  aria-labelledby="mobileSidebarLabel"
+>
+  <!-- Header -->
+  <div class="offcanvas-header">
+    <a href="../student/dashboard.html" class="sidebar-logo-link">
+      <i class="bi bi-mortarboard-fill sidebar-logo-icon"></i>
+      <span class="sidebar-logo-text">EduLearn</span>
+    </a>
+    <button
+      type="button"
+      class="btn-close"
+      data-bs-dismiss="offcanvas"
+      aria-label="Close"
+    ></button>
+  </div>
+
+  <!-- Body -->
+  <div class="offcanvas-body p-0" style="background: var(--sidebar-bg)">
+    <!-- Profile -->
+    <div class="sidebar-profile">
+      <img
+        src="https://placehold.co/40x40/0d6efd/ffffff?text=AJ"
+        alt="Alex Johnson"
+        class="sidebar-avatar"
+      />
+      <div class="sidebar-profile-info">
+        <div class="sidebar-profile-name">Alex Johnson</div>
+        <span class="sidebar-profile-badge">Student</span>
+      </div>
+    </div>
+
+    <!-- Nav Links -->
+    <nav class="sidebar-nav-body">
+      <div class="sidebar-section-label">Main</div>
+      <a
+        href="../student/dashboard.html"
+        class="sidebar-nav-item active"
+        data-bs-dismiss="offcanvas"
+      >
+        <i class="bi bi-house-fill"></i><span class="nav-label">Dashboard</span>
+      </a>
+      <a
+        href="../student/my-courses.html"
+        class="sidebar-nav-item"
+        data-bs-dismiss="offcanvas"
+      >
+        <i class="bi bi-journal-bookmark-fill"></i
+        ><span class="nav-label">My Courses</span>
+      </a>
+      <a
+        href="../student/schedule.html"
+        class="sidebar-nav-item"
+        data-bs-dismiss="offcanvas"
+      >
+        <i class="bi bi-calendar3"></i><span class="nav-label">Schedule</span>
+      </a>
+      <a
+        href="../student/assignments.html"
+        class="sidebar-nav-item"
+        data-bs-dismiss="offcanvas"
+      >
+        <i class="bi bi-pencil-square"></i
+        ><span class="nav-label">Assignments</span>
+      </a>
+      <a
+        href="../student/quizzes.html"
+        class="sidebar-nav-item"
+        data-bs-dismiss="offcanvas"
+      >
+        <i class="bi bi-patch-question-fill"></i
+        ><span class="nav-label">Quizzes</span>
+      </a>
+      <a
+        href="../student/grades.html"
+        class="sidebar-nav-item"
+        data-bs-dismiss="offcanvas"
+      >
+        <i class="bi bi-bar-chart-line-fill"></i
+        ><span class="nav-label">Grades</span>
+      </a>
+
+      <div class="sidebar-separator"></div>
+      <div class="sidebar-section-label">Resources</div>
+      <a
+        href="../student/library.html"
+        class="sidebar-nav-item"
+        data-bs-dismiss="offcanvas"
+      >
+        <i class="bi bi-folder2-open"></i><span class="nav-label">Library</span>
+      </a>
+      <a
+        href="../student/live-sessions.html"
+        class="sidebar-nav-item"
+        data-bs-dismiss="offcanvas"
+      >
+        <i class="bi bi-camera-video-fill"></i
+        ><span class="nav-label">Live Sessions</span>
+      </a>
+      <a
+        href="../student/forum.html"
+        class="sidebar-nav-item"
+        data-bs-dismiss="offcanvas"
+      >
+        <i class="bi bi-chat-dots-fill"></i><span class="nav-label">Forum</span>
+      </a>
+      <a
+        href="../student/announcements.html"
+        class="sidebar-nav-item"
+        data-bs-dismiss="offcanvas"
+      >
+        <i class="bi bi-megaphone-fill"></i>
+        <span class="nav-label">Announcements</span>
+        <span class="nav-badge">3</span>
+      </a>
+
+      <div class="sidebar-separator"></div>
+      <div class="sidebar-section-label">Account</div>
+      <a
+        href="../student/profile.html"
+        class="sidebar-nav-item"
+        data-bs-dismiss="offcanvas"
+      >
+        <i class="bi bi-person-circle"></i
+        ><span class="nav-label">Profile</span>
+      </a>
+      <a
+        href="../student/certificates.html"
+        class="sidebar-nav-item"
+        data-bs-dismiss="offcanvas"
+      >
+        <i class="bi bi-award-fill"></i
+        ><span class="nav-label">Certificates</span>
+      </a>
+      <a
+        href="../student/settings.html"
+        class="sidebar-nav-item"
+        data-bs-dismiss="offcanvas"
+      >
+        <i class="bi bi-gear-fill"></i><span class="nav-label">Settings</span>
+      </a>
+
+      <div class="sidebar-separator"></div>
+      <div class="sidebar-section-label">Other</div>
+      <a
+        href="../contact.html"
+        class="sidebar-nav-item"
+        data-bs-dismiss="offcanvas"
+      >
+        <i class="bi bi-question-circle-fill"></i
+        ><span class="nav-label">Help &amp; Contact</span>
+      </a>
+      <a
+        href="../login.html"
+        class="sidebar-nav-item danger"
+        data-bs-dismiss="offcanvas"
+      >
+        <i class="bi bi-box-arrow-right"></i
+        ><span class="nav-label">Logout</span>
+      </a>
+    </nav>
+  </div>
+</div>
+<!-- /MOBILE OFF-CANVAS SIDEBAR -->
+
+<script>
+  // Initialize Bootstrap tooltips for collapsed sidebar items
+  // Called whenever the sidebar collapses/expands
+  document.addEventListener("alpine:init", () => {
+    // Re-init tooltips when sidebar state changes
+    const initTooltips = () => {
+      const tooltipEls = document.querySelectorAll(
+        '#student-sidebar [data-bs-toggle="tooltip"]',
+      );
+      tooltipEls.forEach((el) => {
+        const existing = bootstrap.Tooltip.getInstance(el);
+        if (existing) existing.dispose();
+        new bootstrap.Tooltip(el, { trigger: "hover" });
+      });
+    };
+    // Init on load + watch for DOM changes
+    setTimeout(initTooltips, 300);
+    document.addEventListener("sidebar-toggled", initTooltips);
+  });
+</script>

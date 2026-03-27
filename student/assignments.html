@@ -1,0 +1,1661 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Assignments — EduLearn Student</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/flatpickr@4.6.13/dist/flatpickr.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/filepond@^4/dist/filepond.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css"
+    />
+    <link rel="stylesheet" href="../assets/css/theme.css" />
+
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+      [x-cloak] {
+        display: none !important;
+      }
+      body {
+        margin: 0;
+        font-family: var(--font-family);
+        background: var(--surface-alt);
+        color: var(--text-primary);
+      }
+
+      .student-main {
+        margin-left: var(--sidebar-width);
+        padding-top: var(--navbar-height);
+        min-height: 100vh;
+        transition: margin-left var(--transition-base);
+      }
+      .student-main.sidebar-collapsed {
+        margin-left: var(--sidebar-collapsed);
+      }
+      @media (max-width: 991.98px) {
+        .student-main {
+          margin-left: 0;
+        }
+      }
+      .page-content {
+        padding: 28px 24px;
+        max-width: 1440px;
+      }
+      @media (max-width: 767px) {
+        .page-content {
+          padding: 18px 14px;
+        }
+      }
+
+      /* ═══ PAGE HEADER ═══ */
+      .page-header {
+        background: var(--surface);
+        border: 1px solid var(--border-color);
+        border-radius: var(--border-radius-lg);
+        padding: 20px 24px;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+      .page-header-title {
+        font-size: 1.3rem;
+        font-weight: 800;
+        margin: 0;
+      }
+      .page-header-sub {
+        font-size: 0.78rem;
+        color: var(--text-muted);
+        margin-top: 2px;
+      }
+
+      /* ═══ KPI STRIP ═══ */
+      .kpi-strip {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        margin-bottom: 20px;
+      }
+      .kpi-pill {
+        flex: 1;
+        min-width: 120px;
+        background: var(--surface);
+        border: 1px solid var(--border-color);
+        border-radius: var(--border-radius);
+        padding: 14px 18px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        transition:
+          border-color 0.2s,
+          box-shadow 0.2s;
+      }
+      .kpi-pill:hover {
+        border-color: var(--primary);
+        box-shadow: 0 2px 12px rgba(13, 110, 253, 0.07);
+      }
+      .kpi-pill-icon {
+        width: 38px;
+        height: 38px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1rem;
+        flex-shrink: 0;
+      }
+      .kpi-pill-val {
+        font-size: 1.4rem;
+        font-weight: 800;
+        line-height: 1;
+      }
+      .kpi-pill-lbl {
+        font-size: 0.68rem;
+        color: var(--text-muted);
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.4px;
+      }
+
+      /* ═══ TOOLBAR ═══ */
+      .toolbar {
+        background: var(--surface);
+        border: 1px solid var(--border-color);
+        border-radius: var(--border-radius-lg);
+        padding: 12px 16px;
+        margin-bottom: 14px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+      .search-wrap {
+        position: relative;
+        flex: 1;
+        min-width: 180px;
+      }
+      .search-wrap i {
+        position: absolute;
+        left: 11px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--text-muted);
+        font-size: 0.85rem;
+        pointer-events: none;
+      }
+      .search-input {
+        width: 100%;
+        padding: 9px 14px 9px 34px;
+        border: 1.5px solid var(--border-color);
+        border-radius: 9px;
+        background: var(--surface-alt);
+        color: var(--text-primary);
+        font-size: 0.83rem;
+        font-family: var(--font-family);
+        outline: none;
+        transition: border-color 0.2s;
+      }
+      .search-input:focus {
+        border-color: var(--primary);
+      }
+      .search-input::placeholder {
+        color: var(--text-muted);
+      }
+
+      .date-input {
+        padding: 9px 12px;
+        border: 1.5px solid var(--border-color);
+        border-radius: 9px;
+        background: var(--surface-alt);
+        color: var(--text-secondary);
+        font-size: 0.82rem;
+        font-family: var(--font-family);
+        outline: none;
+        cursor: pointer;
+        width: 200px;
+        transition: border-color 0.2s;
+      }
+      .date-input:focus {
+        border-color: var(--primary);
+      }
+      @media (max-width: 600px) {
+        .date-input {
+          width: 100%;
+        }
+      }
+
+      .sort-select {
+        padding: 9px 30px 9px 12px;
+        border: 1.5px solid var(--border-color);
+        border-radius: 9px;
+        background: var(--surface-alt);
+        color: var(--text-secondary);
+        font-size: 0.82rem;
+        font-family: var(--font-family);
+        outline: none;
+        cursor: pointer;
+        appearance: none;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%236b7280' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 10px center;
+        background-size: 10px;
+      }
+      .sort-select:focus {
+        border-color: var(--primary);
+      }
+
+      /* ═══ STATUS TABS ═══ */
+      .status-tabs {
+        display: flex;
+        gap: 4px;
+        background: var(--surface);
+        border: 1px solid var(--border-color);
+        border-radius: var(--border-radius-lg);
+        padding: 5px;
+        margin-bottom: 18px;
+        overflow-x: auto;
+        scrollbar-width: none;
+      }
+      .status-tabs::-webkit-scrollbar {
+        display: none;
+      }
+      .stab {
+        flex-shrink: 0;
+        padding: 7px 16px;
+        border-radius: 8px;
+        border: none;
+        background: transparent;
+        color: var(--text-muted);
+        font-size: 0.8rem;
+        font-weight: 600;
+        font-family: var(--font-family);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        white-space: nowrap;
+        transition: all 0.2s;
+      }
+      .stab:hover {
+        color: var(--text-primary);
+      }
+      .stab.active {
+        background: var(--primary);
+        color: #fff;
+      }
+      .stab-count {
+        padding: 1px 6px;
+        border-radius: 99px;
+        font-size: 0.65rem;
+        font-weight: 700;
+      }
+      .stab.active .stab-count {
+        background: rgba(255, 255, 255, 0.25);
+      }
+      .stab:not(.active) .stab-count {
+        background: var(--surface-alt);
+        color: var(--text-muted);
+      }
+
+      /* ═══ ASSIGNMENT CARD ═══ */
+      .assignment-card {
+        background: var(--surface);
+        border: 1px solid var(--border-color);
+        border-radius: var(--border-radius-lg);
+        padding: 18px 20px;
+        margin-bottom: 12px;
+        display: flex;
+        align-items: flex-start;
+        gap: 16px;
+        transition:
+          box-shadow 0.2s,
+          border-color 0.2s,
+          transform 0.2s;
+      }
+      .assignment-card:hover {
+        box-shadow: var(--card-shadow);
+        border-color: rgba(13, 110, 253, 0.15);
+        transform: translateY(-1px);
+      }
+      .assignment-card.urgent {
+        border-left: 4px solid #ef4444;
+      }
+      .assignment-card.submitted {
+        border-left: 4px solid #10b981;
+      }
+      .assignment-card.graded {
+        border-left: 4px solid #0d6efd;
+      }
+      .assignment-card.late {
+        border-left: 4px solid #f59e0b;
+      }
+
+      .card-icon {
+        width: 46px;
+        height: 46px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+        flex-shrink: 0;
+      }
+
+      .card-body-inner {
+        flex: 1;
+        min-width: 0;
+      }
+      .card-top-row {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-bottom: 5px;
+      }
+      .card-title {
+        font-size: 0.93rem;
+        font-weight: 700;
+        color: var(--text-primary);
+      }
+      .card-course {
+        font-size: 0.72rem;
+        color: var(--text-muted);
+        margin-bottom: 8px;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+      }
+
+      .status-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        padding: 3px 10px;
+        border-radius: 99px;
+        font-size: 0.68rem;
+        font-weight: 700;
+        flex-shrink: 0;
+      }
+      .badge-pending {
+        background: rgba(245, 158, 11, 0.1);
+        color: #f59e0b;
+      }
+      .badge-submitted {
+        background: rgba(16, 185, 129, 0.1);
+        color: #10b981;
+      }
+      .badge-graded {
+        background: rgba(13, 110, 253, 0.1);
+        color: #0d6efd;
+      }
+      .badge-late {
+        background: rgba(239, 68, 68, 0.1);
+        color: #ef4444;
+      }
+      .badge-urgent {
+        background: rgba(239, 68, 68, 0.12);
+        color: #ef4444;
+      }
+
+      .card-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 14px;
+        font-size: 0.73rem;
+        color: var(--text-muted);
+        margin-bottom: 10px;
+      }
+      .card-meta span {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+      }
+      .deadline-red {
+        color: #ef4444;
+        font-weight: 700;
+      }
+      .deadline-yellow {
+        color: #f59e0b;
+        font-weight: 700;
+      }
+
+      .card-desc {
+        font-size: 0.79rem;
+        color: var(--text-secondary);
+        line-height: 1.55;
+        margin-bottom: 12px;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        line-clamp: 2;
+        overflow: hidden;
+      }
+
+      .card-footer-row {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+
+      .btn-submit {
+        padding: 7px 16px;
+        border-radius: 8px;
+        border: none;
+        background: var(--primary-gradient);
+        color: #fff;
+        font-size: 0.76rem;
+        font-weight: 700;
+        font-family: var(--font-family);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        transition:
+          opacity 0.2s,
+          transform 0.15s;
+        white-space: nowrap;
+      }
+      .btn-submit:hover {
+        opacity: 0.9;
+        transform: translateY(-1px);
+      }
+      .btn-outline-sm {
+        padding: 6px 14px;
+        border-radius: 8px;
+        border: 1.5px solid var(--border-color);
+        background: transparent;
+        color: var(--text-secondary);
+        font-size: 0.75rem;
+        font-weight: 600;
+        font-family: var(--font-family);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        transition: all 0.2s;
+        white-space: nowrap;
+      }
+      .btn-outline-sm:hover {
+        border-color: var(--primary);
+        color: var(--primary);
+      }
+      .btn-danger-sm {
+        padding: 6px 12px;
+        border-radius: 8px;
+        border: 1.5px solid rgba(239, 68, 68, 0.3);
+        background: transparent;
+        color: #ef4444;
+        font-size: 0.75rem;
+        font-weight: 600;
+        font-family: var(--font-family);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        transition: all 0.2s;
+        white-space: nowrap;
+      }
+      .btn-danger-sm:hover {
+        background: rgba(239, 68, 68, 0.07);
+        border-color: #ef4444;
+      }
+
+      .grade-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        padding: 4px 12px;
+        border-radius: 99px;
+        font-size: 0.78rem;
+        font-weight: 800;
+      }
+      .grade-a {
+        background: rgba(16, 185, 129, 0.1);
+        color: #10b981;
+      }
+      .grade-b {
+        background: rgba(13, 110, 253, 0.1);
+        color: #0d6efd;
+      }
+      .grade-c {
+        background: rgba(245, 158, 11, 0.1);
+        color: #f59e0b;
+      }
+
+      /* ═══ EMPTY STATE ═══ */
+      .empty-state {
+        text-align: center;
+        padding: 60px 20px;
+      }
+      .empty-icon {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        background: var(--surface);
+        border: 1px solid var(--border-color);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2rem;
+        color: var(--text-muted);
+        margin-bottom: 14px;
+      }
+      .empty-title {
+        font-size: 1rem;
+        font-weight: 700;
+        margin-bottom: 6px;
+      }
+      .empty-desc {
+        font-size: 0.82rem;
+        color: var(--text-muted);
+      }
+
+      /* ═══ SUBMISSION MODAL ═══ */
+      .modal-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.55);
+        z-index: 1050;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 16px;
+      }
+      .modal-box {
+        background: var(--surface);
+        border: 1px solid var(--border-color);
+        border-radius: 18px;
+        width: 100%;
+        max-width: 560px;
+        max-height: 90vh;
+        overflow-y: auto;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+        animation: slideUp 0.25s ease;
+      }
+      @keyframes slideUp {
+        from {
+          opacity: 0;
+          transform: translateY(24px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .modal-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 18px 22px;
+        border-bottom: 1px solid var(--border-color);
+      }
+      .modal-title {
+        font-size: 1rem;
+        font-weight: 800;
+        color: var(--text-primary);
+      }
+      .modal-close {
+        background: none;
+        border: none;
+        font-size: 1.15rem;
+        color: var(--text-muted);
+        cursor: pointer;
+        padding: 0;
+        transition: color 0.2s;
+      }
+      .modal-close:hover {
+        color: var(--text-primary);
+      }
+      .modal-body {
+        padding: 20px 22px;
+      }
+      .modal-footer {
+        padding: 14px 22px;
+        border-top: 1px solid var(--border-color);
+        display: flex;
+        gap: 10px;
+        justify-content: flex-end;
+      }
+
+      .modal-field {
+        margin-bottom: 16px;
+      }
+      .modal-label {
+        font-size: 0.78rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin-bottom: 6px;
+        display: block;
+      }
+      .modal-label .req {
+        color: #ef4444;
+        margin-left: 2px;
+      }
+      .modal-info-box {
+        background: var(--surface-alt);
+        border: 1px solid var(--border-color);
+        border-radius: 10px;
+        padding: 12px 14px;
+        margin-bottom: 16px;
+        font-size: 0.79rem;
+        color: var(--text-secondary);
+        line-height: 1.55;
+      }
+      .modal-info-box strong {
+        color: var(--text-primary);
+      }
+      .modal-textarea {
+        width: 100%;
+        padding: 10px 14px;
+        border: 1.5px solid var(--border-color);
+        border-radius: 10px;
+        background: var(--surface-alt);
+        color: var(--text-primary);
+        font-size: 0.83rem;
+        font-family: var(--font-family);
+        resize: vertical;
+        min-height: 90px;
+        outline: none;
+        transition: border-color 0.2s;
+        line-height: 1.55;
+      }
+      .modal-textarea:focus {
+        border-color: var(--primary);
+      }
+      .modal-textarea::placeholder {
+        color: var(--text-muted);
+      }
+
+      .btn-primary-modal {
+        padding: 9px 20px;
+        border-radius: 9px;
+        border: none;
+        background: var(--primary-gradient);
+        color: #fff;
+        font-size: 0.85rem;
+        font-weight: 700;
+        font-family: var(--font-family);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        transition: opacity 0.2s;
+      }
+      .btn-primary-modal:hover {
+        opacity: 0.9;
+      }
+      .btn-primary-modal:disabled {
+        opacity: 0.55;
+        cursor: not-allowed;
+      }
+      .btn-primary-modal .spinner {
+        width: 16px;
+        height: 16px;
+        border: 2px solid rgba(255, 255, 255, 0.35);
+        border-top-color: #fff;
+        border-radius: 50%;
+        animation: spin 0.7s linear infinite;
+      }
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+      .btn-cancel-modal {
+        padding: 9px 18px;
+        border-radius: 9px;
+        border: 1.5px solid var(--border-color);
+        background: transparent;
+        color: var(--text-secondary);
+        font-size: 0.85rem;
+        font-weight: 600;
+        font-family: var(--font-family);
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+      .btn-cancel-modal:hover {
+        border-color: var(--primary);
+        color: var(--primary);
+      }
+
+      /* FilePond overrides */
+      .filepond--root {
+        font-family: var(--font-family) !important;
+        font-size: 0.82rem;
+      }
+      .filepond--panel-root {
+        background: var(--surface-alt) !important;
+        border: 1.5px dashed var(--border-color) !important;
+        border-radius: 10px !important;
+      }
+      .filepond--drop-label {
+        color: var(--text-muted) !important;
+      }
+    </style>
+  </head>
+
+  <body x-data="themeToggle()">
+    <div id="student-layout" x-data="sidebarState()">
+      <div id="sidebar-placeholder"></div>
+      <div id="navbar-placeholder"></div>
+
+      <main class="student-main" :class="{ 'sidebar-collapsed': collapsed }">
+        <div class="page-content" x-data="assignmentsPage()">
+          <!-- Page header -->
+          <div class="page-header">
+            <div>
+              <h1 class="page-header-title">Assignments</h1>
+              <div class="page-header-sub">
+                Track, submit and review all your coursework
+              </div>
+            </div>
+            <div class="d-flex gap-2 align-items-center flex-wrap">
+              <span style="font-size: 0.78rem; color: var(--text-muted)">
+                <i class="bi bi-calendar3 me-1"></i>
+                <span id="today-label"></span>
+              </span>
+            </div>
+          </div>
+
+          <!-- KPI strip -->
+          <div class="kpi-strip">
+            <div class="kpi-pill">
+              <div
+                class="kpi-pill-icon"
+                style="background: rgba(13, 110, 253, 0.1); color: #0d6efd"
+              >
+                <i class="bi bi-clipboard2-fill"></i>
+              </div>
+              <div>
+                <div class="kpi-pill-val" x-text="assignments.length"></div>
+                <div class="kpi-pill-lbl">Total</div>
+              </div>
+            </div>
+            <div class="kpi-pill">
+              <div
+                class="kpi-pill-icon"
+                style="background: rgba(245, 158, 11, 0.1); color: #f59e0b"
+              >
+                <i class="bi bi-hourglass-split"></i>
+              </div>
+              <div>
+                <div
+                  class="kpi-pill-val"
+                  x-text="assignments.filter(a => a.status === 'pending').length"
+                ></div>
+                <div class="kpi-pill-lbl">Pending</div>
+              </div>
+            </div>
+            <div class="kpi-pill">
+              <div
+                class="kpi-pill-icon"
+                style="background: rgba(16, 185, 129, 0.1); color: #10b981"
+              >
+                <i class="bi bi-check-circle-fill"></i>
+              </div>
+              <div>
+                <div
+                  class="kpi-pill-val"
+                  x-text="assignments.filter(a => a.status === 'submitted').length"
+                ></div>
+                <div class="kpi-pill-lbl">Submitted</div>
+              </div>
+            </div>
+            <div class="kpi-pill">
+              <div
+                class="kpi-pill-icon"
+                style="background: rgba(13, 110, 253, 0.1); color: #0d6efd"
+              >
+                <i class="bi bi-award-fill"></i>
+              </div>
+              <div>
+                <div
+                  class="kpi-pill-val"
+                  x-text="assignments.filter(a => a.status === 'graded').length"
+                ></div>
+                <div class="kpi-pill-lbl">Graded</div>
+              </div>
+            </div>
+            <div class="kpi-pill">
+              <div
+                class="kpi-pill-icon"
+                style="background: rgba(239, 68, 68, 0.1); color: #ef4444"
+              >
+                <i class="bi bi-clock-history"></i>
+              </div>
+              <div>
+                <div
+                  class="kpi-pill-val"
+                  x-text="assignments.filter(a => a.status === 'late').length"
+                ></div>
+                <div class="kpi-pill-lbl">Late</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Status tabs -->
+          <div class="status-tabs">
+            <button
+              class="stab"
+              :class="{ active: activeTab === 'all' }"
+              @click="setTab('all')"
+            >
+              All <span class="stab-count" x-text="assignments.length"></span>
+            </button>
+            <button
+              class="stab"
+              :class="{ active: activeTab === 'pending' }"
+              @click="setTab('pending')"
+            >
+              Pending
+              <span
+                class="stab-count"
+                x-text="assignments.filter(a=>a.status==='pending').length"
+              ></span>
+            </button>
+            <button
+              class="stab"
+              :class="{ active: activeTab === 'submitted' }"
+              @click="setTab('submitted')"
+            >
+              Submitted
+              <span
+                class="stab-count"
+                x-text="assignments.filter(a=>a.status==='submitted').length"
+              ></span>
+            </button>
+            <button
+              class="stab"
+              :class="{ active: activeTab === 'graded' }"
+              @click="setTab('graded')"
+            >
+              Graded
+              <span
+                class="stab-count"
+                x-text="assignments.filter(a=>a.status==='graded').length"
+              ></span>
+            </button>
+            <button
+              class="stab"
+              :class="{ active: activeTab === 'late' }"
+              @click="setTab('late')"
+            >
+              Late
+              <span
+                class="stab-count"
+                x-text="assignments.filter(a=>a.status==='late').length"
+              ></span>
+            </button>
+          </div>
+
+          <!-- Toolbar -->
+          <div class="toolbar">
+            <div class="search-wrap">
+              <i class="bi bi-search"></i>
+              <input
+                type="text"
+                class="search-input"
+                placeholder="Search assignments…"
+                x-model="query"
+                @input="applyFilter()"
+              />
+            </div>
+            <input
+              type="text"
+              id="date-range-picker"
+              class="date-input"
+              placeholder="Filter by due date range…"
+              readonly
+            />
+            <select
+              class="sort-select"
+              x-model="sortBy"
+              @change="applyFilter()"
+            >
+              <option value="deadline_asc">Due: Soonest First</option>
+              <option value="deadline_desc">Due: Latest First</option>
+              <option value="title_asc">Title: A → Z</option>
+              <option value="course_asc">Course Name</option>
+            </select>
+          </div>
+
+          <!-- Result count -->
+          <div
+            style="
+              font-size: 0.78rem;
+              color: var(--text-muted);
+              margin-bottom: 12px;
+            "
+            x-show="filtered.length > 0 || query"
+          >
+            Showing
+            <strong
+              style="color: var(--text-primary)"
+              x-text="filtered.length"
+            ></strong>
+            assignment<span x-show="filtered.length !== 1">s</span>
+          </div>
+
+          <!-- Assignment cards -->
+          <div x-show="filtered.length > 0">
+            <template x-for="a in filtered" :key="a.id">
+              <div
+                class="assignment-card"
+                :class="a.status === 'late' ? 'late' : a.status === 'submitted' ? 'submitted' : a.status === 'graded' ? 'graded' : a.urgent ? 'urgent' : ''"
+              >
+                <div
+                  class="card-icon"
+                  :style="'background:' + a.iconBg + ';color:' + a.iconColor + ';'"
+                >
+                  <i :class="'bi ' + a.icon"></i>
+                </div>
+
+                <div class="card-body-inner">
+                  <div class="card-top-row">
+                    <div>
+                      <div class="card-title" x-text="a.title"></div>
+                      <div class="card-course">
+                        <i class="bi bi-book"></i>
+                        <span x-text="a.course"></span>
+                        <span style="color: var(--border-color)">•</span>
+                        <i class="bi bi-person-fill"></i>
+                        <span x-text="a.instructor"></span>
+                      </div>
+                    </div>
+                    <div class="d-flex align-items-center gap-2 flex-shrink-0">
+                      <span
+                        class="status-badge"
+                        :class="a.status === 'pending' ? 'badge-pending' : a.status === 'submitted' ? 'badge-submitted' : a.status === 'graded' ? 'badge-graded' : 'badge-late'"
+                        x-text="a.status.charAt(0).toUpperCase() + a.status.slice(1)"
+                      ></span>
+                      <span
+                        class="grade-pill"
+                        x-show="a.grade"
+                        :class="a.grade && a.grade.startsWith('A') ? 'grade-a' : a.grade && a.grade.startsWith('B') ? 'grade-b' : 'grade-c'"
+                        x-text="a.grade"
+                      ></span>
+                    </div>
+                  </div>
+
+                  <div class="card-meta">
+                    <span>
+                      <i class="bi bi-calendar2-event"></i>
+                      <span>Due:</span>
+                      <strong
+                        :class="a.urgencyClass"
+                        x-text="a.deadlineLabel"
+                      ></strong>
+                    </span>
+                    <span x-show="a.points"
+                      ><i class="bi bi-star-fill" style="color: #f59e0b"></i>
+                      <span x-text="a.points + ' pts'"></span
+                    ></span>
+                    <span
+                      ><i class="bi bi-file-earmark-text"></i>
+                      <span x-text="a.type"></span
+                    ></span>
+                    <span x-show="a.submittedAt"
+                      ><i class="bi bi-upload"></i> Submitted
+                      <span x-text="a.submittedAt"></span
+                    ></span>
+                  </div>
+
+                  <div class="card-desc" x-text="a.description"></div>
+
+                  <div class="card-footer-row">
+                    <!-- Pending: submit button -->
+                    <template
+                      x-if="a.status === 'pending' || a.status === 'late'"
+                    >
+                      <div class="d-flex gap-2 flex-wrap">
+                        <button class="btn-submit" @click="openSubmitModal(a)">
+                          <i class="bi bi-upload"></i> Submit Assignment
+                        </button>
+                        <button
+                          class="btn-outline-sm"
+                          @click="window.lmsNotify?.open({ type: 'info', message: 'Opening assignment details…' })"
+                        >
+                          <i class="bi bi-eye"></i> View Details
+                        </button>
+                      </div>
+                    </template>
+
+                    <!-- Submitted: view submission -->
+                    <template x-if="a.status === 'submitted'">
+                      <div class="d-flex gap-2 flex-wrap">
+                        <button
+                          class="btn-outline-sm"
+                          @click="window.lmsNotify?.open({ type: 'info', message: 'Viewing submission…' })"
+                        >
+                          <i class="bi bi-file-earmark-check"></i> View
+                          Submission
+                        </button>
+                        <button
+                          class="btn-danger-sm"
+                          @click="confirmWithdraw(a)"
+                        >
+                          <i class="bi bi-x-circle"></i> Withdraw
+                        </button>
+                      </div>
+                    </template>
+
+                    <!-- Graded: view feedback -->
+                    <template x-if="a.status === 'graded'">
+                      <div class="d-flex gap-2 flex-wrap">
+                        <button
+                          class="btn-outline-sm"
+                          @click="window.lmsNotify?.open({ type: 'info', message: 'Opening feedback from instructor…' })"
+                        >
+                          <i class="bi bi-chat-left-text"></i> View Feedback
+                        </button>
+                        <button
+                          class="btn-outline-sm"
+                          @click="window.lmsNotify?.open({ type: 'info', message: 'Downloading graded file…' })"
+                        >
+                          <i class="bi bi-download"></i> Download Graded
+                        </button>
+                      </div>
+                    </template>
+
+                    <!-- Feedback snippet for graded -->
+                    <span
+                      x-show="a.feedback"
+                      style="
+                        font-size: 0.72rem;
+                        color: var(--text-muted);
+                        margin-left: auto;
+                        font-style: italic;
+                      "
+                      x-text="'💬 ' + a.feedback"
+                    ></span>
+                  </div>
+                </div>
+              </div>
+            </template>
+          </div>
+
+          <!-- Empty state -->
+          <div class="empty-state" x-show="filtered.length === 0">
+            <div class="empty-icon"><i class="bi bi-clipboard2-x"></i></div>
+            <div class="empty-title">No assignments found</div>
+            <div class="empty-desc">
+              Try adjusting your filters or search query.
+            </div>
+            <button
+              class="btn btn-primary btn-sm fw-bold mt-3"
+              @click="query=''; setTab('all')"
+            >
+              Clear Filters
+            </button>
+          </div>
+
+          <!-- ══════════════ SUBMIT MODAL ══════════════ -->
+          <div
+            class="modal-overlay"
+            x-show="submitModal.open"
+            x-cloak
+            @click.self="submitModal.open = false"
+            x-transition:enter="transition ease-out duration-200"
+            x-transition:enter-start="opacity-0"
+            x-transition:enter-end="opacity-100"
+            x-transition:leave="transition ease-in duration-150"
+            x-transition:leave-start="opacity-100"
+            x-transition:leave-end="opacity-0"
+          >
+            <div class="modal-box">
+              <div class="modal-header">
+                <div class="modal-title">
+                  <i class="bi bi-upload me-2" style="color: var(--primary)"></i
+                  >Submit Assignment
+                </div>
+                <button class="modal-close" @click="submitModal.open = false">
+                  <i class="bi bi-x-lg"></i>
+                </button>
+              </div>
+              <div class="modal-body">
+                <!-- Assignment info -->
+                <div class="modal-info-box">
+                  <div style="margin-bottom: 4px">
+                    <strong x-text="submitModal.assignment?.title"></strong>
+                  </div>
+                  <div
+                    style="
+                      display: flex;
+                      flex-wrap: wrap;
+                      gap: 12px;
+                      font-size: 0.73rem;
+                    "
+                  >
+                    <span
+                      ><i class="bi bi-book me-1"></i
+                      ><span x-text="submitModal.assignment?.course"></span
+                    ></span>
+                    <span
+                      ><i class="bi bi-calendar2-event me-1"></i>Due:
+                      <strong
+                        :class="submitModal.assignment?.urgencyClass"
+                        x-text="submitModal.assignment?.deadlineLabel"
+                      ></strong
+                    ></span>
+                    <span
+                      ><i class="bi bi-star me-1" style="color: #f59e0b"></i
+                      ><span
+                        x-text="(submitModal.assignment?.points || 0) + ' points'"
+                      ></span
+                    ></span>
+                  </div>
+                </div>
+
+                <!-- FilePond upload -->
+                <div class="modal-field">
+                  <label class="modal-label"
+                    >Attach Files <span class="req">*</span></label
+                  >
+                  <input type="file" id="filepond-input" multiple />
+                  <div
+                    style="
+                      font-size: 0.7rem;
+                      color: var(--text-muted);
+                      margin-top: 6px;
+                    "
+                  >
+                    <i class="bi bi-info-circle me-1"></i>Accepted: PDF, DOCX,
+                    ZIP, images. Max 10 MB per file.
+                  </div>
+                </div>
+
+                <!-- Notes -->
+                <div class="modal-field">
+                  <label class="modal-label"
+                    >Submission Notes
+                    <span style="font-weight: 400; color: var(--text-muted)"
+                      >(optional)</span
+                    ></label
+                  >
+                  <textarea
+                    class="modal-textarea"
+                    x-model="submitModal.notes"
+                    placeholder="Add any notes or comments for your instructor…"
+                    rows="3"
+                  ></textarea>
+                </div>
+
+                <!-- Agreement -->
+                <div
+                  style="
+                    display: flex;
+                    align-items: flex-start;
+                    gap: 10px;
+                    font-size: 0.78rem;
+                    color: var(--text-secondary);
+                  "
+                >
+                  <input
+                    type="checkbox"
+                    id="honor-check"
+                    x-model="submitModal.agreed"
+                    style="
+                      margin-top: 3px;
+                      cursor: pointer;
+                      accent-color: var(--primary);
+                    "
+                  />
+                  <label for="honor-check" style="cursor: pointer"
+                    >I confirm this is my original work and I have not violated
+                    the academic integrity policy.</label
+                  >
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button
+                  class="btn-cancel-modal"
+                  @click="submitModal.open = false"
+                >
+                  Cancel
+                </button>
+                <button
+                  class="btn-primary-modal"
+                  @click="submitAssignment()"
+                  :disabled="submitModal.submitting || !submitModal.agreed"
+                >
+                  <template x-if="submitModal.submitting">
+                    <span class="spinner"></span>
+                  </template>
+                  <template x-if="!submitModal.submitting">
+                    <i class="bi bi-send-fill"></i>
+                  </template>
+                  <span
+                    x-text="submitModal.submitting ? 'Submitting…' : 'Submit Now'"
+                  ></span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- ═══════════════════ SCRIPTS ═══════════════════ -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr@4.6.13/dist/flatpickr.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@latest/dayjs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@latest/plugin/relativeTime.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@latest/plugin/isSameOrBefore.js"></script>
+    <script src="https://unpkg.com/filepond@^4/dist/filepond.min.js"></script>
+    <script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.js"></script>
+    <script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.min.js"></script>
+    <script src="https://unpkg.com/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.min.js"></script>
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
+    ></script>
+    <script src="../assets/js/app.js"></script>
+
+    <script>
+      NProgress.configure({ showSpinner: false });
+      document.addEventListener("DOMContentLoaded", () => NProgress.start());
+      window.addEventListener("load", () => NProgress.done());
+
+      /* ── Load sidebar + navbar ──────────────────── */
+      async function loadComponents() {
+        try {
+          const [sHTML, nHTML] = await Promise.all([
+            fetch("../components/student-sidebar.html").then((r) => r.text()),
+            fetch("../components/student-navbar.html").then((r) => r.text()),
+          ]);
+          const sp = document.getElementById("sidebar-placeholder");
+          const np = document.getElementById("navbar-placeholder");
+          sp.innerHTML = sHTML;
+          np.innerHTML = nHTML;
+          if (typeof Alpine !== "undefined") {
+            Alpine.initTree(sp);
+            Alpine.initTree(np);
+          }
+        } catch (e) {
+          console.warn("Component load failed:", e);
+        }
+      }
+      document.addEventListener("alpine:initialized", loadComponents);
+
+      /* ── Day.js setup ───────────────────────────── */
+      let dayjsReady = false;
+      window.addEventListener("load", () => {
+        if (typeof dayjs === "undefined") return;
+        dayjs.extend(window.dayjs_plugin_relativeTime);
+        dayjs.extend(window.dayjs_plugin_isSameOrBefore);
+        dayjsReady = true;
+        const lbl = document.getElementById("today-label");
+        if (lbl) lbl.textContent = dayjs().format("dddd, MMM D YYYY");
+      });
+
+      /* ── Flatpickr date range ───────────────────── */
+      let dateRangePicker = null;
+      window.addEventListener("load", () => {
+        if (typeof flatpickr === "undefined") return;
+        dateRangePicker = flatpickr("#date-range-picker", {
+          mode: "range",
+          dateFormat: "M j",
+          placeholder: "Filter by due date range",
+          onChange(dates) {
+            // Trigger Alpine filter via custom event
+            window.dispatchEvent(
+              new CustomEvent("date-filter-changed", { detail: dates }),
+            );
+          },
+          onClear() {
+            window.dispatchEvent(
+              new CustomEvent("date-filter-changed", { detail: [] }),
+            );
+          },
+        });
+      });
+
+      /* ── FilePond init (runs when modal opens) ─── */
+      let pond = null;
+      function initFilePond() {
+        const input = document.getElementById("filepond-input");
+        if (!input || pond || typeof FilePond === "undefined") return;
+        FilePond.registerPlugin(
+          FilePondPluginImagePreview,
+          FilePondPluginFileValidateType,
+          FilePondPluginFileValidateSize,
+        );
+        pond = FilePond.create(input, {
+          allowMultiple: true,
+          maxFiles: 5,
+          maxFileSize: "10MB",
+          acceptedFileTypes: [
+            "application/pdf",
+            "application/zip",
+            "application/msword",
+            "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+            "image/*",
+          ],
+          labelIdle:
+            '<span class="filepond--label-action"><i class="bi bi-cloud-upload me-1"></i>Browse files</span> or drag &amp; drop',
+          labelFileTypeNotAllowed: "Only PDF, DOCX, ZIP, or images allowed.",
+          labelMaxFileSizeExceeded: "File is too large (max 10 MB).",
+        });
+      }
+
+      /* ── Alpine component ───────────────────────── */
+      document.addEventListener("alpine:init", () => {
+        Alpine.data("assignmentsPage", () => ({
+          activeTab: "all",
+          query: "",
+          sortBy: "deadline_asc",
+          dateRange: [],
+          filtered: [],
+
+          submitModal: {
+            open: false,
+            assignment: null,
+            notes: "",
+            agreed: false,
+            submitting: false,
+          },
+
+          assignments: [
+            {
+              id: 1,
+              title: "Build a Responsive Landing Page",
+              course: "Complete Web Development Bootcamp",
+              instructor: "Dr. Angela Yu",
+              type: "Project",
+              status: "pending",
+              deadline: "2026-03-28",
+              points: 100,
+              urgent: true,
+              description:
+                "Create a fully responsive landing page using HTML5, CSS3 and Flexbox. The page must work on mobile, tablet, and desktop viewports.",
+              icon: "bi-code-slash",
+              iconBg: "rgba(13,110,253,0.1)",
+              iconColor: "#0d6efd",
+              grade: null,
+              feedback: null,
+              submittedAt: null,
+            },
+            {
+              id: 2,
+              title: "UX Case Study — Food Delivery App",
+              course: "UI/UX Design Fundamentals",
+              instructor: "Sarah Johnson",
+              type: "Case Study",
+              status: "pending",
+              deadline: "2026-03-30",
+              points: 80,
+              urgent: false,
+              description:
+                "Conduct a UX analysis of an existing food delivery app. Include heuristic evaluation, user personas, and a redesign mockup.",
+              icon: "bi-palette-fill",
+              iconBg: "rgba(236,72,153,0.1)",
+              iconColor: "#ec4899",
+              grade: null,
+              feedback: null,
+              submittedAt: null,
+            },
+            {
+              id: 3,
+              title: "Python Quiz #4 — Pandas & NumPy",
+              course: "Data Science with Python",
+              instructor: "Jose Portilla",
+              type: "Quiz",
+              status: "pending",
+              deadline: "2026-04-01",
+              points: 50,
+              urgent: false,
+              description:
+                "Complete the online quiz covering Pandas DataFrame operations, NumPy arrays, and data cleaning techniques. 30 minutes time limit.",
+              icon: "bi-graph-up-arrow",
+              iconBg: "rgba(16,185,129,0.1)",
+              iconColor: "#10b981",
+              grade: null,
+              feedback: null,
+              submittedAt: null,
+            },
+            {
+              id: 4,
+              title: "React To-Do App with Hooks",
+              course: "React.js Advanced Patterns",
+              instructor: "Maximilian S.",
+              type: "Project",
+              status: "submitted",
+              deadline: "2026-03-25",
+              points: 120,
+              urgent: false,
+              description:
+                "Build a full-featured to-do application using React functional components, useState, useEffect, and custom hooks.",
+              icon: "bi-filetype-jsx",
+              iconBg: "rgba(13,110,253,0.1)",
+              iconColor: "#0d6efd",
+              grade: null,
+              feedback: "Awaiting instructor review.",
+              submittedAt: "2 days ago",
+            },
+            {
+              id: 5,
+              title: "JavaScript DOM Manipulation Exercise",
+              course: "Complete Web Development Bootcamp",
+              instructor: "Dr. Angela Yu",
+              type: "Exercise",
+              status: "graded",
+              deadline: "2026-03-10",
+              points: 60,
+              urgent: false,
+              description:
+                "Complete 10 DOM manipulation exercises including event delegation, dynamic list rendering, and form validation without libraries.",
+              icon: "bi-filetype-js",
+              iconBg: "rgba(245,158,11,0.1)",
+              iconColor: "#f59e0b",
+              grade: "A+ (98/100)",
+              feedback: "Excellent work on event delegation!",
+              submittedAt: "17 days ago",
+            },
+            {
+              id: 6,
+              title: "CSS Animations & Keyframes",
+              course: "Complete Web Development Bootcamp",
+              instructor: "Dr. Angela Yu",
+              type: "Assignment",
+              status: "graded",
+              deadline: "2026-03-05",
+              points: 50,
+              urgent: false,
+              description:
+                "Create 5 unique CSS animations using @keyframes. Include hover states, loading spinners, and page transition effects.",
+              icon: "bi-stars",
+              iconBg: "rgba(124,58,237,0.1)",
+              iconColor: "#7c3aed",
+              grade: "B+ (88/100)",
+              feedback:
+                "Good work! Transitions were smooth. Try to avoid jank on mobile.",
+              submittedAt: "22 days ago",
+            },
+            {
+              id: 7,
+              title: "ML Linear Regression Project",
+              course: "Machine Learning A-Z",
+              instructor: "Kirill Eremenko",
+              type: "Project",
+              status: "late",
+              deadline: "2026-03-20",
+              points: 150,
+              urgent: false,
+              description:
+                "Implement a linear regression model from scratch in Python to predict housing prices. Include data preprocessing, model training, and visualization.",
+              icon: "bi-cpu-fill",
+              iconBg: "rgba(239,68,68,0.1)",
+              iconColor: "#ef4444",
+              grade: null,
+              feedback: null,
+              submittedAt: null,
+            },
+            {
+              id: 8,
+              title: "Digital Marketing Campaign Report",
+              course: "Digital Marketing Masterclass",
+              instructor: "Phil Ebiner",
+              type: "Report",
+              status: "graded",
+              deadline: "2026-02-28",
+              points: 75,
+              urgent: false,
+              description:
+                "Analyse a real or mock digital marketing campaign. Cover SEO, social media, email marketing ROI, and provide improvement recommendations.",
+              icon: "bi-megaphone-fill",
+              iconBg: "rgba(236,72,153,0.1)",
+              iconColor: "#ec4899",
+              grade: "A (94/100)",
+              feedback:
+                "Great analysis! Your SEO section was particularly insightful.",
+              submittedAt: "27 days ago",
+            },
+          ],
+
+          init() {
+            this._computeLabels();
+            this.filtered = [...this.assignments];
+            window.addEventListener("date-filter-changed", (e) => {
+              this.dateRange = e.detail;
+              this.applyFilter();
+            });
+          },
+
+          _computeLabels() {
+            if (!dayjsReady && typeof dayjs === "undefined") {
+              this.assignments.forEach((a) => {
+                a.deadlineLabel = a.deadline;
+                a.urgencyClass = "";
+              });
+              return;
+            }
+            const now = dayjs();
+            this.assignments.forEach((a) => {
+              const d = dayjs(a.deadline);
+              const diff = d.diff(now, "day");
+              if (a.status === "graded" || a.status === "submitted") {
+                a.deadlineLabel = d.format("MMM D, YYYY");
+                a.urgencyClass = "";
+              } else if (diff < 0) {
+                a.deadlineLabel = d.format("MMM D") + " (overdue)";
+                a.urgencyClass = "deadline-red";
+              } else if (diff === 0) {
+                a.deadlineLabel = "Today!";
+                a.urgencyClass = "deadline-red";
+              } else if (diff === 1) {
+                a.deadlineLabel = "Tomorrow";
+                a.urgencyClass = "deadline-red";
+              } else if (diff <= 4) {
+                a.deadlineLabel = d.format("MMM D") + ` (${diff}d left)`;
+                a.urgencyClass = "deadline-yellow";
+              } else {
+                a.deadlineLabel = d.format("MMM D, YYYY");
+                a.urgencyClass = "";
+              }
+            });
+          },
+
+          setTab(tab) {
+            this.activeTab = tab;
+            this.applyFilter();
+          },
+
+          applyFilter() {
+            this._computeLabels();
+            let result = [...this.assignments];
+            if (this.activeTab !== "all")
+              result = result.filter((a) => a.status === this.activeTab);
+            if (this.query.trim()) {
+              const q = this.query.toLowerCase();
+              result = result.filter(
+                (a) =>
+                  a.title.toLowerCase().includes(q) ||
+                  a.course.toLowerCase().includes(q) ||
+                  a.type.toLowerCase().includes(q),
+              );
+            }
+            if (this.dateRange && this.dateRange.length === 2) {
+              const start = dayjs(this.dateRange[0]).subtract(1, "day");
+              const end = dayjs(this.dateRange[1]).add(1, "day");
+              result = result.filter((a) => {
+                const d = dayjs(a.deadline);
+                return d.isAfter(start) && d.isBefore(end);
+              });
+            }
+            const sorts = {
+              deadline_asc: (a, b) => a.deadline.localeCompare(b.deadline),
+              deadline_desc: (a, b) => b.deadline.localeCompare(a.deadline),
+              title_asc: (a, b) => a.title.localeCompare(b.title),
+              course_asc: (a, b) => a.course.localeCompare(b.course),
+            };
+            result.sort(sorts[this.sortBy] || sorts.deadline_asc);
+            this.filtered = result;
+          },
+
+          openSubmitModal(assignment) {
+            this.submitModal = {
+              open: true,
+              assignment,
+              notes: "",
+              agreed: false,
+              submitting: false,
+            };
+            this.$nextTick(() => {
+              if (pond) {
+                pond.removeFiles();
+                return;
+              }
+              initFilePond();
+            });
+          },
+
+          async submitAssignment() {
+            if (!this.submitModal.agreed) return;
+            this.submitModal.submitting = true;
+            await new Promise((r) => setTimeout(r, 1800));
+            const a = this.assignments.find(
+              (x) => x.id === this.submitModal.assignment.id,
+            );
+            if (a) {
+              a.status = "submitted";
+              a.submittedAt = "just now";
+            }
+            this.submitModal.submitting = false;
+            this.submitModal.open = false;
+            this.applyFilter();
+            window.lmsNotify?.success("Assignment submitted successfully!");
+            if (pond) pond.removeFiles();
+          },
+
+          confirmWithdraw(a) {
+            window
+              .lmsConfirm({
+                title: "Withdraw Submission?",
+                text: `Your submission for "${a.title}" will be removed and you'll need to resubmit before the deadline.`,
+                icon: "warning",
+                confirm: "Yes, Withdraw",
+              })
+              .then((r) => {
+                if (r.isConfirmed) {
+                  const item = this.assignments.find((x) => x.id === a.id);
+                  if (item) {
+                    item.status = "pending";
+                    item.submittedAt = null;
+                  }
+                  this.applyFilter();
+                  window.lmsNotify?.open({
+                    type: "info",
+                    message: "Submission withdrawn.",
+                  });
+                }
+              });
+          },
+        }));
+      });
+    </script>
+  </body>
+</html>

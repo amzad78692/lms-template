@@ -1,0 +1,2017 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Announcements — EduLearn Student</title>
+
+    <!-- Bootstrap 5.3 -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    />
+    <!-- Bootstrap Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css"
+    />
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <!-- NProgress -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.css"
+    />
+    <!-- Notyf -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css"
+    />
+    <!-- Theme -->
+    <link rel="stylesheet" href="../assets/css/theme.css" />
+
+    <style>
+      body {
+        font-family: "Poppins", sans-serif;
+        background: var(--body-bg);
+        color: var(--body-color);
+      }
+      @media (max-width: 991px) {
+        #main-content {
+          margin-left: 0 !important;
+        }
+      }
+
+      /* ── Stat cards ─────────────────────────────────────────── */
+      .stat-card {
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 14px;
+        padding: 16px 18px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .stat-icon {
+        width: 42px;
+        height: 42px;
+        border-radius: 11px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.1rem;
+        flex-shrink: 0;
+      }
+      .stat-val {
+        font-size: 1.45rem;
+        font-weight: 800;
+        line-height: 1;
+      }
+      .stat-lbl {
+        font-size: 0.7rem;
+        color: var(--text-muted);
+        margin-top: 3px;
+        text-transform: uppercase;
+        letter-spacing: 0.03em;
+      }
+
+      /* ── Announcement card ──────────────────────────────────── */
+      .ann-card {
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 14px;
+        padding: 20px 22px;
+        margin-bottom: 12px;
+        transition:
+          box-shadow 0.18s,
+          transform 0.15s;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+      }
+      .ann-card:hover {
+        box-shadow: 0 6px 22px rgba(0, 0, 0, 0.08);
+        transform: translateY(-2px);
+      }
+      .ann-card.unread {
+        border-left: 4px solid var(--primary);
+      }
+      .ann-card.unread-urgent {
+        border-left: 4px solid #ef4444;
+      }
+      .ann-card.pinned-card {
+        background: linear-gradient(
+          135deg,
+          rgba(245, 158, 11, 0.04) 0%,
+          var(--card-bg) 60%
+        );
+      }
+
+      .unread-dot {
+        width: 9px;
+        height: 9px;
+        border-radius: 50%;
+        background: var(--primary);
+        flex-shrink: 0;
+        margin-top: 6px;
+        animation: unreadPulse 2s infinite;
+      }
+      .unread-dot.urgent {
+        background: #ef4444;
+      }
+      @keyframes unreadPulse {
+        0%,
+        100% {
+          box-shadow: 0 0 0 0 rgba(13, 110, 253, 0.4);
+        }
+        50% {
+          box-shadow: 0 0 0 5px rgba(13, 110, 253, 0);
+        }
+      }
+
+      .ann-title {
+        font-size: 0.93rem;
+        font-weight: 700;
+        line-height: 1.4;
+        margin-bottom: 5px;
+      }
+      .ann-excerpt {
+        font-size: 0.81rem;
+        color: var(--text-muted);
+        line-height: 1.6;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+      .ann-meta {
+        font-size: 0.73rem;
+        color: var(--text-muted);
+      }
+
+      /* ── Category badges ────────────────────────────────────── */
+      .cat-badge {
+        display: inline-block;
+        font-size: 0.68rem;
+        font-weight: 700;
+        padding: 3px 10px;
+        border-radius: 6px;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+      }
+
+      /* ── Filter pills ───────────────────────────────────────── */
+      .filter-pill {
+        padding: 6px 16px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 500;
+        cursor: pointer;
+        border: 1px solid var(--border-color);
+        background: var(--body-bg);
+        color: var(--text-muted);
+        transition: all 0.15s;
+        white-space: nowrap;
+      }
+      .filter-pill:hover,
+      .filter-pill.active {
+        background: var(--primary);
+        border-color: var(--primary);
+        color: #fff;
+      }
+
+      /* ── Detail panel ───────────────────────────────────────── */
+      .detail-panel {
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 16px;
+        overflow: hidden;
+      }
+      .detail-header {
+        padding: 24px 26px;
+        border-bottom: 1px solid var(--border-color);
+      }
+      .detail-body {
+        padding: 24px 26px;
+        font-size: 0.88rem;
+        line-height: 1.85;
+      }
+      .detail-footer {
+        padding: 16px 26px;
+        border-top: 1px solid var(--border-color);
+        background: var(--body-bg);
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      /* ── Sender avatar ──────────────────────────────────────── */
+      .sender-avatar {
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        object-fit: cover;
+        flex-shrink: 0;
+      }
+
+      /* ── Modal ──────────────────────────────────────────────── */
+      .modal-content {
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 16px;
+      }
+      .modal-header,
+      .modal-footer {
+        border-color: var(--border-color);
+      }
+
+      /* ── Search ─────────────────────────────────────────────── */
+      .search-wrap {
+        position: relative;
+      }
+      .search-wrap i {
+        position: absolute;
+        left: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--text-muted);
+        font-size: 0.88rem;
+        pointer-events: none;
+      }
+      .search-input {
+        width: 100%;
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 10px;
+        padding: 9px 14px 9px 38px;
+        color: var(--body-color);
+        font-size: 0.85rem;
+        font-family: "Poppins", sans-serif;
+        outline: none;
+        transition: border-color 0.2s;
+      }
+      .search-input:focus {
+        border-color: var(--primary);
+      }
+
+      /* ── Upcoming sidebar ───────────────────────────────────── */
+      .upcoming-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        padding: 12px 0;
+        border-bottom: 1px solid var(--border-color);
+      }
+      .upcoming-item:last-child {
+        border-bottom: none;
+      }
+      .upcoming-date-block {
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        font-weight: 800;
+      }
+      .upcoming-day {
+        font-size: 1rem;
+        line-height: 1;
+      }
+      .upcoming-month {
+        font-size: 0.58rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+
+      /* ── Timeline line ──────────────────────────────────────── */
+      .timeline-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        flex-shrink: 0;
+        margin-top: 5px;
+      }
+
+      /* ── Attachment chip ────────────────────────────────────── */
+      .attachment-chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        background: var(--body-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        padding: 5px 12px;
+        font-size: 0.78rem;
+        cursor: pointer;
+        transition: border-color 0.15s;
+      }
+      .attachment-chip:hover {
+        border-color: var(--primary);
+        color: var(--primary);
+      }
+
+      /* ── Priority indicator ─────────────────────────────────── */
+      .priority-bar {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 4px;
+        height: 100%;
+        border-radius: 0 14px 14px 0;
+      }
+    </style>
+  </head>
+
+  <body x-data="themeToggle()" :data-theme="dark ? 'dark' : 'light'">
+    <div
+      id="layout-wrapper"
+      x-data="sidebarState()"
+      style="display: flex; min-height: 100vh"
+    >
+      <div id="sidebar-placeholder"></div>
+      <div style="flex: 1; display: flex; flex-direction: column; min-width: 0">
+        <div id="navbar-placeholder"></div>
+
+        <div
+          id="main-content"
+          :style="'margin-left:' + (collapsed ? 'var(--sidebar-collapsed)' : 'var(--sidebar-width)')"
+          style="
+            transition: margin-left 0.25s ease;
+            padding-top: var(--navbar-height);
+          "
+        >
+          <div class="container-fluid px-4 py-4" x-data="announcementsPage()">
+            <!-- ── Page header ──────────────────────────────────── -->
+            <div
+              class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-4"
+            >
+              <div>
+                <h4 class="fw-700 mb-1">Announcements</h4>
+                <p class="text-muted mb-0" style="font-size: 0.85rem">
+                  Stay up to date with the latest news from your instructors and
+                  EduLearn
+                </p>
+              </div>
+              <div class="d-flex gap-2">
+                <button
+                  class="btn btn-outline-secondary btn-sm"
+                  @click="markAllRead()"
+                  x-show="unreadCount > 0"
+                >
+                  <i class="bi bi-check2-all me-1"></i>Mark All Read
+                </button>
+                <button
+                  class="btn btn-outline-secondary btn-sm"
+                  @click="openPreferences()"
+                >
+                  <i class="bi bi-sliders me-1"></i>Preferences
+                </button>
+              </div>
+            </div>
+
+            <!-- ── Stats ────────────────────────────────────────── -->
+            <div class="row g-3 mb-4">
+              <div class="col-6 col-xl-3">
+                <div class="stat-card">
+                  <div
+                    class="stat-icon"
+                    style="
+                      background: rgba(13, 110, 253, 0.12);
+                      color: var(--primary);
+                    "
+                  >
+                    <i class="bi bi-megaphone-fill"></i>
+                  </div>
+                  <div>
+                    <div
+                      class="stat-val"
+                      style="color: var(--primary)"
+                      x-text="announcements.length"
+                    ></div>
+                    <div class="stat-lbl">Total</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-6 col-xl-3">
+                <div class="stat-card">
+                  <div
+                    class="stat-icon"
+                    style="background: rgba(239, 68, 68, 0.12); color: #ef4444"
+                  >
+                    <i class="bi bi-envelope-fill"></i>
+                  </div>
+                  <div>
+                    <div
+                      class="stat-val"
+                      style="color: #ef4444"
+                      x-text="unreadCount"
+                    ></div>
+                    <div class="stat-lbl">Unread</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-6 col-xl-3">
+                <div class="stat-card">
+                  <div
+                    class="stat-icon"
+                    style="background: rgba(245, 158, 11, 0.12); color: #f59e0b"
+                  >
+                    <i class="bi bi-pin-fill"></i>
+                  </div>
+                  <div>
+                    <div
+                      class="stat-val"
+                      style="color: #f59e0b"
+                      x-text="announcements.filter(a=>a.pinned).length"
+                    ></div>
+                    <div class="stat-lbl">Pinned</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-6 col-xl-3">
+                <div class="stat-card">
+                  <div
+                    class="stat-icon"
+                    style="background: rgba(16, 185, 129, 0.12); color: #10b981"
+                  >
+                    <i class="bi bi-calendar-check-fill"></i>
+                  </div>
+                  <div>
+                    <div class="stat-val" style="color: #10b981">5</div>
+                    <div class="stat-lbl">This Week</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row g-4">
+              <!-- ══════════════════════════════════════════════════
+               MAIN COLUMN
+          ══════════════════════════════════════════════════════ -->
+              <div class="col-xl-8">
+                <!-- ── Toolbar ──────────────────────────────────── -->
+                <div class="d-flex flex-wrap gap-2 mb-3 align-items-center">
+                  <div class="search-wrap flex-grow-1">
+                    <i class="bi bi-search"></i>
+                    <input
+                      type="text"
+                      class="search-input"
+                      placeholder="Search announcements…"
+                      x-model="searchQuery"
+                    />
+                  </div>
+                  <select
+                    x-model="filterCourse"
+                    style="
+                      background: var(--card-bg);
+                      border: 1px solid var(--border-color);
+                      color: var(--body-color);
+                      border-radius: 9px;
+                      padding: 8px 12px;
+                      font-size: 0.82rem;
+                      font-family: &quot;Poppins&quot;, sans-serif;
+                      outline: none;
+                    "
+                  >
+                    <option value="all">All Sources</option>
+                    <option>Platform</option>
+                    <option>JavaScript Masterclass</option>
+                    <option>React & Next.js Advanced</option>
+                    <option>Python for Data Science</option>
+                    <option>UI/UX Design Fundamentals</option>
+                    <option>AWS Cloud Practitioner</option>
+                  </select>
+                </div>
+
+                <!-- ── Category filter pills ───────────────────── -->
+                <div class="d-flex gap-2 flex-wrap mb-4">
+                  <button
+                    class="filter-pill"
+                    :class="{active:filterCat==='all'}"
+                    @click="filterCat='all'"
+                  >
+                    All
+                    <span
+                      class="ms-1 opacity-75"
+                      x-text="'(' + announcements.length + ')'"
+                    ></span>
+                  </button>
+                  <button
+                    class="filter-pill"
+                    :class="{active:filterCat==='unread'}"
+                    @click="filterCat='unread'"
+                  >
+                    <i
+                      class="bi bi-circle-fill me-1"
+                      style="
+                        font-size: 0.5rem;
+                        color: #ef4444;
+                        vertical-align: middle;
+                      "
+                    ></i
+                    >Unread
+                    <span
+                      class="ms-1 opacity-75"
+                      x-text="'(' + unreadCount + ')'"
+                    ></span>
+                  </button>
+                  <button
+                    class="filter-pill"
+                    :class="{active:filterCat==='pinned'}"
+                    @click="filterCat='pinned'"
+                  >
+                    📌 Pinned
+                  </button>
+                  <button
+                    class="filter-pill"
+                    :class="{active:filterCat==='urgent'}"
+                    @click="filterCat='urgent'"
+                  >
+                    🚨 Urgent
+                  </button>
+                  <button
+                    class="filter-pill"
+                    :class="{active:filterCat==='update'}"
+                    @click="filterCat='update'"
+                  >
+                    🔄 Updates
+                  </button>
+                  <button
+                    class="filter-pill"
+                    :class="{active:filterCat==='event'}"
+                    @click="filterCat='event'"
+                  >
+                    📅 Events
+                  </button>
+                  <button
+                    class="filter-pill"
+                    :class="{active:filterCat==='assignment'}"
+                    @click="filterCat='assignment'"
+                  >
+                    📝 Assignments
+                  </button>
+                  <button
+                    class="filter-pill"
+                    :class="{active:filterCat==='platform'}"
+                    @click="filterCat='platform'"
+                  >
+                    ⚙️ Platform
+                  </button>
+                </div>
+
+                <!-- ── Detail view ──────────────────────────────── -->
+                <div x-show="activeAnn" x-transition class="mb-4">
+                  <button
+                    class="btn btn-sm btn-outline-secondary mb-3"
+                    @click="activeAnn = null"
+                  >
+                    <i class="bi bi-arrow-left me-1"></i>Back to Announcements
+                  </button>
+
+                  <div class="detail-panel" x-show="activeAnn">
+                    <div class="detail-header">
+                      <!-- Category + Priority -->
+                      <div
+                        class="d-flex align-items-center gap-2 mb-3 flex-wrap"
+                      >
+                        <span
+                          class="cat-badge"
+                          :style="'background:' + activeAnn?.badgeBg + ';color:' + activeAnn?.badgeColor + ';'"
+                          x-text="activeAnn?.categoryLabel"
+                        ></span>
+                        <span
+                          class="cat-badge"
+                          style="
+                            background: rgba(239, 68, 68, 0.15);
+                            color: #ef4444;
+                          "
+                          x-show="activeAnn?.urgent"
+                          >🚨 Urgent</span
+                        >
+                        <span
+                          class="cat-badge"
+                          style="
+                            background: rgba(245, 158, 11, 0.15);
+                            color: #f59e0b;
+                          "
+                          x-show="activeAnn?.pinned"
+                          >📌 Pinned</span
+                        >
+                        <span
+                          class="ms-auto ann-meta"
+                          x-text="activeAnn?.date"
+                        ></span>
+                      </div>
+
+                      <h5 class="fw-700 mb-3" x-text="activeAnn?.title"></h5>
+
+                      <div class="d-flex align-items-center gap-3">
+                        <img
+                          :src="activeAnn?.senderAvatar"
+                          class="sender-avatar"
+                          alt=""
+                        />
+                        <div>
+                          <div
+                            class="fw-600"
+                            style="font-size: 0.85rem"
+                            x-text="activeAnn?.sender"
+                          ></div>
+                          <div
+                            class="text-muted"
+                            style="font-size: 0.74rem"
+                            x-text="activeAnn?.senderRole"
+                          ></div>
+                        </div>
+                        <div class="ms-auto d-flex gap-2">
+                          <button
+                            class="btn btn-outline-secondary btn-sm"
+                            @click="toggleSave(activeAnn)"
+                          >
+                            <i
+                              class="bi"
+                              :class="activeAnn?.saved ? 'bi-bookmark-fill text-warning' : 'bi-bookmark'"
+                            ></i>
+                          </button>
+                          <button
+                            class="btn btn-outline-secondary btn-sm"
+                            @click="shareAnn(activeAnn)"
+                          >
+                            <i class="bi bi-share"></i>
+                          </button>
+                          <button
+                            class="btn btn-outline-secondary btn-sm"
+                            @click="printAnn()"
+                          >
+                            <i class="bi bi-printer"></i>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="detail-body">
+                      <div x-html="activeAnn?.fullBody"></div>
+
+                      <!-- Attachments -->
+                      <div x-show="activeAnn?.attachments?.length" class="mt-4">
+                        <div class="fw-600 mb-2" style="font-size: 0.83rem">
+                          <i class="bi bi-paperclip me-1"></i>Attachments
+                        </div>
+                        <div class="d-flex flex-wrap gap-2">
+                          <template
+                            x-for="att in activeAnn?.attachments"
+                            :key="att.name"
+                          >
+                            <div
+                              class="attachment-chip"
+                              @click="downloadAttachment(att)"
+                            >
+                              <i class="bi" :class="att.icon"></i>
+                              <span x-text="att.name"></span>
+                              <span class="text-muted" x-text="att.size"></span>
+                            </div>
+                          </template>
+                        </div>
+                      </div>
+
+                      <!-- Action button -->
+                      <div x-show="activeAnn?.actionBtn" class="mt-4">
+                        <button
+                          class="btn btn-primary"
+                          @click="handleAction(activeAnn)"
+                          x-text="activeAnn?.actionBtn"
+                        ></button>
+                      </div>
+                    </div>
+
+                    <div class="detail-footer">
+                      <div
+                        class="text-muted"
+                        style="font-size: 0.78rem; flex-grow: 1"
+                      >
+                        <i class="bi bi-eye me-1"></i
+                        ><span x-text="activeAnn?.views + ' views'"></span>
+                        <span class="mx-2">·</span>
+                        <i class="bi bi-clock me-1"></i
+                        ><span x-text="activeAnn?.date"></span>
+                      </div>
+                      <button
+                        class="btn btn-outline-secondary btn-sm"
+                        @click="activeAnn = null"
+                      >
+                        <i class="bi bi-x me-1"></i>Close
+                      </button>
+                      <button
+                        class="btn btn-primary btn-sm"
+                        x-show="!activeAnn?.read"
+                        @click="markRead(activeAnn)"
+                      >
+                        <i class="bi bi-check2 me-1"></i>Mark as Read
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- ── Announcements list ────────────────────────── -->
+                <div x-show="!activeAnn" x-transition>
+                  <!-- Results info -->
+                  <div
+                    class="d-flex align-items-center justify-content-between mb-2"
+                  >
+                    <span class="text-muted" style="font-size: 0.8rem">
+                      <span x-text="filteredAnnouncements.length"></span>
+                      announcements
+                      <span
+                        x-show="filterCat !== 'all' || searchQuery || filterCourse !== 'all'"
+                      >
+                        (filtered)</span
+                      >
+                    </span>
+                    <button
+                      class="btn btn-sm btn-link text-muted p-0"
+                      style="font-size: 0.78rem"
+                      x-show="filterCat !== 'all' || searchQuery || filterCourse !== 'all'"
+                      @click="filterCat='all'; searchQuery=''; filterCourse='all'"
+                    >
+                      <i class="bi bi-x-circle me-1"></i>Clear
+                    </button>
+                  </div>
+
+                  <!-- Pinned section -->
+                  <div
+                    x-show="filteredPinned.length > 0 && filterCat === 'all'"
+                    class="mb-2"
+                  >
+                    <div class="d-flex align-items-center gap-2 mb-2">
+                      <span
+                        style="
+                          font-size: 0.72rem;
+                          font-weight: 700;
+                          text-transform: uppercase;
+                          letter-spacing: 0.06em;
+                          color: var(--text-muted);
+                        "
+                        >📌 Pinned</span
+                      >
+                      <div
+                        style="
+                          flex: 1;
+                          height: 1px;
+                          background: var(--border-color);
+                        "
+                      ></div>
+                    </div>
+                    <template x-for="ann in filteredPinned" :key="ann.id">
+                      <div
+                        class="ann-card pinned-card"
+                        :class="{ 'unread': !ann.read && ann.category !== 'urgent', 'unread-urgent': !ann.read && ann.category === 'urgent' }"
+                        @click="openAnn(ann)"
+                      >
+                        <div
+                          class="priority-bar"
+                          style="background: #f59e0b"
+                        ></div>
+                        <div class="d-flex gap-3 align-items-start">
+                          <div
+                            x-show="!ann.read"
+                            class="unread-dot"
+                            :class="{urgent: ann.category==='urgent'}"
+                          ></div>
+                          <div
+                            x-show="ann.read"
+                            style="width: 9px; flex-shrink: 0"
+                          ></div>
+                          <img :src="ann.senderAvatar" class="sender-avatar" />
+                          <div class="flex-grow-1" style="min-width: 0">
+                            <div
+                              class="d-flex align-items-start gap-2 flex-wrap mb-1"
+                            >
+                              <span
+                                class="cat-badge"
+                                :style="'background:' + ann.badgeBg + ';color:' + ann.badgeColor + ';'"
+                                x-text="ann.categoryLabel"
+                              ></span>
+                              <span
+                                class="cat-badge"
+                                style="
+                                  background: rgba(245, 158, 11, 0.15);
+                                  color: #f59e0b;
+                                "
+                                >📌 Pinned</span
+                              >
+                              <span
+                                class="ann-meta ms-auto"
+                                x-text="ann.date"
+                              ></span>
+                            </div>
+                            <div class="ann-title" x-text="ann.title"></div>
+                            <div class="ann-excerpt" x-text="ann.excerpt"></div>
+                            <div
+                              class="d-flex align-items-center gap-3 mt-2 ann-meta flex-wrap"
+                            >
+                              <span x-text="ann.sender"></span>
+                              <span
+                                ><i class="bi bi-eye me-1"></i
+                                ><span x-text="ann.views"></span
+                              ></span>
+                              <span x-show="ann.attachments?.length"
+                                ><i class="bi bi-paperclip me-1"></i
+                                ><span
+                                  x-text="ann.attachments.length + ' files'"
+                                ></span
+                              ></span>
+                              <button
+                                class="btn btn-sm ms-auto py-0 px-2"
+                                style="font-size: 0.76rem"
+                                :class="ann.saved ? 'btn-warning' : 'btn-outline-secondary'"
+                                @click.stop="toggleSave(ann)"
+                              >
+                                <i
+                                  class="bi"
+                                  :class="ann.saved ? 'bi-bookmark-fill' : 'bi-bookmark'"
+                                ></i>
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </template>
+                  </div>
+
+                  <!-- Regular announcements -->
+                  <div
+                    x-show="filterCat === 'all' && filteredPinned.length > 0"
+                    class="mb-2"
+                  >
+                    <div class="d-flex align-items-center gap-2 mb-2">
+                      <span
+                        style="
+                          font-size: 0.72rem;
+                          font-weight: 700;
+                          text-transform: uppercase;
+                          letter-spacing: 0.06em;
+                          color: var(--text-muted);
+                        "
+                        >All Announcements</span
+                      >
+                      <div
+                        style="
+                          flex: 1;
+                          height: 1px;
+                          background: var(--border-color);
+                        "
+                      ></div>
+                    </div>
+                  </div>
+
+                  <template x-for="ann in filteredRegular" :key="ann.id">
+                    <div
+                      class="ann-card"
+                      :class="{ 'unread': !ann.read && ann.category !== 'urgent', 'unread-urgent': !ann.read && ann.category === 'urgent' }"
+                      @click="openAnn(ann)"
+                    >
+                      <div
+                        class="priority-bar"
+                        x-show="ann.urgent"
+                        style="background: #ef4444"
+                      ></div>
+                      <div class="d-flex gap-3 align-items-start">
+                        <div
+                          x-show="!ann.read"
+                          class="unread-dot"
+                          :class="{urgent: ann.category==='urgent'}"
+                        ></div>
+                        <div
+                          x-show="ann.read"
+                          style="width: 9px; flex-shrink: 0"
+                        ></div>
+                        <img :src="ann.senderAvatar" class="sender-avatar" />
+                        <div class="flex-grow-1" style="min-width: 0">
+                          <div
+                            class="d-flex align-items-start gap-2 flex-wrap mb-1"
+                          >
+                            <span
+                              class="cat-badge"
+                              :style="'background:' + ann.badgeBg + ';color:' + ann.badgeColor + ';'"
+                              x-text="ann.categoryLabel"
+                            ></span>
+                            <span
+                              class="cat-badge"
+                              style="
+                                background: rgba(239, 68, 68, 0.15);
+                                color: #ef4444;
+                              "
+                              x-show="ann.urgent"
+                              >🚨 Urgent</span
+                            >
+                            <span
+                              class="ann-meta ms-auto"
+                              x-text="ann.date"
+                            ></span>
+                          </div>
+                          <div
+                            class="ann-title"
+                            :class="{'fw-800': !ann.read}"
+                            x-text="ann.title"
+                          ></div>
+                          <div class="ann-excerpt" x-text="ann.excerpt"></div>
+                          <div
+                            class="d-flex align-items-center gap-3 mt-2 ann-meta flex-wrap"
+                          >
+                            <span x-text="ann.sender"></span>
+                            <span x-text="'· ' + ann.course"></span>
+                            <span
+                              ><i class="bi bi-eye me-1"></i
+                              ><span x-text="ann.views"></span
+                            ></span>
+                            <span x-show="ann.attachments?.length"
+                              ><i class="bi bi-paperclip me-1"></i
+                              ><span
+                                x-text="ann.attachments.length + ' files'"
+                              ></span
+                            ></span>
+                            <button
+                              class="btn btn-sm ms-auto py-0 px-2"
+                              style="font-size: 0.76rem"
+                              :class="ann.saved ? 'btn-warning' : 'btn-outline-secondary'"
+                              @click.stop="toggleSave(ann)"
+                            >
+                              <i
+                                class="bi"
+                                :class="ann.saved ? 'bi-bookmark-fill' : 'bi-bookmark'"
+                              ></i>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </template>
+
+                  <!-- All when filtered -->
+                  <template
+                    x-if="filterCat !== 'all' || searchQuery || filterCourse !== 'all'"
+                  >
+                    <template
+                      x-for="ann in filteredAnnouncements"
+                      :key="ann.id + '_f'"
+                    >
+                      <div
+                        class="ann-card"
+                        :class="{ 'unread': !ann.read && ann.category !== 'urgent', 'unread-urgent': !ann.read && ann.category === 'urgent', 'pinned-card': ann.pinned }"
+                        @click="openAnn(ann)"
+                      >
+                        <div class="d-flex gap-3 align-items-start">
+                          <div
+                            x-show="!ann.read"
+                            class="unread-dot"
+                            :class="{urgent: ann.category==='urgent'}"
+                          ></div>
+                          <div
+                            x-show="ann.read"
+                            style="width: 9px; flex-shrink: 0"
+                          ></div>
+                          <img :src="ann.senderAvatar" class="sender-avatar" />
+                          <div class="flex-grow-1" style="min-width: 0">
+                            <div
+                              class="d-flex align-items-start gap-2 flex-wrap mb-1"
+                            >
+                              <span
+                                class="cat-badge"
+                                :style="'background:' + ann.badgeBg + ';color:' + ann.badgeColor + ';'"
+                                x-text="ann.categoryLabel"
+                              ></span>
+                              <span
+                                class="cat-badge"
+                                style="
+                                  background: rgba(239, 68, 68, 0.15);
+                                  color: #ef4444;
+                                "
+                                x-show="ann.urgent"
+                                >🚨 Urgent</span
+                              >
+                              <span
+                                class="cat-badge"
+                                style="
+                                  background: rgba(245, 158, 11, 0.15);
+                                  color: #f59e0b;
+                                "
+                                x-show="ann.pinned"
+                                >📌 Pinned</span
+                              >
+                              <span
+                                class="ann-meta ms-auto"
+                                x-text="ann.date"
+                              ></span>
+                            </div>
+                            <div
+                              class="ann-title"
+                              :class="{'fw-800': !ann.read}"
+                              x-text="ann.title"
+                            ></div>
+                            <div class="ann-excerpt" x-text="ann.excerpt"></div>
+                            <div
+                              class="d-flex align-items-center gap-3 mt-2 ann-meta flex-wrap"
+                            >
+                              <span
+                                x-text="ann.sender + ' · ' + ann.course"
+                              ></span>
+                              <span
+                                ><i class="bi bi-eye me-1"></i
+                                ><span x-text="ann.views"></span
+                              ></span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </template>
+                  </template>
+
+                  <!-- Empty state -->
+                  <div
+                    x-show="filteredAnnouncements.length === 0"
+                    class="text-center py-5"
+                  >
+                    <div style="font-size: 3.5rem; opacity: 0.25">📭</div>
+                    <h5 class="fw-600 mt-2">No announcements found</h5>
+                    <p class="text-muted" style="font-size: 0.85rem">
+                      Try a different filter or check back later.
+                    </p>
+                    <button
+                      class="btn btn-outline-primary btn-sm"
+                      @click="filterCat='all'; searchQuery=''; filterCourse='all'"
+                    >
+                      Clear Filters
+                    </button>
+                  </div>
+                </div>
+                <!-- /list -->
+              </div>
+              <!-- /main col -->
+
+              <!-- ══════════════════════════════════════════════════
+               RIGHT SIDEBAR
+          ══════════════════════════════════════════════════════ -->
+              <div class="col-xl-4 d-none d-xl-block">
+                <!-- Upcoming deadlines -->
+                <div
+                  class="mb-3"
+                  style="
+                    background: var(--card-bg);
+                    border: 1px solid var(--border-color);
+                    border-radius: 14px;
+                    padding: 18px;
+                  "
+                >
+                  <div class="fw-700 mb-3" style="font-size: 0.88rem">
+                    <i class="bi bi-calendar-event me-1 text-primary"></i
+                    >Upcoming Deadlines
+                  </div>
+                  <template x-for="ev in upcomingEvents" :key="ev.id">
+                    <div class="upcoming-item">
+                      <div
+                        class="upcoming-date-block"
+                        :style="'background:' + ev.color + '22; color:' + ev.color + ';'"
+                      >
+                        <span class="upcoming-day" x-text="ev.day"></span>
+                        <span class="upcoming-month" x-text="ev.month"></span>
+                      </div>
+                      <div style="flex: 1; min-width: 0">
+                        <div
+                          class="fw-600"
+                          style="font-size: 0.82rem; line-height: 1.35"
+                          x-text="ev.title"
+                        ></div>
+                        <div
+                          class="text-muted"
+                          style="font-size: 0.72rem"
+                          x-text="ev.course + ' · ' + ev.time"
+                        ></div>
+                        <div class="mt-1">
+                          <span
+                            class="cat-badge"
+                            :style="'background:' + ev.color + '22;color:' + ev.color + ';'"
+                            x-text="ev.type"
+                          ></span>
+                        </div>
+                      </div>
+                    </div>
+                  </template>
+                </div>
+
+                <!-- Saved announcements -->
+                <div
+                  class="mb-3"
+                  style="
+                    background: var(--card-bg);
+                    border: 1px solid var(--border-color);
+                    border-radius: 14px;
+                    padding: 18px;
+                  "
+                >
+                  <div class="fw-700 mb-3" style="font-size: 0.88rem">
+                    <i class="bi bi-bookmark-star me-1 text-warning"></i>Saved
+                  </div>
+                  <template x-for="ann in savedAnnouncements" :key="ann.id">
+                    <div
+                      style="
+                        display: flex;
+                        align-items: flex-start;
+                        gap: 10px;
+                        padding: 9px 0;
+                        border-bottom: 1px solid var(--border-color);
+                        cursor: pointer;
+                      "
+                      @click="openAnn(ann)"
+                      x-show="savedAnnouncements.length"
+                    >
+                      <div
+                        style="font-size: 1.1rem; flex-shrink: 0"
+                        x-text="ann.emoji"
+                      ></div>
+                      <div style="flex: 1; min-width: 0">
+                        <div
+                          class="fw-600 text-truncate"
+                          style="font-size: 0.8rem"
+                          x-text="ann.title"
+                        ></div>
+                        <div
+                          class="text-muted"
+                          style="font-size: 0.72rem"
+                          x-text="ann.date"
+                        ></div>
+                      </div>
+                      <button
+                        class="btn btn-sm py-0 px-1 text-warning"
+                        style="font-size: 0.75rem"
+                        @click.stop="toggleSave(ann)"
+                      >
+                        <i class="bi bi-bookmark-fill"></i>
+                      </button>
+                    </div>
+                  </template>
+                  <div
+                    x-show="savedAnnouncements.length === 0"
+                    class="text-muted text-center py-3"
+                    style="font-size: 0.82rem"
+                  >
+                    No saved announcements yet.<br />Click 🔖 on any card to
+                    save.
+                  </div>
+                </div>
+
+                <!-- Notification preferences quick card -->
+                <div
+                  style="
+                    background: var(--card-bg);
+                    border: 1px solid var(--border-color);
+                    border-radius: 14px;
+                    padding: 18px;
+                  "
+                >
+                  <div class="fw-700 mb-3" style="font-size: 0.88rem">
+                    <i class="bi bi-bell me-1 text-success"></i>Notification
+                    Settings
+                  </div>
+                  <template x-for="pref in notifPrefs" :key="pref.id">
+                    <div
+                      class="d-flex align-items-center justify-content-between mb-3"
+                    >
+                      <div>
+                        <div
+                          style="font-size: 0.82rem; font-weight: 600"
+                          x-text="pref.label"
+                        ></div>
+                        <div
+                          class="text-muted"
+                          style="font-size: 0.72rem"
+                          x-text="pref.desc"
+                        ></div>
+                      </div>
+                      <div class="form-check form-switch mb-0 ms-2">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          x-model="pref.enabled"
+                          @change="window.lmsNotify.success('Preference updated.')"
+                          style="cursor: pointer"
+                        />
+                      </div>
+                    </div>
+                  </template>
+                </div>
+              </div>
+              <!-- /sidebar -->
+            </div>
+            <!-- /row -->
+          </div>
+          <!-- /container -->
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════════════
+     NOTIFICATION PREFERENCES MODAL
+══════════════════════════════════════════════════════════════════ -->
+    <div class="modal fade" id="preferencesModal" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header border-0">
+            <h5 class="modal-title fw-700">
+              <i class="bi bi-sliders me-2 text-primary"></i>Announcement
+              Preferences
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <p class="text-muted mb-4" style="font-size: 0.83rem">
+              Choose how and when you receive announcement notifications.
+            </p>
+
+            <div class="fw-600 mb-2" style="font-size: 0.82rem">
+              Notification Channels
+            </div>
+            <div class="mb-3">
+              <div
+                class="d-flex align-items-center justify-content-between py-2 border-bottom"
+                style="border-color: var(--border-color) !important"
+              >
+                <div>
+                  <div style="font-size: 0.85rem; font-weight: 600">
+                    Email Notifications
+                  </div>
+                  <div class="text-muted" style="font-size: 0.75rem">
+                    Receive announcements by email
+                  </div>
+                </div>
+                <div class="form-check form-switch mb-0">
+                  <input class="form-check-input" type="checkbox" checked />
+                </div>
+              </div>
+              <div
+                class="d-flex align-items-center justify-content-between py-2 border-bottom"
+                style="border-color: var(--border-color) !important"
+              >
+                <div>
+                  <div style="font-size: 0.85rem; font-weight: 600">
+                    Push Notifications
+                  </div>
+                  <div class="text-muted" style="font-size: 0.75rem">
+                    Browser push alerts
+                  </div>
+                </div>
+                <div class="form-check form-switch mb-0">
+                  <input class="form-check-input" type="checkbox" checked />
+                </div>
+              </div>
+              <div
+                class="d-flex align-items-center justify-content-between py-2"
+              >
+                <div>
+                  <div style="font-size: 0.85rem; font-weight: 600">
+                    SMS Alerts
+                  </div>
+                  <div class="text-muted" style="font-size: 0.75rem">
+                    Urgent announcements only
+                  </div>
+                </div>
+                <div class="form-check form-switch mb-0">
+                  <input class="form-check-input" type="checkbox" />
+                </div>
+              </div>
+            </div>
+
+            <div class="fw-600 mb-2" style="font-size: 0.82rem">
+              Announcement Types
+            </div>
+            <div class="mb-3">
+              <div
+                class="d-flex align-items-center justify-content-between py-2 border-bottom"
+                style="border-color: var(--border-color) !important"
+              >
+                <div>
+                  <div style="font-size: 0.85rem; font-weight: 600">
+                    🚨 Urgent Alerts
+                  </div>
+                  <div class="text-muted" style="font-size: 0.75rem">
+                    Always on — cannot be disabled
+                  </div>
+                </div>
+                <div class="form-check form-switch mb-0">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    checked
+                    disabled
+                  />
+                </div>
+              </div>
+              <div
+                class="d-flex align-items-center justify-content-between py-2 border-bottom"
+                style="border-color: var(--border-color) !important"
+              >
+                <div>
+                  <div style="font-size: 0.85rem; font-weight: 600">
+                    📝 Assignment Updates
+                  </div>
+                  <div class="text-muted" style="font-size: 0.75rem">
+                    Due dates, grade releases
+                  </div>
+                </div>
+                <div class="form-check form-switch mb-0">
+                  <input class="form-check-input" type="checkbox" checked />
+                </div>
+              </div>
+              <div
+                class="d-flex align-items-center justify-content-between py-2 border-bottom"
+                style="border-color: var(--border-color) !important"
+              >
+                <div>
+                  <div style="font-size: 0.85rem; font-weight: 600">
+                    📅 Events & Sessions
+                  </div>
+                  <div class="text-muted" style="font-size: 0.75rem">
+                    Live sessions, webinars
+                  </div>
+                </div>
+                <div class="form-check form-switch mb-0">
+                  <input class="form-check-input" type="checkbox" checked />
+                </div>
+              </div>
+              <div
+                class="d-flex align-items-center justify-content-between py-2 border-bottom"
+                style="border-color: var(--border-color) !important"
+              >
+                <div>
+                  <div style="font-size: 0.85rem; font-weight: 600">
+                    🔄 Course Updates
+                  </div>
+                  <div class="text-muted" style="font-size: 0.75rem">
+                    New content, curriculum changes
+                  </div>
+                </div>
+                <div class="form-check form-switch mb-0">
+                  <input class="form-check-input" type="checkbox" checked />
+                </div>
+              </div>
+              <div
+                class="d-flex align-items-center justify-content-between py-2"
+              >
+                <div>
+                  <div style="font-size: 0.85rem; font-weight: 600">
+                    ⚙️ Platform Updates
+                  </div>
+                  <div class="text-muted" style="font-size: 0.75rem">
+                    Maintenance, new features
+                  </div>
+                </div>
+                <div class="form-check form-switch mb-0">
+                  <input class="form-check-input" type="checkbox" />
+                </div>
+              </div>
+            </div>
+
+            <div class="fw-600 mb-2" style="font-size: 0.82rem">
+              Quiet Hours
+            </div>
+            <div class="row g-2">
+              <div class="col-6">
+                <label class="form-label" style="font-size: 0.78rem"
+                  >From</label
+                >
+                <select class="form-select form-select-sm">
+                  <option>10:00 PM</option>
+                  <option>9:00 PM</option>
+                  <option>8:00 PM</option>
+                </select>
+              </div>
+              <div class="col-6">
+                <label class="form-label" style="font-size: 0.78rem">To</label>
+                <select class="form-select form-select-sm">
+                  <option>7:00 AM</option>
+                  <option>8:00 AM</option>
+                  <option>9:00 AM</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer border-0">
+            <button class="btn btn-outline-secondary" data-bs-dismiss="modal">
+              Cancel
+            </button>
+            <button class="btn btn-primary" onclick="savePreferences()">
+              <i class="bi bi-check2 me-1"></i>Save Preferences
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Scripts ──────────────────────────────────────────────────── -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
+      defer
+    ></script>
+    <script src="../assets/js/app.js"></script>
+
+    <script>
+      NProgress.configure({ showSpinner: false });
+      document.addEventListener("DOMContentLoaded", () => NProgress.start());
+      window.addEventListener("load", () => NProgress.done());
+
+      /* ── Announcement data ───────────────────────────────────────── */
+      const ANNOUNCEMENTS = [
+        {
+          id: "a1",
+          title:
+            "Platform Maintenance – March 29, 2026 (2:00 AM – 4:00 AM UTC)",
+          excerpt:
+            "EduLearn will be undergoing scheduled maintenance on Sunday, March 29. During this window, the platform will be unavailable. Please save any in-progress work beforehand.",
+          fullBody: `<p>EduLearn will be undergoing scheduled maintenance on <strong>Sunday, March 29, 2026 from 2:00 AM to 4:00 AM UTC</strong>.</p>
+<p>During this window, the platform will be completely unavailable, including:</p>
+<ul>
+  <li>Course player and video streaming</li>
+  <li>Assignment submission portal</li>
+  <li>Live session access</li>
+  <li>Community forum</li>
+</ul>
+<p>Please save any in-progress work before this window. We apologise for any inconvenience. After maintenance, you will notice improved video streaming performance and faster page load times.</p>
+<p style="margin-bottom:0;"><strong>Questions?</strong> Contact <a href="mailto:support@edulearn.io">support@edulearn.io</a></p>`,
+          category: "platform",
+          categoryLabel: "⚙️ Platform",
+          badgeBg: "rgba(107,114,128,.12)",
+          badgeColor: "#6b7280",
+          urgent: true,
+          pinned: true,
+          read: false,
+          saved: false,
+          sender: "EduLearn Team",
+          senderRole: "Platform Administration",
+          senderAvatar: "https://i.pravatar.cc/40?img=70",
+          course: "Platform",
+          date: "Mar 27, 2026",
+          views: 1840,
+          emoji: "⚙️",
+          attachments: [
+            {
+              name: "Maintenance Notice.pdf",
+              size: "(210 KB)",
+              icon: "bi-file-pdf text-danger",
+            },
+          ],
+          actionBtn: null,
+        },
+        {
+          id: "a2",
+          title: "New Module Released: React Server Components & Streaming",
+          excerpt:
+            "Module 8 is now live in your React & Next.js Advanced course. This module covers React Server Components, Streaming with Suspense, and the new Next.js 15 partial pre-rendering features.",
+          fullBody: `<p><strong>Module 8 is now available</strong> in your React & Next.js Advanced course.</p>
+<p>This module covers:</p>
+<ul>
+  <li>React Server Components — what they are and when to use them</li>
+  <li>Streaming with <code>Suspense</code> and loading UI patterns</li>
+  <li>Next.js 15 Partial Pre-rendering (PPR)</li>
+  <li>Optimistic UI updates with <code>useOptimistic</code></li>
+  <li>New assignment: Build a streaming dashboard with RSC</li>
+</ul>
+<p>The module includes <strong>12 video lessons</strong>, 3 coding challenges, and 1 graded assignment due <strong>April 10, 2026</strong>.</p>`,
+          category: "update",
+          categoryLabel: "🔄 Update",
+          badgeBg: "rgba(13,110,253,.12)",
+          badgeColor: "#0d6efd",
+          urgent: false,
+          pinned: true,
+          read: false,
+          saved: false,
+          sender: "Prof. Daniel Kim",
+          senderRole: "React & Next.js Advanced Instructor",
+          senderAvatar: "https://i.pravatar.cc/40?img=12",
+          course: "React & Next.js Advanced",
+          date: "Mar 26, 2026",
+          views: 642,
+          emoji: "⚛️",
+          attachments: [
+            {
+              name: "Module 8 Slides.pdf",
+              size: "(4.2 MB)",
+              icon: "bi-file-pdf text-danger",
+            },
+            {
+              name: "Starter Code.zip",
+              size: "(8.1 MB)",
+              icon: "bi-file-zip text-primary",
+            },
+          ],
+          actionBtn: "Go to Module 8 →",
+        },
+        {
+          id: "a3",
+          title: "Assignment 3 Grades Released — JavaScript Masterclass",
+          excerpt:
+            "Your grades for Assignment 3 (Async JavaScript & Promises) have been published. The class average was 84%. Feedback has been added to your submission.",
+          fullBody: `<p>Grades for <strong>Assignment 3: Async JavaScript & Promises</strong> have been published.</p>
+<table style="width:100%;border-collapse:collapse;font-size:.85rem;margin:16px 0;">
+  <tr style="background:rgba(13,110,253,.06);">
+    <th style="padding:8px 12px;text-align:left;border:1px solid rgba(0,0,0,.08);">Metric</th>
+    <th style="padding:8px 12px;text-align:left;border:1px solid rgba(0,0,0,.08);">Value</th>
+  </tr>
+  <tr><td style="padding:8px 12px;border:1px solid rgba(0,0,0,.08);">Your Score</td><td style="padding:8px 12px;border:1px solid rgba(0,0,0,.08);font-weight:700;color:#10b981;">88 / 100</td></tr>
+  <tr><td style="padding:8px 12px;border:1px solid rgba(0,0,0,.08);">Class Average</td><td style="padding:8px 12px;border:1px solid rgba(0,0,0,.08);">84</td></tr>
+  <tr><td style="padding:8px 12px;border:1px solid rgba(0,0,0,.08);">Highest Score</td><td style="padding:8px 12px;border:1px solid rgba(0,0,0,.08);">98</td></tr>
+  <tr><td style="padding:8px 12px;border:1px solid rgba(0,0,0,.08);">Submissions</td><td style="padding:8px 12px;border:1px solid rgba(0,0,0,.08);">94 / 98</td></tr>
+</table>
+<p>Detailed feedback has been added to your submission. Please review the comments before starting Assignment 4.</p>`,
+          category: "assignment",
+          categoryLabel: "📝 Assignment",
+          badgeBg: "rgba(16,185,129,.12)",
+          badgeColor: "#10b981",
+          urgent: false,
+          pinned: false,
+          read: false,
+          saved: true,
+          sender: "Sarah Johnson",
+          senderRole: "JavaScript Masterclass Instructor",
+          senderAvatar: "https://i.pravatar.cc/40?img=5",
+          course: "JavaScript Masterclass",
+          date: "Mar 26, 2026",
+          views: 318,
+          emoji: "📝",
+          attachments: [],
+          actionBtn: "View My Grades →",
+        },
+        {
+          id: "a4",
+          title:
+            "Live Session Reminder: Advanced React Patterns — Today at 2:00 PM",
+          excerpt:
+            "Your live session with Prof. Daniel Kim starts in 2 hours. Topic: Advanced React Patterns & Performance Optimisation. Join link will be active 10 minutes before the session.",
+          fullBody: `<p>This is a reminder that your <strong>live session starts today at 2:00 PM UTC</strong>.</p>
+<ul>
+  <li><strong>Topic:</strong> Advanced React Patterns & Performance Optimisation</li>
+  <li><strong>Instructor:</strong> Prof. Daniel Kim</li>
+  <li><strong>Platform:</strong> Zoom</li>
+  <li><strong>Duration:</strong> 90 minutes</li>
+</ul>
+<p>The join link will be active <strong>10 minutes before</strong> the session. Make sure your camera and microphone are working. Come prepared with any questions from Module 7.</p>`,
+          category: "event",
+          categoryLabel: "📅 Event",
+          badgeBg: "rgba(245,158,11,.12)",
+          badgeColor: "#f59e0b",
+          urgent: true,
+          pinned: false,
+          read: false,
+          saved: false,
+          sender: "Prof. Daniel Kim",
+          senderRole: "React & Next.js Advanced Instructor",
+          senderAvatar: "https://i.pravatar.cc/40?img=12",
+          course: "React & Next.js Advanced",
+          date: "Mar 27, 2026",
+          views: 421,
+          emoji: "🎥",
+          attachments: [],
+          actionBtn: "Join Live Session →",
+        },
+        {
+          id: "a5",
+          title: "Python for Data Science — Week 6 Materials Available",
+          excerpt:
+            "Week 6 study materials including lecture slides, the dataset for the ML project, and the reading list for scikit-learn have been uploaded to the Resource Library.",
+          fullBody: `<p>Week 6 materials for <strong>Python for Data Science</strong> are now available in the Resource Library.</p>
+<p>This week's materials include:</p>
+<ul>
+  <li>Lecture slides — Introduction to Machine Learning (52 slides)</li>
+  <li>Dataset: California Housing dataset (cleaned CSV)</li>
+  <li>Jupyter notebook starter for the regression project</li>
+  <li>Recommended reading: scikit-learn documentation chapters 1–3</li>
+</ul>
+<p>The <strong>ML Project (30% of final grade)</strong> is due on <strong>April 20, 2026</strong>. Start early!</p>`,
+          category: "update",
+          categoryLabel: "🔄 Update",
+          badgeBg: "rgba(13,110,253,.12)",
+          badgeColor: "#0d6efd",
+          urgent: false,
+          pinned: false,
+          read: true,
+          saved: false,
+          sender: "Dr. Alex Rivera",
+          senderRole: "Python for Data Science Instructor",
+          senderAvatar: "https://i.pravatar.cc/40?img=33",
+          course: "Python for Data Science",
+          date: "Mar 25, 2026",
+          views: 287,
+          emoji: "🐍",
+          attachments: [
+            {
+              name: "Week 6 Slides.pdf",
+              size: "(3.8 MB)",
+              icon: "bi-file-pdf text-danger",
+            },
+            {
+              name: "housing_data.csv",
+              size: "(1.1 MB)",
+              icon: "bi-file-spreadsheet text-success",
+            },
+          ],
+          actionBtn: "Open Resource Library →",
+        },
+        {
+          id: "a6",
+          title: "Quiz 4 Scores Released — UI/UX Design Fundamentals",
+          excerpt:
+            "Quiz 4 on Typography & Visual Hierarchy has been graded. Your score has been added to your gradebook. The class average was 79%.",
+          fullBody: `<p>Quiz 4 scores for <strong>UI/UX Design Fundamentals</strong> are now available.</p>
+<p><strong>Quiz topic:</strong> Typography & Visual Hierarchy</p>
+<p>Your score: <strong style="color:#10b981;">82 / 100</strong> — Above average! 🎉</p>
+<p>Review the questions you missed in your gradebook to prepare for the final exam.</p>`,
+          category: "assignment",
+          categoryLabel: "📝 Assignment",
+          badgeBg: "rgba(16,185,129,.12)",
+          badgeColor: "#10b981",
+          urgent: false,
+          pinned: false,
+          read: true,
+          saved: false,
+          sender: "Emily Chen",
+          senderRole: "UI/UX Design Fundamentals Instructor",
+          senderAvatar: "https://i.pravatar.cc/40?img=9",
+          course: "UI/UX Design Fundamentals",
+          date: "Mar 24, 2026",
+          views: 196,
+          emoji: "🎨",
+          attachments: [],
+          actionBtn: "View Gradebook →",
+        },
+        {
+          id: "a7",
+          title: "AWS Cloud Practitioner Exam Tips — Free Webinar April 5",
+          excerpt:
+            "Join our free webinar on April 5 where instructor Mark Williams walks through exam strategy, the most-tested services, and how to approach tricky scenario questions.",
+          fullBody: `<p>Instructor <strong>Mark Williams</strong> is hosting a free exam prep webinar on <strong>April 5, 2026 at 11:00 AM UTC</strong>.</p>
+<p>Webinar agenda:</p>
+<ol>
+  <li>Most commonly tested AWS services in CLF-C02</li>
+  <li>How to approach scenario-based questions</li>
+  <li>Eliminating wrong answers effectively</li>
+  <li>Live Q&A session (30 min)</li>
+</ol>
+<p>This is open to all students enrolled in the AWS Cloud Practitioner course. Registration is free — click below to reserve your spot.</p>`,
+          category: "event",
+          categoryLabel: "📅 Event",
+          badgeBg: "rgba(245,158,11,.12)",
+          badgeColor: "#f59e0b",
+          urgent: false,
+          pinned: false,
+          read: true,
+          saved: true,
+          sender: "Mark Williams",
+          senderRole: "AWS Cloud Practitioner Instructor",
+          senderAvatar: "https://i.pravatar.cc/40?img=62",
+          course: "AWS Cloud Practitioner",
+          date: "Mar 23, 2026",
+          views: 512,
+          emoji: "☁️",
+          attachments: [],
+          actionBtn: "Register for Webinar →",
+        },
+        {
+          id: "a8",
+          title: "New Feature: AI-Powered Study Assistant is Now Live!",
+          excerpt:
+            "We've launched an AI study assistant on EduLearn. Ask it questions about your course content, get explanations, and generate practice questions — available 24/7 in your dashboard.",
+          fullBody: `<p>We're excited to announce the launch of <strong>EduLearn AI Assistant</strong> — your 24/7 study companion.</p>
+<p>What you can do with AI Assistant:</p>
+<ul>
+  <li>Ask questions about any topic in your enrolled courses</li>
+  <li>Get step-by-step explanations with examples</li>
+  <li>Generate practice questions for exam preparation</li>
+  <li>Summarise long lectures into key points</li>
+  <li>Debug code snippets and explain errors</li>
+</ul>
+<p>Find the AI Assistant icon in the bottom-right corner of every page, or access it from your dashboard. It's free for all students. 🚀</p>`,
+          category: "platform",
+          categoryLabel: "⚙️ Platform",
+          badgeBg: "rgba(107,114,128,.12)",
+          badgeColor: "#6b7280",
+          urgent: false,
+          pinned: false,
+          read: true,
+          saved: false,
+          sender: "EduLearn Team",
+          senderRole: "Platform Administration",
+          senderAvatar: "https://i.pravatar.cc/40?img=70",
+          course: "Platform",
+          date: "Mar 22, 2026",
+          views: 2310,
+          emoji: "🤖",
+          attachments: [],
+          actionBtn: "Try AI Assistant →",
+        },
+        {
+          id: "a9",
+          title:
+            "Curriculum Update: React & Next.js Advanced — Module 9 Preview",
+          excerpt:
+            "Module 9 (Testing in React with Vitest & Testing Library) will be released on April 8. We've also updated Module 5 to include the latest Next.js 15 APIs.",
+          fullBody: `<p>We have some exciting curriculum updates for <strong>React & Next.js Advanced</strong>.</p>
+<p><strong>Coming on April 8:</strong> Module 9 — Testing in React</p>
+<ul>
+  <li>Unit testing components with Vitest</li>
+  <li>Integration tests with React Testing Library</li>
+  <li>Mocking API calls and modules</li>
+  <li>End-to-end testing with Playwright</li>
+</ul>
+<p><strong>Updated:</strong> Module 5 has been revised to cover the new Next.js 15 cache APIs, <code>use()</code> hook, and enhanced server actions.</p>`,
+          category: "update",
+          categoryLabel: "🔄 Update",
+          badgeBg: "rgba(13,110,253,.12)",
+          badgeColor: "#0d6efd",
+          urgent: false,
+          pinned: false,
+          read: true,
+          saved: false,
+          sender: "Prof. Daniel Kim",
+          senderRole: "React & Next.js Advanced Instructor",
+          senderAvatar: "https://i.pravatar.cc/40?img=12",
+          course: "React & Next.js Advanced",
+          date: "Mar 20, 2026",
+          views: 389,
+          emoji: "📋",
+          attachments: [],
+          actionBtn: null,
+        },
+        {
+          id: "a10",
+          title: "Final Assignment Deadline Extended — Python for Data Science",
+          excerpt:
+            "Due to the public holiday on April 18, the ML Project final submission deadline has been extended by 48 hours to April 22, 2026 at 11:59 PM UTC.",
+          fullBody: `<p>Good news! The <strong>ML Project (Final Assignment)</strong> deadline has been extended.</p>
+<p><strong>Original deadline:</strong> April 20, 2026 at 11:59 PM UTC</p>
+<p><strong>New deadline:</strong> <span style="color:#10b981;font-weight:700;">April 22, 2026 at 11:59 PM UTC</span></p>
+<p>This extension is due to the public holiday on April 18. No late penalties will be applied for submissions received before the new deadline.</p>
+<p>Please note: the gradebook deadline for instructors remains April 28, so your grade will still be available before end of semester.</p>`,
+          category: "assignment",
+          categoryLabel: "📝 Assignment",
+          badgeBg: "rgba(16,185,129,.12)",
+          badgeColor: "#10b981",
+          urgent: false,
+          pinned: false,
+          read: true,
+          saved: false,
+          sender: "Dr. Alex Rivera",
+          senderRole: "Python for Data Science Instructor",
+          senderAvatar: "https://i.pravatar.cc/40?img=33",
+          course: "Python for Data Science",
+          date: "Mar 19, 2026",
+          views: 743,
+          emoji: "⏰",
+          attachments: [],
+          actionBtn: null,
+        },
+      ];
+
+      /* ── Alpine component ──────────────────────────────────────────── */
+      function announcementsPage() {
+        return {
+          announcements: ANNOUNCEMENTS,
+          filterCat: "all",
+          filterCourse: "all",
+          searchQuery: "",
+          activeAnn: null,
+
+          notifPrefs: [
+            {
+              id: "np1",
+              label: "Email Notifications",
+              desc: "Receive in your inbox",
+              enabled: true,
+            },
+            {
+              id: "np2",
+              label: "Push Notifications",
+              desc: "Browser / mobile alerts",
+              enabled: true,
+            },
+            {
+              id: "np3",
+              label: "Urgent Alerts only",
+              desc: "Only high-priority items",
+              enabled: false,
+            },
+          ],
+
+          upcomingEvents: [
+            {
+              id: "e1",
+              day: "29",
+              month: "Mar",
+              title: "Platform Maintenance",
+              course: "EduLearn",
+              time: "2:00 AM",
+              type: "Maintenance",
+              color: "#ef4444",
+            },
+            {
+              id: "e2",
+              day: "30",
+              month: "Mar",
+              title: "JS Assignment 4 Due",
+              course: "JavaScript",
+              time: "11:59 PM",
+              type: "Assignment",
+              color: "#f59e0b",
+            },
+            {
+              id: "e3",
+              day: "2",
+              month: "Apr",
+              title: "UX Research Q&A Session",
+              course: "UI/UX Design",
+              time: "10:00 AM",
+              type: "Live Session",
+              color: "#8b5cf6",
+            },
+            {
+              id: "e4",
+              day: "5",
+              month: "Apr",
+              title: "AWS Exam Prep Webinar",
+              course: "AWS Cloud",
+              time: "11:00 AM",
+              type: "Event",
+              color: "#0d6efd",
+            },
+            {
+              id: "e5",
+              day: "8",
+              month: "Apr",
+              title: "React Module 9 Released",
+              course: "React & Next.js",
+              time: "All day",
+              type: "Content",
+              color: "#10b981",
+            },
+          ],
+
+          get unreadCount() {
+            return this.announcements.filter((a) => !a.read).length;
+          },
+
+          get savedAnnouncements() {
+            return this.announcements.filter((a) => a.saved);
+          },
+
+          get filteredAnnouncements() {
+            let list = this.announcements.slice();
+
+            if (this.filterCat === "unread") list = list.filter((a) => !a.read);
+            else if (this.filterCat === "pinned")
+              list = list.filter((a) => a.pinned);
+            else if (this.filterCat === "urgent")
+              list = list.filter((a) => a.urgent);
+            else if (this.filterCat !== "all")
+              list = list.filter((a) => a.category === this.filterCat);
+
+            if (this.filterCourse !== "all")
+              list = list.filter(
+                (a) =>
+                  a.course === this.filterCourse || a.course === "Platform",
+              );
+
+            if (this.searchQuery) {
+              const q = this.searchQuery.toLowerCase();
+              list = list.filter(
+                (a) =>
+                  a.title.toLowerCase().includes(q) ||
+                  a.excerpt.toLowerCase().includes(q) ||
+                  a.sender.toLowerCase().includes(q),
+              );
+            }
+
+            return list;
+          },
+
+          get filteredPinned() {
+            return this.announcements.filter((a) => a.pinned);
+          },
+
+          get filteredRegular() {
+            return this.announcements.filter((a) => !a.pinned);
+          },
+
+          openAnn(ann) {
+            this.activeAnn = ann;
+            ann.read = true;
+            ann.views++;
+            window.scrollTo({ top: 0, behavior: "smooth" });
+          },
+
+          markRead(ann) {
+            ann.read = true;
+            window.lmsNotify.success("Marked as read.");
+          },
+
+          markAllRead() {
+            this.announcements.forEach((a) => (a.read = true));
+            window.lmsNotify.success("All announcements marked as read.");
+          },
+
+          toggleSave(ann) {
+            ann.saved = !ann.saved;
+            window.lmsNotify.success(
+              ann.saved ? "Saved to bookmarks." : "Removed from bookmarks.",
+            );
+          },
+
+          shareAnn(ann) {
+            navigator.clipboard
+              ?.writeText(`https://edulearn.io/announcements/${ann.id}`)
+              .catch(() => {});
+            window.lmsNotify.success("Link copied to clipboard!");
+          },
+
+          printAnn() {
+            window.lmsNotify.success("Opening print dialog…");
+          },
+
+          handleAction(ann) {
+            if (!ann?.actionBtn) return;
+            if (ann.actionBtn.includes("Module"))
+              window.lmsNotify.success("Opening course player…");
+            else if (ann.actionBtn.includes("Grades"))
+              window.lmsNotify.success("Opening gradebook…");
+            else if (ann.actionBtn.includes("Session"))
+              window.lmsNotify.success("Launching meeting room…");
+            else if (ann.actionBtn.includes("Library"))
+              window.lmsNotify.success("Opening resource library…");
+            else if (ann.actionBtn.includes("Register"))
+              window.lmsNotify.success("Registration link opening…");
+            else if (ann.actionBtn.includes("AI"))
+              window.lmsNotify.success("Launching AI Assistant…");
+            else window.lmsNotify.success("Opening…");
+          },
+
+          downloadAttachment(att) {
+            window.lmsNotify.success(`Downloading "${att.name}"…`);
+          },
+
+          openPreferences() {
+            new bootstrap.Modal(
+              document.getElementById("preferencesModal"),
+            ).show();
+          },
+        };
+      }
+
+      function savePreferences() {
+        bootstrap.Modal.getInstance(
+          document.getElementById("preferencesModal"),
+        )?.hide();
+        window.lmsNotify.success("Notification preferences saved.");
+      }
+
+      /* ── Load sidebar + navbar ─────────────────────────────────────── */
+      document.addEventListener("DOMContentLoaded", () => {
+        fetch("../components/student-sidebar.html")
+          .then((r) => r.text())
+          .then((html) => {
+            const el = document.getElementById("sidebar-placeholder");
+            el.innerHTML = html;
+            Alpine.initTree(el);
+            el.querySelectorAll(".sidebar-nav-item").forEach((it) => {
+              it.classList.remove("active");
+              if (it.querySelector("a")?.href.includes("announcements"))
+                it.classList.add("active");
+            });
+          });
+
+        fetch("../components/student-navbar.html")
+          .then((r) => r.text())
+          .then((html) => {
+            const el = document.getElementById("navbar-placeholder");
+            el.innerHTML = html;
+            Alpine.initTree(el);
+            const t = document.getElementById("navbarPageTitle");
+            const b = document.getElementById("navbarBreadcrumbCurrent");
+            if (t) t.textContent = "Announcements";
+            if (b) b.textContent = "Announcements";
+          });
+      });
+    </script>
+  </body>
+</html>

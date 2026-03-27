@@ -1,0 +1,473 @@
+<!-- ============================================================
+     EduLearn LMS — Features Section
+     File: sections/features.html
+     Libraries used: AOS 2.3.x
+     ============================================================ -->
+
+<style>
+  /* ── Section Wrapper ────────────────────────────────────────── */
+  .features-section {
+    padding: 100px 0;
+    background: var(--surface);
+    font-family: var(--font-family);
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Subtle top accent line */
+  .features-section::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 3px;
+    background: var(--primary-gradient);
+    border-radius: 0 0 4px 4px;
+  }
+
+  /* ── Section Header ─────────────────────────────────────────── */
+  .features-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    background: var(--primary-light);
+    color: var(--primary-dark);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 5px 14px;
+    border-radius: 20px;
+    margin-bottom: 16px;
+  }
+  [data-theme="dark"] .features-eyebrow {
+    background: rgba(13, 110, 253, 0.18);
+    color: #93c5fd;
+  }
+
+  .features-title {
+    font-size: clamp(1.9rem, 3.5vw, 2.6rem);
+    font-weight: 800;
+    color: var(--text-primary);
+    line-height: 1.2;
+    letter-spacing: -0.5px;
+    margin-bottom: 14px;
+  }
+  .features-title .accent {
+    color: var(--primary);
+  }
+
+  .features-subtitle {
+    font-size: 1rem;
+    color: var(--text-muted);
+    max-width: 520px;
+    margin: 0 auto;
+    line-height: 1.7;
+  }
+
+  /* ── Feature Card ───────────────────────────────────────────── */
+  .feature-card {
+    background: var(--surface);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-lg);
+    padding: 36px 28px;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+    transition:
+      transform 0.3s ease,
+      box-shadow 0.3s ease,
+      border-color 0.3s ease;
+    cursor: default;
+  }
+  .feature-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: var(--primary-gradient);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 0;
+    border-radius: var(--border-radius-lg);
+  }
+  .feature-card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--card-shadow-hover);
+    border-color: var(--primary);
+  }
+  .feature-card:hover::before {
+    opacity: 0.04;
+  }
+  .feature-card:hover .feature-icon-wrap {
+    transform: scale(1.08) rotate(-4deg);
+  }
+  .feature-card:hover .feature-title {
+    color: var(--primary);
+  }
+
+  /* Inner content above the ::before overlay */
+  .feature-card-inner {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ── Icon ───────────────────────────────────────────────────── */
+  .feature-icon-wrap {
+    width: 62px;
+    height: 62px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.6rem;
+    margin-bottom: 22px;
+    transition: transform 0.3s ease;
+    flex-shrink: 0;
+  }
+
+  /* ── Text ───────────────────────────────────────────────────── */
+  .feature-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 10px;
+    transition: color 0.3s ease;
+  }
+  .feature-desc {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+    margin-bottom: 20px;
+  }
+
+  /* ── Feature list inside card ───────────────────────────────── */
+  .feature-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .feature-list li {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+  }
+  .feature-list li i {
+    color: var(--success);
+    font-size: 0.75rem;
+    flex-shrink: 0;
+  }
+
+  /* ── Card number watermark ──────────────────────────────────── */
+  .feature-card-num {
+    position: absolute;
+    bottom: 16px;
+    right: 20px;
+    font-size: 3.5rem;
+    font-weight: 900;
+    color: var(--border-color);
+    line-height: 1;
+    user-select: none;
+    z-index: 0;
+    transition: color 0.3s ease;
+  }
+  .feature-card:hover .feature-card-num {
+    color: var(--primary-light);
+  }
+  [data-theme="dark"] .feature-card-num {
+    color: rgba(255, 255, 255, 0.05);
+  }
+  [data-theme="dark"] .feature-card:hover .feature-card-num {
+    color: rgba(13, 110, 253, 0.15);
+  }
+
+  /* ── Bottom CTA strip ───────────────────────────────────────── */
+  .features-cta-strip {
+    margin-top: 64px;
+    background: var(--surface-alt);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-lg);
+    padding: 36px 40px;
+  }
+  .features-cta-strip h3 {
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    margin-bottom: 6px;
+  }
+  .features-cta-strip p {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin-bottom: 0;
+  }
+  .features-cta-strip .btn-primary {
+    border-radius: 50px;
+    padding: 10px 28px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    font-family: var(--font-family);
+  }
+  .features-cta-strip .btn-outline-secondary {
+    border-radius: 50px;
+    padding: 10px 24px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    font-family: var(--font-family);
+  }
+</style>
+
+<!-- ════════════════════════════════════════════════════════════
+     FEATURES SECTION
+     ════════════════════════════════════════════════════════════ -->
+<section class="features-section" id="features">
+  <div class="container">
+    <!-- ── Section Header ──────────────────────────────────────── -->
+    <div class="text-center mb-5" data-aos="fade-up">
+      <div class="features-eyebrow">
+        <i class="bi bi-lightning-charge-fill"></i>
+        Why Choose EduLearn
+      </div>
+      <h2 class="features-title">
+        Everything You Need to<br />
+        <span class="accent">Learn & Succeed</span>
+      </h2>
+      <p class="features-subtitle">
+        A complete learning ecosystem built around you — from expert-led live
+        classes to industry-recognised certifications, all in one place.
+      </p>
+    </div>
+    <!-- /Header -->
+
+    <!-- ── Feature Cards Grid ──────────────────────────────────── -->
+    <div class="row g-4">
+      <!-- 1. Live Classes -->
+      <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="0">
+        <div class="feature-card">
+          <span class="feature-card-num">01</span>
+          <div class="feature-card-inner">
+            <div
+              class="feature-icon-wrap"
+              style="background: rgba(13, 110, 253, 0.1); color: #0d6efd"
+            >
+              <i class="bi bi-camera-video-fill"></i>
+            </div>
+            <h3 class="feature-title">Live Classes</h3>
+            <p class="feature-desc">
+              Join interactive real-time sessions with world-class instructors.
+              Ask questions, collaborate, and learn with peers globally.
+            </p>
+            <ul class="feature-list">
+              <li>
+                <i class="bi bi-check-circle-fill"></i> HD video &amp; audio
+                streaming
+              </li>
+              <li>
+                <i class="bi bi-check-circle-fill"></i> Live Q&amp;A and chat
+              </li>
+              <li>
+                <i class="bi bi-check-circle-fill"></i> Session recordings
+                available
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. Expert Instructors -->
+      <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="80">
+        <div class="feature-card">
+          <span class="feature-card-num">02</span>
+          <div class="feature-card-inner">
+            <div
+              class="feature-icon-wrap"
+              style="background: rgba(124, 58, 237, 0.1); color: #7c3aed"
+            >
+              <i class="bi bi-person-badge-fill"></i>
+            </div>
+            <h3 class="feature-title">Expert Instructors</h3>
+            <p class="feature-desc">
+              Learn from 50+ industry professionals with real-world experience
+              at top companies like Google, Meta, and Amazon.
+            </p>
+            <ul class="feature-list">
+              <li>
+                <i class="bi bi-check-circle-fill"></i> 50+ verified instructors
+              </li>
+              <li>
+                <i class="bi bi-check-circle-fill"></i> Industry-proven
+                curriculum
+              </li>
+              <li>
+                <i class="bi bi-check-circle-fill"></i> 1-on-1 mentorship
+                sessions
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. Certifications -->
+      <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="160">
+        <div class="feature-card">
+          <span class="feature-card-num">03</span>
+          <div class="feature-card-inner">
+            <div
+              class="feature-icon-wrap"
+              style="background: rgba(251, 191, 36, 0.12); color: #d97706"
+            >
+              <i class="bi bi-award-fill"></i>
+            </div>
+            <h3 class="feature-title">Certifications</h3>
+            <p class="feature-desc">
+              Earn industry-recognised certificates upon course completion.
+              Share them on LinkedIn and boost your professional profile.
+            </p>
+            <ul class="feature-list">
+              <li>
+                <i class="bi bi-check-circle-fill"></i> Verified digital
+                certificates
+              </li>
+              <li>
+                <i class="bi bi-check-circle-fill"></i> LinkedIn-shareable
+                badges
+              </li>
+              <li>
+                <i class="bi bi-check-circle-fill"></i> Recognised by 500+
+                companies
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. Mobile Access -->
+      <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="0">
+        <div class="feature-card">
+          <span class="feature-card-num">04</span>
+          <div class="feature-card-inner">
+            <div
+              class="feature-icon-wrap"
+              style="background: rgba(5, 150, 105, 0.1); color: #059669"
+            >
+              <i class="bi bi-phone-fill"></i>
+            </div>
+            <h3 class="feature-title">Mobile Access</h3>
+            <p class="feature-desc">
+              Learn anytime, anywhere with our fully responsive platform.
+              Download lessons for offline access on the go.
+            </p>
+            <ul class="feature-list">
+              <li>
+                <i class="bi bi-check-circle-fill"></i> iOS &amp; Android apps
+              </li>
+              <li>
+                <i class="bi bi-check-circle-fill"></i> Offline lesson downloads
+              </li>
+              <li>
+                <i class="bi bi-check-circle-fill"></i> Synced progress across
+                devices
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5. Community Forum -->
+      <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="80">
+        <div class="feature-card">
+          <span class="feature-card-num">05</span>
+          <div class="feature-card-inner">
+            <div
+              class="feature-icon-wrap"
+              style="background: rgba(236, 72, 153, 0.1); color: #db2777"
+            >
+              <i class="bi bi-chat-dots-fill"></i>
+            </div>
+            <h3 class="feature-title">Community Forum</h3>
+            <p class="feature-desc">
+              Connect with 50,000+ learners worldwide. Share insights, ask
+              questions, and grow together in our active community.
+            </p>
+            <ul class="feature-list">
+              <li>
+                <i class="bi bi-check-circle-fill"></i> Peer-to-peer discussion
+                boards
+              </li>
+              <li>
+                <i class="bi bi-check-circle-fill"></i> Instructor-moderated
+                threads
+              </li>
+              <li>
+                <i class="bi bi-check-circle-fill"></i> Study groups &amp;
+                projects
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- 6. Progress Tracking -->
+      <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="160">
+        <div class="feature-card">
+          <span class="feature-card-num">06</span>
+          <div class="feature-card-inner">
+            <div
+              class="feature-icon-wrap"
+              style="background: rgba(13, 202, 240, 0.1); color: #0891b2"
+            >
+              <i class="bi bi-bar-chart-line-fill"></i>
+            </div>
+            <h3 class="feature-title">Progress Tracking</h3>
+            <p class="feature-desc">
+              Stay motivated with detailed analytics dashboards, streak
+              counters, and personalised learning path recommendations.
+            </p>
+            <ul class="feature-list">
+              <li>
+                <i class="bi bi-check-circle-fill"></i> Visual progress
+                dashboards
+              </li>
+              <li>
+                <i class="bi bi-check-circle-fill"></i> Daily learning streaks
+              </li>
+              <li>
+                <i class="bi bi-check-circle-fill"></i> AI-powered
+                recommendations
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /Cards Grid -->
+
+    <!-- ── Bottom CTA Strip ─────────────────────────────────────── -->
+    <div class="features-cta-strip" data-aos="fade-up" data-aos-delay="100">
+      <div class="row align-items-center g-3">
+        <div class="col-lg-8">
+          <h3>Ready to start your learning journey?</h3>
+          <p>
+            Join 50,000+ students already learning on EduLearn. No credit card
+            required.
+          </p>
+        </div>
+        <div class="col-lg-4 d-flex gap-3 justify-content-lg-end flex-wrap">
+          <a href="register.html" class="btn btn-primary">
+            <i class="bi bi-rocket-takeoff-fill me-2"></i>Get Started Free
+          </a>
+          <a href="public/courses.html" class="btn btn-outline-secondary">
+            Browse Courses
+          </a>
+        </div>
+      </div>
+    </div>
+    <!-- /CTA Strip -->
+  </div>
+</section>
+<!-- /FEATURES SECTION -->

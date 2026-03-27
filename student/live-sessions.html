@@ -1,0 +1,1944 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Live Sessions — EduLearn Student</title>
+
+    <!-- Bootstrap 5.3 -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    />
+    <!-- Bootstrap Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css"
+    />
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <!-- NProgress -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.css"
+    />
+    <!-- Notyf -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css"
+    />
+    <!-- DataTables -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css"
+    />
+    <!-- Theme -->
+    <link rel="stylesheet" href="../assets/css/theme.css" />
+
+    <style>
+      body {
+        font-family: "Poppins", sans-serif;
+        background: var(--body-bg);
+        color: var(--body-color);
+      }
+      @media (max-width: 991px) {
+        #main-content {
+          margin-left: 0 !important;
+        }
+      }
+
+      /* ── Stat cards ─────────────────────────────────────────── */
+      .stat-card {
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 14px;
+        padding: 18px 20px;
+        display: flex;
+        align-items: center;
+        gap: 14px;
+      }
+      .stat-icon {
+        width: 46px;
+        height: 46px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+        flex-shrink: 0;
+      }
+      .stat-val {
+        font-size: 1.55rem;
+        font-weight: 800;
+        line-height: 1;
+      }
+      .stat-lbl {
+        font-size: 0.72rem;
+        color: var(--text-muted);
+        margin-top: 3px;
+        text-transform: uppercase;
+        letter-spacing: 0.03em;
+      }
+
+      /* ── Live-now banner ────────────────────────────────────── */
+      .live-banner {
+        border-radius: 16px;
+        overflow: hidden;
+        position: relative;
+        background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+        color: #fff;
+        padding: 28px 32px;
+        margin-bottom: 28px;
+      }
+      .live-banner::before {
+        content: "🔴";
+        position: absolute;
+        right: 28px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 5rem;
+        opacity: 0.12;
+      }
+      .live-dot {
+        width: 10px;
+        height: 10px;
+        background: #fff;
+        border-radius: 50%;
+        display: inline-block;
+        animation: livePulse 1.2s infinite;
+      }
+      @keyframes livePulse {
+        0%,
+        100% {
+          box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.6);
+        }
+        50% {
+          box-shadow: 0 0 0 8px rgba(255, 255, 255, 0);
+        }
+      }
+      .live-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 20px;
+        padding: 4px 12px;
+        font-size: 0.76rem;
+        font-weight: 700;
+        backdrop-filter: blur(6px);
+        margin-bottom: 10px;
+      }
+
+      /* ── Session card ───────────────────────────────────────── */
+      .session-card {
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 16px;
+        overflow: hidden;
+        transition:
+          transform 0.2s,
+          box-shadow 0.2s;
+      }
+      .session-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 28px rgba(0, 0, 0, 0.1);
+      }
+      .session-card-top {
+        height: 110px;
+        display: flex;
+        align-items: flex-end;
+        padding: 14px;
+        position: relative;
+      }
+      .session-card-time {
+        background: rgba(0, 0, 0, 0.45);
+        backdrop-filter: blur(6px);
+        color: #fff;
+        border-radius: 8px;
+        padding: 5px 10px;
+        font-size: 0.76rem;
+        font-weight: 600;
+        line-height: 1.3;
+      }
+      .session-status-badge {
+        position: absolute;
+        top: 12px;
+        left: 12px;
+        border-radius: 8px;
+        padding: 4px 10px;
+        font-size: 0.68rem;
+        font-weight: 700;
+      }
+      .session-platform-badge {
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        background: rgba(0, 0, 0, 0.45);
+        backdrop-filter: blur(4px);
+        color: #fff;
+        border-radius: 8px;
+        padding: 4px 10px;
+        font-size: 0.68rem;
+        font-weight: 600;
+      }
+      .session-body {
+        padding: 16px;
+      }
+      .session-title {
+        font-size: 0.9rem;
+        font-weight: 700;
+        margin-bottom: 4px;
+        line-height: 1.35;
+      }
+      .session-course {
+        font-size: 0.76rem;
+        color: var(--text-muted);
+        margin-bottom: 10px;
+      }
+      .session-meta span {
+        font-size: 0.74rem;
+        color: var(--text-muted);
+      }
+      .instructor-avatar {
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2px solid var(--border-color);
+      }
+
+      /* ── Countdown ──────────────────────────────────────────── */
+      .countdown-wrap {
+        background: var(--body-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 10px;
+        padding: 10px 14px;
+        margin: 12px 0;
+      }
+      .countdown-lbl {
+        font-size: 0.66rem;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        margin-bottom: 6px;
+      }
+      .countdown-digits {
+        display: flex;
+        gap: 6px;
+      }
+      .countdown-unit {
+        text-align: center;
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        padding: 5px 8px;
+        min-width: 44px;
+      }
+      .countdown-num {
+        font-size: 1.1rem;
+        font-weight: 800;
+        line-height: 1;
+        display: block;
+      }
+      .countdown-sub {
+        font-size: 0.6rem;
+        color: var(--text-muted);
+        display: block;
+        margin-top: 2px;
+        text-transform: uppercase;
+      }
+
+      /* ── Recording card ─────────────────────────────────────── */
+      .recording-card {
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 12px;
+        padding: 14px 16px;
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        margin-bottom: 10px;
+        transition: box-shadow 0.15s;
+      }
+      .recording-card:hover {
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.07);
+      }
+      .recording-thumb {
+        width: 64px;
+        height: 48px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        flex-shrink: 0;
+        position: relative;
+      }
+      .recording-thumb .play-overlay {
+        position: absolute;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.3);
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transition: opacity 0.15s;
+      }
+      .recording-card:hover .play-overlay {
+        opacity: 1;
+      }
+
+      /* ── DataTable overrides ─────────────────────────────────── */
+      .dataTables_wrapper .dataTables_length select,
+      .dataTables_wrapper .dataTables_filter input {
+        background: var(--body-bg);
+        border: 1px solid var(--border-color);
+        color: var(--body-color);
+        border-radius: 8px;
+        padding: 5px 10px;
+        font-family: "Poppins", sans-serif;
+        font-size: 0.82rem;
+      }
+      .dataTables_wrapper .dataTables_info,
+      .dataTables_wrapper .dataTables_paginate {
+        font-size: 0.8rem;
+      }
+      .dataTables_wrapper .page-link {
+        background: var(--body-bg);
+        border-color: var(--border-color);
+        color: var(--body-color);
+      }
+      .dataTables_wrapper .page-link:hover {
+        background: var(--primary);
+        color: #fff;
+        border-color: var(--primary);
+      }
+      .dataTables_wrapper .active .page-link {
+        background: var(--primary);
+        border-color: var(--primary);
+      }
+      #sessionsTable thead th {
+        background: var(--body-bg);
+        color: var(--body-color);
+        font-size: 0.78rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        border-color: var(--border-color);
+      }
+      #sessionsTable tbody td {
+        font-size: 0.83rem;
+        vertical-align: middle;
+        border-color: var(--border-color);
+        color: var(--body-color);
+      }
+      #sessionsTable tbody tr:hover td {
+        background: rgba(13, 110, 253, 0.04);
+      }
+
+      /* ── Filter pills ───────────────────────────────────────── */
+      .filter-pill {
+        padding: 6px 16px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 500;
+        cursor: pointer;
+        border: 1px solid var(--border-color);
+        background: var(--body-bg);
+        color: var(--text-muted);
+        transition: all 0.15s;
+      }
+      .filter-pill:hover,
+      .filter-pill.active {
+        background: var(--primary);
+        border-color: var(--primary);
+        color: #fff;
+      }
+
+      /* ── Modal ──────────────────────────────────────────────── */
+      .modal-content {
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 16px;
+      }
+      .modal-header,
+      .modal-footer {
+        border-color: var(--border-color);
+      }
+
+      /* ── Tab nav ────────────────────────────────────────────── */
+      .section-tabs .nav-link {
+        color: var(--text-muted);
+        border: none;
+        border-bottom: 2px solid transparent;
+        border-radius: 0;
+        padding: 10px 18px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        transition: all 0.15s;
+      }
+      .section-tabs .nav-link.active {
+        color: var(--primary);
+        border-bottom-color: var(--primary);
+        background: transparent;
+      }
+
+      /* ── Gradient helpers ───────────────────────────────────── */
+      .grad-blue {
+        background: linear-gradient(135deg, #0d6efd, #6610f2);
+      }
+      .grad-purple {
+        background: linear-gradient(135deg, #8b5cf6, #ec4899);
+      }
+      .grad-green {
+        background: linear-gradient(135deg, #10b981, #059669);
+      }
+      .grad-orange {
+        background: linear-gradient(135deg, #f59e0b, #ef4444);
+      }
+      .grad-teal {
+        background: linear-gradient(135deg, #06b6d4, #0d6efd);
+      }
+      .grad-red {
+        background: linear-gradient(135deg, #ef4444, #dc2626);
+      }
+    </style>
+  </head>
+
+  <body x-data="themeToggle()" :data-theme="dark ? 'dark' : 'light'">
+    <div
+      id="layout-wrapper"
+      x-data="sidebarState()"
+      style="display: flex; min-height: 100vh"
+    >
+      <div id="sidebar-placeholder"></div>
+      <div style="flex: 1; display: flex; flex-direction: column; min-width: 0">
+        <div id="navbar-placeholder"></div>
+
+        <div
+          id="main-content"
+          :style="'margin-left:' + (collapsed ? 'var(--sidebar-collapsed)' : 'var(--sidebar-width)')"
+          style="
+            transition: margin-left 0.25s ease;
+            padding-top: var(--navbar-height);
+          "
+        >
+          <div class="container-fluid px-4 py-4" x-data="liveSessionsPage()">
+            <!-- ── Page header ──────────────────────────────────── -->
+            <div
+              class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-4"
+            >
+              <div>
+                <h4 class="fw-700 mb-1">Live Sessions</h4>
+                <p class="text-muted mb-0" style="font-size: 0.85rem">
+                  Join live classes, Q&amp;A sessions, and workshops with your
+                  instructors
+                </p>
+              </div>
+              <button
+                class="btn btn-primary btn-sm"
+                @click="openCalendarSync()"
+              >
+                <i class="bi bi-calendar-plus me-1"></i>Sync to Calendar
+              </button>
+            </div>
+
+            <!-- ── Stats ────────────────────────────────────────── -->
+            <div class="row g-3 mb-4">
+              <div class="col-6 col-xl-3">
+                <div class="stat-card">
+                  <div
+                    class="stat-icon"
+                    style="
+                      background: rgba(13, 110, 253, 0.12);
+                      color: var(--primary);
+                    "
+                  >
+                    <i class="bi bi-camera-video-fill"></i>
+                  </div>
+                  <div>
+                    <div class="stat-val" style="color: var(--primary)">3</div>
+                    <div class="stat-lbl">Upcoming</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-6 col-xl-3">
+                <div class="stat-card">
+                  <div
+                    class="stat-icon"
+                    style="background: rgba(239, 68, 68, 0.12); color: #ef4444"
+                  >
+                    <i class="bi bi-record-circle-fill"></i>
+                  </div>
+                  <div>
+                    <div class="stat-val" style="color: #ef4444">1</div>
+                    <div class="stat-lbl">Live Now</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-6 col-xl-3">
+                <div class="stat-card">
+                  <div
+                    class="stat-icon"
+                    style="background: rgba(16, 185, 129, 0.12); color: #10b981"
+                  >
+                    <i class="bi bi-play-btn-fill"></i>
+                  </div>
+                  <div>
+                    <div class="stat-val" style="color: #10b981">18</div>
+                    <div class="stat-lbl">Recordings</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-6 col-xl-3">
+                <div class="stat-card">
+                  <div
+                    class="stat-icon"
+                    style="background: rgba(245, 158, 11, 0.12); color: #f59e0b"
+                  >
+                    <i class="bi bi-clock-history"></i>
+                  </div>
+                  <div>
+                    <div class="stat-val" style="color: #f59e0b">24h</div>
+                    <div class="stat-lbl">Watch Time</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- ── LIVE NOW banner ──────────────────────────────── -->
+            <div class="live-banner">
+              <div class="row align-items-center gy-3">
+                <div class="col-lg-8">
+                  <div class="live-badge">
+                    <span class="live-dot"></span> LIVE NOW
+                  </div>
+                  <h5 class="fw-700 mb-1">
+                    Advanced React Patterns & Performance
+                  </h5>
+                  <p class="mb-0 opacity-85" style="font-size: 0.85rem">
+                    React &amp; Next.js Advanced · Prof. Daniel Kim is hosting
+                    right now · <strong>142 students</strong> attending
+                  </p>
+                  <div class="d-flex gap-2 flex-wrap mt-3">
+                    <button
+                      class="btn btn-light fw-600 btn-sm"
+                      @click="joinSession(liveNow)"
+                    >
+                      <i class="bi bi-camera-video-fill me-1"></i>Join Session
+                      Now
+                    </button>
+                    <button
+                      class="btn btn-outline-light btn-sm"
+                      @click="addToCalendar(liveNow)"
+                    >
+                      <i class="bi bi-info-circle me-1"></i>Session Details
+                    </button>
+                  </div>
+                </div>
+                <div class="col-lg-4 text-center text-lg-end">
+                  <div
+                    style="font-size: 0.8rem; opacity: 0.8; margin-bottom: 6px"
+                  >
+                    Session started
+                  </div>
+                  <div
+                    style="font-size: 1.6rem; font-weight: 800"
+                    x-text="liveElapsed"
+                  ></div>
+                  <div style="font-size: 0.75rem; opacity: 0.8">ago</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- ── Section tabs ─────────────────────────────────── -->
+            <ul class="nav section-tabs border-bottom mb-4">
+              <li class="nav-item">
+                <button
+                  class="nav-link"
+                  :class="{active:tab==='upcoming'}"
+                  @click="tab='upcoming'"
+                >
+                  <i class="bi bi-calendar-event me-1"></i>Upcoming
+                  <span
+                    class="badge bg-primary bg-opacity-15 text-primary ms-1"
+                    style="font-size: 0.7rem"
+                    >3</span
+                  >
+                </button>
+              </li>
+              <li class="nav-item">
+                <button
+                  class="nav-link"
+                  :class="{active:tab==='recordings'}"
+                  @click="tab='recordings'"
+                >
+                  <i class="bi bi-play-circle me-1"></i>Recordings
+                  <span
+                    class="badge bg-success bg-opacity-15 text-success ms-1"
+                    style="font-size: 0.7rem"
+                    >18</span
+                  >
+                </button>
+              </li>
+              <li class="nav-item">
+                <button
+                  class="nav-link"
+                  :class="{active:tab==='all'}"
+                  @click="tab='all'; initTable()"
+                >
+                  <i class="bi bi-table me-1"></i>All Sessions
+                </button>
+              </li>
+            </ul>
+
+            <!-- ══════════════════════════════════════════════════
+             TAB: UPCOMING
+        ══════════════════════════════════════════════════════ -->
+            <div x-show="tab==='upcoming'" x-transition>
+              <!-- Filter row -->
+              <div class="d-flex gap-2 flex-wrap mb-4">
+                <button
+                  class="filter-pill"
+                  :class="{active:upFilter==='all'}"
+                  @click="upFilter='all'"
+                >
+                  All Courses
+                </button>
+                <button
+                  class="filter-pill"
+                  :class="{active:upFilter==='react'}"
+                  @click="upFilter='react'"
+                >
+                  React &amp; Next.js
+                </button>
+                <button
+                  class="filter-pill"
+                  :class="{active:upFilter==='js'}"
+                  @click="upFilter='js'"
+                >
+                  JavaScript
+                </button>
+                <button
+                  class="filter-pill"
+                  :class="{active:upFilter==='python'}"
+                  @click="upFilter='python'"
+                >
+                  Python
+                </button>
+                <button
+                  class="filter-pill"
+                  :class="{active:upFilter==='ux'}"
+                  @click="upFilter='ux'"
+                >
+                  UI/UX Design
+                </button>
+                <button
+                  class="filter-pill"
+                  :class="{active:upFilter==='aws'}"
+                  @click="upFilter='aws'"
+                >
+                  AWS
+                </button>
+              </div>
+
+              <div class="row g-4">
+                <template x-for="s in filteredUpcoming" :key="s.id">
+                  <div class="col-md-6 col-xl-4">
+                    <div class="session-card h-100">
+                      <div class="session-card-top" :class="s.grad">
+                        <div
+                          class="session-status-badge"
+                          :style="'background:' + s.statusColor + ';color:#fff;'"
+                          x-text="s.statusLabel"
+                        ></div>
+                        <div
+                          class="session-platform-badge"
+                          x-text="s.platform"
+                        ></div>
+                        <div class="session-card-time">
+                          <div x-text="s.dateStr"></div>
+                          <div x-text="s.timeStr"></div>
+                        </div>
+                      </div>
+                      <div class="session-body">
+                        <div class="session-title" x-text="s.title"></div>
+                        <div class="session-course">
+                          <i class="bi bi-book me-1"></i
+                          ><span x-text="s.course"></span>
+                        </div>
+                        <div
+                          class="d-flex align-items-center gap-2 session-meta mb-2"
+                        >
+                          <img
+                            :src="s.instructorAvatar"
+                            class="instructor-avatar"
+                            alt="Instructor"
+                          />
+                          <span x-text="s.instructor"></span>
+                          <span class="ms-auto"
+                            ><i class="bi bi-people me-1"></i
+                            ><span x-text="s.enrolled + ' enrolled'"></span
+                          ></span>
+                        </div>
+                        <!-- Countdown -->
+                        <div class="countdown-wrap">
+                          <div class="countdown-lbl">Session starts in</div>
+                          <div class="countdown-digits">
+                            <div class="countdown-unit">
+                              <span class="countdown-num" :id="'cd-d-' + s.id"
+                                >--</span
+                              ><span class="countdown-sub">Days</span>
+                            </div>
+                            <div class="countdown-unit">
+                              <span class="countdown-num" :id="'cd-h-' + s.id"
+                                >--</span
+                              ><span class="countdown-sub">Hrs</span>
+                            </div>
+                            <div class="countdown-unit">
+                              <span class="countdown-num" :id="'cd-m-' + s.id"
+                                >--</span
+                              ><span class="countdown-sub">Min</span>
+                            </div>
+                            <div class="countdown-unit">
+                              <span class="countdown-num" :id="'cd-s-' + s.id"
+                                >--</span
+                              ><span class="countdown-sub">Sec</span>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="d-flex gap-2 mt-3">
+                          <button
+                            class="btn btn-primary btn-sm flex-grow-1"
+                            @click="joinSession(s)"
+                            :disabled="s.status==='soon'"
+                          >
+                            <i class="bi bi-camera-video me-1"></i>
+                            <span
+                              x-text="s.status==='ready' ? 'Join Now' : 'Join (Opens 10 min before)'"
+                            ></span>
+                          </button>
+                          <button
+                            class="btn btn-outline-secondary btn-sm"
+                            @click="addToCalendar(s)"
+                            title="Add to calendar"
+                          >
+                            <i class="bi bi-calendar-plus"></i>
+                          </button>
+                          <button
+                            class="btn btn-outline-secondary btn-sm"
+                            @click="remindSession(s)"
+                            title="Set reminder"
+                          >
+                            <i class="bi bi-bell"></i>
+                          </button>
+                        </div>
+                        <div class="mt-2 d-flex flex-wrap gap-1">
+                          <template x-for="tag in s.tags" :key="tag">
+                            <span
+                              class="badge bg-secondary bg-opacity-10 text-secondary"
+                              style="font-size: 0.68rem"
+                              x-text="tag"
+                            ></span>
+                          </template>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </template>
+                <!-- Empty -->
+                <div
+                  x-show="filteredUpcoming.length === 0"
+                  class="col-12 text-center py-5"
+                >
+                  <div style="font-size: 3.5rem; opacity: 0.3">📅</div>
+                  <h5 class="fw-600 mt-2">No upcoming sessions</h5>
+                  <p class="text-muted" style="font-size: 0.85rem">
+                    Check back later or explore past recordings.
+                  </p>
+                  <button
+                    class="btn btn-outline-primary btn-sm"
+                    @click="tab='recordings'"
+                  >
+                    View Recordings
+                  </button>
+                </div>
+              </div>
+
+              <!-- Cancelled / Rescheduled notice -->
+              <div
+                class="mt-4 p-3 d-flex align-items-start gap-3"
+                style="
+                  background: rgba(245, 158, 11, 0.08);
+                  border: 1px solid rgba(245, 158, 11, 0.25);
+                  border-radius: 12px;
+                "
+              >
+                <i
+                  class="bi bi-exclamation-triangle-fill text-warning mt-1"
+                ></i>
+                <div>
+                  <div class="fw-600" style="font-size: 0.85rem">
+                    Session Rescheduled
+                  </div>
+                  <div class="text-muted" style="font-size: 0.8rem">
+                    "Python ML Bootcamp – Week 3" has been rescheduled from Apr
+                    10 to Apr 14, 2026 at 3:00 PM. Your calendar invite has been
+                    updated.
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- ══════════════════════════════════════════════════
+             TAB: RECORDINGS
+        ══════════════════════════════════════════════════════ -->
+            <div x-show="tab==='recordings'" x-transition>
+              <!-- Search + filter -->
+              <div class="d-flex flex-wrap gap-2 mb-3 align-items-center">
+                <div style="position: relative; flex: 1; min-width: 200px">
+                  <i
+                    class="bi bi-search"
+                    style="
+                      position: absolute;
+                      left: 12px;
+                      top: 50%;
+                      transform: translateY(-50%);
+                      color: var(--text-muted);
+                      font-size: 0.85rem;
+                      pointer-events: none;
+                    "
+                  ></i>
+                  <input
+                    type="text"
+                    x-model="recSearch"
+                    placeholder="Search recordings…"
+                    style="
+                      width: 100%;
+                      background: var(--card-bg);
+                      border: 1px solid var(--border-color);
+                      border-radius: 8px;
+                      padding: 8px 14px 8px 36px;
+                      color: var(--body-color);
+                      font-size: 0.83rem;
+                      font-family: &quot;Poppins&quot;, sans-serif;
+                      outline: none;
+                    "
+                  />
+                </div>
+                <select
+                  x-model="recCourse"
+                  style="
+                    background: var(--card-bg);
+                    border: 1px solid var(--border-color);
+                    color: var(--body-color);
+                    border-radius: 8px;
+                    padding: 8px 12px;
+                    font-size: 0.82rem;
+                    font-family: &quot;Poppins&quot;, sans-serif;
+                    outline: none;
+                  "
+                >
+                  <option value="all">All Courses</option>
+                  <option>JavaScript Masterclass</option>
+                  <option>UI/UX Design Fundamentals</option>
+                  <option>Python for Data Science</option>
+                  <option>React & Next.js Advanced</option>
+                  <option>AWS Cloud Practitioner</option>
+                </select>
+                <select
+                  x-model="recSort"
+                  style="
+                    background: var(--card-bg);
+                    border: 1px solid var(--border-color);
+                    color: var(--body-color);
+                    border-radius: 8px;
+                    padding: 8px 12px;
+                    font-size: 0.82rem;
+                    font-family: &quot;Poppins&quot;, sans-serif;
+                    outline: none;
+                  "
+                >
+                  <option value="newest">Newest First</option>
+                  <option value="oldest">Oldest First</option>
+                  <option value="popular">Most Viewed</option>
+                  <option value="duration">Longest First</option>
+                </select>
+              </div>
+
+              <template x-for="r in filteredRecordings" :key="r.id">
+                <div class="recording-card">
+                  <div class="recording-thumb" :class="r.grad">
+                    <span style="font-size: 1.4rem">🎬</span>
+                    <div class="play-overlay">
+                      <i
+                        class="bi bi-play-fill text-white"
+                        style="font-size: 1.3rem"
+                      ></i>
+                    </div>
+                  </div>
+                  <div style="flex: 1; min-width: 0">
+                    <div
+                      class="d-flex align-items-start justify-content-between gap-2 flex-wrap"
+                    >
+                      <div>
+                        <div
+                          class="fw-700"
+                          style="font-size: 0.875rem"
+                          x-text="r.title"
+                        ></div>
+                        <div class="text-muted" style="font-size: 0.75rem">
+                          <i class="bi bi-book me-1"></i
+                          ><span x-text="r.course"></span>
+                        </div>
+                      </div>
+                      <div class="d-flex gap-1 flex-shrink-0">
+                        <span
+                          class="badge"
+                          :class="r.watched ? 'bg-success bg-opacity-15 text-success' : 'bg-secondary bg-opacity-10 text-secondary'"
+                          style="font-size: 0.68rem"
+                          x-text="r.watched ? 'Watched' : 'New'"
+                        ></span>
+                      </div>
+                    </div>
+                    <div
+                      class="d-flex flex-wrap gap-3 mt-1"
+                      style="font-size: 0.74rem; color: var(--text-muted)"
+                    >
+                      <span
+                        ><i class="bi bi-clock me-1"></i
+                        ><span x-text="r.duration"></span
+                      ></span>
+                      <span
+                        ><i class="bi bi-calendar3 me-1"></i
+                        ><span x-text="r.date"></span
+                      ></span>
+                      <span
+                        ><i class="bi bi-eye me-1"></i
+                        ><span x-text="r.views + ' views'"></span
+                      ></span>
+                      <span
+                        ><i class="bi bi-person me-1"></i
+                        ><span x-text="r.instructor"></span
+                      ></span>
+                    </div>
+                  </div>
+                  <div class="d-flex flex-column gap-2 flex-shrink-0">
+                    <button
+                      class="btn btn-primary btn-sm"
+                      @click="playRecording(r)"
+                    >
+                      <i class="bi bi-play-fill me-1"></i>Watch
+                    </button>
+                    <button
+                      class="btn btn-outline-secondary btn-sm"
+                      @click="downloadRecording(r)"
+                    >
+                      <i class="bi bi-download"></i>
+                    </button>
+                  </div>
+                </div>
+              </template>
+              <div
+                x-show="filteredRecordings.length === 0"
+                class="text-center py-5"
+              >
+                <div style="font-size: 3.5rem; opacity: 0.3">🎬</div>
+                <h5 class="fw-600 mt-2">No recordings found</h5>
+                <p class="text-muted" style="font-size: 0.85rem">
+                  Try adjusting your search or filter.
+                </p>
+              </div>
+            </div>
+
+            <!-- ══════════════════════════════════════════════════
+             TAB: ALL SESSIONS (DataTables)
+        ══════════════════════════════════════════════════════ -->
+            <div x-show="tab==='all'" x-transition>
+              <div class="card border-0 shadow-sm rounded-4">
+                <div
+                  class="card-body p-4"
+                  style="background: var(--card-bg); border-radius: 16px"
+                >
+                  <div class="table-responsive">
+                    <table
+                      id="sessionsTable"
+                      class="table table-hover align-middle"
+                      style="width: 100%"
+                    >
+                      <thead>
+                        <tr>
+                          <th>Session Title</th>
+                          <th>Course</th>
+                          <th>Instructor</th>
+                          <th>Date &amp; Time</th>
+                          <th>Duration</th>
+                          <th>Status</th>
+                          <th>Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>
+                            <span class="fw-600">Advanced React Patterns</span>
+                          </td>
+                          <td>React &amp; Next.js Advanced</td>
+                          <td>Prof. Daniel Kim</td>
+                          <td>Mar 27, 2026 · 2:00 PM</td>
+                          <td>90 min</td>
+                          <td>
+                            <span
+                              class="badge"
+                              style="
+                                background: rgba(239, 68, 68, 0.15);
+                                color: #ef4444;
+                                border-radius: 6px;
+                                font-size: 0.7rem;
+                              "
+                              >🔴 Live Now</span
+                            >
+                          </td>
+                          <td>
+                            <button
+                              class="btn btn-danger btn-sm"
+                              onclick="joinFromTable('Advanced React Patterns')"
+                            >
+                              <i class="bi bi-camera-video-fill me-1"></i>Join
+                            </button>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <span class="fw-600"
+                              >JS Closures &amp; Scope Deep Dive</span
+                            >
+                          </td>
+                          <td>JavaScript Masterclass</td>
+                          <td>Sarah Johnson</td>
+                          <td>Mar 30, 2026 · 4:00 PM</td>
+                          <td>60 min</td>
+                          <td>
+                            <span
+                              class="badge"
+                              style="
+                                background: rgba(13, 110, 253, 0.12);
+                                color: #0d6efd;
+                                border-radius: 6px;
+                                font-size: 0.7rem;
+                              "
+                              >📅 Upcoming</span
+                            >
+                          </td>
+                          <td>
+                            <button
+                              class="btn btn-outline-primary btn-sm"
+                              onclick="calFromTable('JS Closures')"
+                            >
+                              <i class="bi bi-calendar-plus me-1"></i>Save
+                            </button>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <span class="fw-600"
+                              >UX Research Methods Q&amp;A</span
+                            >
+                          </td>
+                          <td>UI/UX Design Fundamentals</td>
+                          <td>Emily Chen</td>
+                          <td>Apr 2, 2026 · 10:00 AM</td>
+                          <td>45 min</td>
+                          <td>
+                            <span
+                              class="badge"
+                              style="
+                                background: rgba(13, 110, 253, 0.12);
+                                color: #0d6efd;
+                                border-radius: 6px;
+                                font-size: 0.7rem;
+                              "
+                              >📅 Upcoming</span
+                            >
+                          </td>
+                          <td>
+                            <button
+                              class="btn btn-outline-primary btn-sm"
+                              onclick="calFromTable('UX Research')"
+                            >
+                              <i class="bi bi-calendar-plus me-1"></i>Save
+                            </button>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <span class="fw-600"
+                              >Python ML Bootcamp – Week 3</span
+                            >
+                          </td>
+                          <td>Python for Data Science</td>
+                          <td>Dr. Alex Rivera</td>
+                          <td>Apr 14, 2026 · 3:00 PM</td>
+                          <td>120 min</td>
+                          <td>
+                            <span
+                              class="badge"
+                              style="
+                                background: rgba(245, 158, 11, 0.12);
+                                color: #f59e0b;
+                                border-radius: 6px;
+                                font-size: 0.7rem;
+                              "
+                              >⚠️ Rescheduled</span
+                            >
+                          </td>
+                          <td>
+                            <button
+                              class="btn btn-outline-secondary btn-sm"
+                              onclick="calFromTable('ML Bootcamp')"
+                            >
+                              <i class="bi bi-calendar-plus me-1"></i>Save
+                            </button>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <span class="fw-600"
+                              >Next.js App Router Masterclass</span
+                            >
+                          </td>
+                          <td>React &amp; Next.js Advanced</td>
+                          <td>Prof. Daniel Kim</td>
+                          <td>Mar 20, 2026 · 2:00 PM</td>
+                          <td>90 min</td>
+                          <td>
+                            <span
+                              class="badge"
+                              style="
+                                background: rgba(16, 185, 129, 0.12);
+                                color: #10b981;
+                                border-radius: 6px;
+                                font-size: 0.7rem;
+                              "
+                              >✅ Completed</span
+                            >
+                          </td>
+                          <td>
+                            <button
+                              class="btn btn-success btn-sm"
+                              onclick="watchRec('Next.js App Router')"
+                            >
+                              <i class="bi bi-play-fill me-1"></i>Watch
+                            </button>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <span class="fw-600">CSS Grid Masterclass</span>
+                          </td>
+                          <td>JavaScript Masterclass</td>
+                          <td>Sarah Johnson</td>
+                          <td>Mar 18, 2026 · 5:00 PM</td>
+                          <td>75 min</td>
+                          <td>
+                            <span
+                              class="badge"
+                              style="
+                                background: rgba(16, 185, 129, 0.12);
+                                color: #10b981;
+                                border-radius: 6px;
+                                font-size: 0.7rem;
+                              "
+                              >✅ Completed</span
+                            >
+                          </td>
+                          <td>
+                            <button
+                              class="btn btn-success btn-sm"
+                              onclick="watchRec('CSS Grid')"
+                            >
+                              <i class="bi bi-play-fill me-1"></i>Watch
+                            </button>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td><span class="fw-600">AWS IAM Deep Dive</span></td>
+                          <td>AWS Cloud Practitioner</td>
+                          <td>Mark Williams</td>
+                          <td>Mar 15, 2026 · 11:00 AM</td>
+                          <td>60 min</td>
+                          <td>
+                            <span
+                              class="badge"
+                              style="
+                                background: rgba(16, 185, 129, 0.12);
+                                color: #10b981;
+                                border-radius: 6px;
+                                font-size: 0.7rem;
+                              "
+                              >✅ Completed</span
+                            >
+                          </td>
+                          <td>
+                            <button
+                              class="btn btn-success btn-sm"
+                              onclick="watchRec('AWS IAM')"
+                            >
+                              <i class="bi bi-play-fill me-1"></i>Watch
+                            </button>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <span class="fw-600"
+                              >Figma Auto-Layout Workshop</span
+                            >
+                          </td>
+                          <td>UI/UX Design Fundamentals</td>
+                          <td>Emily Chen</td>
+                          <td>Mar 12, 2026 · 10:00 AM</td>
+                          <td>90 min</td>
+                          <td>
+                            <span
+                              class="badge"
+                              style="
+                                background: rgba(16, 185, 129, 0.12);
+                                color: #10b981;
+                                border-radius: 6px;
+                                font-size: 0.7rem;
+                              "
+                              >✅ Completed</span
+                            >
+                          </td>
+                          <td>
+                            <button
+                              class="btn btn-success btn-sm"
+                              onclick="watchRec('Figma Auto-Layout')"
+                            >
+                              <i class="bi bi-play-fill me-1"></i>Watch
+                            </button>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <span class="fw-600"
+                              >Python Pandas Office Hours</span
+                            >
+                          </td>
+                          <td>Python for Data Science</td>
+                          <td>Dr. Alex Rivera</td>
+                          <td>Mar 8, 2026 · 3:00 PM</td>
+                          <td>45 min</td>
+                          <td>
+                            <span
+                              class="badge"
+                              style="
+                                background: rgba(16, 185, 129, 0.12);
+                                color: #10b981;
+                                border-radius: 6px;
+                                font-size: 0.7rem;
+                              "
+                              >✅ Completed</span
+                            >
+                          </td>
+                          <td>
+                            <button
+                              class="btn btn-success btn-sm"
+                              onclick="watchRec('Pandas Office Hours')"
+                            >
+                              <i class="bi bi-play-fill me-1"></i>Watch
+                            </button>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <span class="fw-600">React Hooks In-Depth</span>
+                          </td>
+                          <td>React &amp; Next.js Advanced</td>
+                          <td>Prof. Daniel Kim</td>
+                          <td>Mar 5, 2026 · 2:00 PM</td>
+                          <td>80 min</td>
+                          <td>
+                            <span
+                              class="badge"
+                              style="
+                                background: rgba(16, 185, 129, 0.12);
+                                color: #10b981;
+                                border-radius: 6px;
+                                font-size: 0.7rem;
+                              "
+                              >✅ Completed</span
+                            >
+                          </td>
+                          <td>
+                            <button
+                              class="btn btn-success btn-sm"
+                              onclick="watchRec('React Hooks')"
+                            >
+                              <i class="bi bi-play-fill me-1"></i>Watch
+                            </button>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <span class="fw-600"
+                              >JavaScript Async Patterns</span
+                            >
+                          </td>
+                          <td>JavaScript Masterclass</td>
+                          <td>Sarah Johnson</td>
+                          <td>Feb 28, 2026 · 4:00 PM</td>
+                          <td>65 min</td>
+                          <td>
+                            <span
+                              class="badge"
+                              style="
+                                background: rgba(16, 185, 129, 0.12);
+                                color: #10b981;
+                                border-radius: 6px;
+                                font-size: 0.7rem;
+                              "
+                              >✅ Completed</span
+                            >
+                          </td>
+                          <td>
+                            <button
+                              class="btn btn-success btn-sm"
+                              onclick="watchRec('JS Async')"
+                            >
+                              <i class="bi bi-play-fill me-1"></i>Watch
+                            </button>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <span class="fw-600"
+                              >Cloud Security Fundamentals</span
+                            >
+                          </td>
+                          <td>AWS Cloud Practitioner</td>
+                          <td>Mark Williams</td>
+                          <td>Feb 24, 2026 · 11:00 AM</td>
+                          <td>70 min</td>
+                          <td>
+                            <span
+                              class="badge"
+                              style="
+                                background: rgba(239, 68, 68, 0.12);
+                                color: #ef4444;
+                                border-radius: 6px;
+                                font-size: 0.7rem;
+                              "
+                              >❌ Missed</span
+                            >
+                          </td>
+                          <td>
+                            <button
+                              class="btn btn-success btn-sm"
+                              onclick="watchRec('Cloud Security')"
+                            >
+                              <i class="bi bi-play-fill me-1"></i>Watch
+                            </button>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- /container -->
+        </div>
+        <!-- /main-content -->
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════════════
+     SESSION DETAIL MODAL
+══════════════════════════════════════════════════════════════════ -->
+    <div class="modal fade" id="sessionModal" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+          <div class="modal-header border-0 pb-0">
+            <h5 class="modal-title fw-700" id="sessionModalTitle">
+              Session Details
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+            ></button>
+          </div>
+          <div class="modal-body" id="sessionModalBody"></div>
+          <div class="modal-footer border-0 pt-0">
+            <button class="btn btn-outline-secondary" data-bs-dismiss="modal">
+              Close
+            </button>
+            <button class="btn btn-outline-primary" id="modalCalBtn">
+              <i class="bi bi-calendar-plus me-1"></i>Add to Calendar
+            </button>
+            <button class="btn btn-primary" id="modalJoinBtn">
+              <i class="bi bi-camera-video-fill me-1"></i>Join Session
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════════════
+     PLAY RECORDING MODAL
+══════════════════════════════════════════════════════════════════ -->
+    <div class="modal fade" id="playModal" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content">
+          <div class="modal-header border-0">
+            <h5 class="modal-title fw-700" id="playModalTitle">Recording</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+            ></button>
+          </div>
+          <div class="modal-body p-0">
+            <div
+              style="
+                background: #000;
+                border-radius: 0 0 16px 16px;
+                min-height: 360px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-direction: column;
+                gap: 12px;
+                color: #aaa;
+                padding: 48px;
+              "
+            >
+              <div style="font-size: 4rem; opacity: 0.4">🎬</div>
+              <div class="fw-600" style="font-size: 0.9rem" id="playModalSub">
+                Loading recording…
+              </div>
+              <div style="font-size: 0.78rem; opacity: 0.6">
+                Recordings are hosted on the course CDN and load within a few
+                seconds.
+              </div>
+              <button
+                class="btn btn-danger mt-2"
+                style="border-radius: 30px; padding: 10px 28px"
+              >
+                <i class="bi bi-play-fill me-2"></i>Play Recording
+              </button>
+            </div>
+          </div>
+          <div class="modal-footer border-0">
+            <button class="btn btn-outline-secondary" data-bs-dismiss="modal">
+              Close
+            </button>
+            <button class="btn btn-outline-primary" id="playDownloadBtn">
+              <i class="bi bi-download me-1"></i>Download
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════════════
+     CALENDAR SYNC MODAL
+══════════════════════════════════════════════════════════════════ -->
+    <div class="modal fade" id="calSyncModal" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header border-0">
+            <h5 class="modal-title fw-700">
+              <i class="bi bi-calendar-check me-2 text-primary"></i>Sync to
+              Calendar
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <p class="text-muted mb-3" style="font-size: 0.85rem">
+              Choose your calendar app to sync all upcoming live sessions.
+            </p>
+            <div class="d-grid gap-2">
+              <button
+                class="btn btn-outline-secondary text-start d-flex align-items-center gap-3"
+                onclick="
+                  window.lmsNotify.success('Google Calendar link copied!')
+                "
+              >
+                <span style="font-size: 1.3rem">📅</span>
+                <span>Google Calendar</span>
+                <span
+                  class="ms-auto badge bg-success bg-opacity-15 text-success"
+                  style="font-size: 0.7rem"
+                  >iCal</span
+                >
+              </button>
+              <button
+                class="btn btn-outline-secondary text-start d-flex align-items-center gap-3"
+                onclick="window.lmsNotify.success('Outlook link copied!')"
+              >
+                <span style="font-size: 1.3rem">📧</span>
+                <span>Microsoft Outlook</span>
+                <span
+                  class="ms-auto badge bg-primary bg-opacity-15 text-primary"
+                  style="font-size: 0.7rem"
+                  >ICS</span
+                >
+              </button>
+              <button
+                class="btn btn-outline-secondary text-start d-flex align-items-center gap-3"
+                onclick="
+                  window.lmsNotify.success('Apple Calendar file downloaded!')
+                "
+              >
+                <span style="font-size: 1.3rem">🍎</span>
+                <span>Apple Calendar</span>
+                <span
+                  class="ms-auto badge bg-secondary bg-opacity-10 text-secondary"
+                  style="font-size: 0.7rem"
+                  >ICS</span
+                >
+              </button>
+              <button
+                class="btn btn-outline-secondary text-start d-flex align-items-center gap-3"
+                onclick="
+                  navigator.clipboard?.writeText(
+                    'webcal://edulearn.io/feed/sessions.ics',
+                  );
+                  window.lmsNotify.success('Feed URL copied to clipboard!');
+                "
+              >
+                <span style="font-size: 1.3rem">🔗</span>
+                <span>Copy WebCal URL</span>
+                <span
+                  class="ms-auto badge bg-warning bg-opacity-15 text-warning"
+                  style="font-size: 0.7rem"
+                  >URL</span
+                >
+              </button>
+            </div>
+          </div>
+          <div class="modal-footer border-0">
+            <button class="btn btn-secondary" data-bs-dismiss="modal">
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Scripts ──────────────────────────────────────────────────── -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
+      defer
+    ></script>
+    <script src="../assets/js/app.js"></script>
+
+    <script>
+      NProgress.configure({ showSpinner: false });
+      document.addEventListener("DOMContentLoaded", () => NProgress.start());
+      window.addEventListener("load", () => NProgress.done());
+
+      /* ── Data ──────────────────────────────────────────────────────── */
+      const UPCOMING = [
+        {
+          id: "u1",
+          title: "Advanced React Patterns & Performance",
+          course: "React & Next.js Advanced",
+          instructor: "Prof. Daniel Kim",
+          instructorAvatar: "https://i.pravatar.cc/40?img=12",
+          dateStr: "Mar 27, 2026",
+          timeStr: "2:00 PM – 3:30 PM",
+          platform: "Zoom",
+          enrolled: 142,
+          status: "ready",
+          statusLabel: "🔴 Live Now",
+          statusColor: "#ef4444",
+          targetDate: new Date("2026-03-27T14:00:00"),
+          grad: "grad-blue",
+          tags: ["React", "Performance", "Patterns"],
+          courseKey: "react",
+          description:
+            "Deep dive into advanced React patterns including render props, compound components, and performance optimization strategies using useMemo, useCallback, and React.memo.",
+        },
+        {
+          id: "u2",
+          title: "JavaScript Closures & Scope Deep Dive",
+          course: "JavaScript Masterclass",
+          instructor: "Sarah Johnson",
+          instructorAvatar: "https://i.pravatar.cc/40?img=5",
+          dateStr: "Mar 30, 2026",
+          timeStr: "4:00 PM – 5:00 PM",
+          platform: "Google Meet",
+          enrolled: 98,
+          status: "soon",
+          statusLabel: "📅 In 3 Days",
+          statusColor: "#0d6efd",
+          targetDate: new Date("2026-03-30T16:00:00"),
+          grad: "grad-orange",
+          tags: ["JavaScript", "Closures", "Scope"],
+          courseKey: "js",
+          description:
+            "A comprehensive session on JavaScript closures, lexical scope, and the execution context. We'll work through practical examples and common interview questions.",
+        },
+        {
+          id: "u3",
+          title: "UX Research Methods Q&A Session",
+          course: "UI/UX Design Fundamentals",
+          instructor: "Emily Chen",
+          instructorAvatar: "https://i.pravatar.cc/40?img=9",
+          dateStr: "Apr 2, 2026",
+          timeStr: "10:00 AM – 10:45 AM",
+          platform: "Teams",
+          enrolled: 76,
+          status: "soon",
+          statusLabel: "📅 In 6 Days",
+          statusColor: "#0d6efd",
+          targetDate: new Date("2026-04-02T10:00:00"),
+          grad: "grad-purple",
+          tags: ["UX", "Research", "Q&A"],
+          courseKey: "ux",
+          description:
+            "Open Q&A session covering user research methodologies, usability testing, and how to present findings to stakeholders. Bring your questions!",
+        },
+      ];
+
+      const RECORDINGS = [
+        {
+          id: "r1",
+          title: "Next.js App Router Masterclass",
+          course: "React & Next.js Advanced",
+          instructor: "Prof. Daniel Kim",
+          duration: "1h 32m",
+          date: "Mar 20, 2026",
+          views: 387,
+          watched: true,
+          grad: "grad-blue",
+        },
+        {
+          id: "r2",
+          title: "CSS Grid Layout Complete Guide",
+          course: "JavaScript Masterclass",
+          instructor: "Sarah Johnson",
+          duration: "1h 15m",
+          date: "Mar 18, 2026",
+          views: 312,
+          watched: true,
+          grad: "grad-orange",
+        },
+        {
+          id: "r3",
+          title: "AWS IAM Roles & Policies Deep Dive",
+          course: "AWS Cloud Practitioner",
+          instructor: "Mark Williams",
+          duration: "58m",
+          date: "Mar 15, 2026",
+          views: 218,
+          watched: false,
+          grad: "grad-teal",
+        },
+        {
+          id: "r4",
+          title: "Figma Auto-Layout Workshop",
+          course: "UI/UX Design Fundamentals",
+          instructor: "Emily Chen",
+          duration: "1h 28m",
+          date: "Mar 12, 2026",
+          views: 265,
+          watched: false,
+          grad: "grad-purple",
+        },
+        {
+          id: "r5",
+          title: "Python Pandas Office Hours",
+          course: "Python for Data Science",
+          instructor: "Dr. Alex Rivera",
+          duration: "43m",
+          date: "Mar 8, 2026",
+          views: 194,
+          watched: true,
+          grad: "grad-green",
+        },
+        {
+          id: "r6",
+          title: "React Hooks In-Depth",
+          course: "React & Next.js Advanced",
+          instructor: "Prof. Daniel Kim",
+          duration: "1h 20m",
+          date: "Mar 5, 2026",
+          views: 441,
+          watched: true,
+          grad: "grad-blue",
+        },
+        {
+          id: "r7",
+          title: "JavaScript Async Patterns",
+          course: "JavaScript Masterclass",
+          instructor: "Sarah Johnson",
+          duration: "1h 5m",
+          date: "Feb 28, 2026",
+          views: 358,
+          watched: true,
+          grad: "grad-orange",
+        },
+        {
+          id: "r8",
+          title: "Cloud Security Fundamentals",
+          course: "AWS Cloud Practitioner",
+          instructor: "Mark Williams",
+          duration: "1h 10m",
+          date: "Feb 24, 2026",
+          views: 176,
+          watched: false,
+          grad: "grad-red",
+        },
+        {
+          id: "r9",
+          title: "Wireframing Best Practices",
+          course: "UI/UX Design Fundamentals",
+          instructor: "Emily Chen",
+          duration: "52m",
+          date: "Feb 20, 2026",
+          views: 231,
+          watched: false,
+          grad: "grad-purple",
+        },
+        {
+          id: "r10",
+          title: "Matplotlib & Seaborn Visualisation",
+          course: "Python for Data Science",
+          instructor: "Dr. Alex Rivera",
+          duration: "1h 18m",
+          date: "Feb 16, 2026",
+          views: 289,
+          watched: true,
+          grad: "grad-green",
+        },
+      ];
+
+      /* ── Alpine component ──────────────────────────────────────────── */
+      function liveSessionsPage() {
+        return {
+          tab: "upcoming",
+          upFilter: "all",
+          recSearch: "",
+          recCourse: "all",
+          recSort: "newest",
+          liveNow: UPCOMING[0],
+          liveElapsed: "0:00",
+          _dtInit: false,
+
+          get filteredUpcoming() {
+            if (this.upFilter === "all") return UPCOMING;
+            return UPCOMING.filter((s) => s.courseKey === this.upFilter);
+          },
+
+          get filteredRecordings() {
+            let list = RECORDINGS.slice();
+            if (this.recSearch) {
+              const q = this.recSearch.toLowerCase();
+              list = list.filter(
+                (r) =>
+                  r.title.toLowerCase().includes(q) ||
+                  r.course.toLowerCase().includes(q),
+              );
+            }
+            if (this.recCourse !== "all")
+              list = list.filter((r) => r.course === this.recCourse);
+            if (this.recSort === "newest")
+              list.sort((a, b) => b.id.localeCompare(a.id));
+            if (this.recSort === "oldest")
+              list.sort((a, b) => a.id.localeCompare(b.id));
+            if (this.recSort === "popular")
+              list.sort((a, b) => b.views - a.views);
+            if (this.recSort === "duration") {
+              list.sort((a, b) => {
+                const parse = (s) => {
+                  const p = s.split(/h|m/).map((n) => parseInt(n) || 0);
+                  return p[0] * 60 + (p[1] || 0);
+                };
+                return parse(b.duration) - parse(a.duration);
+              });
+            }
+            return list;
+          },
+
+          initTable() {
+            this.$nextTick(() => {
+              if (!this._dtInit && $.fn.DataTable) {
+                $("#sessionsTable").DataTable({
+                  pageLength: 10,
+                  language: { search: "" },
+                  initComplete() {
+                    $(".dataTables_filter input")
+                      .attr("placeholder", "Search sessions…")
+                      .css({ "border-radius": "8px", padding: "7px 12px" });
+                  },
+                });
+                this._dtInit = true;
+              }
+            });
+          },
+
+          joinSession(s) {
+            Swal.fire({
+              title: "Join Live Session",
+              html: `<div style="text-align:left;font-size:.88rem;">
+          <p class="mb-2"><strong>${s.title}</strong></p>
+          <p class="text-muted mb-2"><i class="bi bi-person me-1"></i>${s.instructor} &nbsp;·&nbsp; <i class="bi bi-camera-video me-1"></i>${s.platform}</p>
+          <p class="text-muted mb-0">${s.dateStr} · ${s.timeStr}</p>
+        </div>`,
+              icon: "question",
+              showCancelButton: true,
+              confirmButtonText:
+                '<i class="bi bi-camera-video-fill me-1"></i>Join Now',
+              cancelButtonText: "Cancel",
+              confirmButtonColor: "#0d6efd",
+              customClass: { popup: "rounded-4" },
+            }).then((r) => {
+              if (r.isConfirmed)
+                window.lmsNotify.success(`Launching ${s.platform}…`);
+            });
+          },
+
+          addToCalendar(s) {
+            window.lmsNotify.success(`"${s.title}" added to your calendar.`);
+          },
+
+          remindSession(s) {
+            window.lmsNotify.success(`Reminder set for "${s.title}".`);
+          },
+
+          playRecording(r) {
+            document.getElementById("playModalTitle").textContent = r.title;
+            document.getElementById("playModalSub").textContent =
+              `${r.course} · ${r.duration} · ${r.date}`;
+            document.getElementById("playDownloadBtn").onclick = () => {
+              window.lmsNotify.success(`Downloading "${r.title}"…`);
+            };
+            r.watched = true;
+            new bootstrap.Modal(document.getElementById("playModal")).show();
+          },
+
+          downloadRecording(r) {
+            window.lmsNotify.success(`Downloading "${r.title}"…`);
+            setTimeout(
+              () => window.lmsNotify.success("Download complete!"),
+              1800,
+            );
+          },
+
+          openCalendarSync() {
+            new bootstrap.Modal(document.getElementById("calSyncModal")).show();
+          },
+
+          startCountdowns() {
+            setInterval(() => {
+              const now = new Date();
+              // Live elapsed
+              const started = new Date("2026-03-27T13:42:00");
+              const diff = Math.floor((now - started) / 1000);
+              const em = Math.floor(diff / 60),
+                es = diff % 60;
+              this.liveElapsed = `${em}:${String(es).padStart(2, "0")}`;
+              // Countdown for each session
+              UPCOMING.forEach((s) => {
+                const rem = Math.max(
+                  0,
+                  Math.floor((s.targetDate - now) / 1000),
+                );
+                const d = Math.floor(rem / 86400);
+                const h = Math.floor((rem % 86400) / 3600);
+                const m = Math.floor((rem % 3600) / 60);
+                const sec = rem % 60;
+                const set = (id, val) => {
+                  const el = document.getElementById(id);
+                  if (el) el.textContent = String(val).padStart(2, "0");
+                };
+                set("cd-d-" + s.id, d);
+                set("cd-h-" + s.id, h);
+                set("cd-m-" + s.id, m);
+                set("cd-s-" + s.id, sec);
+              });
+            }, 1000);
+          },
+
+          init() {
+            this.$nextTick(() => this.startCountdowns());
+          },
+        };
+      }
+
+      /* ── DataTable helper functions (called from inline onclick) ─── */
+      function joinFromTable(title) {
+        Swal.fire({
+          title: "Join Live Session?",
+          text: `You are about to join "${title}". This will open the meeting platform.`,
+          icon: "question",
+          showCancelButton: true,
+          confirmButtonText: "Join Now",
+          confirmButtonColor: "#ef4444",
+          customClass: { popup: "rounded-4" },
+        }).then((r) => {
+          if (r.isConfirmed)
+            window.lmsNotify.success("Launching meeting room…");
+        });
+      }
+      function calFromTable(title) {
+        window.lmsNotify.success(`"${title}" added to your calendar.`);
+      }
+      function watchRec(title) {
+        document.getElementById("playModalTitle").textContent = title;
+        document.getElementById("playModalSub").textContent =
+          "Loading recording…";
+        new bootstrap.Modal(document.getElementById("playModal")).show();
+      }
+
+      /* ── Load sidebar + navbar ─────────────────────────────────────── */
+      document.addEventListener("DOMContentLoaded", () => {
+        fetch("../components/student-sidebar.html")
+          .then((r) => r.text())
+          .then((html) => {
+            const el = document.getElementById("sidebar-placeholder");
+            el.innerHTML = html;
+            Alpine.initTree(el);
+            el.querySelectorAll(".sidebar-nav-item").forEach((it) => {
+              it.classList.remove("active");
+              if (it.querySelector("a")?.href.includes("live-sessions"))
+                it.classList.add("active");
+            });
+          });
+
+        fetch("../components/student-navbar.html")
+          .then((r) => r.text())
+          .then((html) => {
+            const el = document.getElementById("navbar-placeholder");
+            el.innerHTML = html;
+            Alpine.initTree(el);
+            const t = document.getElementById("navbarPageTitle");
+            const b = document.getElementById("navbarBreadcrumbCurrent");
+            if (t) t.textContent = "Live Sessions";
+            if (b) b.textContent = "Live Sessions";
+          });
+      });
+    </script>
+  </body>
+</html>

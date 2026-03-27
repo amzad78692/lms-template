@@ -1,0 +1,1896 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Forum — EduLearn Student</title>
+
+    <!-- Bootstrap 5.3 -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    />
+    <!-- Bootstrap Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css"
+    />
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <!-- NProgress -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.css"
+    />
+    <!-- Notyf -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css"
+    />
+    <!-- Quill Snow theme -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css"
+    />
+    <!-- Theme -->
+    <link rel="stylesheet" href="../assets/css/theme.css" />
+
+    <style>
+      body {
+        font-family: "Poppins", sans-serif;
+        background: var(--body-bg);
+        color: var(--body-color);
+      }
+      @media (max-width: 991px) {
+        #main-content {
+          margin-left: 0 !important;
+        }
+      }
+
+      /* ── Stat cards ─────────────────────────────────────────── */
+      .stat-card {
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 14px;
+        padding: 16px 18px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .stat-icon {
+        width: 42px;
+        height: 42px;
+        border-radius: 11px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.1rem;
+        flex-shrink: 0;
+      }
+      .stat-val {
+        font-size: 1.45rem;
+        font-weight: 800;
+        line-height: 1;
+      }
+      .stat-lbl {
+        font-size: 0.7rem;
+        color: var(--text-muted);
+        margin-top: 3px;
+        text-transform: uppercase;
+        letter-spacing: 0.03em;
+      }
+
+      /* ── Category sidebar ───────────────────────────────────── */
+      .cat-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 9px 14px;
+        border-radius: 10px;
+        cursor: pointer;
+        font-size: 0.83rem;
+        font-weight: 500;
+        transition: all 0.15s;
+        border: 1px solid transparent;
+      }
+      .cat-item:hover {
+        background: var(--body-bg);
+      }
+      .cat-item.active {
+        background: rgba(13, 110, 253, 0.1);
+        border-color: rgba(13, 110, 253, 0.2);
+        color: var(--primary);
+      }
+      .cat-count {
+        font-size: 0.72rem;
+        background: var(--body-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 12px;
+        padding: 1px 8px;
+        color: var(--text-muted);
+      }
+      .cat-item.active .cat-count {
+        background: var(--primary);
+        border-color: var(--primary);
+        color: #fff;
+      }
+
+      /* ── Thread cards ───────────────────────────────────────── */
+      .thread-card {
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 14px;
+        padding: 18px 20px;
+        margin-bottom: 12px;
+        transition:
+          box-shadow 0.18s,
+          transform 0.18s;
+        cursor: pointer;
+      }
+      .thread-card:hover {
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+        transform: translateY(-2px);
+      }
+      .thread-card.unread {
+        border-left: 3px solid var(--primary);
+      }
+      .thread-card.pinned {
+        border-left: 3px solid #f59e0b;
+      }
+      .thread-card.solved {
+        border-left: 3px solid #10b981;
+      }
+
+      .thread-avatar {
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        object-fit: cover;
+        flex-shrink: 0;
+      }
+      .thread-title {
+        font-size: 0.9rem;
+        font-weight: 700;
+        margin-bottom: 4px;
+        line-height: 1.35;
+      }
+      .thread-excerpt {
+        font-size: 0.78rem;
+        color: var(--text-muted);
+        line-height: 1.5;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+      .thread-meta {
+        font-size: 0.72rem;
+        color: var(--text-muted);
+      }
+
+      .status-badge {
+        font-size: 0.65rem;
+        font-weight: 700;
+        padding: 3px 8px;
+        border-radius: 6px;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+      }
+      .badge-pinned {
+        background: rgba(245, 158, 11, 0.15);
+        color: #f59e0b;
+      }
+      .badge-solved {
+        background: rgba(16, 185, 129, 0.15);
+        color: #10b981;
+      }
+      .badge-hot {
+        background: rgba(239, 68, 68, 0.15);
+        color: #ef4444;
+      }
+      .badge-new {
+        background: rgba(13, 110, 253, 0.15);
+        color: #0d6efd;
+      }
+
+      /* ── Reaction pills ─────────────────────────────────────── */
+      .reaction-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        background: var(--body-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 20px;
+        padding: 3px 10px;
+        font-size: 0.75rem;
+        cursor: pointer;
+        transition: all 0.15s;
+        user-select: none;
+      }
+      .reaction-pill:hover {
+        border-color: var(--primary);
+        color: var(--primary);
+      }
+      .reaction-pill.active {
+        background: rgba(13, 110, 253, 0.1);
+        border-color: rgba(13, 110, 253, 0.3);
+        color: var(--primary);
+        font-weight: 600;
+      }
+
+      /* ── Post detail panel ──────────────────────────────────── */
+      .post-panel {
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 16px;
+        overflow: hidden;
+      }
+      .post-panel-header {
+        padding: 20px 24px 0;
+        border-bottom: 1px solid var(--border-color);
+        padding-bottom: 16px;
+      }
+      .reply-card {
+        padding: 16px 24px;
+        border-bottom: 1px solid var(--border-color);
+      }
+      .reply-card:last-child {
+        border-bottom: none;
+      }
+      .reply-card.accepted-answer {
+        background: rgba(16, 185, 129, 0.04);
+        border-left: 3px solid #10b981;
+      }
+      .reply-avatar {
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        object-fit: cover;
+        flex-shrink: 0;
+      }
+
+      /* ── Quill editor ───────────────────────────────────────── */
+      .ql-toolbar.ql-snow {
+        border-color: var(--border-color);
+        border-radius: 10px 10px 0 0;
+        background: var(--body-bg);
+      }
+      .ql-container.ql-snow {
+        border-color: var(--border-color);
+        border-radius: 0 0 10px 10px;
+        background: var(--card-bg);
+      }
+      .ql-editor {
+        min-height: 120px;
+        font-family: "Poppins", sans-serif;
+        font-size: 0.88rem;
+        color: var(--body-color);
+      }
+      .ql-editor.ql-blank::before {
+        color: var(--text-muted);
+        font-style: normal;
+      }
+
+      /* ── Tag chips ──────────────────────────────────────────── */
+      .tag-chip {
+        display: inline-block;
+        font-size: 0.7rem;
+        font-weight: 500;
+        padding: 2px 9px;
+        border-radius: 5px;
+        background: var(--body-bg);
+        border: 1px solid var(--border-color);
+        color: var(--text-muted);
+      }
+
+      /* ── Modal ──────────────────────────────────────────────── */
+      .modal-content {
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 16px;
+      }
+      .modal-header,
+      .modal-footer {
+        border-color: var(--border-color);
+      }
+
+      /* ── Sort bar ───────────────────────────────────────────── */
+      .sort-pill {
+        padding: 5px 14px;
+        border-radius: 20px;
+        font-size: 0.78rem;
+        font-weight: 500;
+        cursor: pointer;
+        border: 1px solid var(--border-color);
+        background: var(--body-bg);
+        color: var(--text-muted);
+        transition: all 0.15s;
+      }
+      .sort-pill:hover,
+      .sort-pill.active {
+        background: var(--primary);
+        border-color: var(--primary);
+        color: #fff;
+      }
+
+      /* ── Leaderboard ────────────────────────────────────────── */
+      .lb-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 9px 0;
+        border-bottom: 1px solid var(--border-color);
+      }
+      .lb-item:last-child {
+        border-bottom: none;
+      }
+      .lb-rank {
+        width: 24px;
+        text-align: center;
+        font-size: 0.82rem;
+        font-weight: 700;
+        flex-shrink: 0;
+      }
+      .lb-av {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        object-fit: cover;
+        flex-shrink: 0;
+      }
+
+      /* ── Search ─────────────────────────────────────────────── */
+      .search-wrap {
+        position: relative;
+      }
+      .search-wrap i {
+        position: absolute;
+        left: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--text-muted);
+        font-size: 0.88rem;
+        pointer-events: none;
+      }
+      .search-input {
+        width: 100%;
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 10px;
+        padding: 9px 14px 9px 38px;
+        color: var(--body-color);
+        font-size: 0.85rem;
+        font-family: "Poppins", sans-serif;
+        outline: none;
+        transition: border-color 0.2s;
+      }
+      .search-input:focus {
+        border-color: var(--primary);
+      }
+    </style>
+  </head>
+
+  <body x-data="themeToggle()" :data-theme="dark ? 'dark' : 'light'">
+    <div
+      id="layout-wrapper"
+      x-data="sidebarState()"
+      style="display: flex; min-height: 100vh"
+    >
+      <div id="sidebar-placeholder"></div>
+      <div style="flex: 1; display: flex; flex-direction: column; min-width: 0">
+        <div id="navbar-placeholder"></div>
+
+        <div
+          id="main-content"
+          :style="'margin-left:' + (collapsed ? 'var(--sidebar-collapsed)' : 'var(--sidebar-width)')"
+          style="
+            transition: margin-left 0.25s ease;
+            padding-top: var(--navbar-height);
+          "
+        >
+          <div class="container-fluid px-4 py-4" x-data="forumPage()">
+            <!-- ── Page header ──────────────────────────────────── -->
+            <div
+              class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-4"
+            >
+              <div>
+                <h4 class="fw-700 mb-1">Community Forum</h4>
+                <p class="text-muted mb-0" style="font-size: 0.85rem">
+                  Ask questions, share knowledge, and connect with fellow
+                  learners
+                </p>
+              </div>
+              <button class="btn btn-primary btn-sm" @click="openNewPost()">
+                <i class="bi bi-pencil-square me-1"></i>New Thread
+              </button>
+            </div>
+
+            <!-- ── Stats ────────────────────────────────────────── -->
+            <div class="row g-3 mb-4">
+              <div class="col-6 col-xl-3">
+                <div class="stat-card">
+                  <div
+                    class="stat-icon"
+                    style="
+                      background: rgba(13, 110, 253, 0.12);
+                      color: var(--primary);
+                    "
+                  >
+                    <i class="bi bi-chat-square-dots-fill"></i>
+                  </div>
+                  <div>
+                    <div class="stat-val" style="color: var(--primary)">
+                      1,284
+                    </div>
+                    <div class="stat-lbl">Total Threads</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-6 col-xl-3">
+                <div class="stat-card">
+                  <div
+                    class="stat-icon"
+                    style="background: rgba(16, 185, 129, 0.12); color: #10b981"
+                  >
+                    <i class="bi bi-check-circle-fill"></i>
+                  </div>
+                  <div>
+                    <div class="stat-val" style="color: #10b981">892</div>
+                    <div class="stat-lbl">Solved</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-6 col-xl-3">
+                <div class="stat-card">
+                  <div
+                    class="stat-icon"
+                    style="background: rgba(245, 158, 11, 0.12); color: #f59e0b"
+                  >
+                    <i class="bi bi-people-fill"></i>
+                  </div>
+                  <div>
+                    <div class="stat-val" style="color: #f59e0b">4.2k</div>
+                    <div class="stat-lbl">Members</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-6 col-xl-3">
+                <div class="stat-card">
+                  <div
+                    class="stat-icon"
+                    style="background: rgba(139, 92, 246, 0.12); color: #8b5cf6"
+                  >
+                    <i class="bi bi-award-fill"></i>
+                  </div>
+                  <div>
+                    <div
+                      class="stat-val"
+                      style="color: #8b5cf6"
+                      x-text="myStats.points + 'pts'"
+                    ></div>
+                    <div class="stat-lbl">My Points</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row g-4">
+              <!-- ══════════════════════════════════════════════════
+               LEFT: CATEGORIES
+          ══════════════════════════════════════════════════════ -->
+              <div class="col-xl-2 col-lg-3 d-none d-lg-block">
+                <div
+                  style="
+                    background: var(--card-bg);
+                    border: 1px solid var(--border-color);
+                    border-radius: 14px;
+                    padding: 16px;
+                    position: sticky;
+                    top: calc(var(--navbar-height) + 16px);
+                  "
+                >
+                  <div
+                    class="fw-700 mb-3"
+                    style="
+                      font-size: 0.82rem;
+                      text-transform: uppercase;
+                      letter-spacing: 0.06em;
+                      color: var(--text-muted);
+                    "
+                  >
+                    Categories
+                  </div>
+
+                  <template x-for="cat in categories" :key="cat.id">
+                    <div
+                      class="cat-item"
+                      :class="{active: activeCategory === cat.id}"
+                      @click="activeCategory = cat.id"
+                    >
+                      <span
+                        ><span x-text="cat.icon" class="me-2"></span
+                        ><span x-text="cat.name"></span
+                      ></span>
+                      <span class="cat-count" x-text="cat.count"></span>
+                    </div>
+                  </template>
+
+                  <hr
+                    style="border-color: var(--border-color); margin: 14px 0"
+                  />
+
+                  <div
+                    class="fw-700 mb-2"
+                    style="
+                      font-size: 0.82rem;
+                      text-transform: uppercase;
+                      letter-spacing: 0.06em;
+                      color: var(--text-muted);
+                    "
+                  >
+                    My Activity
+                  </div>
+                  <div
+                    class="cat-item"
+                    :class="{active:activeCategory==='my-threads'}"
+                    @click="activeCategory='my-threads'"
+                  >
+                    <span><i class="bi bi-person me-2"></i>My Threads</span>
+                    <span class="cat-count">8</span>
+                  </div>
+                  <div
+                    class="cat-item"
+                    :class="{active:activeCategory==='bookmarked'}"
+                    @click="activeCategory='bookmarked'"
+                  >
+                    <span><i class="bi bi-bookmark me-2"></i>Saved</span>
+                    <span class="cat-count">12</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- ══════════════════════════════════════════════════
+               CENTER: THREAD LIST / POST DETAIL
+          ══════════════════════════════════════════════════════ -->
+              <div class="col-xl-7 col-lg-9">
+                <!-- Thread list view -->
+                <div x-show="!activeThread" x-transition>
+                  <!-- Search + sort -->
+                  <div class="d-flex flex-wrap gap-2 mb-3 align-items-center">
+                    <div class="search-wrap flex-grow-1">
+                      <i class="bi bi-search"></i>
+                      <input
+                        type="text"
+                        class="search-input"
+                        placeholder="Search threads, keywords, tags…"
+                        x-model="searchQuery"
+                      />
+                    </div>
+                    <div class="d-flex gap-1 flex-wrap">
+                      <button
+                        class="sort-pill"
+                        :class="{active:sortMode==='latest'}"
+                        @click="sortMode='latest'"
+                      >
+                        Latest
+                      </button>
+                      <button
+                        class="sort-pill"
+                        :class="{active:sortMode==='hot'}"
+                        @click="sortMode='hot'"
+                      >
+                        🔥 Hot
+                      </button>
+                      <button
+                        class="sort-pill"
+                        :class="{active:sortMode==='unanswered'}"
+                        @click="sortMode='unanswered'"
+                      >
+                        Unanswered
+                      </button>
+                      <button
+                        class="sort-pill"
+                        :class="{active:sortMode==='solved'}"
+                        @click="sortMode='solved'"
+                      >
+                        ✅ Solved
+                      </button>
+                    </div>
+                  </div>
+
+                  <!-- Mobile category dropdown -->
+                  <div class="d-lg-none mb-3">
+                    <select
+                      class="form-select"
+                      style="font-size: 0.85rem"
+                      x-model="activeCategory"
+                    >
+                      <template x-for="cat in categories" :key="cat.id">
+                        <option
+                          :value="cat.id"
+                          x-text="cat.icon + ' ' + cat.name"
+                        ></option>
+                      </template>
+                    </select>
+                  </div>
+
+                  <!-- Thread cards -->
+                  <template x-for="thread in filteredThreads" :key="thread.id">
+                    <div
+                      class="thread-card"
+                      :class="{ unread: !thread.read, pinned: thread.pinned, solved: thread.solved }"
+                      @click="openThread(thread)"
+                    >
+                      <div class="d-flex gap-3">
+                        <img
+                          :src="thread.authorAvatar"
+                          class="thread-avatar"
+                          alt=""
+                        />
+                        <div class="flex-grow-1 min-width-0">
+                          <div
+                            class="d-flex align-items-start justify-content-between gap-2 flex-wrap mb-1"
+                          >
+                            <div
+                              class="d-flex align-items-center gap-2 flex-wrap"
+                            >
+                              <span
+                                class="status-badge badge-pinned"
+                                x-show="thread.pinned"
+                                >📌 Pinned</span
+                              >
+                              <span
+                                class="status-badge badge-solved"
+                                x-show="thread.solved"
+                                >✅ Solved</span
+                              >
+                              <span
+                                class="status-badge badge-hot"
+                                x-show="thread.hot && !thread.solved"
+                                >🔥 Hot</span
+                              >
+                              <span
+                                class="status-badge badge-new"
+                                x-show="!thread.read && !thread.pinned"
+                                >New</span
+                              >
+                            </div>
+                            <div
+                              class="thread-meta flex-shrink-0"
+                              x-text="thread.timeAgo"
+                            ></div>
+                          </div>
+                          <div class="thread-title" x-text="thread.title"></div>
+                          <div
+                            class="thread-excerpt"
+                            x-text="thread.excerpt"
+                          ></div>
+                          <div
+                            class="d-flex align-items-center justify-content-between flex-wrap gap-2 mt-2"
+                          >
+                            <div
+                              class="d-flex align-items-center gap-2 flex-wrap"
+                            >
+                              <span
+                                class="tag-chip"
+                                style="
+                                  background: rgba(13, 110, 253, 0.1);
+                                  border-color: rgba(13, 110, 253, 0.2);
+                                  color: var(--primary);
+                                "
+                                x-text="thread.category"
+                              ></span>
+                              <template
+                                x-for="tag in thread.tags.slice(0,2)"
+                                :key="tag"
+                              >
+                                <span class="tag-chip" x-text="tag"></span>
+                              </template>
+                            </div>
+                            <div class="d-flex gap-3 thread-meta">
+                              <span
+                                ><i class="bi bi-chat me-1"></i
+                                ><span x-text="thread.replies"></span
+                              ></span>
+                              <span
+                                ><i class="bi bi-eye me-1"></i
+                                ><span x-text="thread.views"></span
+                              ></span>
+                              <span
+                                ><i class="bi bi-hand-thumbs-up me-1"></i
+                                ><span x-text="thread.likes"></span
+                              ></span>
+                              <span
+                                class="fw-600"
+                                x-text="thread.authorName"
+                              ></span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </template>
+
+                  <!-- Empty -->
+                  <div
+                    x-show="filteredThreads.length === 0"
+                    class="text-center py-5"
+                  >
+                    <div style="font-size: 3.5rem; opacity: 0.3">💬</div>
+                    <h5 class="fw-600 mt-2">No threads found</h5>
+                    <p class="text-muted" style="font-size: 0.85rem">
+                      Be the first to start a discussion in this category!
+                    </p>
+                    <button
+                      class="btn btn-primary btn-sm"
+                      @click="openNewPost()"
+                    >
+                      Start a Thread
+                    </button>
+                  </div>
+
+                  <!-- Load more -->
+                  <div
+                    class="text-center mt-4"
+                    x-show="filteredThreads.length >= 5"
+                  >
+                    <button
+                      class="btn btn-outline-primary btn-sm px-4"
+                      @click="loadMore()"
+                    >
+                      <i class="bi bi-arrow-down-circle me-1"></i>Load More
+                      Threads
+                    </button>
+                  </div>
+                </div>
+
+                <!-- ────────────────────────────────────────────────
+                 POST DETAIL VIEW
+            ──────────────────────────────────────────────────── -->
+                <div x-show="activeThread" x-transition>
+                  <!-- Back button -->
+                  <button
+                    class="btn btn-sm btn-outline-secondary mb-3"
+                    @click="activeThread = null"
+                  >
+                    <i class="bi bi-arrow-left me-1"></i>Back to Forum
+                  </button>
+
+                  <!-- Post detail panel -->
+                  <div class="post-panel" x-show="activeThread">
+                    <!-- Header -->
+                    <div class="post-panel-header">
+                      <div
+                        class="d-flex align-items-start justify-content-between gap-2 flex-wrap mb-2"
+                      >
+                        <div class="d-flex gap-2 flex-wrap">
+                          <span
+                            class="status-badge badge-solved"
+                            x-show="activeThread?.solved"
+                            >✅ Solved</span
+                          >
+                          <span
+                            class="status-badge badge-pinned"
+                            x-show="activeThread?.pinned"
+                            >📌 Pinned</span
+                          >
+                          <span
+                            class="status-badge badge-hot"
+                            x-show="activeThread?.hot"
+                            >🔥 Hot</span
+                          >
+                        </div>
+                        <div class="d-flex gap-2">
+                          <button
+                            class="btn btn-outline-secondary btn-sm"
+                            @click="bookmarkThread(activeThread)"
+                          >
+                            <i
+                              class="bi"
+                              :class="activeThread?.bookmarked ? 'bi-bookmark-fill text-warning' : 'bi-bookmark'"
+                            ></i>
+                          </button>
+                          <button
+                            class="btn btn-outline-secondary btn-sm"
+                            @click="shareThread(activeThread)"
+                          >
+                            <i class="bi bi-share"></i>
+                          </button>
+                        </div>
+                      </div>
+
+                      <h5 class="fw-700 mb-3" x-text="activeThread?.title"></h5>
+
+                      <div class="d-flex align-items-center gap-3 mb-3">
+                        <img
+                          :src="activeThread?.authorAvatar"
+                          class="thread-avatar"
+                        />
+                        <div>
+                          <div
+                            class="fw-600"
+                            style="font-size: 0.85rem"
+                            x-text="activeThread?.authorName"
+                          ></div>
+                          <div
+                            class="text-muted"
+                            style="font-size: 0.74rem"
+                            x-text="activeThread?.timeAgo + ' · ' + activeThread?.views + ' views'"
+                          ></div>
+                        </div>
+                        <span
+                          class="tag-chip ms-auto"
+                          style="
+                            background: rgba(13, 110, 253, 0.1);
+                            border-color: rgba(13, 110, 253, 0.2);
+                            color: var(--primary);
+                          "
+                          x-text="activeThread?.category"
+                        ></span>
+                      </div>
+
+                      <div
+                        class="mb-3"
+                        style="
+                          font-size: 0.88rem;
+                          line-height: 1.75;
+                          color: var(--body-color);
+                        "
+                        x-text="activeThread?.body"
+                      ></div>
+
+                      <div class="d-flex flex-wrap gap-1 mb-3">
+                        <template x-for="tag in activeThread?.tags" :key="tag">
+                          <span class="tag-chip" x-text="tag"></span>
+                        </template>
+                      </div>
+
+                      <!-- Reactions -->
+                      <div class="d-flex flex-wrap gap-2 pb-2">
+                        <button
+                          class="reaction-pill"
+                          :class="{active:activeThread?.liked}"
+                          @click="likeThread(activeThread)"
+                        >
+                          <span>👍</span
+                          ><span x-text="activeThread?.likes"></span>
+                        </button>
+                        <button
+                          class="reaction-pill"
+                          @click="window.lmsNotify.success('Reaction added!')"
+                        >
+                          <span>🎯</span><span>Helpful</span>
+                        </button>
+                        <button
+                          class="reaction-pill"
+                          @click="window.lmsNotify.success('Reaction added!')"
+                        >
+                          <span>🤔</span><span>Interesting</span>
+                        </button>
+                        <button
+                          class="reaction-pill ms-auto btn-sm btn-outline-secondary"
+                          style="background: transparent"
+                          @click="window.lmsNotify.success('Post reported. Thank you.')"
+                        >
+                          <i class="bi bi-flag me-1"></i
+                          ><span style="font-size: 0.72rem">Report</span>
+                        </button>
+                      </div>
+                    </div>
+
+                    <!-- Replies header -->
+                    <div
+                      class="d-flex align-items-center justify-content-between px-5 py-3"
+                      style="
+                        background: var(--body-bg);
+                        border-bottom: 1px solid var(--border-color);
+                      "
+                    >
+                      <span class="fw-700" style="font-size: 0.85rem">
+                        <i class="bi bi-chat-dots me-1 text-primary"></i>
+                        <span
+                          x-text="activeThread?.replies + ' Replies'"
+                        ></span>
+                      </span>
+                      <div class="d-flex gap-1">
+                        <button
+                          class="sort-pill py-1 px-3"
+                          :class="{active:replySort==='oldest'}"
+                          @click="replySort='oldest'"
+                          style="font-size: 0.74rem"
+                        >
+                          Oldest
+                        </button>
+                        <button
+                          class="sort-pill py-1 px-3"
+                          :class="{active:replySort==='newest'}"
+                          @click="replySort='newest'"
+                          style="font-size: 0.74rem"
+                        >
+                          Newest
+                        </button>
+                        <button
+                          class="sort-pill py-1 px-3"
+                          :class="{active:replySort==='top'}"
+                          @click="replySort='top'"
+                          style="font-size: 0.74rem"
+                        >
+                          Top
+                        </button>
+                      </div>
+                    </div>
+
+                    <!-- Replies list -->
+                    <template
+                      x-for="reply in activeThread?.replyList"
+                      :key="reply.id"
+                    >
+                      <div
+                        class="reply-card"
+                        :class="{'accepted-answer': reply.accepted}"
+                      >
+                        <div class="d-flex gap-3">
+                          <div>
+                            <img :src="reply.avatar" class="reply-avatar" />
+                          </div>
+                          <div class="flex-grow-1">
+                            <div
+                              class="d-flex align-items-center gap-2 mb-1 flex-wrap"
+                            >
+                              <span
+                                class="fw-700"
+                                style="font-size: 0.84rem"
+                                x-text="reply.name"
+                              ></span>
+                              <span
+                                class="badge bg-primary bg-opacity-10 text-primary"
+                                style="font-size: 0.65rem"
+                                x-show="reply.isInstructor"
+                                >Instructor</span
+                              >
+                              <span
+                                class="badge"
+                                style="
+                                  background: rgba(16, 185, 129, 0.15);
+                                  color: #10b981;
+                                  font-size: 0.65rem;
+                                "
+                                x-show="reply.accepted"
+                                >✅ Accepted Answer</span
+                              >
+                              <span
+                                class="text-muted ms-auto"
+                                style="font-size: 0.72rem"
+                                x-text="reply.timeAgo"
+                              ></span>
+                            </div>
+                            <div
+                              style="
+                                font-size: 0.86rem;
+                                line-height: 1.7;
+                                margin-bottom: 10px;
+                              "
+                              x-text="reply.content"
+                            ></div>
+                            <div class="d-flex align-items-center gap-3">
+                              <button
+                                class="reaction-pill"
+                                :class="{active:reply.liked}"
+                                @click="likeReply(reply)"
+                                style="padding: 2px 8px"
+                              >
+                                <span>👍</span
+                                ><span x-text="reply.likes"></span>
+                              </button>
+                              <button
+                                class="reaction-pill"
+                                @click="quoteReply(reply)"
+                                style="padding: 2px 8px"
+                              >
+                                <i class="bi bi-quote me-1"></i
+                                ><span style="font-size: 0.72rem">Quote</span>
+                              </button>
+                              <button
+                                class="reaction-pill"
+                                @click="window.lmsNotify.success('Reply reported.')"
+                                style="padding: 2px 8px"
+                              >
+                                <i class="bi bi-flag me-1"></i
+                                ><span style="font-size: 0.72rem">Report</span>
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </template>
+
+                    <!-- Reply composer -->
+                    <div
+                      class="p-4"
+                      style="border-top: 1px solid var(--border-color)"
+                    >
+                      <div class="fw-700 mb-3" style="font-size: 0.88rem">
+                        <i class="bi bi-reply me-1 text-primary"></i>Post a
+                        Reply
+                      </div>
+                      <div id="replyEditor"></div>
+                      <div
+                        class="d-flex justify-content-between align-items-center mt-3 flex-wrap gap-2"
+                      >
+                        <div class="d-flex gap-2">
+                          <button
+                            class="btn btn-outline-secondary btn-sm"
+                            @click="attachFile()"
+                            title="Attach file"
+                          >
+                            <i class="bi bi-paperclip"></i>
+                          </button>
+                          <button
+                            class="btn btn-outline-secondary btn-sm"
+                            title="Insert code block"
+                            @click="insertCodeBlock()"
+                          >
+                            <i class="bi bi-code-slash"></i>
+                          </button>
+                        </div>
+                        <div class="d-flex gap-2">
+                          <button
+                            class="btn btn-outline-secondary btn-sm"
+                            @click="activeThread = null"
+                          >
+                            Cancel
+                          </button>
+                          <button
+                            class="btn btn-primary btn-sm px-4"
+                            @click="submitReply()"
+                          >
+                            <i class="bi bi-send me-1"></i>Post Reply
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- /post detail -->
+              </div>
+              <!-- /center col -->
+
+              <!-- ══════════════════════════════════════════════════
+               RIGHT SIDEBAR
+          ══════════════════════════════════════════════════════ -->
+              <div class="col-xl-3 d-none d-xl-block">
+                <!-- My profile card -->
+                <div
+                  class="mb-3"
+                  style="
+                    background: var(--card-bg);
+                    border: 1px solid var(--border-color);
+                    border-radius: 14px;
+                    padding: 18px;
+                    text-align: center;
+                  "
+                >
+                  <img
+                    src="https://i.pravatar.cc/64?img=3"
+                    style="
+                      width: 56px;
+                      height: 56px;
+                      border-radius: 50%;
+                      border: 3px solid var(--primary);
+                      margin-bottom: 10px;
+                    "
+                  />
+                  <div class="fw-700" style="font-size: 0.9rem">
+                    Alex Thompson
+                  </div>
+                  <div class="text-muted" style="font-size: 0.75rem">
+                    Level 4 Contributor
+                  </div>
+                  <div class="d-flex justify-content-around mt-3">
+                    <div style="text-align: center">
+                      <div
+                        class="fw-800"
+                        style="font-size: 1.1rem; color: var(--primary)"
+                        x-text="myStats.threads"
+                      ></div>
+                      <div style="font-size: 0.7rem; color: var(--text-muted)">
+                        Threads
+                      </div>
+                    </div>
+                    <div style="text-align: center">
+                      <div
+                        class="fw-800"
+                        style="font-size: 1.1rem; color: #10b981"
+                        x-text="myStats.replies"
+                      ></div>
+                      <div style="font-size: 0.7rem; color: var(--text-muted)">
+                        Replies
+                      </div>
+                    </div>
+                    <div style="text-align: center">
+                      <div
+                        class="fw-800"
+                        style="font-size: 1.1rem; color: #f59e0b"
+                        x-text="myStats.points"
+                      ></div>
+                      <div style="font-size: 0.7rem; color: var(--text-muted)">
+                        Points
+                      </div>
+                    </div>
+                  </div>
+                  <!-- XP bar -->
+                  <div class="mt-3">
+                    <div
+                      class="d-flex justify-content-between mb-1"
+                      style="font-size: 0.7rem; color: var(--text-muted)"
+                    >
+                      <span>Level 4</span><span>680 / 1000 XP</span>
+                    </div>
+                    <div
+                      style="
+                        background: var(--border-color);
+                        border-radius: 8px;
+                        height: 6px;
+                      "
+                    >
+                      <div
+                        style="
+                          width: 68%;
+                          height: 100%;
+                          background: linear-gradient(90deg, #8b5cf6, #0d6efd);
+                          border-radius: 8px;
+                        "
+                      ></div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Hot topics -->
+                <div
+                  class="mb-3"
+                  style="
+                    background: var(--card-bg);
+                    border: 1px solid var(--border-color);
+                    border-radius: 14px;
+                    padding: 18px;
+                  "
+                >
+                  <div class="fw-700 mb-3" style="font-size: 0.88rem">
+                    <i class="bi bi-fire me-1 text-danger"></i>Hot Topics
+                  </div>
+                  <template x-for="(t, i) in hotTopics" :key="i">
+                    <div
+                      class="d-flex align-items-start gap-2 mb-3 cursor-pointer"
+                      @click="openThread(t)"
+                      style="cursor: pointer"
+                    >
+                      <span
+                        class="fw-800 text-muted"
+                        style="width: 18px; font-size: 0.82rem; flex-shrink: 0"
+                        x-text="(i+1) + '.'"
+                      ></span>
+                      <div>
+                        <div
+                          class="fw-600"
+                          style="font-size: 0.8rem; line-height: 1.35"
+                          x-text="t.title"
+                        ></div>
+                        <div class="text-muted" style="font-size: 0.72rem">
+                          <i class="bi bi-chat me-1"></i
+                          ><span x-text="t.replies"></span> replies
+                        </div>
+                      </div>
+                    </div>
+                  </template>
+                </div>
+
+                <!-- Leaderboard -->
+                <div
+                  style="
+                    background: var(--card-bg);
+                    border: 1px solid var(--border-color);
+                    border-radius: 14px;
+                    padding: 18px;
+                  "
+                >
+                  <div class="fw-700 mb-3" style="font-size: 0.88rem">
+                    <i class="bi bi-trophy me-1 text-warning"></i>Top
+                    Contributors
+                  </div>
+                  <template x-for="(lb, i) in leaderboard" :key="i">
+                    <div class="lb-item">
+                      <div
+                        class="lb-rank"
+                        x-text="i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : (i+1)"
+                      ></div>
+                      <img :src="lb.avatar" class="lb-av" />
+                      <div class="flex-grow-1" style="min-width: 0">
+                        <div
+                          class="fw-600 text-truncate"
+                          style="font-size: 0.8rem"
+                          x-text="lb.name"
+                        ></div>
+                        <div
+                          class="text-muted"
+                          style="font-size: 0.7rem"
+                          x-text="lb.points + ' pts'"
+                        ></div>
+                      </div>
+                      <div
+                        style="font-size: 0.7rem; color: #10b981"
+                        x-text="'+' + lb.week + ' this wk'"
+                      ></div>
+                    </div>
+                  </template>
+                </div>
+              </div>
+              <!-- /right sidebar -->
+            </div>
+            <!-- /row -->
+          </div>
+          <!-- /container -->
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════════════
+     NEW THREAD MODAL
+══════════════════════════════════════════════════════════════════ -->
+    <div class="modal fade" id="newPostModal" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+          <div class="modal-header border-0">
+            <h5 class="modal-title fw-700">
+              <i class="bi bi-pencil-square me-2 text-primary"></i>New Thread
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <div class="mb-3">
+              <label class="form-label fw-600" style="font-size: 0.82rem"
+                >Title <span class="text-danger">*</span></label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="postTitle"
+                placeholder="Summarise your question or topic clearly…"
+              />
+              <div class="form-text">
+                Be specific and clear – good titles get better answers.
+              </div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label fw-600" style="font-size: 0.82rem"
+                >Category <span class="text-danger">*</span></label
+              >
+              <select class="form-select" id="postCategory">
+                <option value="">Select category…</option>
+                <option>JavaScript</option>
+                <option>React & Next.js</option>
+                <option>Python</option>
+                <option>UI/UX Design</option>
+                <option>AWS & Cloud</option>
+                <option>Career & Jobs</option>
+                <option>General</option>
+                <option>Bug Report</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label class="form-label fw-600" style="font-size: 0.82rem"
+                >Description <span class="text-danger">*</span></label
+              >
+              <div id="newPostEditor" style="min-height: 180px"></div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label fw-600" style="font-size: 0.82rem"
+                >Tags</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="postTags"
+                placeholder="e.g. react, hooks, state-management (comma-separated)"
+              />
+            </div>
+            <div class="mb-0">
+              <label class="form-label fw-600" style="font-size: 0.82rem"
+                >Attachments</label
+              >
+              <div class="d-flex align-items-center gap-2">
+                <button
+                  class="btn btn-outline-secondary btn-sm"
+                  onclick="
+                    window.lmsNotify.success('File picker would open here.')
+                  "
+                >
+                  <i class="bi bi-paperclip me-1"></i>Attach Files
+                </button>
+                <span class="text-muted" style="font-size: 0.76rem"
+                  >Max 10 MB · PNG, JPG, PDF, ZIP</span
+                >
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer border-0">
+            <button class="btn btn-outline-secondary" data-bs-dismiss="modal">
+              Cancel
+            </button>
+            <button class="btn btn-outline-primary" onclick="saveDraft()">
+              <i class="bi bi-save me-1"></i>Save Draft
+            </button>
+            <button class="btn btn-primary" onclick="submitPost()">
+              <i class="bi bi-send me-1"></i>Publish Thread
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Scripts ──────────────────────────────────────────────────── -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
+      defer
+    ></script>
+    <script src="../assets/js/app.js"></script>
+
+    <script>
+      NProgress.configure({ showSpinner: false });
+      document.addEventListener("DOMContentLoaded", () => NProgress.start());
+      window.addEventListener("load", () => NProgress.done());
+
+      /* ── Dummy data ──────────────────────────────────────────────── */
+      const REPLIES_1 = [
+        {
+          id: "rp1",
+          name: "Prof. Daniel Kim",
+          avatar: "https://i.pravatar.cc/40?img=12",
+          isInstructor: true,
+          accepted: true,
+          liked: false,
+          likes: 34,
+          timeAgo: "2 hours ago",
+          content:
+            "Great question! The key difference is that useCallback memoizes a function reference while useMemo memoizes a computed value. Use useCallback when passing callbacks to optimized child components, and useMemo for expensive calculations that you don't want to recompute on every render.",
+        },
+        {
+          id: "rp2",
+          name: "Maria Torres",
+          avatar: "https://i.pravatar.cc/40?img=21",
+          isInstructor: false,
+          accepted: false,
+          liked: true,
+          likes: 12,
+          timeAgo: "1 hour ago",
+          content:
+            "To add to the instructor's answer — a practical rule: if you're wrapping something in React.memo, you almost certainly want useCallback for its props functions. Otherwise you're defeating the purpose of the memoization.",
+        },
+        {
+          id: "rp3",
+          name: "Liam Brooks",
+          avatar: "https://i.pravatar.cc/40?img=15",
+          isInstructor: false,
+          accepted: false,
+          liked: false,
+          likes: 7,
+          timeAgo: "45 min ago",
+          content:
+            "Also worth noting — both have a dependency array. If any dependency changes, the memoized value/function is recomputed. So make sure your dependency arrays are accurate, otherwise you'll get stale closures.",
+        },
+      ];
+
+      const REPLIES_2 = [
+        {
+          id: "rp4",
+          name: "Sarah Johnson",
+          avatar: "https://i.pravatar.cc/40?img=5",
+          isInstructor: true,
+          accepted: true,
+          liked: false,
+          likes: 28,
+          timeAgo: "3 hours ago",
+          content:
+            "AWS Lambda functions scale automatically, but there are concurrency limits per region (default 1000 concurrent executions). For your use case, I'd recommend enabling Provisioned Concurrency to eliminate cold starts, and use Lambda Layers to share common dependencies.",
+        },
+        {
+          id: "rp5",
+          name: "James Patel",
+          avatar: "https://i.pravatar.cc/40?img=33",
+          isInstructor: false,
+          accepted: false,
+          liked: false,
+          likes: 9,
+          timeAgo: "2 hours ago",
+          content:
+            "Also check your timeout settings — default is 3 seconds which is very short. Increase it based on your function's expected execution time, and set up CloudWatch alarms for errors and throttles.",
+        },
+      ];
+
+      const THREADS = [
+        {
+          id: "t1",
+          title: "When to use useCallback vs useMemo in React?",
+          category: "React & Next.js",
+          courseKey: "react",
+          authorName: "Alex Thompson",
+          authorAvatar: "https://i.pravatar.cc/40?img=3",
+          timeAgo: "5 min ago",
+          read: false,
+          pinned: false,
+          solved: true,
+          hot: true,
+          bookmarked: false,
+          liked: false,
+          replies: 3,
+          views: 142,
+          likes: 28,
+          excerpt:
+            "I keep confusing myself on when to use useCallback versus useMemo. I know both are used for performance optimisation but I can't figure out the right mental model.",
+          body: "I keep confusing myself on when to use useCallback versus useMemo. I know both are used for performance optimisation but I can't figure out the right mental model for choosing between them. Can anyone explain with a practical example? I'm working on a large list component where re-renders are causing performance issues.",
+          tags: ["react", "hooks", "performance", "memoization"],
+          replyList: REPLIES_1,
+        },
+        {
+          id: "t2",
+          title: "AWS Lambda cold starts — best practices to reduce latency",
+          category: "AWS & Cloud",
+          courseKey: "aws",
+          authorName: "Priya Sharma",
+          authorAvatar: "https://i.pravatar.cc/40?img=47",
+          timeAgo: "22 min ago",
+          read: false,
+          pinned: true,
+          solved: false,
+          hot: true,
+          bookmarked: false,
+          liked: false,
+          replies: 2,
+          views: 89,
+          likes: 19,
+          excerpt:
+            "My Lambda functions are experiencing cold start latency of 800ms–2s. This is causing timeout issues in my API Gateway. What are the best strategies to minimise cold starts?",
+          body: "My Lambda functions are experiencing cold start latency of 800ms–2s. This is causing timeout issues in my API Gateway. What are the best strategies to minimise cold starts in Node.js Lambda functions? I've tried keeping the handler small but it's still slow.",
+          tags: ["aws", "lambda", "serverless", "performance"],
+          replyList: REPLIES_2,
+        },
+        {
+          id: "t3",
+          title: "Difference between Flexbox gap and margin for spacing?",
+          category: "JavaScript",
+          courseKey: "js",
+          authorName: "Jordan Lee",
+          authorAvatar: "https://i.pravatar.cc/40?img=8",
+          timeAgo: "1 hour ago",
+          read: true,
+          pinned: false,
+          solved: false,
+          hot: false,
+          bookmarked: true,
+          liked: true,
+          replies: 5,
+          views: 203,
+          likes: 44,
+          excerpt:
+            "Should I use gap in Flexbox or margin on children for spacing? I've seen both approaches and want to understand which is more appropriate in different contexts.",
+          body: "Should I use gap in Flexbox or margin on children for spacing? I've seen both approaches and want to understand which is more appropriate in different contexts. Especially curious about responsive layouts and when margins on children might be more flexible.",
+          tags: ["css", "flexbox", "layout"],
+          replyList: [],
+        },
+        {
+          id: "t4",
+          title: "Best way to handle async errors in Python FastAPI?",
+          category: "Python",
+          courseKey: "python",
+          authorName: "Chen Wei",
+          authorAvatar: "https://i.pravatar.cc/40?img=57",
+          timeAgo: "2 hours ago",
+          read: true,
+          pinned: false,
+          solved: true,
+          hot: false,
+          bookmarked: false,
+          liked: false,
+          replies: 8,
+          views: 317,
+          likes: 56,
+          excerpt:
+            "I'm building a REST API with FastAPI and I need a clean way to handle async exceptions globally rather than try/except in every endpoint. Looking for best practice patterns.",
+          body: "I'm building a REST API with FastAPI and I need a clean way to handle async exceptions globally rather than try/except in every endpoint. Looking for best practice patterns for global exception handlers and custom error responses.",
+          tags: ["python", "fastapi", "async", "error-handling"],
+          replyList: [],
+        },
+        {
+          id: "t5",
+          title: "Figma auto-layout not respecting min-width — anyone else?",
+          category: "UI/UX Design",
+          courseKey: "ux",
+          authorName: "Aisha Nkosi",
+          authorAvatar: "https://i.pravatar.cc/40?img=24",
+          timeAgo: "3 hours ago",
+          read: true,
+          pinned: false,
+          solved: false,
+          hot: false,
+          bookmarked: false,
+          liked: false,
+          replies: 4,
+          views: 124,
+          likes: 11,
+          excerpt:
+            "I've set a min-width on my auto-layout frame but when content shrinks, it still collapses below that value. Is this a known Figma bug or am I missing something?",
+          body: "I've set a min-width on my auto-layout frame in Figma but when content shrinks, it still collapses below that value. I'm using \"Hug contents\" on the frame. Is this a known bug or am I missing a setting?",
+          tags: ["figma", "auto-layout", "design"],
+          replyList: [],
+        },
+        {
+          id: "t6",
+          title:
+            "Next.js 14 server actions — passing state from client to server?",
+          category: "React & Next.js",
+          courseKey: "react",
+          authorName: "Sam Rivera",
+          authorAvatar: "https://i.pravatar.cc/40?img=19",
+          timeAgo: "4 hours ago",
+          read: true,
+          pinned: false,
+          solved: false,
+          hot: true,
+          bookmarked: false,
+          liked: false,
+          replies: 6,
+          views: 198,
+          likes: 37,
+          excerpt:
+            "I'm using Next.js 14 server actions for form submissions but struggling to pass client-side state to the server action. The form data alone isn't enough — I also need some dynamic state from React.",
+          body: "I'm using Next.js 14 server actions for form submissions but struggling to pass client-side state to the server action. The form data alone isn't enough — I also need some dynamic state values from React. What's the cleanest approach here?",
+          tags: ["nextjs", "server-actions", "react"],
+          replyList: [],
+        },
+        {
+          id: "t7",
+          title: "[Tip] How I passed AWS Solutions Architect in 6 weeks",
+          category: "AWS & Cloud",
+          courseKey: "aws",
+          authorName: "David Park",
+          authorAvatar: "https://i.pravatar.cc/40?img=62",
+          timeAgo: "1 day ago",
+          read: true,
+          pinned: false,
+          solved: false,
+          hot: true,
+          bookmarked: true,
+          liked: true,
+          replies: 24,
+          views: 1240,
+          likes: 189,
+          excerpt:
+            "I just passed the AWS SAA-C03 exam with a score of 892/1000. Here's my full study plan, resources and tips for anyone preparing for it.",
+          body: "I just passed the AWS SAA-C03 exam with a score of 892/1000. Here's my full 6-week study plan, resources and tips for anyone preparing for it. I used a mix of the EduLearn course, official AWS whitepapers, and practice exams.",
+          tags: ["aws", "certification", "exam-tips"],
+          replyList: [],
+        },
+        {
+          id: "t8",
+          title: "Python list comprehension vs generator expression — memory?",
+          category: "Python",
+          courseKey: "python",
+          authorName: "Fatima Al-Hassan",
+          authorAvatar: "https://i.pravatar.cc/40?img=45",
+          timeAgo: "2 days ago",
+          read: true,
+          pinned: false,
+          solved: true,
+          hot: false,
+          bookmarked: false,
+          liked: false,
+          replies: 7,
+          views: 283,
+          likes: 42,
+          excerpt:
+            "I understand that generator expressions are lazy while list comprehensions are eager, but I want to understand the actual memory difference for large datasets. Can anyone benchmark this?",
+          body: "I understand that generator expressions are lazy while list comprehensions are eager, but I want to understand the actual memory difference for large datasets. Can anyone benchmark this or explain with numbers?",
+          tags: ["python", "generators", "memory", "performance"],
+          replyList: [],
+        },
+      ];
+
+      /* ── Alpine ──────────────────────────────────────────────────── */
+      function forumPage() {
+        return {
+          activeCategory: "all",
+          activeThread: null,
+          searchQuery: "",
+          sortMode: "latest",
+          replySort: "oldest",
+          replyEditor: null,
+
+          myStats: { threads: 8, replies: 31, points: 680 },
+
+          categories: [
+            { id: "all", name: "All Topics", icon: "🌐", count: 1284 },
+            { id: "react", name: "React & Next.js", icon: "⚛️", count: 312 },
+            { id: "js", name: "JavaScript", icon: "🟨", count: 298 },
+            { id: "python", name: "Python", icon: "🐍", count: 221 },
+            { id: "ux", name: "UI/UX Design", icon: "🎨", count: 187 },
+            { id: "aws", name: "AWS & Cloud", icon: "☁️", count: 143 },
+            { id: "career", name: "Career & Jobs", icon: "💼", count: 123 },
+          ],
+
+          hotTopics: THREADS.filter((t) => t.hot).slice(0, 5),
+
+          leaderboard: [
+            {
+              name: "David Park",
+              avatar: "https://i.pravatar.cc/32?img=62",
+              points: 2840,
+              week: 120,
+            },
+            {
+              name: "Prof. Daniel Kim",
+              avatar: "https://i.pravatar.cc/32?img=12",
+              points: 2410,
+              week: 95,
+            },
+            {
+              name: "Sarah Johnson",
+              avatar: "https://i.pravatar.cc/32?img=5",
+              points: 1980,
+              week: 88,
+            },
+            {
+              name: "Priya Sharma",
+              avatar: "https://i.pravatar.cc/32?img=47",
+              points: 1650,
+              week: 72,
+            },
+            {
+              name: "Alex Thompson",
+              avatar: "https://i.pravatar.cc/32?img=3",
+              points: 680,
+              week: 45,
+            },
+          ],
+
+          get filteredThreads() {
+            let list = THREADS.slice();
+
+            // Category filter
+            if (this.activeCategory === "bookmarked")
+              list = list.filter((t) => t.bookmarked);
+            else if (this.activeCategory === "my-threads")
+              list = list.filter((t) => t.authorName === "Alex Thompson");
+            else if (this.activeCategory !== "all")
+              list = list.filter((t) => t.courseKey === this.activeCategory);
+
+            // Search
+            if (this.searchQuery) {
+              const q = this.searchQuery.toLowerCase();
+              list = list.filter(
+                (t) =>
+                  t.title.toLowerCase().includes(q) ||
+                  t.excerpt.toLowerCase().includes(q) ||
+                  t.tags.some((tag) => tag.includes(q)),
+              );
+            }
+
+            // Sort
+            if (this.sortMode === "hot")
+              list = list
+                .filter((t) => t.hot)
+                .concat(list.filter((t) => !t.hot));
+            if (this.sortMode === "unanswered")
+              list = list.filter((t) => t.replies === 0);
+            if (this.sortMode === "solved") list = list.filter((t) => t.solved);
+
+            // Pinned always first
+            list.sort((a, b) => (b.pinned ? 1 : 0) - (a.pinned ? 1 : 0));
+            return list;
+          },
+
+          openThread(thread) {
+            thread.read = true;
+            this.activeThread = thread;
+            this.$nextTick(() => {
+              if (!this.replyEditor) {
+                this.replyEditor = new Quill("#replyEditor", {
+                  theme: "snow",
+                  placeholder:
+                    "Write your reply… Use code blocks for code snippets.",
+                  modules: {
+                    toolbar: [
+                      ["bold", "italic", "underline"],
+                      ["blockquote", "code-block"],
+                      [{ list: "ordered" }, { list: "bullet" }],
+                      ["link"],
+                      ["clean"],
+                    ],
+                  },
+                });
+              }
+              window.scrollTo({ top: 0, behavior: "smooth" });
+            });
+          },
+
+          openNewPost() {
+            const modal = new bootstrap.Modal(
+              document.getElementById("newPostModal"),
+            );
+            modal.show();
+            setTimeout(() => {
+              if (!window._newPostQuill) {
+                window._newPostQuill = new Quill("#newPostEditor", {
+                  theme: "snow",
+                  placeholder:
+                    "Describe your question or topic in detail. Include code snippets if relevant.",
+                  modules: {
+                    toolbar: [
+                      ["bold", "italic", "underline"],
+                      ["blockquote", "code-block"],
+                      [{ list: "ordered" }, { list: "bullet" }],
+                      ["link", "image"],
+                      ["clean"],
+                    ],
+                  },
+                });
+              }
+            }, 300);
+          },
+
+          submitReply() {
+            const content = this.replyEditor?.getText().trim();
+            if (!content) {
+              window.lmsNotify.error("Please write something before posting.");
+              return;
+            }
+            const newReply = {
+              id: "rp_" + Date.now(),
+              name: "Alex Thompson",
+              avatar: "https://i.pravatar.cc/40?img=3",
+              isInstructor: false,
+              accepted: false,
+              liked: false,
+              likes: 0,
+              timeAgo: "just now",
+              content: content,
+            };
+            this.activeThread.replyList.push(newReply);
+            this.activeThread.replies++;
+            this.myStats.replies++;
+            this.myStats.points += 10;
+            this.replyEditor.setText("");
+            window.lmsNotify.success("Reply posted! +10 points earned.");
+          },
+
+          likeThread(thread) {
+            thread.liked = !thread.liked;
+            thread.likes += thread.liked ? 1 : -1;
+          },
+
+          likeReply(reply) {
+            reply.liked = !reply.liked;
+            reply.likes += reply.liked ? 1 : -1;
+          },
+
+          bookmarkThread(thread) {
+            thread.bookmarked = !thread.bookmarked;
+            window.lmsNotify.success(
+              thread.bookmarked
+                ? "Thread saved to bookmarks."
+                : "Removed from bookmarks.",
+            );
+          },
+
+          shareThread(thread) {
+            navigator.clipboard
+              ?.writeText(`https://edulearn.io/forum/thread/${thread.id}`)
+              .catch(() => {});
+            window.lmsNotify.success("Thread link copied to clipboard!");
+          },
+
+          quoteReply(reply) {
+            if (this.replyEditor) {
+              const quoted = `> ${reply.name}: "${reply.content.substring(0, 80)}…"\n\n`;
+              this.replyEditor.setText(quoted);
+              document
+                .getElementById("replyEditor")
+                .scrollIntoView({ behavior: "smooth" });
+            }
+          },
+
+          attachFile() {
+            window.lmsNotify.success("File picker would open here.");
+          },
+          insertCodeBlock() {
+            if (this.replyEditor) {
+              const len = this.replyEditor.getLength();
+              this.replyEditor.insertText(
+                len - 1,
+                "\n```\n// your code here\n```\n",
+              );
+            }
+          },
+
+          loadMore() {
+            window.lmsNotify.success("Loading more threads…");
+          },
+        };
+      }
+
+      /* ── New post helpers ─────────────────────────────────────────── */
+      function submitPost() {
+        const title = document.getElementById("postTitle").value.trim();
+        const category = document.getElementById("postCategory").value;
+        const content = window._newPostQuill?.getText().trim();
+
+        if (!title) {
+          window.lmsNotify.error("Please enter a thread title.");
+          return;
+        }
+        if (!category) {
+          window.lmsNotify.error("Please select a category.");
+          return;
+        }
+        if (!content) {
+          window.lmsNotify.error("Please write a description.");
+          return;
+        }
+
+        bootstrap.Modal.getInstance(
+          document.getElementById("newPostModal"),
+        )?.hide();
+        window.lmsNotify.success("Thread published! +25 points earned.");
+      }
+
+      function saveDraft() {
+        bootstrap.Modal.getInstance(
+          document.getElementById("newPostModal"),
+        )?.hide();
+        window.lmsNotify.success(
+          "Draft saved. You can continue editing later.",
+        );
+      }
+
+      /* ── Load sidebar + navbar ─────────────────────────────────────── */
+      document.addEventListener("DOMContentLoaded", () => {
+        fetch("../components/student-sidebar.html")
+          .then((r) => r.text())
+          .then((html) => {
+            const el = document.getElementById("sidebar-placeholder");
+            el.innerHTML = html;
+            Alpine.initTree(el);
+            el.querySelectorAll(".sidebar-nav-item").forEach((it) => {
+              it.classList.remove("active");
+              if (it.querySelector("a")?.href.includes("forum"))
+                it.classList.add("active");
+            });
+          });
+
+        fetch("../components/student-navbar.html")
+          .then((r) => r.text())
+          .then((html) => {
+            const el = document.getElementById("navbar-placeholder");
+            el.innerHTML = html;
+            Alpine.initTree(el);
+            const t = document.getElementById("navbarPageTitle");
+            const b = document.getElementById("navbarBreadcrumbCurrent");
+            if (t) t.textContent = "Community Forum";
+            if (b) b.textContent = "Forum";
+          });
+      });
+    </script>
+  </body>
+</html>

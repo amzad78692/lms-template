@@ -1,0 +1,1539 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Coming Soon — EduLearn LMS</title>
+    <meta
+      name="description"
+      content="EduLearn is launching soon! The next-generation learning management system. Sign up to get notified."
+    />
+
+    <!-- Bootstrap 5.3 -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    />
+    <!-- Bootstrap Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css"
+    />
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <!-- NProgress -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.css"
+    />
+    <!-- Notyf -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css"
+    />
+
+    <style>
+      :root {
+        --primary: #6366f1;
+        --primary-dark: #4f46e5;
+        --primary-light: #818cf8;
+        --accent: #06b6d4;
+        --accent2: #8b5cf6;
+        --gold: #f59e0b;
+        --bg: #080c1a;
+        --card: rgba(255, 255, 255, 0.06);
+        --card-border: rgba(255, 255, 255, 0.1);
+        --text: #f1f5f9;
+        --text-muted: #94a3b8;
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        font-family: "Poppins", sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+
+      /* ══════════════════════════════
+       ANIMATED GRADIENT BACKGROUND
+    ══════════════════════════════ */
+      .bg-canvas {
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+        background: linear-gradient(
+          135deg,
+          #080c1a 0%,
+          #0f1535 40%,
+          #0a0f28 70%,
+          #0d1020 100%
+        );
+      }
+      /* Animated orbs */
+      .orb {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(80px);
+        opacity: 0.25;
+        animation: orbFloat 12s ease-in-out infinite alternate;
+      }
+      .orb-1 {
+        width: 600px;
+        height: 600px;
+        background: radial-gradient(circle, #6366f1, transparent);
+        top: -15%;
+        left: -10%;
+        animation-duration: 14s;
+      }
+      .orb-2 {
+        width: 500px;
+        height: 500px;
+        background: radial-gradient(circle, #06b6d4, transparent);
+        top: 20%;
+        right: -15%;
+        animation-duration: 10s;
+        animation-delay: 2s;
+      }
+      .orb-3 {
+        width: 400px;
+        height: 400px;
+        background: radial-gradient(circle, #8b5cf6, transparent);
+        bottom: 0;
+        left: 30%;
+        animation-duration: 16s;
+        animation-delay: 4s;
+      }
+      .orb-4 {
+        width: 300px;
+        height: 300px;
+        background: radial-gradient(circle, #ec4899, transparent);
+        bottom: 20%;
+        right: 5%;
+        animation-duration: 12s;
+        animation-delay: 1s;
+      }
+      @keyframes orbFloat {
+        0% {
+          transform: translate(0, 0) scale(1);
+        }
+        100% {
+          transform: translate(30px, 40px) scale(1.1);
+        }
+      }
+      /* Star field */
+      .stars {
+        position: absolute;
+        inset: 0;
+        background-image:
+          radial-gradient(
+            1px 1px at 10% 20%,
+            rgba(255, 255, 255, 0.6) 0%,
+            transparent 100%
+          ),
+          radial-gradient(
+            1px 1px at 25% 65%,
+            rgba(255, 255, 255, 0.5) 0%,
+            transparent 100%
+          ),
+          radial-gradient(
+            1.5px 1.5px at 40% 10%,
+            rgba(255, 255, 255, 0.7) 0%,
+            transparent 100%
+          ),
+          radial-gradient(
+            1px 1px at 55% 80%,
+            rgba(255, 255, 255, 0.4) 0%,
+            transparent 100%
+          ),
+          radial-gradient(
+            1px 1px at 70% 35%,
+            rgba(255, 255, 255, 0.6) 0%,
+            transparent 100%
+          ),
+          radial-gradient(
+            1.5px 1.5px at 80% 15%,
+            rgba(255, 255, 255, 0.5) 0%,
+            transparent 100%
+          ),
+          radial-gradient(
+            1px 1px at 90% 70%,
+            rgba(255, 255, 255, 0.4) 0%,
+            transparent 100%
+          ),
+          radial-gradient(
+            1px 1px at 15% 90%,
+            rgba(255, 255, 255, 0.5) 0%,
+            transparent 100%
+          ),
+          radial-gradient(
+            1px 1px at 60% 50%,
+            rgba(255, 255, 255, 0.3) 0%,
+            transparent 100%
+          ),
+          radial-gradient(
+            1px 1px at 35% 40%,
+            rgba(255, 255, 255, 0.4) 0%,
+            transparent 100%
+          ),
+          radial-gradient(
+            1px 1px at 85% 55%,
+            rgba(255, 255, 255, 0.6) 0%,
+            transparent 100%
+          ),
+          radial-gradient(
+            1px 1px at 5% 50%,
+            rgba(255, 255, 255, 0.3) 0%,
+            transparent 100%
+          ),
+          radial-gradient(
+            1.5px 1.5px at 48% 28%,
+            rgba(255, 255, 255, 0.5) 0%,
+            transparent 100%
+          ),
+          radial-gradient(
+            1px 1px at 92% 88%,
+            rgba(255, 255, 255, 0.4) 0%,
+            transparent 100%
+          ),
+          radial-gradient(
+            1px 1px at 72% 92%,
+            rgba(255, 255, 255, 0.5) 0%,
+            transparent 100%
+          );
+        animation: starsTwinkle 8s ease-in-out infinite alternate;
+      }
+      @keyframes starsTwinkle {
+        0% {
+          opacity: 0.7;
+        }
+        100% {
+          opacity: 1;
+        }
+      }
+
+      /* ══════════════════════════════
+       LAYOUT
+    ══════════════════════════════ */
+      .page-wrapper {
+        position: relative;
+        z-index: 1;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      /* ══════════════════════════════
+       TOP BAR
+    ══════════════════════════════ */
+      .topbar {
+        width: 100%;
+        max-width: 1100px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1.75rem 2rem 0;
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        text-decoration: none;
+      }
+      .brand-icon {
+        width: 40px;
+        height: 40px;
+        background: linear-gradient(135deg, var(--primary), var(--accent));
+        border-radius: 0.6rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.1rem;
+        color: #fff;
+      }
+      .brand-name {
+        font-size: 1.3rem;
+        font-weight: 800;
+        background: linear-gradient(135deg, #fff, var(--primary-light));
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      .topbar-badge {
+        background: linear-gradient(135deg, var(--primary), var(--accent2));
+        color: #fff;
+        padding: 0.35rem 0.9rem;
+        border-radius: 50px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        animation: badgePulse 2.5s ease-in-out infinite;
+      }
+      @keyframes badgePulse {
+        0%,
+        100% {
+          box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.5);
+        }
+        50% {
+          box-shadow: 0 0 0 8px rgba(99, 102, 241, 0);
+        }
+      }
+
+      /* ══════════════════════════════
+       HERO SECTION
+    ══════════════════════════════ */
+      .hero {
+        width: 100%;
+        max-width: 900px;
+        text-align: center;
+        padding: 3.5rem 2rem 0;
+      }
+      .launch-label {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: rgba(99, 102, 241, 0.15);
+        border: 1px solid rgba(99, 102, 241, 0.3);
+        color: var(--primary-light);
+        padding: 0.4rem 1rem;
+        border-radius: 50px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+        margin-bottom: 1.5rem;
+      }
+      .launch-dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--primary-light);
+        animation: dotPulse 1.4s ease-in-out infinite;
+      }
+      @keyframes dotPulse {
+        0%,
+        100% {
+          opacity: 1;
+          transform: scale(1);
+        }
+        50% {
+          opacity: 0.4;
+          transform: scale(0.6);
+        }
+      }
+      .hero-title {
+        font-size: clamp(2.5rem, 7vw, 5.5rem);
+        font-weight: 900;
+        line-height: 1.05;
+        letter-spacing: -2px;
+        margin-bottom: 1.25rem;
+      }
+      .hero-title .line1 {
+        display: block;
+        background: linear-gradient(135deg, #fff 0%, #cbd5e1 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      .hero-title .line2 {
+        display: block;
+        background: linear-gradient(
+          135deg,
+          var(--primary-light),
+          var(--accent),
+          var(--accent2)
+        );
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: gradientShift 4s ease-in-out infinite alternate;
+        background-size: 200%;
+      }
+      @keyframes gradientShift {
+        0% {
+          background-position: 0% 50%;
+        }
+        100% {
+          background-position: 100% 50%;
+        }
+      }
+      .hero-sub {
+        font-size: 1.05rem;
+        color: var(--text-muted);
+        line-height: 1.7;
+        max-width: 580px;
+        margin: 0 auto 2.5rem;
+        font-weight: 300;
+      }
+      .hero-sub strong {
+        color: var(--text);
+        font-weight: 600;
+      }
+
+      /* ══════════════════════════════
+       COUNTDOWN
+    ══════════════════════════════ */
+      .countdown-wrap {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        justify-content: center;
+        margin-bottom: 3rem;
+      }
+      .countdown-unit {
+        background: var(--card);
+        border: 1px solid var(--card-border);
+        border-radius: 1rem;
+        padding: 1.25rem 1.5rem;
+        min-width: 100px;
+        text-align: center;
+        backdrop-filter: blur(12px);
+        position: relative;
+        overflow: hidden;
+        transition:
+          transform 0.2s,
+          border-color 0.2s;
+      }
+      .countdown-unit::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: linear-gradient(90deg, var(--primary), var(--accent));
+        border-radius: 1rem 1rem 0 0;
+      }
+      .countdown-unit:hover {
+        transform: translateY(-4px);
+        border-color: rgba(99, 102, 241, 0.4);
+      }
+      .countdown-number {
+        font-size: 2.8rem;
+        font-weight: 800;
+        line-height: 1;
+        background: linear-gradient(135deg, #fff, var(--primary-light));
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        display: block;
+        transition: all 0.3s;
+      }
+      .countdown-label {
+        font-size: 0.7rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        color: var(--text-muted);
+        display: block;
+        margin-top: 0.3rem;
+      }
+      .countdown-sep {
+        display: flex;
+        align-items: center;
+        font-size: 2rem;
+        font-weight: 700;
+        color: var(--primary-light);
+        opacity: 0.5;
+        animation: sepBlink 1s ease-in-out infinite;
+        padding-bottom: 0.5rem;
+      }
+      @keyframes sepBlink {
+        0%,
+        100% {
+          opacity: 0.5;
+        }
+        50% {
+          opacity: 0.1;
+        }
+      }
+
+      /* ══════════════════════════════
+       PROGRESS BAR
+    ══════════════════════════════ */
+      .progress-section {
+        width: 100%;
+        max-width: 520px;
+        margin: 0 auto 3rem;
+        padding: 0 2rem;
+      }
+      .progress-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 0.75rem;
+      }
+      .progress-label {
+        font-size: 0.83rem;
+        font-weight: 600;
+        color: var(--text-muted);
+      }
+      .progress-pct {
+        font-size: 0.83rem;
+        font-weight: 700;
+        background: linear-gradient(
+          135deg,
+          var(--primary-light),
+          var(--accent)
+        );
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      .progress-track {
+        height: 8px;
+        background: rgba(255, 255, 255, 0.08);
+        border-radius: 50px;
+        overflow: hidden;
+      }
+      .progress-fill {
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          var(--primary),
+          var(--accent),
+          var(--accent2)
+        );
+        border-radius: 50px;
+        background-size: 200%;
+        animation: progressShimmer 2.5s linear infinite;
+      }
+      @keyframes progressShimmer {
+        0% {
+          background-position: 0% 50%;
+        }
+        100% {
+          background-position: 200% 50%;
+        }
+      }
+      .progress-milestones {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 0.6rem;
+      }
+      .milestone {
+        font-size: 0.68rem;
+        color: var(--text-muted);
+        display: flex;
+        align-items: center;
+        gap: 0.3rem;
+      }
+      .milestone.done {
+        color: var(--accent);
+      }
+      .milestone i {
+        font-size: 0.65rem;
+      }
+
+      /* ══════════════════════════════
+       EMAIL SUBSCRIBE
+    ══════════════════════════════ */
+      .subscribe-section {
+        width: 100%;
+        max-width: 520px;
+        margin: 0 auto 1rem;
+        padding: 0 2rem;
+      }
+      .subscribe-label {
+        font-size: 0.82rem;
+        font-weight: 600;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+        margin-bottom: 0.75rem;
+        text-align: center;
+      }
+      .subscribe-form {
+        display: flex;
+        gap: 0.5rem;
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid var(--card-border);
+        border-radius: 50px;
+        padding: 0.35rem 0.35rem 0.35rem 1.25rem;
+        backdrop-filter: blur(12px);
+        transition:
+          border-color 0.2s,
+          box-shadow 0.2s;
+      }
+      .subscribe-form:focus-within {
+        border-color: rgba(99, 102, 241, 0.5);
+        box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+      }
+      .subscribe-input {
+        flex: 1;
+        background: transparent;
+        border: none;
+        outline: none;
+        color: var(--text);
+        font-family: "Poppins", sans-serif;
+        font-size: 0.9rem;
+        min-width: 0;
+      }
+      .subscribe-input::placeholder {
+        color: var(--text-muted);
+      }
+      .subscribe-btn {
+        background: linear-gradient(
+          135deg,
+          var(--primary),
+          var(--primary-dark)
+        );
+        color: #fff;
+        border: none;
+        border-radius: 50px;
+        padding: 0.65rem 1.5rem;
+        font-family: "Poppins", sans-serif;
+        font-size: 0.87rem;
+        font-weight: 600;
+        cursor: pointer;
+        white-space: nowrap;
+        display: flex;
+        align-items: center;
+        gap: 0.45rem;
+        transition: all 0.2s;
+      }
+      .subscribe-btn:hover {
+        transform: scale(1.04);
+        box-shadow: 0 8px 20px rgba(99, 102, 241, 0.4);
+      }
+      .subscribe-btn:disabled {
+        opacity: 0.7;
+        cursor: not-allowed;
+        transform: none;
+      }
+      .subscriber-count {
+        text-align: center;
+        font-size: 0.78rem;
+        color: var(--text-muted);
+        margin-top: 0.75rem;
+      }
+      .subscriber-count strong {
+        color: var(--accent);
+      }
+
+      /* ══════════════════════════════
+       SOCIAL LINKS
+    ══════════════════════════════ */
+      .social-section {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        justify-content: center;
+        margin: 1.75rem 0;
+      }
+      .social-label {
+        font-size: 0.75rem;
+        color: var(--text-muted);
+        font-weight: 500;
+        letter-spacing: 0.5px;
+      }
+      .social-links {
+        display: flex;
+        gap: 0.6rem;
+      }
+      .social-btn {
+        width: 38px;
+        height: 38px;
+        border-radius: 0.6rem;
+        background: var(--card);
+        border: 1px solid var(--card-border);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--text-muted);
+        font-size: 1rem;
+        text-decoration: none;
+        transition: all 0.2s;
+        backdrop-filter: blur(12px);
+      }
+      .social-btn:hover {
+        color: #fff;
+        transform: translateY(-3px);
+      }
+      .social-btn.twitter:hover {
+        background: #1da1f2;
+        border-color: #1da1f2;
+      }
+      .social-btn.linkedin:hover {
+        background: #0a66c2;
+        border-color: #0a66c2;
+      }
+      .social-btn.youtube:hover {
+        background: #ff0000;
+        border-color: #ff0000;
+      }
+      .social-btn.instagram:hover {
+        background: linear-gradient(
+          135deg,
+          #f09433,
+          #e6683c,
+          #dc2743,
+          #cc2366,
+          #bc1888
+        );
+        border-color: #bc1888;
+      }
+      .social-btn.github:hover {
+        background: #333;
+        border-color: #666;
+      }
+
+      /* ══════════════════════════════
+       FEATURES
+    ══════════════════════════════ */
+      .features-section {
+        width: 100%;
+        max-width: 1000px;
+        padding: 0 2rem 1rem;
+        margin-top: 1rem;
+      }
+      .features-heading {
+        text-align: center;
+        font-size: 0.72rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        color: var(--text-muted);
+        margin-bottom: 1.5rem;
+      }
+      .features-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 1rem;
+      }
+      .feature-card {
+        background: var(--card);
+        border: 1px solid var(--card-border);
+        border-radius: 1rem;
+        padding: 1.5rem;
+        backdrop-filter: blur(12px);
+        position: relative;
+        overflow: hidden;
+        transition:
+          transform 0.25s,
+          border-color 0.25s,
+          box-shadow 0.25s;
+      }
+      .feature-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        opacity: 0;
+        transition: opacity 0.3s;
+        border-radius: 1rem;
+      }
+      .feature-card:hover {
+        transform: translateY(-5px);
+      }
+      .feature-card:hover::before {
+        opacity: 1;
+      }
+
+      .feature-card.card-purple::before {
+        background: radial-gradient(
+          ellipse at top left,
+          rgba(99, 102, 241, 0.12),
+          transparent 60%
+        );
+      }
+      .feature-card.card-cyan::before {
+        background: radial-gradient(
+          ellipse at top left,
+          rgba(6, 182, 212, 0.12),
+          transparent 60%
+        );
+      }
+      .feature-card.card-violet::before {
+        background: radial-gradient(
+          ellipse at top left,
+          rgba(139, 92, 246, 0.12),
+          transparent 60%
+        );
+      }
+
+      .feature-card:hover {
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+      }
+      .feature-card.card-purple:hover {
+        border-color: rgba(99, 102, 241, 0.4);
+      }
+      .feature-card.card-cyan:hover {
+        border-color: rgba(6, 182, 212, 0.4);
+      }
+      .feature-card.card-violet:hover {
+        border-color: rgba(139, 92, 246, 0.4);
+      }
+
+      .feature-icon {
+        width: 48px;
+        height: 48px;
+        border-radius: 0.75rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.4rem;
+        margin-bottom: 1rem;
+      }
+      .feature-icon.ic-purple {
+        background: rgba(99, 102, 241, 0.2);
+        color: var(--primary-light);
+      }
+      .feature-icon.ic-cyan {
+        background: rgba(6, 182, 212, 0.2);
+        color: var(--accent);
+      }
+      .feature-icon.ic-violet {
+        background: rgba(139, 92, 246, 0.2);
+        color: var(--accent2);
+      }
+
+      .feature-tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.3rem;
+        font-size: 0.67rem;
+        font-weight: 600;
+        padding: 0.2rem 0.6rem;
+        border-radius: 50px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 0.75rem;
+      }
+      .tag-purple {
+        background: rgba(99, 102, 241, 0.15);
+        color: var(--primary-light);
+        border: 1px solid rgba(99, 102, 241, 0.2);
+      }
+      .tag-cyan {
+        background: rgba(6, 182, 212, 0.15);
+        color: var(--accent);
+        border: 1px solid rgba(6, 182, 212, 0.2);
+      }
+      .tag-violet {
+        background: rgba(139, 92, 246, 0.15);
+        color: var(--accent2);
+        border: 1px solid rgba(139, 92, 246, 0.2);
+      }
+
+      .feature-title {
+        font-size: 1rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+        color: var(--text);
+      }
+      .feature-desc {
+        font-size: 0.83rem;
+        color: var(--text-muted);
+        line-height: 1.6;
+      }
+      .feature-points {
+        list-style: none;
+        margin-top: 0.75rem;
+      }
+      .feature-points li {
+        font-size: 0.8rem;
+        color: var(--text-muted);
+        display: flex;
+        align-items: flex-start;
+        gap: 0.5rem;
+        margin-bottom: 0.35rem;
+      }
+      .feature-points li i {
+        color: var(--accent);
+        flex-shrink: 0;
+        margin-top: 2px;
+      }
+      .feature-eta {
+        margin-top: 1rem;
+        font-size: 0.72rem;
+        font-weight: 600;
+        color: var(--text-muted);
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+      }
+      .eta-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        flex-shrink: 0;
+      }
+
+      /* ══════════════════════════════
+       STATS STRIP
+    ══════════════════════════════ */
+      .stats-strip {
+        width: 100%;
+        max-width: 860px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1.5rem 3rem;
+        padding: 1.5rem 2rem;
+        margin: 0.5rem 0;
+      }
+      .stat-item {
+        text-align: center;
+      }
+      .stat-value {
+        font-size: 1.8rem;
+        font-weight: 800;
+        background: linear-gradient(135deg, #fff, var(--primary-light));
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        line-height: 1;
+        display: block;
+      }
+      .stat-label {
+        font-size: 0.75rem;
+        color: var(--text-muted);
+        margin-top: 0.2rem;
+        font-weight: 500;
+      }
+      .stat-divider {
+        width: 1px;
+        background: var(--card-border);
+        align-self: stretch;
+        min-height: 40px;
+      }
+
+      /* ══════════════════════════════
+       FOOTER
+    ══════════════════════════════ */
+      .page-footer {
+        width: 100%;
+        max-width: 900px;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.75rem;
+        padding: 1.5rem 2rem 2.5rem;
+        font-size: 0.78rem;
+        color: var(--text-muted);
+        border-top: 1px solid rgba(255, 255, 255, 0.06);
+        margin-top: 1rem;
+      }
+      .page-footer a {
+        color: var(--text-muted);
+        text-decoration: none;
+        transition: color 0.2s;
+      }
+      .page-footer a:hover {
+        color: var(--primary-light);
+      }
+      .footer-links {
+        display: flex;
+        gap: 1.5rem;
+        flex-wrap: wrap;
+      }
+
+      /* ══════════════════════════════
+       NPROGRESS OVERRIDE
+    ══════════════════════════════ */
+      #nprogress .bar {
+        background: linear-gradient(90deg, var(--primary), var(--accent));
+      }
+      #nprogress .peg {
+        box-shadow:
+          0 0 10px var(--primary),
+          0 0 5px var(--primary);
+      }
+
+      /* ══════════════════════════════
+       RESPONSIVE
+    ══════════════════════════════ */
+      @media (max-width: 640px) {
+        .topbar {
+          padding: 1.25rem 1.25rem 0;
+        }
+        .hero {
+          padding: 2rem 1.25rem 0;
+        }
+        .countdown-unit {
+          min-width: 72px;
+          padding: 1rem;
+        }
+        .countdown-number {
+          font-size: 2rem;
+        }
+        .subscribe-section,
+        .progress-section {
+          padding: 0 1.25rem;
+        }
+        .features-section {
+          padding: 0 1.25rem 1rem;
+        }
+        .countdown-sep {
+          display: none;
+        }
+        .stat-divider {
+          display: none;
+        }
+        .page-footer {
+          flex-direction: column;
+          align-items: center;
+          text-align: center;
+          padding: 1.5rem 1.25rem 2.5rem;
+        }
+        .social-section {
+          flex-direction: column;
+          gap: 0.6rem;
+        }
+      }
+      @media (max-width: 400px) {
+        .subscribe-form {
+          flex-direction: column;
+          border-radius: 1rem;
+          padding: 0.75rem;
+        }
+        .subscribe-btn {
+          justify-content: center;
+          border-radius: 0.75rem;
+        }
+      }
+    </style>
+  </head>
+  <body x-data="comingSoon()">
+    <!-- Animated Background -->
+    <div class="bg-canvas" aria-hidden="true">
+      <div class="orb orb-1"></div>
+      <div class="orb orb-2"></div>
+      <div class="orb orb-3"></div>
+      <div class="orb orb-4"></div>
+      <div class="stars"></div>
+    </div>
+
+    <!-- Page Wrapper -->
+    <div class="page-wrapper">
+      <!-- ── Top Bar ── -->
+      <nav class="topbar">
+        <a href="index.html" class="brand">
+          <span class="brand-icon"><i class="bi bi-mortarboard-fill"></i></span>
+          <span class="brand-name">EduLearn</span>
+        </a>
+        <span class="topbar-badge">
+          <i class="bi bi-rocket-takeoff-fill"></i>&nbsp; Launching April 1,
+          2026
+        </span>
+      </nav>
+
+      <!-- ── Hero ── -->
+      <section class="hero">
+        <div class="launch-label">
+          <span class="launch-dot"></span>
+          Something big is coming
+        </div>
+
+        <h1 class="hero-title">
+          <span class="line1">The Future of</span>
+          <span class="line2">Learning is Here</span>
+        </h1>
+
+        <p class="hero-sub">
+          We're putting the finishing touches on
+          <strong>EduLearn 2.0</strong> &mdash; a smarter, faster, and more
+          immersive learning platform. AI-powered paths, live cohort sessions,
+          and a community built for curious minds.
+        </p>
+      </section>
+
+      <!-- ── Countdown ── -->
+      <div class="countdown-wrap" role="timer" aria-label="Time until launch">
+        <div class="countdown-unit">
+          <span class="countdown-number" x-text="pad(time.days)">05</span>
+          <span class="countdown-label">Days</span>
+        </div>
+        <span class="countdown-sep">:</span>
+        <div class="countdown-unit">
+          <span class="countdown-number" x-text="pad(time.hours)">12</span>
+          <span class="countdown-label">Hours</span>
+        </div>
+        <span class="countdown-sep">:</span>
+        <div class="countdown-unit">
+          <span class="countdown-number" x-text="pad(time.minutes)">34</span>
+          <span class="countdown-label">Minutes</span>
+        </div>
+        <span class="countdown-sep">:</span>
+        <div class="countdown-unit">
+          <span class="countdown-number" x-text="pad(time.seconds)">56</span>
+          <span class="countdown-label">Seconds</span>
+        </div>
+      </div>
+
+      <!-- ── Progress Bar ── -->
+      <div class="progress-section">
+        <div class="progress-header">
+          <span class="progress-label">🚀 Launch Readiness</span>
+          <span class="progress-pct">72% Complete</span>
+        </div>
+        <div
+          class="progress-track"
+          role="progressbar"
+          aria-valuenow="72"
+          aria-valuemin="0"
+          aria-valuemax="100"
+        >
+          <div class="progress-fill" style="width: 72%"></div>
+        </div>
+        <div class="progress-milestones">
+          <span class="milestone done"
+            ><i class="bi bi-check-circle-fill"></i> Design</span
+          >
+          <span class="milestone done"
+            ><i class="bi bi-check-circle-fill"></i> Backend</span
+          >
+          <span class="milestone done"
+            ><i class="bi bi-check-circle-fill"></i> Auth</span
+          >
+          <span class="milestone"
+            ><i class="bi bi-circle-half"></i> AI Engine</span
+          >
+          <span class="milestone"><i class="bi bi-circle"></i> QA</span>
+          <span class="milestone"><i class="bi bi-circle"></i> Launch</span>
+        </div>
+      </div>
+
+      <!-- ── Subscribe ── -->
+      <div class="subscribe-section">
+        <p class="subscribe-label">
+          <i class="bi bi-bell-fill" style="color: var(--gold)"></i> &nbsp;Get
+          notified on launch day
+        </p>
+        <div class="subscribe-form">
+          <input
+            class="subscribe-input"
+            type="email"
+            placeholder="Enter your email address..."
+            x-model="email"
+            @keydown.enter="subscribe()"
+            :disabled="subscribed"
+          />
+          <button
+            class="subscribe-btn"
+            @click="subscribe()"
+            :disabled="subscribing || subscribed"
+          >
+            <template x-if="!subscribing && !subscribed">
+              <span style="display: flex; align-items: center; gap: 0.4rem">
+                <i class="bi bi-send-fill"></i> Notify Me
+              </span>
+            </template>
+            <template x-if="subscribing">
+              <span style="display: flex; align-items: center; gap: 0.4rem">
+                <span class="spinner-border spinner-border-sm"></span>
+                Sending...
+              </span>
+            </template>
+            <template x-if="subscribed">
+              <span style="display: flex; align-items: center; gap: 0.4rem">
+                <i class="bi bi-check-lg"></i> You're In!
+              </span>
+            </template>
+          </button>
+        </div>
+        <p class="subscriber-count">
+          Join
+          <strong x-text="subscriberCount.toLocaleString()">4,218</strong> early
+          subscribers already on the waitlist.
+          <span style="color: var(--text-muted)"> &nbsp;No spam, ever.</span>
+        </p>
+      </div>
+
+      <!-- ── Social ── -->
+      <div class="social-section">
+        <span class="social-label">Follow us</span>
+        <div class="social-links">
+          <a
+            href="#"
+            class="social-btn twitter"
+            title="Follow on X / Twitter"
+            aria-label="X / Twitter"
+          >
+            <i class="bi bi-twitter-x"></i>
+          </a>
+          <a
+            href="#"
+            class="social-btn linkedin"
+            title="Follow on LinkedIn"
+            aria-label="LinkedIn"
+          >
+            <i class="bi bi-linkedin"></i>
+          </a>
+          <a
+            href="#"
+            class="social-btn youtube"
+            title="Subscribe on YouTube"
+            aria-label="YouTube"
+          >
+            <i class="bi bi-youtube"></i>
+          </a>
+          <a
+            href="#"
+            class="social-btn instagram"
+            title="Follow on Instagram"
+            aria-label="Instagram"
+          >
+            <i class="bi bi-instagram"></i>
+          </a>
+          <a
+            href="#"
+            class="social-btn github"
+            title="Star us on GitHub"
+            aria-label="GitHub"
+          >
+            <i class="bi bi-github"></i>
+          </a>
+        </div>
+      </div>
+
+      <!-- ── Stats strip ── -->
+      <div class="stats-strip" aria-label="Platform statistics">
+        <div class="stat-item">
+          <span class="stat-value">50k+</span>
+          <span class="stat-label">Courses Available</span>
+        </div>
+        <div class="stat-divider" aria-hidden="true"></div>
+        <div class="stat-item">
+          <span class="stat-value">200+</span>
+          <span class="stat-label">Expert Instructors</span>
+        </div>
+        <div class="stat-divider" aria-hidden="true"></div>
+        <div class="stat-item">
+          <span class="stat-value">1.2M</span>
+          <span class="stat-label">Learners Worldwide</span>
+        </div>
+        <div class="stat-divider" aria-hidden="true"></div>
+        <div class="stat-item">
+          <span class="stat-value">98%</span>
+          <span class="stat-label">Satisfaction Rate</span>
+        </div>
+        <div class="stat-divider" aria-hidden="true"></div>
+        <div class="stat-item">
+          <span class="stat-value">40+</span>
+          <span class="stat-label">Countries</span>
+        </div>
+      </div>
+
+      <!-- ── Upcoming Features ── -->
+      <section class="features-section">
+        <p class="features-heading">
+          <i class="bi bi-stars"></i>&nbsp; What's coming in v2.0
+        </p>
+        <div class="features-grid">
+          <!-- Feature 1 -->
+          <div class="feature-card card-purple">
+            <div class="feature-icon ic-purple">
+              <i class="bi bi-cpu-fill"></i>
+            </div>
+            <span class="feature-tag tag-purple"
+              ><i class="bi bi-lightning-fill"></i> AI-Powered</span
+            >
+            <h3 class="feature-title">Adaptive Learning Paths</h3>
+            <p class="feature-desc">
+              Our AI engine learns how you learn — dynamically adjusting course
+              content, pacing, and difficulty to match your unique style.
+            </p>
+            <ul class="feature-points">
+              <li>
+                <i class="bi bi-check-circle-fill"></i> Smart skill gap analysis
+              </li>
+              <li>
+                <i class="bi bi-check-circle-fill"></i> Personalized content
+                recommendations
+              </li>
+              <li>
+                <i class="bi bi-check-circle-fill"></i> Progress prediction &
+                alerts
+              </li>
+            </ul>
+            <div class="feature-eta">
+              <span
+                class="eta-dot"
+                style="background: var(--primary-light)"
+              ></span>
+              Launching with v2.0 &mdash; April 2026
+            </div>
+          </div>
+
+          <!-- Feature 2 -->
+          <div class="feature-card card-cyan">
+            <div class="feature-icon ic-cyan">
+              <i class="bi bi-people-fill"></i>
+            </div>
+            <span class="feature-tag tag-cyan"
+              ><i class="bi bi-broadcast-pin"></i> Live Cohorts</span
+            >
+            <h3 class="feature-title">Collaborative Learning Rooms</h3>
+            <p class="feature-desc">
+              Real-time group study rooms with whiteboard, code sharing, voice
+              chat, and instructor presence — learning is better together.
+            </p>
+            <ul class="feature-points">
+              <li>
+                <i class="bi bi-check-circle-fill"></i> Live collaborative
+                whiteboard
+              </li>
+              <li>
+                <i class="bi bi-check-circle-fill"></i> Shared coding sandbox
+              </li>
+              <li>
+                <i class="bi bi-check-circle-fill"></i> Peer review & feedback
+                loops
+              </li>
+            </ul>
+            <div class="feature-eta">
+              <span class="eta-dot" style="background: var(--accent)"></span>
+              Beta access — March 2026
+            </div>
+          </div>
+
+          <!-- Feature 3 -->
+          <div class="feature-card card-violet">
+            <div class="feature-icon ic-violet">
+              <i class="bi bi-award-fill"></i>
+            </div>
+            <span class="feature-tag tag-violet"
+              ><i class="bi bi-patch-check-fill"></i> Blockchain</span
+            >
+            <h3 class="feature-title">Verifiable Credentials</h3>
+            <p class="feature-desc">
+              Earn tamper-proof, blockchain-verified certificates that live on
+              your digital wallet — share them instantly with LinkedIn and
+              employers.
+            </p>
+            <ul class="feature-points">
+              <li>
+                <i class="bi bi-check-circle-fill"></i> On-chain certificate
+                issuance
+              </li>
+              <li>
+                <i class="bi bi-check-circle-fill"></i> One-click LinkedIn share
+              </li>
+              <li>
+                <i class="bi bi-check-circle-fill"></i> Employer verification
+                portal
+              </li>
+            </ul>
+            <div class="feature-eta">
+              <span class="eta-dot" style="background: var(--accent2)"></span>
+              Q2 2026 roadmap
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── Footer ── -->
+      <footer class="page-footer">
+        <span>&copy; 2026 EduLearn LMS. All rights reserved.</span>
+        <div class="footer-links">
+          <a href="index.html">Home</a>
+          <a href="courses.html">Courses</a>
+          <a href="contact.html">Contact</a>
+          <a href="404.html">404</a>
+          <a
+            href="#"
+            @click.prevent="window.lmsNotify.open({type:'info',message:'Privacy Policy coming soon!'})"
+            >Privacy</a
+          >
+        </div>
+      </footer>
+    </div>
+    <!-- /page-wrapper -->
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
+    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+      // NProgress
+      NProgress.configure({ showSpinner: false, trickleSpeed: 200 });
+      NProgress.start();
+      window.addEventListener("load", () => NProgress.done());
+
+      // Notyf global
+      window.lmsNotify = new Notyf({
+        duration: 4000,
+        position: { x: "right", y: "top" },
+        types: [
+          {
+            type: "success",
+            background: "linear-gradient(135deg,#10b981,#059669)",
+            icon: {
+              className: "bi bi-check-circle-fill",
+              tagName: "i",
+              color: "#fff",
+            },
+          },
+          {
+            type: "error",
+            background: "linear-gradient(135deg,#ef4444,#dc2626)",
+            icon: {
+              className: "bi bi-x-circle-fill",
+              tagName: "i",
+              color: "#fff",
+            },
+          },
+          {
+            type: "info",
+            background: "linear-gradient(135deg,#6366f1,#4f46e5)",
+            icon: {
+              className: "bi bi-info-circle-fill",
+              tagName: "i",
+              color: "#fff",
+            },
+          },
+        ],
+      });
+
+      // Alpine component
+      document.addEventListener("alpine:init", () => {
+        Alpine.data("comingSoon", () => ({
+          // ── Countdown ──────────────────────────────────────────
+          launchDate: new Date("2026-04-01T00:00:00"),
+          time: { days: 0, hours: 0, minutes: 0, seconds: 0 },
+          _timer: null,
+
+          // ── Subscribe ──────────────────────────────────────────
+          email: "",
+          subscribing: false,
+          subscribed: false,
+          subscriberCount: 4218,
+
+          // ── Init ───────────────────────────────────────────────
+          init() {
+            this.tick();
+            this._timer = setInterval(() => this.tick(), 1000);
+          },
+
+          destroy() {
+            clearInterval(this._timer);
+          },
+
+          // ── Countdown tick ─────────────────────────────────────
+          tick() {
+            const now = new Date();
+            const diff = Math.max(0, this.launchDate - now);
+
+            this.time.days = Math.floor(diff / 86400000);
+            this.time.hours = Math.floor((diff % 86400000) / 3600000);
+            this.time.minutes = Math.floor((diff % 3600000) / 60000);
+            this.time.seconds = Math.floor((diff % 60000) / 1000);
+          },
+
+          pad(n) {
+            return String(n).padStart(2, "0");
+          },
+
+          // ── Subscribe handler ──────────────────────────────────
+          subscribe() {
+            if (this.subscribed) return;
+
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!this.email.trim()) {
+              window.lmsNotify.open({
+                type: "error",
+                message: "Please enter your email address.",
+              });
+              return;
+            }
+            if (!emailRegex.test(this.email)) {
+              window.lmsNotify.open({
+                type: "error",
+                message: "Please enter a valid email address.",
+              });
+              return;
+            }
+
+            this.subscribing = true;
+
+            // Simulate API call
+            setTimeout(() => {
+              this.subscribing = false;
+              this.subscribed = true;
+              this.subscriberCount += 1;
+
+              window.lmsNotify.open({
+                type: "success",
+                message: `🎉 You're on the list! We'll notify <strong>${this.email}</strong> on launch day.`,
+              });
+
+              // Confetti burst (lightweight CSS approach)
+              this._launchConfetti();
+            }, 1400);
+          },
+
+          // ── Lightweight confetti burst ─────────────────────────
+          _launchConfetti() {
+            const colors = [
+              "#6366f1",
+              "#06b6d4",
+              "#8b5cf6",
+              "#f59e0b",
+              "#10b981",
+              "#ec4899",
+            ];
+            const container = document.body;
+
+            for (let i = 0; i < 60; i++) {
+              const el = document.createElement("div");
+              const size = Math.random() * 8 + 4;
+              el.style.cssText = `
+              position:fixed;
+              width:${size}px; height:${size}px;
+              background:${colors[Math.floor(Math.random() * colors.length)]};
+              border-radius:${Math.random() > 0.5 ? "50%" : "2px"};
+              top:${Math.random() * 40 + 30}%;
+              left:${Math.random() * 100}%;
+              z-index:9999;
+              pointer-events:none;
+              animation:confettiFall ${Math.random() * 1.5 + 1}s ease-out forwards;
+              animation-delay:${Math.random() * 0.4}s;
+            `;
+              container.appendChild(el);
+              el.addEventListener("animationend", () => el.remove());
+            }
+
+            // Inject keyframe once
+            if (!document.getElementById("confetti-style")) {
+              const style = document.createElement("style");
+              style.id = "confetti-style";
+              style.textContent = `
+              @keyframes confettiFall {
+                0%   { transform: translateY(0) rotate(0deg) scale(1); opacity:1; }
+                100% { transform: translateY(200px) rotate(${Math.random() > 0.5 ? "" : "—"}720deg) scale(.3); opacity:0; }
+              }
+            `;
+              document.head.appendChild(style);
+            }
+          },
+        }));
+      });
+    </script>
+  </body>
+</html>
