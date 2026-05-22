@@ -1,1261 +1,467 @@
 <!doctype html>
 <html lang="en" data-theme="light">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Create Account — EduLearn</title>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Create Account — EduLearn</title>
 
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
-      rel="stylesheet"
-    />
+		<!-- Fonts -->
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+			rel="stylesheet"
+		/>
 
-    <!-- CSS -->
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css"
-      rel="stylesheet"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.css"
-    />
-    <link rel="stylesheet" href="assets/css/theme.css" />
+		<!-- CSS -->
+		<link
+			href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+			rel="stylesheet"
+		/>
+		<link
+			href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css"
+			rel="stylesheet"
+		/>
+		<link
+			rel="stylesheet"
+			href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css"
+		/>
+		<link
+			rel="stylesheet"
+			href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.css"
+		/>
+		<link rel="stylesheet" href="assets/css/theme.css" />
+		<link rel="stylesheet" href="assets/css/register.css" />
+	</head>
 
-    <style>
-      *,
-      *::before,
-      *::after {
-        box-sizing: border-box;
-      }
-      html,
-      body {
-        height: 100%;
-      }
-      body {
-        font-family: var(--font-family);
-        background: var(--surface-alt);
-        color: var(--text-primary);
-        min-height: 100vh;
-        display: flex;
-        flex-direction: column;
-      }
+	<body x-data="themeToggle()" :data-theme="dark ? 'dark' : 'light'">
+		<!-- Theme toggle -->
+		<button
+			class="auth-theme-btn"
+			@click="toggle()"
+			:title="dark ? 'Light mode' : 'Dark mode'"
+		>
+			<i :class="dark ? 'bi bi-sun-fill' : 'bi bi-moon-fill'"></i>
+		</button>
 
-      #nprogress .bar {
-        background: var(--primary) !important;
-      }
-
-      /* ── Split layout ─────────────────────────────────── */
-      .auth-wrap {
-        flex: 1;
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        min-height: 100vh;
-      }
-      @media (max-width: 991px) {
-        .auth-wrap {
-          grid-template-columns: 1fr;
-        }
-        .auth-panel {
-          display: none;
-        }
-      }
-
-      /* ── Left panel ───────────────────────────────────── */
-      .auth-panel {
-        position: relative;
-        background: #060a14;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        padding: 48px;
-        overflow: hidden;
-      }
-      .auth-panel::before {
-        content: "";
-        position: absolute;
-        inset: 0;
-        background:
-          radial-gradient(
-            ellipse 70% 55% at 75% 25%,
-            rgba(124, 58, 237, 0.22) 0%,
-            transparent 65%
-          ),
-          radial-gradient(
-            ellipse 60% 50% at 20% 80%,
-            rgba(13, 110, 253, 0.2) 0%,
-            transparent 65%
-          );
-        pointer-events: none;
-      }
-      .auth-panel-dots {
-        position: absolute;
-        inset: 0;
-        background-image: radial-gradient(
-          rgba(255, 255, 255, 0.055) 1px,
-          transparent 1px
-        );
-        background-size: 28px 28px;
-        pointer-events: none;
-      }
-      .auth-panel-content {
-        position: relative;
-        z-index: 1;
-        max-width: 420px;
-      }
-
-      /* Logo */
-      .panel-logo {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        margin-bottom: 36px;
-      }
-      .panel-logo-icon {
-        width: 44px;
-        height: 44px;
-        border-radius: 12px;
-        background: var(--primary);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.4rem;
-        color: #fff;
-      }
-      .panel-logo span {
-        font-size: 1.4rem;
-        font-weight: 800;
-        color: #fff;
-      }
-
-      .panel-heading {
-        font-size: 1.85rem;
-        font-weight: 800;
-        color: #fff;
-        line-height: 1.25;
-        margin-bottom: 12px;
-      }
-      .panel-sub {
-        font-size: 0.88rem;
-        color: rgba(255, 255, 255, 0.5);
-        line-height: 1.7;
-        margin-bottom: 32px;
-      }
-
-      /* Feature list */
-      .panel-features {
-        list-style: none;
-        padding: 0;
-        margin: 0 0 32px;
-      }
-      .panel-features li {
-        display: flex;
-        align-items: flex-start;
-        gap: 12px;
-        padding: 10px 0;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-        font-size: 0.85rem;
-        color: rgba(255, 255, 255, 0.65);
-      }
-      .panel-features li:last-child {
-        border-bottom: none;
-      }
-      .panel-feature-icon {
-        width: 32px;
-        height: 32px;
-        border-radius: 8px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 0.95rem;
-        flex-shrink: 0;
-        margin-top: -1px;
-      }
-      .panel-feature-icon.blue {
-        background: rgba(13, 110, 253, 0.2);
-        color: #93c5fd;
-      }
-      .panel-feature-icon.purple {
-        background: rgba(124, 58, 237, 0.2);
-        color: #c4b5fd;
-      }
-      .panel-feature-icon.green {
-        background: rgba(5, 150, 105, 0.2);
-        color: #6ee7b7;
-      }
-      .panel-feature-icon.yellow {
-        background: rgba(217, 119, 6, 0.2);
-        color: #fcd34d;
-      }
-      .panel-feature-icon.pink {
-        background: rgba(219, 39, 119, 0.2);
-        color: #f9a8d4;
-      }
-
-      .panel-feature-text strong {
-        color: #fff;
-        display: block;
-        margin-bottom: 1px;
-      }
-
-      /* Avatars testimonial strip */
-      .panel-testimonial {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        padding: 14px 18px;
-        background: rgba(255, 255, 255, 0.06);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 12px;
-      }
-      .panel-avatars {
-        display: flex;
-      }
-      .panel-avatars img {
-        width: 30px;
-        height: 30px;
-        border-radius: 50%;
-        border: 2px solid #060a14;
-        margin-left: -8px;
-      }
-      .panel-avatars img:first-child {
-        margin-left: 0;
-      }
-      .panel-testimonial-text {
-        font-size: 0.76rem;
-        color: rgba(255, 255, 255, 0.65);
-        line-height: 1.45;
-      }
-      .panel-testimonial-text strong {
-        color: #fff;
-      }
-
-      /* ── Right form side ──────────────────────────────── */
-      .auth-form-side {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        padding: 40px 24px;
-        background: var(--surface);
-        overflow-y: auto;
-      }
-      .auth-form-inner {
-        width: 100%;
-        max-width: 440px;
-      }
-
-      /* Mobile logo */
-      .auth-mobile-logo {
-        display: none;
-        align-items: center;
-        gap: 10px;
-        margin-bottom: 26px;
-      }
-      @media (max-width: 991px) {
-        .auth-mobile-logo {
-          display: flex;
-        }
-      }
-      .auth-mobile-logo-icon {
-        width: 38px;
-        height: 38px;
-        border-radius: 10px;
-        background: var(--primary);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.2rem;
-        color: #fff;
-      }
-      .auth-mobile-logo span {
-        font-size: 1.2rem;
-        font-weight: 800;
-        color: var(--text-primary);
-      }
-
-      /* Form header */
-      .auth-form-head {
-        margin-bottom: 24px;
-      }
-      .auth-form-title {
-        font-size: 1.55rem;
-        font-weight: 800;
-        color: var(--text-primary);
-        margin-bottom: 5px;
-      }
-      .auth-form-sub {
-        font-size: 0.84rem;
-        color: var(--text-muted);
-      }
-      .auth-form-sub a {
-        color: var(--primary);
-        font-weight: 600;
-        text-decoration: none;
-      }
-      .auth-form-sub a:hover {
-        text-decoration: underline;
-      }
-
-      /* Social buttons */
-      .social-btn-row {
-        display: flex;
-        gap: 12px;
-        margin-bottom: 20px;
-      }
-      .social-btn {
-        flex: 1;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 8px;
-        padding: 11px;
-        border-radius: 10px;
-        border: 1.5px solid var(--border-color);
-        background: var(--surface);
-        color: var(--text-secondary);
-        font-size: 0.84rem;
-        font-weight: 600;
-        font-family: var(--font-family);
-        cursor: pointer;
-        transition: all 0.2s;
-      }
-      .social-btn:hover {
-        border-color: var(--primary);
-        background: rgba(13, 110, 253, 0.04);
-        color: var(--primary);
-      }
-
-      /* Divider */
-      .auth-divider {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        margin-bottom: 20px;
-        font-size: 0.78rem;
-        color: var(--text-muted);
-      }
-      .auth-divider::before,
-      .auth-divider::after {
-        content: "";
-        flex: 1;
-        height: 1px;
-        background: var(--border-color);
-      }
-
-      /* Form fields */
-      .form-row-2 {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 14px;
-      }
-      @media (max-width: 480px) {
-        .form-row-2 {
-          grid-template-columns: 1fr;
-        }
-      }
-      .form-group {
-        margin-bottom: 16px;
-      }
-      .form-label {
-        display: block;
-        font-size: 0.8rem;
-        font-weight: 700;
-        color: var(--text-primary);
-        margin-bottom: 6px;
-      }
-      .form-label .req {
-        color: #ef4444;
-        margin-left: 2px;
-      }
-      .input-wrap {
-        position: relative;
-      }
-      .input-icon {
-        position: absolute;
-        left: 13px;
-        top: 50%;
-        transform: translateY(-50%);
-        color: var(--text-muted);
-        font-size: 0.9rem;
-        pointer-events: none;
-        transition: color 0.2s;
-      }
-      .auth-input {
-        width: 100%;
-        padding: 11px 40px 11px 38px;
-        border: 1.5px solid var(--border-color);
-        border-radius: 10px;
-        background: var(--surface-alt);
-        color: var(--text-primary);
-        font-size: 0.875rem;
-        font-family: var(--font-family);
-        outline: none;
-        transition:
-          border-color 0.2s,
-          box-shadow 0.2s;
-      }
-      .auth-input.no-left-icon {
-        padding-left: 14px;
-      }
-      .auth-input:focus {
-        border-color: var(--primary);
-        box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.12);
-      }
-      .auth-input.error {
-        border-color: #ef4444;
-        box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
-      }
-      .auth-input.valid {
-        border-color: #10b981;
-      }
-      .auth-input::placeholder {
-        color: var(--text-muted);
-      }
-      .input-wrap:focus-within .input-icon {
-        color: var(--primary);
-      }
-      .pw-toggle {
-        position: absolute;
-        right: 12px;
-        top: 50%;
-        transform: translateY(-50%);
-        background: none;
-        border: none;
-        color: var(--text-muted);
-        cursor: pointer;
-        font-size: 0.9rem;
-        padding: 0;
-        transition: color 0.2s;
-      }
-      .pw-toggle:hover {
-        color: var(--text-primary);
-      }
-      .field-error {
-        font-size: 0.7rem;
-        color: #ef4444;
-        margin-top: 4px;
-        display: flex;
-        align-items: center;
-        gap: 4px;
-      }
-      .field-success {
-        font-size: 0.7rem;
-        color: #10b981;
-        margin-top: 4px;
-        display: flex;
-        align-items: center;
-        gap: 4px;
-      }
-
-      /* Password strength */
-      .pw-strength {
-        margin-top: 8px;
-      }
-      .pw-strength-bars {
-        display: flex;
-        gap: 4px;
-        margin-bottom: 5px;
-      }
-      .pw-bar {
-        flex: 1;
-        height: 4px;
-        border-radius: 4px;
-        background: var(--border-color);
-        transition: background 0.3s;
-      }
-      .pw-bar.active-weak {
-        background: #ef4444;
-      }
-      .pw-bar.active-fair {
-        background: #f59e0b;
-      }
-      .pw-bar.active-good {
-        background: #3b82f6;
-      }
-      .pw-bar.active-strong {
-        background: #10b981;
-      }
-      .pw-strength-label {
-        font-size: 0.7rem;
-        font-weight: 600;
-      }
-      .pw-strength-label.weak {
-        color: #ef4444;
-      }
-      .pw-strength-label.fair {
-        color: #f59e0b;
-      }
-      .pw-strength-label.good {
-        color: #3b82f6;
-      }
-      .pw-strength-label.strong {
-        color: #10b981;
-      }
-
-      /* Terms */
-      .terms-row {
-        display: flex;
-        align-items: flex-start;
-        gap: 10px;
-        margin-bottom: 20px;
-      }
-      .terms-row input[type="checkbox"] {
-        width: 16px;
-        height: 16px;
-        accent-color: var(--primary);
-        flex-shrink: 0;
-        margin-top: 2px;
-      }
-      .terms-label {
-        font-size: 0.8rem;
-        color: var(--text-secondary);
-        line-height: 1.5;
-      }
-      .terms-label a {
-        color: var(--primary);
-        font-weight: 600;
-        text-decoration: none;
-      }
-      .terms-label a:hover {
-        text-decoration: underline;
-      }
-
-      /* Submit */
-      .btn-auth {
-        width: 100%;
-        padding: 13px;
-        border-radius: 10px;
-        border: none;
-        background: var(--primary-gradient);
-        color: #fff;
-        font-size: 1rem;
-        font-weight: 700;
-        font-family: var(--font-family);
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 8px;
-        transition:
-          opacity 0.2s,
-          transform 0.2s;
-        margin-bottom: 18px;
-      }
-      .btn-auth:hover:not(:disabled) {
-        opacity: 0.9;
-        transform: translateY(-1px);
-      }
-      .btn-auth:disabled {
-        opacity: 0.65;
-        cursor: not-allowed;
-      }
-      .btn-auth .spinner {
-        width: 18px;
-        height: 18px;
-        border: 2px solid rgba(255, 255, 255, 0.4);
-        border-top-color: #fff;
-        border-radius: 50%;
-        animation: spin 0.7s linear infinite;
-        display: none;
-      }
-      .btn-auth.loading .spinner {
-        display: block;
-      }
-      .btn-auth.loading .btn-label {
-        display: none;
-      }
-      @keyframes spin {
-        to {
-          transform: rotate(360deg);
-        }
-      }
-
-      /* Login link */
-      .auth-switch {
-        text-align: center;
-        font-size: 0.85rem;
-        color: var(--text-muted);
-      }
-      .auth-switch a {
-        color: var(--primary);
-        font-weight: 700;
-        text-decoration: none;
-      }
-      .auth-switch a:hover {
-        text-decoration: underline;
-      }
-
-      /* Footer */
-      .auth-footer {
-        text-align: center;
-        font-size: 0.72rem;
-        color: var(--text-muted);
-        margin-top: 24px;
-        padding-top: 18px;
-        border-top: 1px solid var(--border-color);
-      }
-      .auth-footer a {
-        color: var(--text-muted);
-        text-decoration: none;
-      }
-      .auth-footer a:hover {
-        color: var(--primary);
-      }
-
-      /* Theme toggle */
-      .auth-theme-btn {
-        position: fixed;
-        top: 16px;
-        right: 16px;
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        border: 1.5px solid var(--border-color);
-        background: var(--surface);
-        color: var(--text-secondary);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        font-size: 1rem;
-        z-index: 100;
-        transition: all 0.2s;
-      }
-      .auth-theme-btn:hover {
-        border-color: var(--primary);
-        color: var(--primary);
-      }
-
-      /* Step indicator */
-      .plan-select {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 10px;
-        margin-bottom: 18px;
-      }
-      .plan-option {
-        border: 1.5px solid var(--border-color);
-        border-radius: 10px;
-        padding: 12px 10px;
-        text-align: center;
-        cursor: pointer;
-        transition: all 0.2s;
-      }
-      .plan-option:hover {
-        border-color: var(--primary);
-      }
-      .plan-option.selected {
-        border-color: var(--primary);
-        background: rgba(13, 110, 253, 0.06);
-      }
-      .plan-option-name {
-        font-size: 0.82rem;
-        font-weight: 700;
-        color: var(--text-primary);
-      }
-      .plan-option-price {
-        font-size: 0.7rem;
-        color: var(--text-muted);
-        margin-top: 2px;
-      }
-      .plan-option-badge {
-        display: inline-block;
-        font-size: 0.6rem;
-        font-weight: 800;
-        background: var(--primary);
-        color: #fff;
-        padding: 1px 6px;
-        border-radius: 4px;
-        margin-top: 3px;
-      }
-    </style>
-  </head>
-
-  <body x-data="themeToggle()" :data-theme="dark ? 'dark' : 'light'">
-    <!-- Theme toggle -->
-    <button
-      class="auth-theme-btn"
-      @click="toggle()"
-      :title="theme === 'dark' ? 'Light mode' : 'Dark mode'"
-    >
-      <i :class="theme === 'dark' ? 'bi bi-sun-fill' : 'bi bi-moon-fill'"></i>
-    </button>
-
-    <div class="auth-wrap">
-      <!-- ══════════════════════════════════════════
+		<div class="auth-wrap">
+			<!-- ══════════════════════════════════════════
          LEFT PANEL
          ══════════════════════════════════════════ -->
-      <div class="auth-panel">
-        <div class="auth-panel-dots"></div>
-        <div class="auth-panel-content">
-          <div class="panel-logo">
-            <div class="panel-logo-icon">
-              <i class="bi bi-mortarboard-fill"></i>
-            </div>
-            <span>EduLearn</span>
-          </div>
+			<div class="auth-panel">
+				<div class="auth-panel-dots"></div>
+				<div class="auth-panel-content">
+					<div class="panel-logo">
+						<div class="panel-logo-icon">
+							<i class="bi bi-mortarboard-fill"></i>
+						</div>
+						<span>EduLearn</span>
+					</div>
 
-          <h1 class="panel-heading">Start learning today — it's free.</h1>
-          <p class="panel-sub">
-            Everything you need to level up your skills, all in one place.
-          </p>
+					<h1 class="panel-heading">Start learning today — it's free.</h1>
+					<p class="panel-sub">
+						Everything you need to level up your skills, all in one place.
+					</p>
 
-          <ul class="panel-features">
-            <li>
-              <div class="panel-feature-icon blue">
-                <i class="bi bi-play-circle-fill"></i>
-              </div>
-              <div class="panel-feature-text">
-                <strong>200+ Expert-Led Courses</strong>
-                Development, design, business, data science & more
-              </div>
-            </li>
-            <li>
-              <div class="panel-feature-icon purple">
-                <i class="bi bi-patch-check-fill"></i>
-              </div>
-              <div class="panel-feature-text">
-                <strong>Verified Certificates</strong>
-                Share on LinkedIn and stand out to employers
-              </div>
-            </li>
-            <li>
-              <div class="panel-feature-icon green">
-                <i class="bi bi-phone-fill"></i>
-              </div>
-              <div class="panel-feature-text">
-                <strong>Learn Anywhere</strong>
-                Access courses on any device, anytime
-              </div>
-            </li>
-            <li>
-              <div class="panel-feature-icon yellow">
-                <i class="bi bi-people-fill"></i>
-              </div>
-              <div class="panel-feature-text">
-                <strong>Community & Forums</strong>
-                Connect with 50,000+ learners and instructors
-              </div>
-            </li>
-            <li>
-              <div class="panel-feature-icon pink">
-                <i class="bi bi-infinity"></i>
-              </div>
-              <div class="panel-feature-text">
-                <strong>Lifetime Access</strong>
-                Buy once, access forever — including future updates
-              </div>
-            </li>
-          </ul>
+					<ul class="panel-features">
+						<li>
+							<div class="panel-feature-icon blue">
+								<i class="bi bi-play-circle-fill"></i>
+							</div>
+							<div class="panel-feature-text">
+								<strong>200+ Expert-Led Courses</strong>
+								Development, design, business, data science & more
+							</div>
+						</li>
+						<li>
+							<div class="panel-feature-icon purple">
+								<i class="bi bi-patch-check-fill"></i>
+							</div>
+							<div class="panel-feature-text">
+								<strong>Verified Certificates</strong>
+								Share on LinkedIn and stand out to employers
+							</div>
+						</li>
+						<li>
+							<div class="panel-feature-icon green">
+								<i class="bi bi-phone-fill"></i>
+							</div>
+							<div class="panel-feature-text">
+								<strong>Learn Anywhere</strong>
+								Access courses on any device, anytime
+							</div>
+						</li>
+						<li>
+							<div class="panel-feature-icon yellow">
+								<i class="bi bi-people-fill"></i>
+							</div>
+							<div class="panel-feature-text">
+								<strong>Community & Forums</strong>
+								Connect with 50,000+ learners and instructors
+							</div>
+						</li>
+						<li>
+							<div class="panel-feature-icon pink">
+								<i class="bi bi-infinity"></i>
+							</div>
+							<div class="panel-feature-text">
+								<strong>Lifetime Access</strong>
+								Buy once, access forever — including future updates
+							</div>
+						</li>
+					</ul>
 
-          <div class="panel-testimonial">
-            <div class="panel-avatars">
-              <img
-                src="https://placehold.co/30x30/6366f1/fff?text=A"
-                alt="Student A"
-              />
-              <img
-                src="https://placehold.co/30x30/ec4899/fff?text=B"
-                alt="Student B"
-              />
-              <img
-                src="https://placehold.co/30x30/f59e0b/000?text=C"
-                alt="Student C"
-              />
-              <img
-                src="https://placehold.co/30x30/10b981/fff?text=D"
-                alt="Student D"
-              />
-            </div>
-            <div class="panel-testimonial-text">
-              <strong>Join 50,000+ learners</strong>
-              who have already enrolled this month
-            </div>
-          </div>
-        </div>
-      </div>
+					<div class="panel-testimonial">
+						<div class="panel-avatars">
+							<img
+								src="https://placehold.co/30x30/6366f1/fff?text=A"
+								alt="Student A"
+							/>
+							<img
+								src="https://placehold.co/30x30/ec4899/fff?text=B"
+								alt="Student B"
+							/>
+							<img
+								src="https://placehold.co/30x30/f59e0b/000?text=C"
+								alt="Student C"
+							/>
+							<img
+								src="https://placehold.co/30x30/10b981/fff?text=D"
+								alt="Student D"
+							/>
+						</div>
+						<div class="panel-testimonial-text">
+							<strong>Join 50,000+ learners</strong>
+							who have already enrolled this month
+						</div>
+					</div>
+				</div>
+			</div>
 
-      <!-- ══════════════════════════════════════════
+			<!-- ══════════════════════════════════════════
          RIGHT FORM
          ══════════════════════════════════════════ -->
-      <div class="auth-form-side">
-        <div class="auth-form-inner" x-data="registerForm()">
-          <!-- Mobile logo -->
-          <div class="auth-mobile-logo">
-            <div class="auth-mobile-logo-icon">
-              <i class="bi bi-mortarboard-fill"></i>
-            </div>
-            <span>EduLearn</span>
-          </div>
+			<div class="auth-form-side">
+				<div class="auth-form-inner" x-data="registerForm()">
+					<!-- Mobile logo -->
+					<div class="auth-mobile-logo">
+						<div class="auth-mobile-logo-icon">
+							<i class="bi bi-mortarboard-fill"></i>
+						</div>
+						<span>EduLearn</span>
+					</div>
 
-          <!-- Header -->
-          <div class="auth-form-head">
-            <h2 class="auth-form-title">Create your free account ✨</h2>
-            <p class="auth-form-sub">
-              Already have an account? <a href="login.html">Sign in</a>
-            </p>
-          </div>
+					<!-- Header -->
+					<div class="auth-form-head">
+						<h2 class="auth-form-title">Create your free account ✨</h2>
+						<p class="auth-form-sub">
+							Already have an account? <a href="login.html">Sign in</a>
+						</p>
+					</div>
 
-          <!-- Social signup -->
-          <div class="social-btn-row">
-            <button class="social-btn" @click="socialSignup('Google')">
-              <svg width="18" height="18" viewBox="0 0 24 24">
-                <path
-                  fill="#4285F4"
-                  d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
-                />
-                <path
-                  fill="#34A853"
-                  d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
-                />
-                <path
-                  fill="#FBBC05"
-                  d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"
-                />
-                <path
-                  fill="#EA4335"
-                  d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.47 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
-                />
-              </svg>
-              Sign up with Google
-            </button>
-            <button class="social-btn" @click="socialSignup('GitHub')">
-              <i class="bi bi-github" style="font-size: 1rem"></i>
-              GitHub
-            </button>
-          </div>
+					<!-- Social signup -->
+					<div class="social-btn-row">
+						<button class="social-btn" @click="socialSignup('Google')">
+							<svg width="18" height="18" viewBox="0 0 24 24">
+								<path
+									fill="#4285F4"
+									d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
+								/>
+								<path
+									fill="#34A853"
+									d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
+								/>
+								<path
+									fill="#FBBC05"
+									d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"
+								/>
+								<path
+									fill="#EA4335"
+									d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.47 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
+								/>
+							</svg>
+							Sign up with Google
+						</button>
+						<button class="social-btn" @click="socialSignup('GitHub')">
+							<i class="bi bi-github" style="font-size: 1rem"></i>
+							GitHub
+						</button>
+					</div>
 
-          <div class="auth-divider">or register with email</div>
+					<div class="auth-divider">or register with email</div>
 
-          <!-- Plan selector -->
-          <div style="margin-bottom: 16px">
-            <label class="form-label" style="margin-bottom: 10px"
-              >Choose a plan</label
-            >
-            <div class="plan-select">
-              <div
-                class="plan-option"
-                :class="{ selected: fields.plan === 'free' }"
-                @click="fields.plan = 'free'"
-              >
-                <div class="plan-option-name">Free</div>
-                <div class="plan-option-price">$0 / mo</div>
-              </div>
-              <div
-                class="plan-option"
-                :class="{ selected: fields.plan === 'pro' }"
-                @click="fields.plan = 'pro'"
-              >
-                <div class="plan-option-name">Pro</div>
-                <div class="plan-option-price">$15 / mo</div>
-                <div class="plan-option-badge">Popular</div>
-              </div>
-              <div
-                class="plan-option"
-                :class="{ selected: fields.plan === 'enterprise' }"
-                @click="fields.plan = 'enterprise'"
-              >
-                <div class="plan-option-name">Enterprise</div>
-                <div class="plan-option-price">$39 / mo</div>
-              </div>
-            </div>
-          </div>
+					<!-- Plan selector -->
+					<div style="margin-bottom: 16px">
+						<label class="form-label" style="margin-bottom: 10px"
+							>Choose a plan</label
+						>
+						<div class="plan-select">
+							<div
+								class="plan-option"
+								:class="{ selected: fields.plan === 'free' }"
+								@click="fields.plan = 'free'"
+							>
+								<div class="plan-option-name">Free</div>
+								<div class="plan-option-price">$0 / mo</div>
+							</div>
+							<div
+								class="plan-option"
+								:class="{ selected: fields.plan === 'pro' }"
+								@click="fields.plan = 'pro'"
+							>
+								<div class="plan-option-name">Pro</div>
+								<div class="plan-option-price">$15 / mo</div>
+								<div class="plan-option-badge">Popular</div>
+							</div>
+							<div
+								class="plan-option"
+								:class="{ selected: fields.plan === 'enterprise' }"
+								@click="fields.plan = 'enterprise'"
+							>
+								<div class="plan-option-name">Enterprise</div>
+								<div class="plan-option-price">$39 / mo</div>
+							</div>
+						</div>
+					</div>
 
-          <!-- Form -->
-          <form @submit.prevent="submit()" novalidate>
-            <!-- Name row -->
-            <div class="form-row-2">
-              <div class="form-group">
-                <label class="form-label" for="reg-fname"
-                  >First name <span class="req">*</span></label
-                >
-                <div class="input-wrap">
-                  <i class="bi bi-person input-icon"></i>
-                  <input
-                    id="reg-fname"
-                    type="text"
-                    class="auth-input"
-                    :class="{ error: errors.firstName, valid: valid.firstName }"
-                    placeholder="John"
-                    x-model="fields.firstName"
-                    @blur="validateField('firstName')"
-                    autocomplete="given-name"
-                  />
-                </div>
-                <div class="field-error" x-show="errors.firstName" x-transition>
-                  <i class="bi bi-exclamation-circle-fill"></i>
-                  <span x-text="errors.firstName"></span>
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="form-label" for="reg-lname"
-                  >Last name <span class="req">*</span></label
-                >
-                <div class="input-wrap">
-                  <i class="bi bi-person input-icon"></i>
-                  <input
-                    id="reg-lname"
-                    type="text"
-                    class="auth-input"
-                    :class="{ error: errors.lastName, valid: valid.lastName }"
-                    placeholder="Doe"
-                    x-model="fields.lastName"
-                    @blur="validateField('lastName')"
-                    autocomplete="family-name"
-                  />
-                </div>
-                <div class="field-error" x-show="errors.lastName" x-transition>
-                  <i class="bi bi-exclamation-circle-fill"></i>
-                  <span x-text="errors.lastName"></span>
-                </div>
-              </div>
-            </div>
+					<!-- Form -->
+					<form @submit.prevent="submit()" novalidate>
+						<!-- Name row -->
+						<div class="form-row-2">
+							<div class="form-group">
+								<label class="form-label" for="reg-fname"
+									>First name <span class="req">*</span></label
+								>
+								<div class="input-wrap">
+									<i class="bi bi-person input-icon"></i>
+									<input
+										id="reg-fname"
+										type="text"
+										class="auth-input"
+										:class="{ error: errors.firstName, valid: valid.firstName }"
+										placeholder="John"
+										x-model="fields.firstName"
+										@blur="validateField('firstName')"
+										autocomplete="given-name"
+									/>
+								</div>
+								<div class="field-error" x-show="errors.firstName" x-transition>
+									<i class="bi bi-exclamation-circle-fill"></i>
+									<span x-text="errors.firstName"></span>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="form-label" for="reg-lname"
+									>Last name <span class="req">*</span></label
+								>
+								<div class="input-wrap">
+									<i class="bi bi-person input-icon"></i>
+									<input
+										id="reg-lname"
+										type="text"
+										class="auth-input"
+										:class="{ error: errors.lastName, valid: valid.lastName }"
+										placeholder="Doe"
+										x-model="fields.lastName"
+										@blur="validateField('lastName')"
+										autocomplete="family-name"
+									/>
+								</div>
+								<div class="field-error" x-show="errors.lastName" x-transition>
+									<i class="bi bi-exclamation-circle-fill"></i>
+									<span x-text="errors.lastName"></span>
+								</div>
+							</div>
+						</div>
 
-            <!-- Email -->
-            <div class="form-group">
-              <label class="form-label" for="reg-email"
-                >Email address <span class="req">*</span></label
-              >
-              <div class="input-wrap">
-                <i class="bi bi-envelope input-icon"></i>
-                <input
-                  id="reg-email"
-                  type="email"
-                  class="auth-input"
-                  :class="{ error: errors.email, valid: valid.email }"
-                  placeholder="you@example.com"
-                  x-model="fields.email"
-                  @blur="validateField('email')"
-                  autocomplete="email"
-                />
-              </div>
-              <div class="field-error" x-show="errors.email" x-transition>
-                <i class="bi bi-exclamation-circle-fill"></i>
-                <span x-text="errors.email"></span>
-              </div>
-              <div
-                class="field-success"
-                x-show="valid.email && !errors.email"
-                x-transition
-              >
-                <i class="bi bi-check-circle-fill"></i> Looks good!
-              </div>
-            </div>
+						<!-- Email -->
+						<div class="form-group">
+							<label class="form-label" for="reg-email"
+								>Email address <span class="req">*</span></label
+							>
+							<div class="input-wrap">
+								<i class="bi bi-envelope input-icon"></i>
+								<input
+									id="reg-email"
+									type="email"
+									class="auth-input"
+									:class="{ error: errors.email, valid: valid.email }"
+									placeholder="you@example.com"
+									x-model="fields.email"
+									@blur="validateField('email')"
+									autocomplete="email"
+								/>
+							</div>
+							<div class="field-error" x-show="errors.email" x-transition>
+								<i class="bi bi-exclamation-circle-fill"></i>
+								<span x-text="errors.email"></span>
+							</div>
+							<div
+								class="field-success"
+								x-show="valid.email && !errors.email"
+								x-transition
+							>
+								<i class="bi bi-check-circle-fill"></i> Looks good!
+							</div>
+						</div>
 
-            <!-- Password -->
-            <div class="form-group">
-              <label class="form-label" for="reg-password"
-                >Password <span class="req">*</span></label
-              >
-              <div class="input-wrap">
-                <i class="bi bi-lock input-icon"></i>
-                <input
-                  id="reg-password"
-                  :type="showPw ? 'text' : 'password'"
-                  class="auth-input"
-                  :class="{ error: errors.password }"
-                  placeholder="At least 8 characters"
-                  x-model="fields.password"
-                  @input="calcStrength()"
-                  @blur="validateField('password')"
-                  autocomplete="new-password"
-                />
-                <button
-                  type="button"
-                  class="pw-toggle"
-                  @click="showPw = !showPw"
-                >
-                  <i :class="showPw ? 'bi bi-eye-slash' : 'bi bi-eye'"></i>
-                </button>
-              </div>
-              <!-- Strength meter -->
-              <div class="pw-strength" x-show="fields.password.length > 0">
-                <div class="pw-strength-bars">
-                  <div
-                    class="pw-bar"
-                    :class="strength >= 1 ? 'active-' + strengthClass : ''"
-                  ></div>
-                  <div
-                    class="pw-bar"
-                    :class="strength >= 2 ? 'active-' + strengthClass : ''"
-                  ></div>
-                  <div
-                    class="pw-bar"
-                    :class="strength >= 3 ? 'active-' + strengthClass : ''"
-                  ></div>
-                  <div
-                    class="pw-bar"
-                    :class="strength >= 4 ? 'active-' + strengthClass : ''"
-                  ></div>
-                </div>
-                <span
-                  class="pw-strength-label"
-                  :class="strengthClass"
-                  x-text="strengthLabel"
-                ></span>
-              </div>
-              <div class="field-error" x-show="errors.password" x-transition>
-                <i class="bi bi-exclamation-circle-fill"></i>
-                <span x-text="errors.password"></span>
-              </div>
-            </div>
+						<!-- Password -->
+						<div class="form-group">
+							<label class="form-label" for="reg-password"
+								>Password <span class="req">*</span></label
+							>
+							<div class="input-wrap">
+								<i class="bi bi-lock input-icon"></i>
+								<input
+									id="reg-password"
+									:type="showPw ? 'text' : 'password'"
+									class="auth-input"
+									:class="{ error: errors.password }"
+									placeholder="At least 8 characters"
+									x-model="fields.password"
+									@input="calcStrength()"
+									@blur="validateField('password')"
+									autocomplete="new-password"
+								/>
+								<button
+									type="button"
+									class="pw-toggle"
+									@click="showPw = !showPw"
+								>
+									<i :class="showPw ? 'bi bi-eye-slash' : 'bi bi-eye'"></i>
+								</button>
+							</div>
+							<!-- Strength meter -->
+							<div class="pw-strength" x-show="fields.password.length > 0">
+								<div class="pw-strength-bars">
+									<div
+										class="pw-bar"
+										:class="strength >= 1 ? 'active-' + strengthClass : ''"
+									></div>
+									<div
+										class="pw-bar"
+										:class="strength >= 2 ? 'active-' + strengthClass : ''"
+									></div>
+									<div
+										class="pw-bar"
+										:class="strength >= 3 ? 'active-' + strengthClass : ''"
+									></div>
+									<div
+										class="pw-bar"
+										:class="strength >= 4 ? 'active-' + strengthClass : ''"
+									></div>
+								</div>
+								<span
+									class="pw-strength-label"
+									:class="strengthClass"
+									x-text="strengthLabel"
+								></span>
+							</div>
+							<div class="field-error" x-show="errors.password" x-transition>
+								<i class="bi bi-exclamation-circle-fill"></i>
+								<span x-text="errors.password"></span>
+							</div>
+						</div>
 
-            <!-- Confirm password -->
-            <div class="form-group">
-              <label class="form-label" for="reg-confirm"
-                >Confirm password <span class="req">*</span></label
-              >
-              <div class="input-wrap">
-                <i class="bi bi-lock-fill input-icon"></i>
-                <input
-                  id="reg-confirm"
-                  :type="showConfirmPw ? 'text' : 'password'"
-                  class="auth-input"
-                  :class="{ error: errors.confirm, valid: valid.confirm }"
-                  placeholder="Repeat your password"
-                  x-model="fields.confirm"
-                  @blur="validateField('confirm')"
-                  autocomplete="new-password"
-                />
-                <button
-                  type="button"
-                  class="pw-toggle"
-                  @click="showConfirmPw = !showConfirmPw"
-                >
-                  <i
-                    :class="showConfirmPw ? 'bi bi-eye-slash' : 'bi bi-eye'"
-                  ></i>
-                </button>
-              </div>
-              <div class="field-error" x-show="errors.confirm" x-transition>
-                <i class="bi bi-exclamation-circle-fill"></i>
-                <span x-text="errors.confirm"></span>
-              </div>
-              <div
-                class="field-success"
-                x-show="valid.confirm && !errors.confirm"
-                x-transition
-              >
-                <i class="bi bi-check-circle-fill"></i> Passwords match!
-              </div>
-            </div>
+						<!-- Confirm password -->
+						<div class="form-group">
+							<label class="form-label" for="reg-confirm"
+								>Confirm password <span class="req">*</span></label
+							>
+							<div class="input-wrap">
+								<i class="bi bi-lock-fill input-icon"></i>
+								<input
+									id="reg-confirm"
+									:type="showConfirmPw ? 'text' : 'password'"
+									class="auth-input"
+									:class="{ error: errors.confirm, valid: valid.confirm }"
+									placeholder="Repeat your password"
+									x-model="fields.confirm"
+									@blur="validateField('confirm')"
+									autocomplete="new-password"
+								/>
+								<button
+									type="button"
+									class="pw-toggle"
+									@click="showConfirmPw = !showConfirmPw"
+								>
+									<i
+										:class="showConfirmPw ? 'bi bi-eye-slash' : 'bi bi-eye'"
+									></i>
+								</button>
+							</div>
+							<div class="field-error" x-show="errors.confirm" x-transition>
+								<i class="bi bi-exclamation-circle-fill"></i>
+								<span x-text="errors.confirm"></span>
+							</div>
+							<div
+								class="field-success"
+								x-show="valid.confirm && !errors.confirm"
+								x-transition
+							>
+								<i class="bi bi-check-circle-fill"></i> Passwords match!
+							</div>
+						</div>
 
-            <!-- Terms -->
-            <div class="terms-row">
-              <input type="checkbox" id="reg-terms" x-model="fields.terms" />
-              <label for="reg-terms" class="terms-label">
-                I agree to the <a href="#">Terms of Service</a> and
-                <a href="#">Privacy Policy</a>. I also agree to receive course
-                recommendations and product updates.
-              </label>
-            </div>
-            <div
-              class="field-error"
-              x-show="errors.terms"
-              x-transition
-              style="margin-top: -12px; margin-bottom: 14px"
-            >
-              <i class="bi bi-exclamation-circle-fill"></i>
-              <span x-text="errors.terms"></span>
-            </div>
+						<!-- Terms -->
+						<div class="terms-row">
+							<input type="checkbox" id="reg-terms" x-model="fields.terms" />
+							<label for="reg-terms" class="terms-label">
+								I agree to the <a href="#">Terms of Service</a> and
+								<a href="#">Privacy Policy</a>. I also agree to receive course
+								recommendations and product updates.
+							</label>
+						</div>
+						<div
+							class="field-error"
+							x-show="errors.terms"
+							x-transition
+							style="margin-top: -12px; margin-bottom: 14px"
+						>
+							<i class="bi bi-exclamation-circle-fill"></i>
+							<span x-text="errors.terms"></span>
+						</div>
 
-            <!-- Submit -->
-            <button
-              type="submit"
-              class="btn-auth"
-              :class="{ loading: submitting }"
-              :disabled="submitting"
-            >
-              <div class="spinner"></div>
-              <span class="btn-label">
-                <i class="bi bi-person-plus-fill me-1"></i> Create Free Account
-              </span>
-            </button>
-          </form>
+						<!-- Submit -->
+						<button
+							type="submit"
+							class="btn-auth"
+							:class="{ loading: submitting }"
+							:disabled="submitting"
+						>
+							<div class="spinner"></div>
+							<span class="btn-label">
+								<i class="bi bi-person-plus-fill me-1"></i> Create Free Account
+							</span>
+						</button>
+					</form>
 
-          <!-- Sign in link -->
-          <div class="auth-switch">
-            Already have an account? <a href="login.html">Sign in</a>
-          </div>
+					<!-- Sign in link -->
+					<div class="auth-switch">
+						Already have an account? <a href="login.html">Sign in</a>
+					</div>
 
-          <!-- Footer -->
-          <div class="auth-footer">
-            <a href="index.html">← Back to Home</a>
-            &nbsp;·&nbsp;
-            <a href="#">Privacy Policy</a>
-            &nbsp;·&nbsp;
-            <a href="#">Terms of Service</a>
-          </div>
-        </div>
-      </div>
-    </div>
+					<!-- Footer -->
+					<div class="auth-footer">
+						<a href="index.html">← Back to Home</a>
+						&nbsp;·&nbsp;
+						<a href="#">Privacy Policy</a>
+						&nbsp;·&nbsp;
+						<a href="#">Terms of Service</a>
+					</div>
+				</div>
+			</div>
+		</div>
 
-    <!-- ── Scripts ──────────────────────────────────────────── -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.js"></script>
-    <script
-      defer
-      src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
-    ></script>
-    <script src="assets/js/app.js"></script>
-
-    <script>
-      NProgress.configure({ showSpinner: false });
-      NProgress.start();
-      window.addEventListener("load", () => NProgress.done());
-
-      document.addEventListener("alpine:init", () => {
-        Alpine.data("registerForm", () => ({
-          fields: {
-            firstName: "",
-            lastName: "",
-            email: "",
-            password: "",
-            confirm: "",
-            terms: false,
-            plan: "free",
-          },
-          errors: {
-            firstName: "",
-            lastName: "",
-            email: "",
-            password: "",
-            confirm: "",
-            terms: "",
-          },
-          valid: {
-            firstName: false,
-            lastName: false,
-            email: false,
-            confirm: false,
-          },
-
-          showPw: false,
-          showConfirmPw: false,
-          submitting: false,
-
-          /* Password strength */
-          strength: 0,
-          get strengthClass() {
-            return (
-              ["", "weak", "fair", "good", "strong"][this.strength] || "weak"
-            );
-          },
-          get strengthLabel() {
-            return ["", "Weak", "Fair", "Good", "Strong"][this.strength] || "";
-          },
-          calcStrength() {
-            const p = this.fields.password;
-            let s = 0;
-            if (p.length >= 8) s++;
-            if (/[A-Z]/.test(p)) s++;
-            if (/[0-9]/.test(p)) s++;
-            if (/[^A-Za-z0-9]/.test(p)) s++;
-            this.strength = s;
-          },
-
-          validateField(name) {
-            this.errors[name] = "";
-            this.valid[name] = false;
-            const v = this.fields;
-            if (name === "firstName") {
-              if (!v.firstName.trim())
-                this.errors.firstName = "First name is required.";
-              else if (v.firstName.trim().length < 2)
-                this.errors.firstName = "Must be at least 2 characters.";
-              else this.valid.firstName = true;
-            }
-            if (name === "lastName") {
-              if (!v.lastName.trim())
-                this.errors.lastName = "Last name is required.";
-              else this.valid.lastName = true;
-            }
-            if (name === "email") {
-              if (!v.email.trim()) this.errors.email = "Email is required.";
-              else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.email))
-                this.errors.email = "Enter a valid email address.";
-              else this.valid.email = true;
-            }
-            if (name === "password") {
-              if (!v.password) this.errors.password = "Password is required.";
-              else if (v.password.length < 8)
-                this.errors.password =
-                  "Password must be at least 8 characters.";
-              else if (this.strength < 2)
-                this.errors.password =
-                  "Password is too weak. Add numbers or symbols.";
-            }
-            if (name === "confirm") {
-              if (!v.confirm)
-                this.errors.confirm = "Please confirm your password.";
-              else if (v.confirm !== v.password)
-                this.errors.confirm = "Passwords do not match.";
-              else this.valid.confirm = true;
-            }
-            if (name === "terms") {
-              if (!v.terms)
-                this.errors.terms = "You must accept the terms to continue.";
-            }
-            return !this.errors[name];
-          },
-
-          validateAll() {
-            const fields = [
-              "firstName",
-              "lastName",
-              "email",
-              "password",
-              "confirm",
-              "terms",
-            ];
-            return fields.map((f) => this.validateField(f)).every(Boolean);
-          },
-
-          async submit() {
-            if (!this.validateAll()) {
-              window.lmsNotify?.open({
-                type: "error",
-                message: "Please fill in all required fields correctly.",
-              });
-              return;
-            }
-            this.submitting = true;
-            NProgress.start();
-
-            /* Simulate API */
-            await new Promise((r) => setTimeout(r, 1800));
-
-            NProgress.done();
-            this.submitting = false;
-            window.lmsNotify?.success(
-              `Welcome, ${this.fields.firstName}! Your account has been created.`,
-            );
-            setTimeout(() => {
-              window.location.href = "student/dashboard.html";
-            }, 1500);
-          },
-
-          socialSignup(provider) {
-            window.lmsNotify?.open({
-              type: "info",
-              message: `${provider} OAuth signup would open here.`,
-            });
-          },
-        }));
-      });
-    </script>
-  </body>
+		<!-- ── Scripts ──────────────────────────────────────────── -->
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.js"></script>
+		<script
+			defer
+			src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
+		></script>
+		<script src="assets/js/app.js"></script>
+		<script src="assets/js/register.js"></script>
+	</body>
 </html>

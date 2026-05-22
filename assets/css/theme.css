@@ -5,59 +5,60 @@
    ============================================================ */
 
 /* Prevent horizontal scroll caused by Bootstrap .row negative margins */
-html, body {
-  overflow-x: hidden;
+html,
+body {
+	overflow-x: hidden;
 }
 
 :root {
-  /* ── Brand Colors ─────────────────────────────────────────── */
-  --primary:            #0d6efd;
-  --primary-dark:       #0a58ca;
-  --primary-light:      #cfe2ff;
-  --primary-gradient:   linear-gradient(135deg, #0d6efd 0%, #0a58ca 100%);
-  --accent:             #000000;
+	/* ── Brand Colors ─────────────────────────────────────────── */
+	--primary: #0d6efd;
+	--primary-dark: #0a58ca;
+	--primary-light: #cfe2ff;
+	--primary-gradient: linear-gradient(135deg, #0d6efd 0%, #0a58ca 100%);
+	--accent: #000000;
 
-  /* ── Surface / Background ─────────────────────────────────── */
-  --surface:            #ffffff;
-  --surface-alt:        #f8f9fa;
-  --surface-elevated:   #ffffff;
+	/* ── Surface / Background ─────────────────────────────────── */
+	--surface: #ffffff;
+	--surface-alt: #f8f9fa;
+	--surface-elevated: #ffffff;
 
-  /* ── Sidebar ──────────────────────────────────────────────── */
-  --sidebar-bg:         #000000;
-  --sidebar-text:       #ffffff;
-  --sidebar-muted:      #adb5bd;
-  --sidebar-active-bg:  #0d6efd;
-  --sidebar-hover-bg:   rgba(255, 255, 255, 0.08);
-  --sidebar-width:      260px;
-  --sidebar-collapsed:  64px;
+	/* ── Sidebar ──────────────────────────────────────────────── */
+	--sidebar-bg: #000000;
+	--sidebar-text: #ffffff;
+	--sidebar-muted: #adb5bd;
+	--sidebar-active-bg: #0d6efd;
+	--sidebar-hover-bg: rgba(255, 255, 255, 0.08);
+	--sidebar-width: 260px;
+	--sidebar-collapsed: 64px;
 
-  /* ── Typography ───────────────────────────────────────────── */
-  --text-primary:       #212529;
-  --text-secondary:     #495057;
-  --text-muted:         #6c757d;
-  --font-family:        'Poppins', sans-serif;
+	/* ── Typography ───────────────────────────────────────────── */
+	--text-primary: #212529;
+	--text-secondary: #495057;
+	--text-muted: #6c757d;
+	--font-family: "Poppins", sans-serif;
 
-  /* ── Borders ──────────────────────────────────────────────── */
-  --border-color:       #dee2e6;
-  --border-radius:      0.5rem;
-  --border-radius-lg:   1rem;
+	/* ── Borders ──────────────────────────────────────────────── */
+	--border-color: #dee2e6;
+	--border-radius: 0.5rem;
+	--border-radius-lg: 1rem;
 
-  /* ── Shadows ──────────────────────────────────────────────── */
-  --card-shadow:        0 2px 12px rgba(0, 0, 0, 0.08);
-  --card-shadow-hover:  0 8px 24px rgba(0, 0, 0, 0.14);
+	/* ── Shadows ──────────────────────────────────────────────── */
+	--card-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+	--card-shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.14);
 
-  /* ── Status Colors ────────────────────────────────────────── */
-  --success:            #198754;
-  --warning:            #ffc107;
-  --danger:             #dc3545;
-  --info:               #0dcaf0;
+	/* ── Status Colors ────────────────────────────────────────── */
+	--success: #198754;
+	--warning: #ffc107;
+	--danger: #dc3545;
+	--info: #0dcaf0;
 
-  /* ── Navbar ───────────────────────────────────────────────── */
-  --navbar-height:      64px;
-  --navbar-bg:          #ffffff;
+	/* ── Navbar ───────────────────────────────────────────────── */
+	--navbar-height: 64px;
+	--navbar-bg: #ffffff;
 
-  /* ── Transitions ──────────────────────────────────────────── */
-  --transition-base:    0.25s ease;
+	/* ── Transitions ──────────────────────────────────────────── */
+	--transition-base: 0.25s ease;
 }
 
 /* ============================================================
@@ -65,12 +66,82 @@ html, body {
    Usage: <html data-theme="dark"> or [data-theme="dark"]
    ============================================================ */
 [data-theme="dark"] {
-  --surface:            #1a1a2e;
-  --surface-alt:        #16213e;
-  --surface-elevated:   #0f3460;
-  --text-primary:       #e9ecef;
-  --text-secondary:     #adb5bd;
-  --border-color:       #2d3748;
-  --navbar-bg:          #1a1a2e;
-  --card-shadow:        0 2px 12px rgba(0, 0, 0, 0.4);
+	--surface: #1a1a2e;
+	--surface-alt: #16213e;
+	--surface-elevated: #0f3460;
+	--text-primary: #e9ecef;
+	--text-secondary: #adb5bd;
+	--border-color: #2d3748;
+	--navbar-bg: #1a1a2e;
+	--card-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+}
+
+/* ============================================================
+   Shared Utilities / Components
+   Extracted from page-specific styles for reuse.
+   ============================================================ */
+
+/* Consistent NProgress accent across public pages */
+#nprogress .bar {
+	background: var(--primary) !important;
+}
+
+/* Shared compact hero label used on marketing pages */
+.hero-label {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
+	background: rgba(255, 255, 255, 0.1);
+	border: 1px solid rgba(255, 255, 255, 0.15);
+	color: rgba(255, 255, 255, 0.9);
+	padding: 0.35rem 0.9rem;
+	border-radius: 50px;
+	font-size: 0.78rem;
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: 0.6px;
+	margin-bottom: 1rem;
+}
+
+/* Shared auth split layout (login/register) */
+.auth-wrap {
+	flex: 1;
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	min-height: 100vh;
+}
+
+@media (max-width: 991px) {
+	.auth-wrap {
+		grid-template-columns: 1fr;
+	}
+
+	.auth-panel {
+		display: none;
+	}
+}
+
+.auth-panel {
+	position: relative;
+	background: #060a14;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	padding: 48px;
+	overflow: hidden;
+}
+
+/* Shared auth form field interactions (login/register) */
+.auth-input:focus {
+	border-color: var(--primary);
+	box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.12);
+}
+
+.auth-input::placeholder {
+	color: var(--text-muted);
+}
+
+.input-wrap:focus-within .input-icon {
+	color: var(--primary);
 }

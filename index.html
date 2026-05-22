@@ -1,642 +1,2960 @@
 <!doctype html>
 <html lang="en" data-theme="light">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta
-      name="description"
-      content="EduLearn — The modern online learning platform with 200+ expert-led courses, live sessions, and verified certificates."
-    />
-    <meta name="theme-color" content="#0d6efd" />
-    <title>EduLearn — Learn Skills That Matter</title>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta
+			name="description"
+			content="EduLearn — The modern online learning platform with 200+ expert-led courses, live sessions, and verified certificates."
+		/>
+		<meta name="theme-color" content="#0d6efd" />
+		<title>EduLearn — Learn Skills That Matter</title>
 
-    <!-- ── Favicon placeholder ──────────────────────────────────── -->
-    <link
-      rel="icon"
-      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎓</text></svg>"
-    />
+		<!-- ── Favicon placeholder ──────────────────────────────────── -->
+		<link
+			rel="icon"
+			href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎓</text></svg>"
+		/>
 
-    <!-- ══════════════════════════════════════════════════════════
+		<!-- ══════════════════════════════════════════════════════════
        FONTS
        ══════════════════════════════════════════════════════════ -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
-      rel="stylesheet"
-    />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+			rel="stylesheet"
+		/>
 
-    <!-- ══════════════════════════════════════════════════════════
+		<!-- ══════════════════════════════════════════════════════════
        CSS LIBRARIES
        ══════════════════════════════════════════════════════════ -->
 
-    <!-- Bootstrap 5.3 -->
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
-    <!-- Bootstrap Icons 1.11 -->
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css"
-      rel="stylesheet"
-    />
-    <!-- AOS -->
-    <link
-      href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css"
-      rel="stylesheet"
-    />
-    <!-- Swiper.js -->
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
-    />
-    <!-- Notyf -->
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css"
-    />
+		<!-- Bootstrap 5.3 -->
+		<link
+			href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+			rel="stylesheet"
+		/>
+		<!-- Bootstrap Icons 1.11 -->
+		<link
+			href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css"
+			rel="stylesheet"
+		/>
+		<!-- AOS -->
+		<link
+			href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css"
+			rel="stylesheet"
+		/>
+		<!-- Swiper.js -->
+		<link
+			rel="stylesheet"
+			href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+		/>
+		<!-- Notyf -->
+		<link
+			rel="stylesheet"
+			href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css"
+		/>
 
-    <!-- ── Project theme ──────────────────────────────────────── -->
-    <link rel="stylesheet" href="assets/css/theme.css" />
+		<!-- ── Project theme ──────────────────────────────────────── -->
+		<link rel="stylesheet" href="assets/css/theme.css" />
 
-    <!-- ══════════════════════════════════════════════════════════
-       INLINE PAGE STYLES
-       ══════════════════════════════════════════════════════════ -->
-    <style>
-      /* Smooth scroll */
-      html {
-        scroll-behavior: smooth;
-      }
+		<!-- Index page styles -->
+		<link rel="stylesheet" href="assets/css/index.css" />
+	</head>
 
-      /* Page transition fade-in */
-      body {
-        opacity: 0;
-        animation: pageFadeIn 0.35s ease forwards;
-      }
-      @keyframes pageFadeIn {
-        to {
-          opacity: 1;
-        }
-      }
-
-      /* ── Section separators ─────────────────────────────────── */
-      .section-divider {
-        height: 1px;
-        background: var(--border-color);
-        margin: 0;
-      }
-
-      /* ── Back-to-top button ─────────────────────────────────── */
-      #backToTop {
-        position: fixed;
-        bottom: 28px;
-        right: 28px;
-        width: 44px;
-        height: 44px;
-        border-radius: 50%;
-        background: var(--primary);
-        color: #fff;
-        border: none;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1rem;
-        cursor: pointer;
-        z-index: 1050;
-        box-shadow: 0 4px 16px rgba(13, 110, 253, 0.4);
-        opacity: 0;
-        transform: translateY(12px);
-        pointer-events: none;
-        transition:
-          opacity 0.25s ease,
-          transform 0.25s ease;
-      }
-      #backToTop.visible {
-        opacity: 1;
-        transform: translateY(0);
-        pointer-events: auto;
-      }
-      #backToTop:hover {
-        background: var(--primary-dark);
-        transform: translateY(-2px);
-      }
-
-      /* ── Cookie banner ──────────────────────────────────────── */
-      #cookieBanner {
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        background: var(--surface-elevated);
-        border-top: 1px solid var(--border-color);
-        padding: 16px 24px;
-        z-index: 2000;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 16px;
-        flex-wrap: wrap;
-        box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.08);
-        font-family: var(--font-family);
-        font-size: 0.85rem;
-        color: var(--text-secondary);
-      }
-      #cookieBanner.hidden {
-        display: none;
-      }
-      .cookie-actions {
-        display: flex;
-        gap: 10px;
-        flex-shrink: 0;
-      }
-      .btn-cookie-accept {
-        padding: 8px 20px;
-        border-radius: 50px;
-        background: var(--primary);
-        color: #fff;
-        border: none;
-        font-size: 0.82rem;
-        font-weight: 700;
-        font-family: var(--font-family);
-        cursor: pointer;
-        transition: background 0.2s;
-      }
-      .btn-cookie-accept:hover {
-        background: var(--primary-dark);
-      }
-      .btn-cookie-decline {
-        padding: 8px 16px;
-        border-radius: 50px;
-        background: transparent;
-        color: var(--text-muted);
-        border: 1px solid var(--border-color);
-        font-size: 0.82rem;
-        font-weight: 600;
-        font-family: var(--font-family);
-        cursor: pointer;
-        transition:
-          border-color 0.2s,
-          color 0.2s;
-      }
-      .btn-cookie-decline:hover {
-        border-color: var(--text-muted);
-        color: var(--text-primary);
-      }
-    </style>
-  </head>
-
-  <body x-data="themeToggle()" :data-theme="dark ? 'dark' : 'light'">
-    <!-- ══════════════════════════════════════════════════════════
+	<body x-data="themeToggle()" :data-theme="dark ? 'dark' : 'light'">
+		<!-- ══════════════════════════════════════════════════════════
        PUBLIC NAVBAR
        ══════════════════════════════════════════════════════════ -->
-    <!-- #include components/public-navbar.html -->
-    <div id="public-navbar-placeholder"></div>
+		<!-- ── NAVBAR ─────────────────────────────────────────────────── -->
+		<nav
+			id="public-navbar"
+			x-data="navbarState()"
+			:class="scrolled ? 'nav-scrolled' : 'nav-transparent'"
+			class="d-flex align-items-center px-3 px-lg-5"
+		>
+			<div class="container-fluid px-0 d-flex align-items-center">
+				<!-- ── Logo ───────────────────────────────────────────────── -->
+				<a
+					href="index.html"
+					class="nav-logo-text d-flex align-items-center gap-2 me-4"
+				>
+					<i
+						class="bi bi-mortarboard-fill"
+						style="font-size: 1.5rem; color: var(--primary)"
+					></i>
+					EduLearn
+				</a>
 
-    <!-- ══════════════════════════════════════════════════════════
+				<!-- ── Center Nav Links (desktop) ────────────────────────── -->
+				<ul class="nav nav-center-links d-none d-lg-flex mb-0 me-auto">
+					<li class="nav-item">
+						<a class="nav-link active" href="index.html">Home</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="courses.html">Courses</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="about.html">About</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="blog.html">Blog</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="pricing.html">Pricing</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="contact.html">Contact</a>
+					</li>
+				</ul>
+
+				<!-- ── Right Side Controls ───────────────────────────────── -->
+				<div class="d-flex align-items-center gap-2 ms-auto">
+					<!-- Dark / Light Toggle -->
+					<button
+						class="btn-nav-toggle d-none d-md-inline-flex align-items-center"
+						@click="toggle()"
+						:title="dark ? 'Switch to Light Mode' : 'Switch to Dark Mode'"
+						aria-label="Toggle dark mode"
+					>
+						<i :class="dark ? 'bi bi-sun-fill' : 'bi bi-moon-fill'"></i>
+					</button>
+
+					<!-- Language Dropdown -->
+					<div class="lang-dropdown dropdown d-none d-md-block">
+						<button
+							class="dropdown-toggle"
+							type="button"
+							data-bs-toggle="dropdown"
+							aria-expanded="false"
+						>
+							<i class="bi bi-globe me-1"></i> EN
+						</button>
+						<ul class="dropdown-menu dropdown-menu-end">
+							<li><a class="dropdown-item" href="#">🇺🇸 EN</a></li>
+							<li><a class="dropdown-item" href="#">🇸🇦 AR</a></li>
+							<li><a class="dropdown-item" href="#">🇫🇷 FR</a></li>
+						</ul>
+					</div>
+
+					<!-- Log In Button -->
+					<a href="login.html" class="btn-nav-login d-none d-md-inline-block"
+						>Log In</a
+					>
+
+					<!-- Get Started CTA -->
+					<a href="register.html" class="btn-nav-cta d-none d-md-inline-block">
+						Get Started Free
+					</a>
+
+					<!-- Mobile Hamburger -->
+					<button
+						class="nav-hamburger d-lg-none"
+						type="button"
+						data-bs-toggle="offcanvas"
+						data-bs-target="#mobileNavOffcanvas"
+						aria-controls="mobileNavOffcanvas"
+						aria-label="Open navigation menu"
+					>
+						<i class="bi bi-list"></i>
+					</button>
+				</div>
+				<!-- /Right Side Controls -->
+			</div>
+		</nav>
+		<!-- /NAVBAR -->
+
+		<!-- ── MOBILE OFF-CANVAS DRAWER ──────────────────────────────── -->
+		<div
+			class="offcanvas offcanvas-end"
+			tabindex="-1"
+			id="mobileNavOffcanvas"
+			aria-labelledby="mobileNavOffcanvasLabel"
+			style="
+				width: 300px;
+				background: var(--surface);
+				color: var(--text-primary);
+			"
+		>
+			<div class="offcanvas-header">
+				<a
+					href="index.html"
+					class="nav-logo-text d-flex align-items-center gap-2"
+				>
+					<i
+						class="bi bi-mortarboard-fill"
+						style="font-size: 1.4rem; color: var(--primary)"
+					></i>
+					EduLearn
+				</a>
+				<button
+					type="button"
+					class="btn-close"
+					data-bs-dismiss="offcanvas"
+					aria-label="Close"
+				></button>
+			</div>
+
+			<div class="offcanvas-body">
+				<!-- Nav Links -->
+				<nav class="d-flex flex-column gap-1">
+					<a href="index.html" class="mobile-nav-link active">
+						<i class="bi bi-house"></i> Home
+					</a>
+					<a href="courses.html" class="mobile-nav-link">
+						<i class="bi bi-grid"></i> Courses
+					</a>
+					<a href="about.html" class="mobile-nav-link">
+						<i class="bi bi-info-circle"></i> About
+					</a>
+					<a href="blog.html" class="mobile-nav-link">
+						<i class="bi bi-newspaper"></i> Blog
+					</a>
+					<a href="pricing.html" class="mobile-nav-link">
+						<i class="bi bi-tag"></i> Pricing
+					</a>
+					<a href="contact.html" class="mobile-nav-link">
+						<i class="bi bi-envelope"></i> Contact
+					</a>
+				</nav>
+
+				<div class="mobile-nav-divider"></div>
+
+				<!-- Auth Buttons -->
+				<div class="d-flex flex-column gap-2">
+					<a href="login.html" class="btn btn-outline-primary w-100">Log In</a>
+					<a href="register.html" class="btn btn-primary w-100"
+						>Get Started Free</a
+					>
+				</div>
+
+				<div class="mobile-nav-divider"></div>
+
+				<!-- Theme + Language -->
+				<div class="d-flex align-items-center justify-content-between px-1">
+					<!-- Dark/Light toggle -->
+					<div
+						x-data="mobileThemeToggle()"
+						class="d-flex align-items-center gap-2"
+					>
+						<span style="font-size: 0.82rem; color: var(--text-muted)"
+							>Theme</span
+						>
+						<button class="btn-nav-toggle" @click="toggle()">
+							<i :class="dark ? 'bi bi-sun-fill' : 'bi bi-moon-fill'"></i>
+							<span
+								x-text="dark ? 'Light' : 'Dark'"
+								style="font-size: 0.82rem; margin-left: 4px"
+							></span>
+						</button>
+					</div>
+
+					<!-- Language Dropdown -->
+					<div class="lang-dropdown dropdown">
+						<button
+							class="dropdown-toggle"
+							type="button"
+							data-bs-toggle="dropdown"
+							style="font-size: 0.82rem"
+						>
+							<i class="bi bi-globe me-1"></i> EN
+						</button>
+						<ul class="dropdown-menu">
+							<li><a class="dropdown-item" href="#">🇺🇸 EN</a></li>
+							<li><a class="dropdown-item" href="#">🇸🇦 AR</a></li>
+							<li><a class="dropdown-item" href="#">🇫🇷 FR</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- /MOBILE OFF-CANVAS DRAWER -->
+
+		<!-- ══════════════════════════════════════════════════════════
        MAIN CONTENT
        ══════════════════════════════════════════════════════════ -->
-    <main id="main-content">
-      <!-- 1 ── HERO ──────────────────────────────────────────────── -->
-      <!-- #include sections/hero.html -->
-      <div id="hero-placeholder"></div>
+		<main id="main-content">
+			<!-- 1 ── HERO ──────────────────────────────────────────────── -->
+			<!-- ============================================================
+     EduLearn LMS — Hero Section
+     File: sections/hero.html
+     Libraries used: Typed.js 2.x, AOS 2.3.x
+     (CDN links live in index.html — not repeated here)
+     ============================================================ -->
+			<!-- ════════════════════════════════════════════════════════════
+     HERO SECTION
+     ════════════════════════════════════════════════════════════ -->
+			<section class="hero-section" id="hero">
+				<!-- Background blobs -->
+				<div class="hero-blob hero-blob-1"></div>
+				<div class="hero-blob hero-blob-2"></div>
+				<div class="hero-blob hero-blob-3"></div>
 
-      <!-- 2 ── STATS BAND ──────────────────────────────────────── -->
-      <!-- #include sections/stats.html -->
-      <div id="stats-placeholder"></div>
+				<!-- ── Main Content ────────────────────────────────────────── -->
+				<div class="container hero-inner py-5">
+					<div class="row align-items-center g-5">
+						<!-- LEFT: Text ─────────────────────────────────────────── -->
+						<div class="col-lg-6" data-aos="fade-right" data-aos-duration="700">
+							<!-- Eyebrow tag -->
+							<div
+								class="hero-eyebrow"
+								data-aos="fade-down"
+								data-aos-delay="100"
+							>
+								<i class="bi bi-stars"></i>
+								#1 Online Learning Platform — 2026
+							</div>
 
-      <!-- 3 ── FEATURES ─────────────────────────────────────────── -->
-      <!-- #include sections/features.html -->
-      <div id="features-placeholder"></div>
+							<!-- Headline -->
+							<h1 class="hero-headline">
+								Learn Skills That<br />
+								<span class="highlight">Shape Your Future</span>
+							</h1>
 
-      <!-- 4 ── POPULAR COURSES ─────────────────────────────────── -->
-      <!-- #include sections/popular-courses.html -->
-      <div id="popular-courses-placeholder"></div>
+							<!-- Typed.js subtitle -->
+							<div class="hero-typed-row">
+								<span class="typed-static">Start</span>
+								<span id="hero-typed-text"></span>
+							</div>
 
-      <!-- Divider -->
-      <div class="section-divider"></div>
+							<!-- CTA Buttons -->
+							<div class="hero-cta-row" data-aos="fade-up" data-aos-delay="200">
+								<a href="courses.html" class="btn-hero-primary">
+									<i class="bi bi-rocket-takeoff-fill"></i>
+									Start Learning Free
+								</a>
+								<a href="course-detail.html" class="btn-hero-outline">
+									<span class="play-icon-circle">
+										<i
+											class="bi bi-play-fill"
+											style="font-size: 0.65rem; margin-left: 1px"
+										></i>
+									</span>
+									Watch Demo
+								</a>
+							</div>
 
-      <!-- 5 ── INSTRUCTORS ─────────────────────────────────────── -->
-      <!-- #include sections/instructors.html -->
-      <div id="instructors-placeholder"></div>
+							<!-- Trust row -->
+							<div
+								class="hero-trust-row"
+								data-aos="fade-up"
+								data-aos-delay="300"
+							>
+								<div class="hero-avatars">
+									<img
+										src="https://placehold.co/30x30/4f46e5/ffffff?text=A"
+										alt="student"
+									/>
+									<img
+										src="https://placehold.co/30x30/0d6efd/ffffff?text=B"
+										alt="student"
+									/>
+									<img
+										src="https://placehold.co/30x30/0891b2/ffffff?text=C"
+										alt="student"
+									/>
+									<img
+										src="https://placehold.co/30x30/059669/ffffff?text=D"
+										alt="student"
+									/>
+								</div>
+								<div>
+									<div class="hero-rating-stars">★★★★★</div>
+									<div class="hero-trust-text">
+										<strong>50,000+</strong> happy students · Rated
+										<strong>4.9/5</strong>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- /LEFT -->
 
-      <!-- 6 ── TESTIMONIALS ────────────────────────────────────── -->
-      <!-- #include sections/testimonials.html -->
-      <div id="testimonials-placeholder"></div>
+						<!-- RIGHT: Floating Cards ──────────────────────────────── -->
+						<div
+							class="col-lg-6 d-none d-lg-block"
+							data-aos="fade-left"
+							data-aos-duration="800"
+							data-aos-delay="100"
+						>
+							<div class="hero-cards-wrapper">
+								<!-- Main Course Card -->
+								<div class="hero-card hero-card-main">
+									<div class="card-thumb">🎓</div>
+									<span class="card-badge">Development</span>
+									<div class="card-title">
+										Complete JavaScript &amp; React Developer Bootcamp
+									</div>
+									<div class="card-progress-label">
+										<span>Progress</span>
+										<span>68%</span>
+									</div>
+									<div class="card-progress-bar">
+										<div class="card-progress-fill"></div>
+									</div>
+									<div class="card-footer-row">
+										<div class="card-avatar-group">
+											<img
+												src="https://placehold.co/22x22/0d6efd/fff?text=J"
+												alt=""
+											/>
+											<img
+												src="https://placehold.co/22x22/7c3aed/fff?text=K"
+												alt=""
+											/>
+											<img
+												src="https://placehold.co/22x22/059669/fff?text=L"
+												alt=""
+											/>
+											<span class="card-avatar-count">+420</span>
+										</div>
+										<span class="card-price">$49</span>
+									</div>
+								</div>
 
-      <!-- 7 ── PRICING ─────────────────────────────────────────── -->
-      <!-- #include sections/pricing.html -->
-      <div id="pricing-placeholder"></div>
+								<!-- Stats Mini Card -->
+								<div class="hero-card hero-card-stats">
+									<div class="stat-row">
+										<div
+											class="stat-icon"
+											style="
+												background: rgba(13, 110, 253, 0.2);
+												color: #60a5fa;
+											"
+										>
+											<i class="bi bi-people-fill"></i>
+										</div>
+										<div>
+											<div class="stat-val">50K+</div>
+											<div class="stat-lbl">Active Students</div>
+										</div>
+									</div>
+									<div class="stat-row">
+										<div
+											class="stat-icon"
+											style="
+												background: rgba(16, 185, 129, 0.2);
+												color: #34d399;
+											"
+										>
+											<i class="bi bi-book-half"></i>
+										</div>
+										<div>
+											<div class="stat-val">200+</div>
+											<div class="stat-lbl">Courses</div>
+										</div>
+									</div>
+									<div class="stat-row">
+										<div
+											class="stat-icon"
+											style="
+												background: rgba(245, 158, 11, 0.2);
+												color: #fbbf24;
+											"
+										>
+											<i class="bi bi-star-fill"></i>
+										</div>
+										<div>
+											<div class="stat-val">4.9</div>
+											<div class="stat-lbl">Avg Rating</div>
+										</div>
+									</div>
+								</div>
 
-      <!-- 8 ── CTA / NEWSLETTER ────────────────────────────────── -->
-      <!-- #include sections/cta.html -->
-      <div id="cta-placeholder"></div>
-    </main>
+								<!-- Certificate Card -->
+								<div class="hero-card hero-card-cert">
+									<div class="cert-header">
+										<div class="cert-icon-wrap">
+											<i class="bi bi-award-fill"></i>
+										</div>
+										<div>
+											<div class="cert-title">Certificate Earned!</div>
+											<div class="cert-sub">HTML &amp; CSS Mastery</div>
+										</div>
+									</div>
+									<div class="cert-stars">★★★★★</div>
+									<div class="cert-bar"><div class="cert-bar-fill"></div></div>
+									<div class="cert-complete">Course Completed · March 2026</div>
+								</div>
 
-    <!-- ══════════════════════════════════════════════════════════
+								<!-- Live Session Card -->
+								<div class="hero-card hero-card-live">
+									<div class="live-label">
+										<span class="live-dot"></span> Live Now
+									</div>
+									<div class="live-title">React Hooks Deep Dive</div>
+									<div class="live-meta">
+										<img
+											src="https://placehold.co/20x20/7c3aed/fff?text=S"
+											alt=""
+											class="live-avatar"
+										/>
+										<span>Sarah Chen · 247 watching</span>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- /RIGHT -->
+					</div>
+				</div>
+				<!-- /Main Content -->
+
+				<!-- ── Stats Bar ───────────────────────────────────────────── -->
+				<div class="hero-stats-bar">
+					<div class="container">
+						<div class="row g-0 justify-content-center">
+							<div class="col-6 col-sm-3" data-aos="fade-up" data-aos-delay="0">
+								<div class="hero-stat-item">
+									<i
+										class="bi bi-people-fill hero-stat-icon"
+										style="color: #60a5fa"
+									></i>
+									<div class="hero-stat-number">
+										50K<span class="stat-plus">+</span>
+									</div>
+									<div class="hero-stat-label">Active Students</div>
+								</div>
+							</div>
+
+							<div
+								class="col-6 col-sm-3"
+								data-aos="fade-up"
+								data-aos-delay="80"
+							>
+								<div class="hero-stat-item">
+									<i
+										class="bi bi-collection-play-fill hero-stat-icon"
+										style="color: #34d399"
+									></i>
+									<div class="hero-stat-number">
+										200<span class="stat-plus">+</span>
+									</div>
+									<div class="hero-stat-label">Expert Courses</div>
+								</div>
+							</div>
+
+							<div
+								class="col-6 col-sm-3"
+								data-aos="fade-up"
+								data-aos-delay="160"
+							>
+								<div class="hero-stat-item">
+									<i
+										class="bi bi-emoji-smile-fill hero-stat-icon"
+										style="color: #fbbf24"
+									></i>
+									<div class="hero-stat-number">
+										95<span class="stat-plus">%</span>
+									</div>
+									<div class="hero-stat-label">Satisfaction Rate</div>
+								</div>
+							</div>
+
+							<div
+								class="col-6 col-sm-3"
+								data-aos="fade-up"
+								data-aos-delay="240"
+							>
+								<div class="hero-stat-item">
+									<i
+										class="bi bi-patch-check-fill hero-stat-icon"
+										style="color: #f472b6"
+									></i>
+									<div class="hero-stat-number">
+										50<span class="stat-plus">+</span>
+									</div>
+									<div class="hero-stat-label">Expert Instructors</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- /Stats Bar -->
+			</section>
+			<!-- /HERO SECTION -->
+			<!-- 2 ── STATS BAND ──────────────────────────────────────── -->
+			<!-- ============================================================
+     EduLearn LMS — Stats / Counter Section
+     File: sections/stats.html
+     Libraries used: CountUp.js 2.x, AOS 2.3.x
+     (CDN links live in index.html)
+     ============================================================ -->
+			<!-- ════════════════════════════════════════════════════════════
+     STATS / COUNTER SECTION
+     ════════════════════════════════════════════════════════════ -->
+			<section class="stats-section" id="stats">
+				<!-- Blue gradient band -->
+				<div class="stats-band">
+					<div class="stats-band-dots"></div>
+					<div class="container">
+						<div class="row gy-5 align-items-center">
+							<!-- Left: heading -->
+							<div class="col-lg-4" data-aos="fade-right">
+								<div class="stats-eyebrow">
+									<i class="bi bi-graph-up-arrow"></i>
+									By The Numbers
+								</div>
+								<h2 class="stats-title">Trusted by Learners<br />Worldwide</h2>
+								<p class="stats-subtitle">
+									EduLearn has helped over 50,000 students build real skills,
+									land better jobs, and grow their businesses across 100+
+									countries.
+								</p>
+							</div>
+
+							<!-- Vertical divider (desktop) -->
+							<div class="col-auto d-none d-lg-flex ps-4">
+								<div class="stats-vdivider"></div>
+							</div>
+
+							<!-- Right: counters grid -->
+							<div class="col-lg" data-aos="fade-left" data-aos-delay="80">
+								<div
+									class="row g-0 justify-content-center"
+									id="statsCountersRow"
+								>
+									<!-- Students -->
+									<div class="col-6 col-sm-3 col-lg-3">
+										<div class="stat-item">
+											<div class="stat-icon-wrap">
+												<i class="bi bi-people-fill"></i>
+											</div>
+											<div class="stat-number-row">
+												<span
+													class="stat-counter"
+													data-target="50000"
+													data-suffix=""
+													>0</span
+												>
+												<span class="stat-suffix">K+</span>
+											</div>
+											<div class="stat-label">Students</div>
+											<div class="stat-sublabel">Active learners</div>
+										</div>
+									</div>
+
+									<!-- Courses -->
+									<div class="col-6 col-sm-3 col-lg-3">
+										<div class="stat-item">
+											<div class="stat-icon-wrap">
+												<i class="bi bi-play-btn-fill"></i>
+											</div>
+											<div class="stat-number-row">
+												<span
+													class="stat-counter"
+													data-target="200"
+													data-suffix=""
+													>0</span
+												>
+												<span class="stat-suffix">+</span>
+											</div>
+											<div class="stat-label">Courses</div>
+											<div class="stat-sublabel">Across 12 categories</div>
+										</div>
+									</div>
+
+									<!-- Satisfaction -->
+									<div class="col-6 col-sm-3 col-lg-3">
+										<div class="stat-item">
+											<div class="stat-icon-wrap">
+												<i class="bi bi-emoji-smile-fill"></i>
+											</div>
+											<div class="stat-number-row">
+												<span
+													class="stat-counter"
+													data-target="95"
+													data-suffix=""
+													>0</span
+												>
+												<span class="stat-suffix">%</span>
+											</div>
+											<div class="stat-label">Satisfaction</div>
+											<div class="stat-sublabel">From 12K+ reviews</div>
+										</div>
+									</div>
+
+									<!-- Instructors -->
+									<div class="col-6 col-sm-3 col-lg-3">
+										<div class="stat-item">
+											<div class="stat-icon-wrap">
+												<i class="bi bi-person-badge-fill"></i>
+											</div>
+											<div class="stat-number-row">
+												<span
+													class="stat-counter"
+													data-target="50"
+													data-suffix=""
+													>0</span
+												>
+												<span class="stat-suffix">+</span>
+											</div>
+											<div class="stat-label">Instructors</div>
+											<div class="stat-sublabel">Industry veterans</div>
+										</div>
+									</div>
+								</div>
+								<!-- /row -->
+							</div>
+							<!-- /Right -->
+						</div>
+						<!-- /row -->
+					</div>
+				</div>
+				<!-- /Blue band -->
+
+				<!-- ── Partner logos strip ──────────────────────────────────── -->
+				<div class="stats-partners">
+					<div class="container">
+						<div class="row align-items-center g-3">
+							<div class="col-12 col-sm-auto text-center text-sm-start">
+								<p class="stats-partners-label mb-0">Trusted by teams at</p>
+							</div>
+							<div class="col">
+								<div class="stats-partners-logos">
+									<span class="partner-logo"
+										><i class="bi bi-google"></i> Google</span
+									>
+									<span class="partner-logo"
+										><i class="bi bi-microsoft"></i> Microsoft</span
+									>
+									<span class="partner-logo"
+										><i class="bi bi-amazon"></i> Amazon</span
+									>
+									<span class="partner-logo"
+										><i class="bi bi-meta"></i> Meta</span
+									>
+									<span class="partner-logo"
+										><i class="bi bi-apple"></i> Apple</span
+									>
+									<span class="partner-logo"
+										><i class="bi bi-spotify"></i> Spotify</span
+									>
+									<span class="partner-logo"
+										><i class="bi bi-slack"></i> Slack</span
+									>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+			<!-- /STATS SECTION -->
+			<!-- 3 ── FEATURES ─────────────────────────────────────────── -->
+			<!-- ============================================================
+     EduLearn LMS — Features Section
+     File: sections/features.html
+     Libraries used: AOS 2.3.x
+     ============================================================ -->
+			<!-- ════════════════════════════════════════════════════════════
+     FEATURES SECTION
+     ════════════════════════════════════════════════════════════ -->
+			<section class="features-section" id="features">
+				<div class="container">
+					<!-- ── Section Header ──────────────────────────────────────── -->
+					<div class="text-center mb-5" data-aos="fade-up">
+						<div class="features-eyebrow">
+							<i class="bi bi-lightning-charge-fill"></i>
+							Why Choose EduLearn
+						</div>
+						<h2 class="features-title">
+							Everything You Need to<br />
+							<span class="accent">Learn & Succeed</span>
+						</h2>
+						<p class="features-subtitle">
+							A complete learning ecosystem built around you — from expert-led
+							live classes to industry-recognised certifications, all in one
+							place.
+						</p>
+					</div>
+					<!-- /Header -->
+
+					<!-- ── Feature Cards Grid ──────────────────────────────────── -->
+					<div class="row g-4">
+						<!-- 1. Live Classes -->
+						<div
+							class="col-md-6 col-lg-4"
+							data-aos="fade-up"
+							data-aos-delay="0"
+						>
+							<div class="feature-card">
+								<span class="feature-card-num">01</span>
+								<div class="feature-card-inner">
+									<div
+										class="feature-icon-wrap"
+										style="background: rgba(13, 110, 253, 0.1); color: #0d6efd"
+									>
+										<i class="bi bi-camera-video-fill"></i>
+									</div>
+									<h3 class="feature-title">Live Classes</h3>
+									<p class="feature-desc">
+										Join interactive real-time sessions with world-class
+										instructors. Ask questions, collaborate, and learn with
+										peers globally.
+									</p>
+									<ul class="feature-list">
+										<li>
+											<i class="bi bi-check-circle-fill"></i> HD video &amp;
+											audio streaming
+										</li>
+										<li>
+											<i class="bi bi-check-circle-fill"></i> Live Q&amp;A and
+											chat
+										</li>
+										<li>
+											<i class="bi bi-check-circle-fill"></i> Session recordings
+											available
+										</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+
+						<!-- 2. Expert Instructors -->
+						<div
+							class="col-md-6 col-lg-4"
+							data-aos="fade-up"
+							data-aos-delay="80"
+						>
+							<div class="feature-card">
+								<span class="feature-card-num">02</span>
+								<div class="feature-card-inner">
+									<div
+										class="feature-icon-wrap"
+										style="background: rgba(124, 58, 237, 0.1); color: #7c3aed"
+									>
+										<i class="bi bi-person-badge-fill"></i>
+									</div>
+									<h3 class="feature-title">Expert Instructors</h3>
+									<p class="feature-desc">
+										Learn from 50+ industry professionals with real-world
+										experience at top companies like Google, Meta, and Amazon.
+									</p>
+									<ul class="feature-list">
+										<li>
+											<i class="bi bi-check-circle-fill"></i> 50+ verified
+											instructors
+										</li>
+										<li>
+											<i class="bi bi-check-circle-fill"></i> Industry-proven
+											curriculum
+										</li>
+										<li>
+											<i class="bi bi-check-circle-fill"></i> 1-on-1 mentorship
+											sessions
+										</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+
+						<!-- 3. Certifications -->
+						<div
+							class="col-md-6 col-lg-4"
+							data-aos="fade-up"
+							data-aos-delay="160"
+						>
+							<div class="feature-card">
+								<span class="feature-card-num">03</span>
+								<div class="feature-card-inner">
+									<div
+										class="feature-icon-wrap"
+										style="background: rgba(251, 191, 36, 0.12); color: #d97706"
+									>
+										<i class="bi bi-award-fill"></i>
+									</div>
+									<h3 class="feature-title">Certifications</h3>
+									<p class="feature-desc">
+										Earn industry-recognised certificates upon course
+										completion. Share them on LinkedIn and boost your
+										professional profile.
+									</p>
+									<ul class="feature-list">
+										<li>
+											<i class="bi bi-check-circle-fill"></i> Verified digital
+											certificates
+										</li>
+										<li>
+											<i class="bi bi-check-circle-fill"></i> LinkedIn-shareable
+											badges
+										</li>
+										<li>
+											<i class="bi bi-check-circle-fill"></i> Recognised by 500+
+											companies
+										</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+
+						<!-- 4. Mobile Access -->
+						<div
+							class="col-md-6 col-lg-4"
+							data-aos="fade-up"
+							data-aos-delay="0"
+						>
+							<div class="feature-card">
+								<span class="feature-card-num">04</span>
+								<div class="feature-card-inner">
+									<div
+										class="feature-icon-wrap"
+										style="background: rgba(5, 150, 105, 0.1); color: #059669"
+									>
+										<i class="bi bi-phone-fill"></i>
+									</div>
+									<h3 class="feature-title">Mobile Access</h3>
+									<p class="feature-desc">
+										Learn anytime, anywhere with our fully responsive platform.
+										Download lessons for offline access on the go.
+									</p>
+									<ul class="feature-list">
+										<li>
+											<i class="bi bi-check-circle-fill"></i> iOS &amp; Android
+											apps
+										</li>
+										<li>
+											<i class="bi bi-check-circle-fill"></i> Offline lesson
+											downloads
+										</li>
+										<li>
+											<i class="bi bi-check-circle-fill"></i> Synced progress
+											across devices
+										</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+
+						<!-- 5. Community Forum -->
+						<div
+							class="col-md-6 col-lg-4"
+							data-aos="fade-up"
+							data-aos-delay="80"
+						>
+							<div class="feature-card">
+								<span class="feature-card-num">05</span>
+								<div class="feature-card-inner">
+									<div
+										class="feature-icon-wrap"
+										style="background: rgba(236, 72, 153, 0.1); color: #db2777"
+									>
+										<i class="bi bi-chat-dots-fill"></i>
+									</div>
+									<h3 class="feature-title">Community Forum</h3>
+									<p class="feature-desc">
+										Connect with 50,000+ learners worldwide. Share insights, ask
+										questions, and grow together in our active community.
+									</p>
+									<ul class="feature-list">
+										<li>
+											<i class="bi bi-check-circle-fill"></i> Peer-to-peer
+											discussion boards
+										</li>
+										<li>
+											<i class="bi bi-check-circle-fill"></i>
+											Instructor-moderated threads
+										</li>
+										<li>
+											<i class="bi bi-check-circle-fill"></i> Study groups &amp;
+											projects
+										</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+
+						<!-- 6. Progress Tracking -->
+						<div
+							class="col-md-6 col-lg-4"
+							data-aos="fade-up"
+							data-aos-delay="160"
+						>
+							<div class="feature-card">
+								<span class="feature-card-num">06</span>
+								<div class="feature-card-inner">
+									<div
+										class="feature-icon-wrap"
+										style="background: rgba(13, 202, 240, 0.1); color: #0891b2"
+									>
+										<i class="bi bi-bar-chart-line-fill"></i>
+									</div>
+									<h3 class="feature-title">Progress Tracking</h3>
+									<p class="feature-desc">
+										Stay motivated with detailed analytics dashboards, streak
+										counters, and personalised learning path recommendations.
+									</p>
+									<ul class="feature-list">
+										<li>
+											<i class="bi bi-check-circle-fill"></i> Visual progress
+											dashboards
+										</li>
+										<li>
+											<i class="bi bi-check-circle-fill"></i> Daily learning
+											streaks
+										</li>
+										<li>
+											<i class="bi bi-check-circle-fill"></i> AI-powered
+											recommendations
+										</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- /Cards Grid -->
+
+					<!-- ── Bottom CTA Strip ─────────────────────────────────────── -->
+					<div
+						class="features-cta-strip"
+						data-aos="fade-up"
+						data-aos-delay="100"
+					>
+						<div class="row align-items-center g-3">
+							<div class="col-lg-8">
+								<h3>Ready to start your learning journey?</h3>
+								<p>
+									Join 50,000+ students already learning on EduLearn. No credit
+									card required.
+								</p>
+							</div>
+							<div
+								class="col-lg-4 d-flex gap-3 justify-content-lg-end flex-wrap"
+							>
+								<a href="register.html" class="btn btn-primary">
+									<i class="bi bi-rocket-takeoff-fill me-2"></i>Get Started Free
+								</a>
+								<a href="courses.html" class="btn btn-outline-secondary">
+									Browse Courses
+								</a>
+							</div>
+						</div>
+					</div>
+					<!-- /CTA Strip -->
+				</div>
+			</section>
+			<!-- /FEATURES SECTION -->
+
+			<!-- 4 ── POPULAR COURSES ─────────────────────────────────── -->
+			<!-- ============================================================
+     EduLearn LMS — Popular Courses Section
+     File: sections/popular-courses.html
+     Libraries used: AOS 2.3.x
+     Alpine.js handles tab filtering
+     ============================================================ -->
+			<!-- ════════════════════════════════════════════════════════════
+     POPULAR COURSES SECTION
+     ════════════════════════════════════════════════════════════ -->
+			<section
+				class="courses-section"
+				id="popular-courses"
+				x-data="popularCourses()"
+			>
+				<div class="container">
+					<!-- ── Section Header ──────────────────────────────────────── -->
+					<div class="text-center mb-5" data-aos="fade-up">
+						<div class="courses-eyebrow">
+							<i class="bi bi-collection-play-fill"></i>
+							Trending Courses
+						</div>
+						<h2 class="courses-title">
+							Our Most <span class="accent">Popular Courses</span>
+						</h2>
+						<p class="courses-subtitle">
+							Hand-picked by our experts — the courses students love most. Start
+							today and join thousands of successful learners.
+						</p>
+					</div>
+
+					<!-- ── Filter Tabs ─────────────────────────────────────────── -->
+					<div
+						class="courses-filter-tabs"
+						data-aos="fade-up"
+						data-aos-delay="80"
+					>
+						<template x-for="tab in tabs" :key="tab.key">
+							<button
+								class="filter-tab"
+								:class="{ active: activeTab === tab.key }"
+								@click="setTab(tab.key)"
+								x-text="tab.label"
+							></button>
+						</template>
+					</div>
+
+					<!-- ── Courses Grid ─────────────────────────────────────────── -->
+					<div class="row g-4" id="coursesGrid">
+						<template
+							x-for="(course, index) in filteredCourses"
+							:key="course.id"
+						>
+							<div
+								class="col-sm-6 col-lg-4"
+								x-show="true"
+								x-transition:enter="transition ease-out duration-300"
+								x-transition:enter-start="opacity-0 transform scale-95"
+								x-transition:enter-end="opacity-100 transform scale-100"
+							>
+								<div
+									class="course-card h-100"
+									@click="window.location='course-detail.html'"
+								>
+									<!-- Thumbnail -->
+									<div class="course-thumb">
+										<img
+											:src="course.thumb"
+											:alt="course.title"
+											loading="lazy"
+										/>
+										<div class="course-thumb-overlay"></div>
+										<div class="course-play-btn">
+											<i class="bi bi-play-fill"></i>
+										</div>
+										<span
+											class="course-cat-badge"
+											:style="'background:' + course.catColor"
+										>
+											<span x-text="course.category"></span>
+										</span>
+										<span
+											x-show="course.badge"
+											class="course-top-badge"
+											:style="'background:' + course.badgeColor + '; color:' + (course.badgeColor === '#fbbf24' ? '#78350f' : '#fff')"
+											x-text="course.badge"
+										></span>
+									</div>
+
+									<!-- Body -->
+									<div class="course-body">
+										<h3 class="course-title" x-text="course.title"></h3>
+
+										<div class="course-instructor">
+											<img
+												:src="course.instructorAvatar"
+												:alt="course.instructor"
+											/>
+											<span x-text="course.instructor"></span>
+										</div>
+
+										<div class="course-rating-row">
+											<span
+												class="course-rating-val"
+												x-text="course.rating"
+											></span>
+											<span class="course-stars">★★★★★</span>
+											<span
+												class="course-rating-count"
+												x-text="'(' + course.reviews + ' reviews)'"
+											></span>
+										</div>
+
+										<div class="course-meta-row">
+											<span class="course-meta-pill">
+												<i class="bi bi-collection-play"></i>
+												<span x-text="course.lessons + ' lessons'"></span>
+											</span>
+											<span class="course-meta-pill">
+												<i class="bi bi-clock"></i>
+												<span x-text="course.duration"></span>
+											</span>
+											<span class="course-meta-pill">
+												<i class="bi bi-bar-chart-fill"></i>
+												<span x-text="course.level"></span>
+											</span>
+										</div>
+									</div>
+
+									<!-- Footer -->
+									<div class="course-footer">
+										<div class="course-students">
+											<i class="bi bi-people-fill"></i>
+											<span x-text="course.students + ' students'"></span>
+										</div>
+										<div>
+											<span class="course-price" x-text="course.price"></span>
+											<span
+												class="course-price-original"
+												x-show="course.originalPrice"
+												x-text="course.originalPrice"
+											></span>
+										</div>
+									</div>
+								</div>
+							</div>
+						</template>
+
+						<!-- Empty state -->
+						<div
+							class="col-12 courses-empty"
+							x-show="filteredCourses.length === 0"
+						>
+							<i class="bi bi-search"></i>
+							No courses found in this category yet.
+						</div>
+					</div>
+					<!-- /Grid -->
+
+					<!-- ── View All CTA ─────────────────────────────────────────── -->
+					<div class="courses-view-all" data-aos="fade-up">
+						<a href="courses.html" class="btn-view-all">
+							View All Courses
+							<i class="bi bi-arrow-right"></i>
+						</a>
+					</div>
+				</div>
+			</section>
+			<!-- /POPULAR COURSES SECTION -->
+
+			<!-- Divider -->
+			<div class="section-divider"></div>
+
+			<!-- 5 ── INSTRUCTORS ─────────────────────────────────────── -->
+			<!-- ============================================================
+     EduLearn LMS — Instructors Section
+     File: sections/instructors.html
+     Libraries used: AOS 2.3.x, Swiper.js 11.x
+     (CDN links live in index.html)
+     ============================================================ -->
+			<!-- ════════════════════════════════════════════════════════════
+     INSTRUCTORS SECTION
+     ════════════════════════════════════════════════════════════ -->
+			<section class="instructors-section" id="instructors">
+				<div class="container">
+					<!-- ── Header ──────────────────────────────────────────────── -->
+					<div class="row align-items-end mb-5" data-aos="fade-up">
+						<div class="col-lg-7 text-center text-lg-start">
+							<div class="instructors-eyebrow">
+								<i class="bi bi-person-badge-fill"></i>
+								Meet the Experts
+							</div>
+							<h2 class="instructors-title">
+								Learn from <span class="accent">World-Class</span
+								><br />Instructors
+							</h2>
+							<p class="instructors-subtitle" style="margin: 0">
+								Our instructors are industry veterans with real-world
+								experience, passionate about helping you achieve your goals.
+							</p>
+						</div>
+						<!-- Nav buttons (desktop) -->
+						<div
+							class="col-lg-5 d-none d-lg-flex justify-content-end align-items-center gap-2"
+						>
+							<button
+								class="instructors-nav-btn"
+								id="instrPrev"
+								aria-label="Previous"
+							>
+								<i class="bi bi-chevron-left"></i>
+							</button>
+							<button
+								class="instructors-nav-btn"
+								id="instrNext"
+								aria-label="Next"
+							>
+								<i class="bi bi-chevron-right"></i>
+							</button>
+						</div>
+					</div>
+
+					<!-- ── Swiper Carousel ─────────────────────────────────────── -->
+					<div
+						class="swiper instructors-swiper"
+						id="instructorsSwiper"
+						data-aos="fade-up"
+						data-aos-delay="100"
+					>
+						<div class="swiper-wrapper">
+							<!-- ── Instructor 1: David Miller ─────────────────────── -->
+							<div class="swiper-slide">
+								<div class="instructor-card">
+									<div class="instructor-cover">
+										<div
+											class="instructor-cover-overlay"
+											style="
+												background: linear-gradient(135deg, #1e3a8a, #2563eb);
+											"
+										></div>
+									</div>
+									<div class="instructor-avatar-wrap">
+										<img
+											src="https://placehold.co/84x84/0d6efd/ffffff?text=DM"
+											alt="David Miller"
+											class="instructor-avatar"
+										/>
+										<span class="instructor-verified"
+											><i class="bi bi-check"></i
+										></span>
+									</div>
+									<div class="instructor-body">
+										<div class="instructor-name">David Miller</div>
+										<div class="instructor-specialty">
+											Full-Stack Developer · JavaScript Expert
+										</div>
+										<p class="instructor-bio">
+											Former Senior Engineer at Google with 12+ years building
+											scalable web applications. Passionate about teaching
+											modern JavaScript, React, and Node.js.
+										</p>
+										<div class="instructor-rating">
+											<span class="instructor-stars">★★★★★</span>
+											<span class="instructor-rating-val">4.9</span>
+											<span class="instructor-rating-count"
+												>(3,241 ratings)</span
+											>
+										</div>
+										<div class="instructor-stats">
+											<div class="instructor-stat">
+												<div class="instructor-stat-val">12K+</div>
+												<div class="instructor-stat-lbl">Students</div>
+											</div>
+											<div class="instructor-stat">
+												<div class="instructor-stat-val">8</div>
+												<div class="instructor-stat-lbl">Courses</div>
+											</div>
+											<div class="instructor-stat">
+												<div class="instructor-stat-val">12yr</div>
+												<div class="instructor-stat-lbl">Exp.</div>
+											</div>
+										</div>
+										<div class="instructor-socials">
+											<a
+												href="#"
+												class="instructor-social-btn"
+												aria-label="LinkedIn"
+												><i class="bi bi-linkedin"></i
+											></a>
+											<a
+												href="#"
+												class="instructor-social-btn"
+												aria-label="Twitter/X"
+												><i class="bi bi-twitter-x"></i
+											></a>
+											<a
+												href="#"
+												class="instructor-social-btn"
+												aria-label="GitHub"
+												><i class="bi bi-github"></i
+											></a>
+											<a
+												href="#"
+												class="instructor-social-btn"
+												aria-label="YouTube"
+												><i class="bi bi-youtube"></i
+											></a>
+										</div>
+									</div>
+									<a href="courses.html" class="instructor-view-link">
+										View Courses <i class="bi bi-arrow-right"></i>
+									</a>
+								</div>
+							</div>
+
+							<!-- ── Instructor 2: Sarah Chen ───────────────────────── -->
+							<div class="swiper-slide">
+								<div class="instructor-card">
+									<div class="instructor-cover">
+										<div
+											class="instructor-cover-overlay"
+											style="
+												background: linear-gradient(135deg, #4c1d95, #7c3aed);
+											"
+										></div>
+									</div>
+									<div class="instructor-avatar-wrap">
+										<img
+											src="https://placehold.co/84x84/7c3aed/ffffff?text=SC"
+											alt="Sarah Chen"
+											class="instructor-avatar"
+										/>
+										<span class="instructor-verified"
+											><i class="bi bi-check"></i
+										></span>
+									</div>
+									<div class="instructor-body">
+										<div class="instructor-name">Sarah Chen</div>
+										<div class="instructor-specialty">
+											UI/UX Designer · Product Strategist
+										</div>
+										<p class="instructor-bio">
+											Lead Designer at Airbnb for 8 years. Specialises in Figma,
+											design systems, and user research. Has designed products
+											used by 100M+ users worldwide.
+										</p>
+										<div class="instructor-rating">
+											<span class="instructor-stars">★★★★★</span>
+											<span class="instructor-rating-val">4.8</span>
+											<span class="instructor-rating-count"
+												>(1,876 ratings)</span
+											>
+										</div>
+										<div class="instructor-stats">
+											<div class="instructor-stat">
+												<div class="instructor-stat-val">8.1K+</div>
+												<div class="instructor-stat-lbl">Students</div>
+											</div>
+											<div class="instructor-stat">
+												<div class="instructor-stat-val">5</div>
+												<div class="instructor-stat-lbl">Courses</div>
+											</div>
+											<div class="instructor-stat">
+												<div class="instructor-stat-val">8yr</div>
+												<div class="instructor-stat-lbl">Exp.</div>
+											</div>
+										</div>
+										<div class="instructor-socials">
+											<a
+												href="#"
+												class="instructor-social-btn"
+												aria-label="LinkedIn"
+												><i class="bi bi-linkedin"></i
+											></a>
+											<a
+												href="#"
+												class="instructor-social-btn"
+												aria-label="Dribbble"
+												><i class="bi bi-dribbble"></i
+											></a>
+											<a
+												href="#"
+												class="instructor-social-btn"
+												aria-label="Twitter/X"
+												><i class="bi bi-twitter-x"></i
+											></a>
+											<a
+												href="#"
+												class="instructor-social-btn"
+												aria-label="Behance"
+												><i class="bi bi-behance"></i
+											></a>
+										</div>
+									</div>
+									<a href="courses.html" class="instructor-view-link">
+										View Courses <i class="bi bi-arrow-right"></i>
+									</a>
+								</div>
+							</div>
+
+							<!-- ── Instructor 3: Priya Sharma ─────────────────────── -->
+							<div class="swiper-slide">
+								<div class="instructor-card">
+									<div class="instructor-cover">
+										<div
+											class="instructor-cover-overlay"
+											style="
+												background: linear-gradient(135deg, #1e1b4b, #4f46e5);
+											"
+										></div>
+									</div>
+									<div class="instructor-avatar-wrap">
+										<img
+											src="https://placehold.co/84x84/4f46e5/ffffff?text=PS"
+											alt="Priya Sharma"
+											class="instructor-avatar"
+										/>
+										<span class="instructor-verified"
+											><i class="bi bi-check"></i
+										></span>
+									</div>
+									<div class="instructor-body">
+										<div class="instructor-name">Priya Sharma</div>
+										<div class="instructor-specialty">
+											Data Scientist · ML Engineer
+										</div>
+										<p class="instructor-bio">
+											PhD in Machine Learning from MIT, formerly at Meta AI
+											Research. Makes complex data science topics approachable
+											for beginners and experts alike.
+										</p>
+										<div class="instructor-rating">
+											<span class="instructor-stars">★★★★★</span>
+											<span class="instructor-rating-val">4.9</span>
+											<span class="instructor-rating-count"
+												>(4,532 ratings)</span
+											>
+										</div>
+										<div class="instructor-stats">
+											<div class="instructor-stat">
+												<div class="instructor-stat-val">18K+</div>
+												<div class="instructor-stat-lbl">Students</div>
+											</div>
+											<div class="instructor-stat">
+												<div class="instructor-stat-val">6</div>
+												<div class="instructor-stat-lbl">Courses</div>
+											</div>
+											<div class="instructor-stat">
+												<div class="instructor-stat-val">10yr</div>
+												<div class="instructor-stat-lbl">Exp.</div>
+											</div>
+										</div>
+										<div class="instructor-socials">
+											<a
+												href="#"
+												class="instructor-social-btn"
+												aria-label="LinkedIn"
+												><i class="bi bi-linkedin"></i
+											></a>
+											<a
+												href="#"
+												class="instructor-social-btn"
+												aria-label="GitHub"
+												><i class="bi bi-github"></i
+											></a>
+											<a
+												href="#"
+												class="instructor-social-btn"
+												aria-label="Twitter/X"
+												><i class="bi bi-twitter-x"></i
+											></a>
+											<a
+												href="#"
+												class="instructor-social-btn"
+												aria-label="Website"
+												><i class="bi bi-globe"></i
+											></a>
+										</div>
+									</div>
+									<a href="courses.html" class="instructor-view-link">
+										View Courses <i class="bi bi-arrow-right"></i>
+									</a>
+								</div>
+							</div>
+
+							<!-- ── Instructor 4: James Wilson ─────────────────────── -->
+							<div class="swiper-slide">
+								<div class="instructor-card">
+									<div class="instructor-cover">
+										<div
+											class="instructor-cover-overlay"
+											style="
+												background: linear-gradient(135deg, #1c1a0f, #d97706);
+											"
+										></div>
+									</div>
+									<div class="instructor-avatar-wrap">
+										<img
+											src="https://placehold.co/84x84/d97706/ffffff?text=JW"
+											alt="James Wilson"
+											class="instructor-avatar"
+										/>
+										<span class="instructor-verified"
+											><i class="bi bi-check"></i
+										></span>
+									</div>
+									<div class="instructor-body">
+										<div class="instructor-name">James Wilson</div>
+										<div class="instructor-specialty">
+											Business Strategist · Serial Entrepreneur
+										</div>
+										<p class="instructor-bio">
+											Founded 3 successful startups and exited 2. MBA from
+											Harvard Business School. Specialises in growth strategy,
+											fundraising, and building remote teams.
+										</p>
+										<div class="instructor-rating">
+											<span class="instructor-stars">★★★★★</span>
+											<span class="instructor-rating-val">4.7</span>
+											<span class="instructor-rating-count"
+												>(2,109 ratings)</span
+											>
+										</div>
+										<div class="instructor-stats">
+											<div class="instructor-stat">
+												<div class="instructor-stat-val">9.3K+</div>
+												<div class="instructor-stat-lbl">Students</div>
+											</div>
+											<div class="instructor-stat">
+												<div class="instructor-stat-val">4</div>
+												<div class="instructor-stat-lbl">Courses</div>
+											</div>
+											<div class="instructor-stat">
+												<div class="instructor-stat-val">15yr</div>
+												<div class="instructor-stat-lbl">Exp.</div>
+											</div>
+										</div>
+										<div class="instructor-socials">
+											<a
+												href="#"
+												class="instructor-social-btn"
+												aria-label="LinkedIn"
+												><i class="bi bi-linkedin"></i
+											></a>
+											<a
+												href="#"
+												class="instructor-social-btn"
+												aria-label="Twitter/X"
+												><i class="bi bi-twitter-x"></i
+											></a>
+											<a
+												href="#"
+												class="instructor-social-btn"
+												aria-label="YouTube"
+												><i class="bi bi-youtube"></i
+											></a>
+											<a
+												href="#"
+												class="instructor-social-btn"
+												aria-label="Website"
+												><i class="bi bi-globe"></i
+											></a>
+										</div>
+									</div>
+									<a href="courses.html" class="instructor-view-link">
+										View Courses <i class="bi bi-arrow-right"></i>
+									</a>
+								</div>
+							</div>
+
+							<!-- ── Instructor 5: Emma Roberts ─────────────────────── -->
+							<div class="swiper-slide">
+								<div class="instructor-card">
+									<div class="instructor-cover">
+										<div
+											class="instructor-cover-overlay"
+											style="
+												background: linear-gradient(135deg, #500724, #db2777);
+											"
+										></div>
+									</div>
+									<div class="instructor-avatar-wrap">
+										<img
+											src="https://placehold.co/84x84/db2777/ffffff?text=ER"
+											alt="Emma Roberts"
+											class="instructor-avatar"
+										/>
+										<span class="instructor-verified"
+											><i class="bi bi-check"></i
+										></span>
+									</div>
+									<div class="instructor-body">
+										<div class="instructor-name">Emma Roberts</div>
+										<div class="instructor-specialty">
+											Digital Marketer · Growth Hacker
+										</div>
+										<p class="instructor-bio">
+											Led growth at HubSpot and Shopify. Expert in SEO, paid
+											advertising, and building marketing funnels that convert
+											at scale.
+										</p>
+										<div class="instructor-rating">
+											<span class="instructor-stars">★★★★★</span>
+											<span class="instructor-rating-val">4.7</span>
+											<span class="instructor-rating-count"
+												>(1,654 ratings)</span
+											>
+										</div>
+										<div class="instructor-stats">
+											<div class="instructor-stat">
+												<div class="instructor-stat-val">7.9K+</div>
+												<div class="instructor-stat-lbl">Students</div>
+											</div>
+											<div class="instructor-stat">
+												<div class="instructor-stat-val">3</div>
+												<div class="instructor-stat-lbl">Courses</div>
+											</div>
+											<div class="instructor-stat">
+												<div class="instructor-stat-val">9yr</div>
+												<div class="instructor-stat-lbl">Exp.</div>
+											</div>
+										</div>
+										<div class="instructor-socials">
+											<a
+												href="#"
+												class="instructor-social-btn"
+												aria-label="LinkedIn"
+												><i class="bi bi-linkedin"></i
+											></a>
+											<a
+												href="#"
+												class="instructor-social-btn"
+												aria-label="Twitter/X"
+												><i class="bi bi-twitter-x"></i
+											></a>
+											<a
+												href="#"
+												class="instructor-social-btn"
+												aria-label="Instagram"
+												><i class="bi bi-instagram"></i
+											></a>
+											<a
+												href="#"
+												class="instructor-social-btn"
+												aria-label="YouTube"
+												><i class="bi bi-youtube"></i
+											></a>
+										</div>
+									</div>
+									<a href="courses.html" class="instructor-view-link">
+										View Courses <i class="bi bi-arrow-right"></i>
+									</a>
+								</div>
+							</div>
+						</div>
+						<!-- Pagination bullets -->
+						<div class="swiper-pagination"></div>
+					</div>
+					<!-- /Swiper -->
+
+					<!-- ── Become an Instructor CTA ─────────────────────────────── -->
+					<div class="instructors-become-cta" data-aos="fade-up">
+						<p>
+							Are you an expert in your field?
+							<strong>Share your knowledge with thousands of learners.</strong>
+						</p>
+						<a href="register.html" class="btn-become-instructor">
+							<i class="bi bi-person-plus-fill"></i>
+							Become an Instructor
+						</a>
+					</div>
+				</div>
+			</section>
+			<!-- /INSTRUCTORS SECTION -->
+			<!-- 6 ── TESTIMONIALS ────────────────────────────────────── -->
+			<!-- ============================================================
+     EduLearn LMS — Testimonials Section
+     File: sections/testimonials.html
+     Libraries used: Swiper.js 11.x, AOS 2.3.x
+     (CDN links live in index.html)
+     ============================================================ -->
+			<!-- ════════════════════════════════════════════════════════════
+     TESTIMONIALS SECTION
+     ════════════════════════════════════════════════════════════ -->
+			<section class="testimonials-section" id="testimonials">
+				<div class="container">
+					<!-- ── Header ──────────────────────────────────────────────── -->
+					<div class="text-center mb-4" data-aos="fade-up">
+						<div class="testimonials-eyebrow">
+							<i class="bi bi-chat-quote-fill"></i>
+							Student Stories
+						</div>
+						<h2 class="testimonials-title">
+							What Our <span class="accent">Students</span> Say
+						</h2>
+						<p class="testimonials-subtitle">
+							Real reviews from real learners who transformed their careers with
+							EduLearn.
+						</p>
+					</div>
+
+					<!-- ── Summary Bar ────────────────────────────────────────── -->
+					<div
+						class="testimonials-summary"
+						data-aos="fade-up"
+						data-aos-delay="60"
+					>
+						<div class="testimonials-summary-rating">
+							<div class="tsr-score">4.8</div>
+							<div class="tsr-right">
+								<div class="tsr-stars">★★★★★</div>
+								<div class="tsr-label">Average Rating</div>
+							</div>
+						</div>
+						<div class="testimonials-summary-divider d-none d-sm-block"></div>
+						<div class="testimonials-summary-stat">
+							<div class="tss-val">50K+</div>
+							<div class="tss-lbl">Happy Students</div>
+						</div>
+						<div class="testimonials-summary-divider d-none d-sm-block"></div>
+						<div class="testimonials-summary-stat">
+							<div class="tss-val">12K+</div>
+							<div class="tss-lbl">Reviews Written</div>
+						</div>
+						<div class="testimonials-summary-divider d-none d-sm-block"></div>
+						<div class="testimonials-summary-stat">
+							<div class="tss-val">96%</div>
+							<div class="tss-lbl">Recommend Us</div>
+						</div>
+					</div>
+
+					<!-- ── Swiper Carousel ─────────────────────────────────────── -->
+					<div
+						class="swiper testimonials-swiper"
+						id="testimonialsSwiper"
+						data-aos="fade-up"
+						data-aos-delay="100"
+					>
+						<div class="swiper-wrapper">
+							<!-- Card 1 -->
+							<div class="swiper-slide">
+								<div class="tcard">
+									<div class="tcard-quote-icon">"</div>
+									<div class="tcard-stars">★★★★★</div>
+									<p class="tcard-text">
+										"EduLearn's Full-Stack course completely changed my career
+										trajectory. Within 4 months of completing it I landed a
+										junior developer role at a fintech startup. The hands-on
+										projects and community support made all the difference."
+									</p>
+									<div class="tcard-divider"></div>
+									<div class="tcard-author">
+										<img
+											src="https://placehold.co/46x46/0d6efd/ffffff?text=AK"
+											alt="Alex Kim"
+											class="tcard-avatar"
+										/>
+										<div class="tcard-author-info">
+											<div class="tcard-author-name">Alex Kim</div>
+											<div class="tcard-author-role">
+												Junior Developer · Seoul, South Korea
+											</div>
+										</div>
+										<span class="tcard-course-badge"
+											><i class="bi bi-code-slash"></i> Full-Stack Dev</span
+										>
+									</div>
+								</div>
+							</div>
+
+							<!-- Card 2 -->
+							<div class="swiper-slide">
+								<div class="tcard">
+									<div class="tcard-quote-icon">"</div>
+									<div class="tcard-stars">★★★★★</div>
+									<p class="tcard-text">
+										"Sarah's UI/UX Design course is worth every penny. The
+										curriculum is exactly what the industry demands — Figma,
+										design systems, user research. I doubled my freelance rates
+										after finishing it. Absolutely phenomenal."
+									</p>
+									<div class="tcard-divider"></div>
+									<div class="tcard-author">
+										<img
+											src="https://placehold.co/46x46/db2777/ffffff?text=MR"
+											alt="Maria Rossi"
+											class="tcard-avatar"
+										/>
+										<div class="tcard-author-info">
+											<div class="tcard-author-name">Maria Rossi</div>
+											<div class="tcard-author-role">
+												Freelance Designer · Milan, Italy
+											</div>
+										</div>
+										<span class="tcard-course-badge"
+											><i class="bi bi-pen"></i> UI/UX Design</span
+										>
+									</div>
+								</div>
+							</div>
+
+							<!-- Card 3 -->
+							<div class="swiper-slide">
+								<div class="tcard">
+									<div class="tcard-quote-icon">"</div>
+									<div class="tcard-stars">★★★★★</div>
+									<p class="tcard-text">
+										"Priya's Data Science course is next-level. I came in
+										knowing zero Python and left feeling confident enough to
+										complete an end-to-end ML project. The visualisations and
+										live demos in every lesson kept me hooked."
+									</p>
+									<div class="tcard-divider"></div>
+									<div class="tcard-author">
+										<img
+											src="https://placehold.co/46x46/4f46e5/ffffff?text=JL"
+											alt="Jordan Lee"
+											class="tcard-avatar"
+										/>
+										<div class="tcard-author-info">
+											<div class="tcard-author-name">Jordan Lee</div>
+											<div class="tcard-author-role">
+												Data Analyst · Toronto, Canada
+											</div>
+										</div>
+										<span class="tcard-course-badge"
+											><i class="bi bi-bar-chart"></i> Data Science</span
+										>
+									</div>
+								</div>
+							</div>
+
+							<!-- Card 4 -->
+							<div class="swiper-slide">
+								<div class="tcard">
+									<div class="tcard-quote-icon">"</div>
+									<div class="tcard-stars">★★★★☆</div>
+									<p class="tcard-text">
+										"The Business Strategy course gave me the frameworks I was
+										missing. James has a rare gift of making MBA-level concepts
+										digestible and actionable. I applied the growth strategies
+										directly to my small business and saw results in weeks."
+									</p>
+									<div class="tcard-divider"></div>
+									<div class="tcard-author">
+										<img
+											src="https://placehold.co/46x46/d97706/ffffff?text=FO"
+											alt="Fatima Osei"
+											class="tcard-avatar"
+										/>
+										<div class="tcard-author-info">
+											<div class="tcard-author-name">Fatima Osei</div>
+											<div class="tcard-author-role">
+												Small Business Owner · Accra, Ghana
+											</div>
+										</div>
+										<span class="tcard-course-badge"
+											><i class="bi bi-briefcase"></i> Business Strategy</span
+										>
+									</div>
+								</div>
+							</div>
+
+							<!-- Card 5 -->
+							<div class="swiper-slide">
+								<div class="tcard">
+									<div class="tcard-quote-icon">"</div>
+									<div class="tcard-stars">★★★★★</div>
+									<p class="tcard-text">
+										"I've tried many online platforms but EduLearn stands out
+										because of the live sessions and instant instructor
+										feedback. It genuinely feels like a real classroom. The
+										certificate I earned helped me get promoted at work."
+									</p>
+									<div class="tcard-divider"></div>
+									<div class="tcard-author">
+										<img
+											src="https://placehold.co/46x46/059669/ffffff?text=RN"
+											alt="Raj Nair"
+											class="tcard-avatar"
+										/>
+										<div class="tcard-author-info">
+											<div class="tcard-author-name">Raj Nair</div>
+											<div class="tcard-author-role">
+												Software Engineer · Bengaluru, India
+											</div>
+										</div>
+										<span class="tcard-course-badge"
+											><i class="bi bi-patch-check"></i> React Mastery</span
+										>
+									</div>
+								</div>
+							</div>
+
+							<!-- Card 6 -->
+							<div class="swiper-slide">
+								<div class="tcard">
+									<div class="tcard-quote-icon">"</div>
+									<div class="tcard-stars">★★★★★</div>
+									<p class="tcard-text">
+										"Emma's Digital Marketing course is packed with real
+										strategies — not just theory. I ran my first successful
+										Google Ads campaign and got a 7× ROAS within the first
+										month. Genuinely the best investment I've made."
+									</p>
+									<div class="tcard-divider"></div>
+									<div class="tcard-author">
+										<img
+											src="https://placehold.co/46x46/7c3aed/ffffff?text=SB"
+											alt="Sofia Blanc"
+											class="tcard-avatar"
+										/>
+										<div class="tcard-author-info">
+											<div class="tcard-author-name">Sofia Blanc</div>
+											<div class="tcard-author-role">
+												Marketing Manager · Paris, France
+											</div>
+										</div>
+										<span class="tcard-course-badge"
+											><i class="bi bi-megaphone"></i> Digital Marketing</span
+										>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- Pagination -->
+						<div class="swiper-pagination"></div>
+					</div>
+					<!-- /Swiper -->
+
+					<!-- ── Platform logos ──────────────────────────────────────── -->
+					<div
+						class="testimonials-platforms"
+						data-aos="fade-up"
+						data-aos-delay="80"
+					>
+						<span>Also reviewed on</span>
+						<div class="platform-badge">
+							<i class="bi bi-google" style="color: #4285f4"></i> Google
+						</div>
+						<div class="platform-badge">
+							<i class="bi bi-trustpilot" style="color: #00b67a"></i> Trustpilot
+						</div>
+						<div class="platform-badge">
+							<i class="bi bi-star-fill" style="color: #fbbf24"></i> Capterra
+						</div>
+						<div class="platform-badge">
+							<i class="bi bi-linkedin" style="color: #0a66c2"></i> LinkedIn
+						</div>
+					</div>
+				</div>
+			</section>
+			<!-- /TESTIMONIALS SECTION -->
+			<!-- 7 ── PRICING ─────────────────────────────────────────── -->
+			<!-- ============================================================
+     EduLearn LMS — Pricing Section
+     File: sections/pricing.html
+     Libraries used: AOS 2.3.x, Alpine.js (pricingToggle)
+     (CDN links live in index.html)
+     ============================================================ -->
+			<!-- ════════════════════════════════════════════════════════════
+     PRICING SECTION
+     ════════════════════════════════════════════════════════════ -->
+			<section class="pricing-section" id="pricing" x-data="pricingToggle()">
+				<div class="container">
+					<!-- ── Header ──────────────────────────────────────────────── -->
+					<div class="text-center" data-aos="fade-up">
+						<div class="pricing-eyebrow">
+							<i class="bi bi-tags-fill"></i>
+							Simple Pricing
+						</div>
+						<h2 class="pricing-title">
+							Invest in Your <span class="accent">Future</span>
+						</h2>
+						<p class="pricing-subtitle">
+							No hidden fees. Cancel any time. Pick the plan that fits your
+							goals and start learning today.
+						</p>
+					</div>
+
+					<!-- ── Billing Toggle ───────────────────────────────────────── -->
+					<div class="text-center" data-aos="fade-up" data-aos-delay="60">
+						<div class="pricing-toggle-wrap">
+							<span class="pricing-toggle-label" :class="{ active: !annual }"
+								>Monthly</span
+							>
+							<div
+								class="pricing-switch"
+								:class="{ annual: annual }"
+								@click="annual = !annual"
+								role="switch"
+								:aria-checked="annual.toString()"
+								tabindex="0"
+								@keydown.space.prevent="annual = !annual"
+							></div>
+							<span class="pricing-toggle-label" :class="{ active: annual }"
+								>Annual</span
+							>
+							<span class="pricing-save-badge" x-show="annual">
+								<i class="bi bi-lightning-charge-fill"></i> Save 20%
+							</span>
+						</div>
+					</div>
+
+					<!-- ── Cards Row ───────────────────────────────────────────── -->
+					<div class="row g-4 align-items-stretch mt-1">
+						<!-- FREE -->
+						<div class="col-lg-4" data-aos="fade-up" data-aos-delay="0">
+							<div class="pricing-card">
+								<div class="pricing-plan-icon free">
+									<i class="bi bi-rocket-takeoff"></i>
+								</div>
+								<div class="pricing-plan-name">Free</div>
+								<div class="pricing-plan-tagline">
+									Perfect for exploring and getting started.
+								</div>
+
+								<div class="pricing-price-block">
+									<div class="pricing-amount">
+										<span class="currency">$</span>
+										<span>0</span>
+										<span class="period">/ mo</span>
+									</div>
+									<div class="pricing-billed-note">
+										Always free. No credit card required.
+									</div>
+								</div>
+
+								<div class="pricing-divider"></div>
+
+								<ul class="pricing-features">
+									<li>
+										<span class="feat-icon check"
+											><i class="bi bi-check"></i
+										></span>
+										Access to <strong>5 free courses</strong>
+									</li>
+									<li>
+										<span class="feat-icon check"
+											><i class="bi bi-check"></i
+										></span>
+										Community forum access
+									</li>
+									<li>
+										<span class="feat-icon check"
+											><i class="bi bi-check"></i
+										></span>
+										Course completion badges
+									</li>
+									<li>
+										<span class="feat-icon check"
+											><i class="bi bi-check"></i
+										></span>
+										Mobile app access
+									</li>
+									<li class="disabled">
+										<span class="feat-icon cross"><i class="bi bi-x"></i></span>
+										Certificates of completion
+									</li>
+									<li class="disabled">
+										<span class="feat-icon cross"><i class="bi bi-x"></i></span>
+										Live Q&amp;A sessions
+									</li>
+									<li class="disabled">
+										<span class="feat-icon cross"><i class="bi bi-x"></i></span>
+										Priority support
+									</li>
+									<li class="disabled">
+										<span class="feat-icon cross"><i class="bi bi-x"></i></span>
+										Download for offline viewing
+									</li>
+								</ul>
+
+								<a href="register.html" class="pricing-btn outline"
+									>Get Started Free</a
+								>
+							</div>
+						</div>
+
+						<!-- PRO (featured) -->
+						<div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
+							<div class="pricing-card featured">
+								<div class="pricing-popular-badge">
+									<i class="bi bi-star-fill me-1"></i> Most Popular
+								</div>
+								<div class="pricing-plan-icon pro">
+									<i class="bi bi-lightning-charge-fill"></i>
+								</div>
+								<div class="pricing-plan-name">Pro</div>
+								<div class="pricing-plan-tagline">
+									For serious learners ready to level up their career.
+								</div>
+
+								<div class="pricing-price-block">
+									<div class="pricing-amount">
+										<span class="currency">$</span>
+										<span x-text="monthlyPro"></span>
+										<span class="period">/ mo</span>
+									</div>
+									<div class="pricing-original" x-show="annual">
+										was $19/mo · billed $180/yr
+									</div>
+									<div class="pricing-billed-note" x-show="!annual">
+										Billed monthly. Cancel anytime.
+									</div>
+									<div class="pricing-billed-note" x-show="annual">
+										Billed $180/yr. Save $48 vs monthly.
+									</div>
+								</div>
+
+								<div class="pricing-divider"></div>
+
+								<ul class="pricing-features">
+									<li>
+										<span class="feat-icon check"
+											><i class="bi bi-check"></i
+										></span>
+										<strong>Unlimited</strong> course access (200+ courses)
+									</li>
+									<li>
+										<span class="feat-icon check"
+											><i class="bi bi-check"></i
+										></span>
+										Verified certificates of completion
+									</li>
+									<li>
+										<span class="feat-icon check"
+											><i class="bi bi-check"></i
+										></span>
+										Live Q&amp;A sessions with instructors
+									</li>
+									<li>
+										<span class="feat-icon check"
+											><i class="bi bi-check"></i
+										></span>
+										Download for offline viewing
+									</li>
+									<li>
+										<span class="feat-icon check"
+											><i class="bi bi-check"></i
+										></span>
+										Assignment submissions &amp; feedback
+									</li>
+									<li>
+										<span class="feat-icon check"
+											><i class="bi bi-check"></i
+										></span>
+										Progress tracking &amp; analytics
+									</li>
+									<li>
+										<span class="feat-icon check"
+											><i class="bi bi-check"></i
+										></span>
+										Priority email support
+									</li>
+									<li class="disabled">
+										<span class="feat-icon cross"><i class="bi bi-x"></i></span>
+										Team management dashboard
+									</li>
+								</ul>
+
+								<a href="register.html" class="pricing-btn primary"
+									>Start Pro Plan</a
+								>
+							</div>
+						</div>
+
+						<!-- ENTERPRISE -->
+						<div class="col-lg-4" data-aos="fade-up" data-aos-delay="200">
+							<div class="pricing-card">
+								<div class="pricing-plan-icon enterprise">
+									<i class="bi bi-building"></i>
+								</div>
+								<div class="pricing-plan-name">Enterprise</div>
+								<div class="pricing-plan-tagline">
+									For teams and organisations scaling up their training.
+								</div>
+
+								<div class="pricing-price-block">
+									<div class="pricing-amount">
+										<span class="currency">$</span>
+										<span x-text="monthlyEnt"></span>
+										<span class="period">/ mo</span>
+									</div>
+									<div class="pricing-original" x-show="annual">
+										was $49/mo · billed $468/yr
+									</div>
+									<div class="pricing-billed-note" x-show="!annual">
+										Per seat, billed monthly.
+									</div>
+									<div class="pricing-billed-note" x-show="annual">
+										Per seat, billed $468/yr. Save $120.
+									</div>
+								</div>
+
+								<div class="pricing-divider"></div>
+
+								<ul class="pricing-features">
+									<li>
+										<span class="feat-icon check"
+											><i class="bi bi-check"></i
+										></span>
+										Everything in Pro
+									</li>
+									<li>
+										<span class="feat-icon check"
+											><i class="bi bi-check"></i
+										></span>
+										Team management dashboard
+									</li>
+									<li>
+										<span class="feat-icon check"
+											><i class="bi bi-check"></i
+										></span>
+										Custom learning paths
+									</li>
+									<li>
+										<span class="feat-icon check"
+											><i class="bi bi-check"></i
+										></span>
+										Branded learner portal
+									</li>
+									<li>
+										<span class="feat-icon check"
+											><i class="bi bi-check"></i
+										></span>
+										Advanced reporting &amp; analytics
+									</li>
+									<li>
+										<span class="feat-icon check"
+											><i class="bi bi-check"></i
+										></span>
+										SSO &amp; SCORM integration
+									</li>
+									<li>
+										<span class="feat-icon check"
+											><i class="bi bi-check"></i
+										></span>
+										Dedicated account manager
+									</li>
+									<li>
+										<span class="feat-icon check"
+											><i class="bi bi-check"></i
+										></span>
+										SLA-backed 24/7 support
+									</li>
+								</ul>
+
+								<a href="register.html" class="pricing-btn dark-outline"
+									>Contact Sales</a
+								>
+							</div>
+						</div>
+					</div>
+					<!-- /Cards Row -->
+
+					<!-- ── Guarantee Strip ─────────────────────────────────────── -->
+					<div class="pricing-guarantee" data-aos="fade-up" data-aos-delay="80">
+						<div class="pricing-guarantee-item">
+							<i class="bi bi-shield-check"></i>
+							30-day money-back guarantee
+						</div>
+						<div class="pricing-guarantee-item">
+							<i class="bi bi-lock"></i>
+							Secure payment via Stripe
+						</div>
+						<div class="pricing-guarantee-item">
+							<i class="bi bi-arrow-repeat"></i>
+							Cancel any time, no questions
+						</div>
+						<div class="pricing-guarantee-item">
+							<i class="bi bi-headset"></i>
+							Friendly support team
+						</div>
+					</div>
+
+					<div class="text-center pricing-faq-note" data-aos="fade-up">
+						Have questions? <a href="#">Read our FAQ</a> or
+						<a href="#">chat with us</a>.
+					</div>
+				</div>
+			</section>
+			<!-- /PRICING SECTION -->
+
+			<!-- 8 ── CTA / NEWSLETTER ────────────────────────────────── -->
+			<!-- ============================================================
+     EduLearn LMS — CTA / Newsletter Section
+     File: sections/cta.html
+     Libraries used: AOS 2.3.x, Notyf 3.x (window.lmsNotify)
+     (CDN links live in index.html)
+     ============================================================ -->
+			<!-- ════════════════════════════════════════════════════════════
+     CTA / NEWSLETTER SECTION
+     ════════════════════════════════════════════════════════════ -->
+			<section class="cta-section" id="cta">
+				<div class="container">
+					<div class="cta-card" data-aos="fade-up">
+						<div class="cta-card-dots"></div>
+
+						<div class="row align-items-center g-5">
+							<!-- ── Left: Big CTA copy ──────────────────────────────── -->
+							<div class="col-lg-7" data-aos="fade-right" data-aos-delay="60">
+								<div class="cta-eyebrow">
+									<i class="bi bi-lightning-charge-fill"></i>
+									Start Learning Today
+								</div>
+								<h2 class="cta-title">
+									Take the Next Step<br />in Your
+									<span class="cta-highlight">Career Journey</span>
+								</h2>
+								<p class="cta-desc">
+									Join over 50,000 learners who have transformed their skills
+									and landed their dream jobs with EduLearn. Your first course
+									is on us.
+								</p>
+
+								<div class="cta-buttons">
+									<a href="register.html" class="btn-cta-primary">
+										<i class="bi bi-rocket-takeoff-fill"></i>
+										Get Started — It's Free
+									</a>
+									<a href="courses.html" class="btn-cta-ghost">
+										<i class="bi bi-play-circle"></i>
+										Browse Courses
+									</a>
+								</div>
+
+								<!-- Social proof -->
+								<div class="cta-social-proof">
+									<div class="cta-avatars">
+										<img
+											src="https://placehold.co/32x32/0d6efd/ffffff?text=A"
+											alt="Student 1"
+										/>
+										<img
+											src="https://placehold.co/32x32/7c3aed/ffffff?text=B"
+											alt="Student 2"
+										/>
+										<img
+											src="https://placehold.co/32x32/db2777/ffffff?text=C"
+											alt="Student 3"
+										/>
+										<img
+											src="https://placehold.co/32x32/d97706/ffffff?text=D"
+											alt="Student 4"
+										/>
+										<img
+											src="https://placehold.co/32x32/059669/ffffff?text=E"
+											alt="Student 5"
+										/>
+									</div>
+									<p class="cta-sp-text mb-0">
+										<strong>2,400+</strong> students enrolled this week ·
+										⭐⭐⭐⭐⭐
+										<strong>4.9/5</strong>
+									</p>
+								</div>
+							</div>
+
+							<!-- ── Right: Newsletter form ──────────────────────────── -->
+							<div class="col-lg-5" data-aos="fade-left" data-aos-delay="120">
+								<div class="cta-newsletter-box" x-data="ctaNewsletter()">
+									<!-- Normal state -->
+									<template x-if="!submitted">
+										<div>
+											<div class="cta-newsletter-title">
+												<i
+													class="bi bi-envelope-paper-fill me-2"
+													style="color: #60a5fa"
+												></i>
+												Get Free Learning Tips
+											</div>
+											<p class="cta-newsletter-sub">
+												Weekly curated articles, course recommendations, and
+												career advice. No spam — unsubscribe any time.
+											</p>
+
+											<div class="cta-input-group">
+												<input
+													type="text"
+													class="cta-form-control"
+													placeholder="Your first name"
+													x-model="name"
+													autocomplete="given-name"
+												/>
+												<input
+													id="ctaEmailInput"
+													type="email"
+													class="cta-form-control"
+													placeholder="Your best email address"
+													x-model="email"
+													autocomplete="email"
+													@keydown.enter="submit()"
+												/>
+											</div>
+
+											<button
+												class="btn-subscribe"
+												@click="submit()"
+												:disabled="loading"
+											>
+												<template x-if="!loading">
+													<span class="d-flex align-items-center gap-2">
+														<i class="bi bi-send-fill"></i> Subscribe for Free
+													</span>
+												</template>
+												<template x-if="loading">
+													<span class="d-flex align-items-center gap-2">
+														<span
+															class="spinner-border spinner-border-sm"
+															role="status"
+														></span>
+														Subscribing…
+													</span>
+												</template>
+											</button>
+
+											<p class="cta-privacy mt-3">
+												By subscribing you agree to our
+												<a href="#">Privacy Policy</a>. We'll never share your
+												data.
+											</p>
+
+											<ul class="cta-benefits">
+												<li>
+													<i class="bi bi-check"></i> Weekly curated course
+													picks
+												</li>
+												<li>
+													<i class="bi bi-check"></i> Exclusive discount codes
+												</li>
+												<li>
+													<i class="bi bi-check"></i> Career tips from top
+													instructors
+												</li>
+												<li>
+													<i class="bi bi-check"></i> Early access to new
+													content
+												</li>
+											</ul>
+										</div>
+									</template>
+
+									<!-- Success state -->
+									<template x-if="submitted">
+										<div class="text-center py-3">
+											<div style="font-size: 3rem; margin-bottom: 14px">🎉</div>
+											<h4
+												style="
+													color: #fff;
+													font-weight: 800;
+													margin-bottom: 10px;
+												"
+											>
+												You're in!
+											</h4>
+											<p
+												style="
+													color: rgba(255, 255, 255, 0.65);
+													font-size: 0.875rem;
+													line-height: 1.6;
+													margin-bottom: 24px;
+												"
+											>
+												Welcome to the EduLearn community.<br />
+												Check your inbox for your first newsletter.
+											</p>
+											<a
+												href="courses.html"
+												class="btn-cta-primary"
+												style="display: inline-flex"
+											>
+												<i class="bi bi-play-circle-fill"></i>
+												Start Browsing Courses
+											</a>
+										</div>
+									</template>
+								</div>
+							</div>
+							<!-- /Right -->
+						</div>
+						<!-- /row -->
+					</div>
+					<!-- /cta-card -->
+				</div>
+			</section>
+			<!-- /CTA SECTION -->
+		</main>
+
+		<!-- ══════════════════════════════════════════════════════════
        PUBLIC FOOTER
        ══════════════════════════════════════════════════════════ -->
-    <!-- #include components/public-footer.html -->
-    <div id="public-footer-placeholder"></div>
+		<!-- ── FOOTER ─────────────────────────────────────────────────── -->
+		<footer id="public-footer">
+			<div class="container">
+				<!-- ── Top 4-Column Grid ───────────────────────────────────── -->
+				<div class="row g-5 pb-5">
+					<!-- Column 1: Logo + Social + Newsletter ─────────────────── -->
+					<div class="col-12 col-sm-6 col-lg-4">
+						<a href="index.html" class="footer-logo">
+							<i
+								class="bi bi-mortarboard-fill"
+								style="color: var(--primary); font-size: 1.5rem"
+							></i>
+							EduLearn
+						</a>
+						<p class="footer-tagline">
+							Empowering learners worldwide with world-class online education.
+							Learn without limits, grow without boundaries.
+						</p>
 
-    <!-- ══════════════════════════════════════════════════════════
+						<!-- Social Icons -->
+						<div class="footer-social d-flex gap-2 mb-3">
+							<a href="#" aria-label="Facebook" title="Facebook">
+								<i class="bi bi-facebook"></i>
+							</a>
+							<a href="#" aria-label="Twitter/X" title="Twitter / X">
+								<i class="bi bi-twitter-x"></i>
+							</a>
+							<a href="#" aria-label="LinkedIn" title="LinkedIn">
+								<i class="bi bi-linkedin"></i>
+							</a>
+							<a href="#" aria-label="Instagram" title="Instagram">
+								<i class="bi bi-instagram"></i>
+							</a>
+							<a href="#" aria-label="YouTube" title="YouTube">
+								<i class="bi bi-youtube"></i>
+							</a>
+						</div>
+
+						<!-- Mini Newsletter -->
+						<p
+							style="
+								font-size: 0.78rem;
+								color: rgba(255, 255, 255, 0.45);
+								margin-bottom: 6px;
+							"
+						>
+							Get weekly learning tips in your inbox:
+						</p>
+						<div class="footer-newsletter">
+							<input
+								type="email"
+								placeholder="you@email.com"
+								aria-label="Email for newsletter"
+							/>
+							<button type="button">Subscribe</button>
+						</div>
+					</div>
+
+					<!-- Column 2: Company ────────────────────────────────────── -->
+					<div class="col-6 col-sm-3 col-lg-2">
+						<h6 class="footer-heading">Company</h6>
+						<ul class="footer-links">
+							<li><a href="about.html">About Us</a></li>
+							<li><a href="#">Careers</a></li>
+							<li><a href="blog.html">Blog</a></li>
+							<li><a href="#">Press</a></li>
+							<li><a href="#">Partners</a></li>
+						</ul>
+					</div>
+
+					<!-- Column 3: Platform ───────────────────────────────────── -->
+					<div class="col-6 col-sm-3 col-lg-2">
+						<h6 class="footer-heading">Platform</h6>
+						<ul class="footer-links">
+							<li><a href="courses.html">Courses</a></li>
+							<li><a href="pricing.html">Pricing</a></li>
+							<li><a href="#">Features</a></li>
+							<li><a href="#">Mobile App</a></li>
+							<li><a href="#">API</a></li>
+						</ul>
+					</div>
+
+					<!-- Column 4: Support ────────────────────────────────────── -->
+					<div class="col-6 col-sm-3 col-lg-2">
+						<h6 class="footer-heading">Support</h6>
+						<ul class="footer-links">
+							<li><a href="#">Help Center</a></li>
+							<li><a href="contact.html">Contact Us</a></li>
+							<li><a href="#">Privacy Policy</a></li>
+							<li><a href="#">Terms of Service</a></li>
+							<li><a href="#">Cookie Policy</a></li>
+						</ul>
+					</div>
+
+					<!-- Column 5: App Links (bonus) ─────────────────────────── -->
+					<div class="col-6 col-sm-3 col-lg-2">
+						<h6 class="footer-heading">Get the App</h6>
+						<div class="d-flex flex-column gap-2">
+							<a
+								href="#"
+								class="payment-badge"
+								style="max-width: 160px; text-decoration: none"
+							>
+								<i class="bi bi-apple" style="font-size: 1.1rem"></i>
+								<span>App Store</span>
+							</a>
+							<a
+								href="#"
+								class="payment-badge"
+								style="max-width: 160px; text-decoration: none"
+							>
+								<i class="bi bi-google-play" style="font-size: 1rem"></i>
+								<span>Google Play</span>
+							</a>
+						</div>
+
+						<h6 class="footer-heading mt-4">Follow Us</h6>
+						<ul class="footer-links">
+							<li>
+								<a href="#"><i class="bi bi-github"></i> GitHub</a>
+							</li>
+							<li>
+								<a href="#"><i class="bi bi-discord"></i> Discord</a>
+							</li>
+							<li>
+								<a href="#"><i class="bi bi-reddit"></i> Reddit</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<!-- /Top Grid -->
+
+				<!-- ── Bottom Bar ──────────────────────────────────────────── -->
+				<div
+					class="footer-bottom d-flex flex-column flex-md-row align-items-center justify-content-between gap-3"
+				>
+					<!-- Copyright -->
+					<p class="footer-copyright mb-0">
+						&copy; 2026 <a href="index.html">EduLearn LMS</a>. All rights
+						reserved. &nbsp;·&nbsp;
+						<a href="#">Privacy</a>
+						&nbsp;·&nbsp;
+						<a href="#">Terms</a>
+					</p>
+
+					<!-- Payment Badges -->
+					<div class="footer-payment">
+						<span
+							class="me-1"
+							style="font-size: 0.72rem; color: rgba(255, 255, 255, 0.35)"
+							>Secure payments:</span
+						>
+						<span class="payment-badge">
+							<i class="bi bi-credit-card-fill"></i> Visa
+						</span>
+						<span class="payment-badge">
+							<i class="bi bi-credit-card-2-front-fill"></i> Mastercard
+						</span>
+						<span class="payment-badge">
+							<i class="bi bi-paypal"></i> PayPal
+						</span>
+						<span class="payment-badge">
+							<i class="bi bi-stripe"></i> Stripe
+						</span>
+						<span class="payment-badge">
+							<i class="bi bi-shield-fill-check" style="color: #4ade80"></i> SSL
+							Secure
+						</span>
+					</div>
+				</div>
+				<!-- /Bottom Bar -->
+			</div>
+		</footer>
+		<!-- /FOOTER -->
+
+		<!-- ══════════════════════════════════════════════════════════
        BACK TO TOP BUTTON
        ══════════════════════════════════════════════════════════ -->
-    <button id="backToTop" aria-label="Back to top">
-      <i class="bi bi-chevron-up"></i>
-    </button>
+		<button id="backToTop" aria-label="Back to top">
+			<i class="bi bi-chevron-up"></i>
+		</button>
 
-    <!-- ══════════════════════════════════════════════════════════
+		<!-- ══════════════════════════════════════════════════════════
        COOKIE CONSENT BANNER
        ══════════════════════════════════════════════════════════ -->
-    <div id="cookieBanner">
-      <span>
-        <i class="bi bi-cookie me-2 text-warning"></i>
-        We use cookies to improve your experience. By continuing you agree to
-        our
-        <a href="#" style="color: var(--primary); font-weight: 600"
-          >Cookie Policy</a
-        >.
-      </span>
-      <div class="cookie-actions">
-        <button class="btn-cookie-accept" onclick="acceptCookies()">
-          Accept All
-        </button>
-        <button class="btn-cookie-decline" onclick="declineCookies()">
-          Decline
-        </button>
-      </div>
-    </div>
+		<div id="cookieBanner">
+			<span>
+				<i class="bi bi-cookie me-2 text-warning"></i>
+				We use cookies to improve your experience. By continuing you agree to
+				our
+				<a href="#" style="color: var(--primary); font-weight: 600"
+					>Cookie Policy</a
+				>.
+			</span>
+			<div class="cookie-actions">
+				<button class="btn-cookie-accept" onclick="acceptCookies()">
+					Accept All
+				</button>
+				<button class="btn-cookie-decline" onclick="declineCookies()">
+					Decline
+				</button>
+			</div>
+		</div>
 
-    <!-- ══════════════════════════════════════════════════════════
+		<!-- ══════════════════════════════════════════════════════════
        GLOBAL SEARCH OVERLAY (from app.js globalSearch())
        ══════════════════════════════════════════════════════════ -->
-    <div
-      x-data="globalSearch()"
-      @keydown.window.escape="closeOverlay()"
-      @keydown.window.meta.k.prevent="openOverlay()"
-      @keydown.window.ctrl.k.prevent="openOverlay()"
-    >
-      <!-- Backdrop -->
-      <div
-        x-show="open"
-        x-transition:enter="transition ease-out duration-200"
-        x-transition:enter-start="opacity-0"
-        x-transition:enter-end="opacity-100"
-        x-transition:leave="transition ease-in duration-150"
-        x-transition:leave-start="opacity-100"
-        x-transition:leave-end="opacity-0"
-        class="position-fixed top-0 start-0 w-100 h-100"
-        style="
-          background: rgba(0, 0, 0, 0.55);
-          z-index: 1060;
-          backdrop-filter: blur(4px);
-        "
-        @click="closeOverlay()"
-      ></div>
+		<div
+			x-data="globalSearch()"
+			@keydown.window.escape="closeOverlay()"
+			@keydown.window.meta.k.prevent="openOverlay()"
+			@keydown.window.ctrl.k.prevent="openOverlay()"
+		>
+			<!-- Backdrop -->
+			<div
+				x-show="open"
+				x-transition:enter="transition ease-out duration-200"
+				x-transition:enter-start="opacity-0"
+				x-transition:enter-end="opacity-100"
+				x-transition:leave="transition ease-in duration-150"
+				x-transition:leave-start="opacity-100"
+				x-transition:leave-end="opacity-0"
+				class="position-fixed top-0 start-0 w-100 h-100"
+				style="
+					background: rgba(0, 0, 0, 0.55);
+					z-index: 1060;
+					backdrop-filter: blur(4px);
+				"
+				@click="closeOverlay()"
+			></div>
 
-      <!-- Search Panel -->
-      <div
-        x-show="open"
-        x-transition:enter="transition ease-out duration-200"
-        x-transition:enter-start="opacity-0 translate-y-[-20px]"
-        x-transition:enter-end="opacity-100 translate-y-0"
-        x-transition:leave="transition ease-in duration-150"
-        x-transition:leave-start="opacity-100"
-        x-transition:leave-end="opacity-0"
-        class="position-fixed top-0 start-50 translate-middle-x mt-5"
-        style="width: min(580px, 92vw); z-index: 1061"
-      >
-        <div
-          class="card border-0 shadow-lg rounded-3 overflow-hidden"
-          style="background: var(--surface)"
-        >
-          <!-- Input -->
-          <div
-            class="d-flex align-items-center gap-2 px-3 py-2 border-bottom"
-            style="border-color: var(--border-color) !important"
-          >
-            <i class="bi bi-search fs-5" style="color: var(--text-muted)"></i>
-            <input
-              x-ref="searchInput"
-              type="text"
-              x-model="query"
-              @input="search()"
-              placeholder="Search pages, courses, settings…"
-              class="border-0 flex-grow-1 bg-transparent py-2"
-              style="
-                outline: none;
-                color: var(--text-primary);
-                font-family: var(--font-family);
-                font-size: 0.95rem;
-              "
-            />
-            <kbd
-              class="d-none d-sm-inline-flex align-items-center gap-1 px-2 py-1 rounded"
-              style="
-                background: var(--surface-alt);
-                border: 1px solid var(--border-color);
-                font-size: 0.65rem;
-                color: var(--text-muted);
-              "
-            >
-              ESC
-            </kbd>
-            <button
-              class="btn-close d-sm-none"
-              @click="closeOverlay()"
-            ></button>
-          </div>
-          <!-- Results -->
-          <div class="py-1" style="max-height: 360px; overflow-y: auto">
-            <template x-if="results.length === 0 && query.length > 0">
-              <div
-                class="text-center py-4"
-                style="color: var(--text-muted); font-size: 0.875rem"
-              >
-                <i class="bi bi-search d-block mb-2 fs-4"></i>
-                No results for "<span x-text="query"></span>"
-              </div>
-            </template>
-            <template x-if="results.length === 0 && query.length === 0">
-              <div
-                class="px-3 py-2"
-                style="
-                  color: var(--text-muted);
-                  font-size: 0.8rem;
-                  font-weight: 600;
-                  text-transform: uppercase;
-                  letter-spacing: 0.8px;
-                "
-              >
-                Quick links
-              </div>
-            </template>
-            <template
-              x-for="item in (query.length === 0 ? pages.slice(0,6) : results)"
-              :key="item.title"
-            >
-              <a
-                :href="item.url"
-                class="d-flex align-items-center gap-3 px-3 py-2 text-decoration-none"
-                style="color: var(--text-primary); transition: background 0.15s"
-                @mouseover="$el.style.background='var(--surface-alt)'"
-                @mouseleave="$el.style.background='transparent'"
-              >
-                <span
-                  class="d-flex align-items-center justify-content-center rounded-2 flex-shrink-0"
-                  style="
-                    width: 32px;
-                    height: 32px;
-                    background: var(--primary-light);
-                    color: var(--primary);
-                    font-size: 0.85rem;
-                  "
-                >
-                  <i :class="'bi ' + (item.icon || 'bi-link-45deg')"></i>
-                </span>
-                <span>
-                  <span
-                    class="d-block"
-                    style="font-size: 0.875rem; font-weight: 600"
-                    x-text="item.title"
-                  ></span>
-                  <span
-                    style="font-size: 0.75rem; color: var(--text-muted)"
-                    x-text="item.url"
-                  ></span>
-                </span>
-              </a>
-            </template>
-          </div>
-          <!-- Footer hint -->
-          <div
-            class="px-3 py-2 border-top d-flex align-items-center gap-3"
-            style="
-              border-color: var(--border-color) !important;
-              font-size: 0.72rem;
-              color: var(--text-muted);
-            "
-          >
-            <span
-              ><kbd
-                style="
-                  background: var(--surface-alt);
-                  border: 1px solid var(--border-color);
-                  border-radius: 4px;
-                  padding: 2px 6px;
-                "
-                >↑↓</kbd
-              >
-              navigate</span
-            >
-            <span
-              ><kbd
-                style="
-                  background: var(--surface-alt);
-                  border: 1px solid var(--border-color);
-                  border-radius: 4px;
-                  padding: 2px 6px;
-                "
-                >↵</kbd
-              >
-              open</span
-            >
-            <span
-              ><kbd
-                style="
-                  background: var(--surface-alt);
-                  border: 1px solid var(--border-color);
-                  border-radius: 4px;
-                  padding: 2px 6px;
-                "
-                >ESC</kbd
-              >
-              close</span
-            >
-          </div>
-        </div>
-      </div>
-    </div>
+			<!-- Search Panel -->
+			<div
+				x-show="open"
+				x-transition:enter="transition ease-out duration-200"
+				x-transition:enter-start="opacity-0 translate-y-[-20px]"
+				x-transition:enter-end="opacity-100 translate-y-0"
+				x-transition:leave="transition ease-in duration-150"
+				x-transition:leave-start="opacity-100"
+				x-transition:leave-end="opacity-0"
+				class="position-fixed top-0 start-50 translate-middle-x mt-5"
+				style="width: min(580px, 92vw); z-index: 1061"
+			>
+				<div
+					class="card border-0 shadow-lg rounded-3 overflow-hidden"
+					style="background: var(--surface)"
+				>
+					<!-- Input -->
+					<div
+						class="d-flex align-items-center gap-2 px-3 py-2 border-bottom"
+						style="border-color: var(--border-color) !important"
+					>
+						<i class="bi bi-search fs-5" style="color: var(--text-muted)"></i>
+						<input
+							x-ref="searchInput"
+							type="text"
+							x-model="query"
+							@input="search()"
+							placeholder="Search pages, courses, settings…"
+							class="border-0 flex-grow-1 bg-transparent py-2"
+							style="
+								outline: none;
+								color: var(--text-primary);
+								font-family: var(--font-family);
+								font-size: 0.95rem;
+							"
+						/>
+						<kbd
+							class="d-none d-sm-inline-flex align-items-center gap-1 px-2 py-1 rounded"
+							style="
+								background: var(--surface-alt);
+								border: 1px solid var(--border-color);
+								font-size: 0.65rem;
+								color: var(--text-muted);
+							"
+						>
+							ESC
+						</kbd>
+						<button
+							class="btn-close d-sm-none"
+							@click="closeOverlay()"
+						></button>
+					</div>
+					<!-- Results -->
+					<div class="py-1" style="max-height: 360px; overflow-y: auto">
+						<template x-if="results.length === 0 && query.length > 0">
+							<div
+								class="text-center py-4"
+								style="color: var(--text-muted); font-size: 0.875rem"
+							>
+								<i class="bi bi-search d-block mb-2 fs-4"></i>
+								No results for "<span x-text="query"></span>"
+							</div>
+						</template>
+						<template x-if="results.length === 0 && query.length === 0">
+							<div
+								class="px-3 py-2"
+								style="
+									color: var(--text-muted);
+									font-size: 0.8rem;
+									font-weight: 600;
+									text-transform: uppercase;
+									letter-spacing: 0.8px;
+								"
+							>
+								Quick links
+							</div>
+						</template>
+						<template
+							x-for="item in (query.length === 0 ? pages.slice(0,6) : results)"
+							:key="item.title"
+						>
+							<a
+								:href="item.url"
+								class="d-flex align-items-center gap-3 px-3 py-2 text-decoration-none"
+								style="color: var(--text-primary); transition: background 0.15s"
+								@mouseover="$el.style.background='var(--surface-alt)'"
+								@mouseleave="$el.style.background='transparent'"
+							>
+								<span
+									class="d-flex align-items-center justify-content-center rounded-2 flex-shrink-0"
+									style="
+										width: 32px;
+										height: 32px;
+										background: var(--primary-light);
+										color: var(--primary);
+										font-size: 0.85rem;
+									"
+								>
+									<i :class="'bi ' + (item.icon || 'bi-link-45deg')"></i>
+								</span>
+								<span>
+									<span
+										class="d-block"
+										style="font-size: 0.875rem; font-weight: 600"
+										x-text="item.title"
+									></span>
+									<span
+										style="font-size: 0.75rem; color: var(--text-muted)"
+										x-text="item.url"
+									></span>
+								</span>
+							</a>
+						</template>
+					</div>
+					<!-- Footer hint -->
+					<div
+						class="px-3 py-2 border-top d-flex align-items-center gap-3"
+						style="
+							border-color: var(--border-color) !important;
+							font-size: 0.72rem;
+							color: var(--text-muted);
+						"
+					>
+						<span
+							><kbd
+								style="
+									background: var(--surface-alt);
+									border: 1px solid var(--border-color);
+									border-radius: 4px;
+									padding: 2px 6px;
+								"
+								>↑↓</kbd
+							>
+							navigate</span
+						>
+						<span
+							><kbd
+								style="
+									background: var(--surface-alt);
+									border: 1px solid var(--border-color);
+									border-radius: 4px;
+									padding: 2px 6px;
+								"
+								>↵</kbd
+							>
+							open</span
+						>
+						<span
+							><kbd
+								style="
+									background: var(--surface-alt);
+									border: 1px solid var(--border-color);
+									border-radius: 4px;
+									padding: 2px 6px;
+								"
+								>ESC</kbd
+							>
+							close</span
+						>
+					</div>
+				</div>
+			</div>
+		</div>
 
-    <!-- ══════════════════════════════════════════════════════════
+		<!-- ══════════════════════════════════════════════════════════
        JS LIBRARIES
        ══════════════════════════════════════════════════════════ -->
 
-    <!-- Bootstrap 5.3 bundle -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+		<!-- Bootstrap 5.3 bundle -->
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-    <!-- AOS -->
-    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+		<!-- AOS -->
+		<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
 
-    <!-- Typed.js (hero section) -->
-    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.1.0/dist/typed.umd.js"></script>
+		<!-- Typed.js (hero section) -->
+		<script src="https://cdn.jsdelivr.net/npm/typed.js@2.1.0/dist/typed.umd.js"></script>
 
-    <!-- Swiper.js (instructors + testimonials) -->
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+		<!-- Swiper.js (instructors + testimonials) -->
+		<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
-    <!-- CountUp.js (stats section) -->
-    <script src="https://cdn.jsdelivr.net/npm/countup.js@2.8.0/dist/countUp.umd.js"></script>
+		<!-- CountUp.js (stats section) -->
+		<script src="https://cdn.jsdelivr.net/npm/countup.js@2.8.0/dist/countUp.umd.js"></script>
 
-    <!-- Notyf -->
-    <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+		<!-- Notyf -->
+		<script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
 
-    <!-- SweetAlert2 -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
+		<!-- SweetAlert2 -->
+		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
 
-    <!-- Alpine.js (MUST be last before app.js) -->
-    <script
-      defer
-      src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
-    ></script>
+		<!-- Alpine.js (MUST be last before app.js) -->
+		<script
+			defer
+			src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
+		></script>
 
-    <!-- Project app.js (Alpine components + lmsNotify + lmsConfirm) -->
-    <script src="assets/js/app.js"></script>
+		<!-- Project app.js (Alpine components + lmsNotify + lmsConfirm) -->
+		<script src="assets/js/app.js"></script>
 
-    <!-- ══════════════════════════════════════════════════════════
-       INLINE PAGE SCRIPTS
-       ══════════════════════════════════════════════════════════ -->
-    <script>
-      /* ── Section loader (fetch + inject) ──────────────────────
-       Loads each section/component HTML fragment and injects it
-       into the matching placeholder div, then boots AOS once all
-       sections are ready.
-    ──────────────────────────────────────────────────────────── */
-      const fragments = [
-        {
-          id: "public-navbar-placeholder",
-          src: "components/public-navbar.html",
-        },
-        { id: "hero-placeholder", src: "sections/hero.html" },
-        { id: "stats-placeholder", src: "sections/stats.html" },
-        { id: "features-placeholder", src: "sections/features.html" },
-        {
-          id: "popular-courses-placeholder",
-          src: "sections/popular-courses.html",
-        },
-        { id: "instructors-placeholder", src: "sections/instructors.html" },
-        { id: "testimonials-placeholder", src: "sections/testimonials.html" },
-        { id: "pricing-placeholder", src: "sections/pricing.html" },
-        { id: "cta-placeholder", src: "sections/cta.html" },
-        {
-          id: "public-footer-placeholder",
-          src: "components/public-footer.html",
-        },
-      ];
-
-      async function loadFragment(frag) {
-        try {
-          const res = await fetch(frag.src);
-          const html = await res.text();
-          const el = document.getElementById(frag.id);
-          if (!el) return;
-
-          // Parse into a temp div — preserves <style> tags in-place
-          // (DOMParser would move them to <head> and lose them)
-          const temp = document.createElement("div");
-          temp.innerHTML = html;
-
-          // Extract scripts before insertion; browsers skip scripts
-          // injected via innerHTML/outerHTML
-          const scripts = [...temp.querySelectorAll("script")];
-          scripts.forEach((s) => s.remove());
-
-          // Swap placeholder with the parsed fragment nodes
-          el.replaceWith(...temp.childNodes);
-
-          // Re-execute each script now that its DOM elements are live
-          scripts.forEach((s) => {
-            const script = document.createElement("script");
-            if (s.src) {
-              script.src = s.src;
-            } else {
-              script.textContent = s.textContent;
-            }
-            document.body.appendChild(script);
-          });
-        } catch (e) {
-          console.warn("[EduLearn] Could not load fragment:", frag.src, e);
-        }
-      }
-
-      (async () => {
-        await Promise.all(fragments.map(loadFragment));
-
-        /* Boot AOS after all sections are in the DOM */
-        if (typeof AOS !== "undefined") {
-          AOS.init({ duration: 600, once: true, offset: 80 });
-        }
-
-        /* Re-initialise Bootstrap tooltips injected by components */
-        document
-          .querySelectorAll('[data-bs-toggle="tooltip"]')
-          .forEach((el) => {
-            new bootstrap.Tooltip(el);
-          });
-      })();
-
-      /* ── Back-to-top ──────────────────────────────────────── */
-      const bttBtn = document.getElementById("backToTop");
-      window.addEventListener("scroll", () => {
-        bttBtn.classList.toggle("visible", window.scrollY > 400);
-      });
-      bttBtn.addEventListener("click", () => {
-        window.scrollTo({ top: 0, behavior: "smooth" });
-      });
-
-      /* ── Cookie banner ────────────────────────────────────── */
-      (function () {
-        const banner = document.getElementById("cookieBanner");
-        if (localStorage.getItem("lms-cookies-accepted")) {
-          banner.classList.add("hidden");
-        }
-      })();
-
-      function acceptCookies() {
-        localStorage.setItem("lms-cookies-accepted", "1");
-        document.getElementById("cookieBanner").classList.add("hidden");
-        if (window.lmsNotify)
-          window.lmsNotify.success("Preferences saved. Thank you!");
-      }
-      function declineCookies() {
-        document.getElementById("cookieBanner").classList.add("hidden");
-      }
-
-      /* ── Active nav link via scroll spy ──────────────────── */
-      const navSections = [
-        "#hero",
-        "#stats",
-        "#features",
-        "#popular-courses",
-        "#instructors",
-        "#testimonials",
-        "#pricing",
-        "#cta",
-      ];
-      const io = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (!entry.isIntersecting) return;
-            const id = entry.target.id;
-            document
-              .querySelectorAll(".navbar-nav .nav-link")
-              .forEach((link) => {
-                link.classList.toggle(
-                  "active",
-                  link.getAttribute("href") === "#" + id,
-                );
-              });
-          });
-        },
-        { threshold: 0.35 },
-      );
-
-      // observe once sections are injected
-      setTimeout(() => {
-        navSections.forEach((sel) => {
-          const el = document.querySelector(sel);
-          if (el) io.observe(el);
-        });
-      }, 800);
-    </script>
-  </body>
+		<!-- Index page scripts -->
+		<script src="assets/js/index.js"></script>
+	</body>
 </html>
